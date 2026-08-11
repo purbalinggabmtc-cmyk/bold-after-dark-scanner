@@ -1,1 +1,939 @@
+<!DOCTYPE html>
+<html lang="id">
 
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>BOLD AFTER DARK — EVENT CHECK-IN</title>
+
+
+  <!-- QR SCANNER LIBRARY -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    body {
+
+      margin: 0;
+
+      min-height: 100vh;
+
+      background:
+        radial-gradient(
+          circle at top,
+          #250000 0%,
+          #0b0b0b 45%,
+          #000000 100%
+        );
+
+      color: #ffffff;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      padding: 20px;
+
+    }
+
+
+    .container {
+
+      width: 100%;
+
+      max-width: 500px;
+
+      text-align: center;
+
+    }
+
+
+    .brand {
+
+      font-size: 30px;
+
+      font-weight: 900;
+
+      letter-spacing: 4px;
+
+      margin-bottom: 5px;
+
+    }
+
+
+    .brand .red {
+
+      color: #e00000;
+
+    }
+
+
+    .subtitle {
+
+      font-size: 12px;
+
+      letter-spacing: 5px;
+
+      color: #aaaaaa;
+
+      margin-bottom: 25px;
+
+    }
+
+
+    .scanner-card {
+
+      background: #0e0e0e;
+
+      border: 1px solid #333333;
+
+      border-radius: 18px;
+
+      padding: 15px;
+
+      box-shadow:
+        0 0 40px rgba(255, 0, 0, 0.12);
+
+    }
+
+
+    #reader {
+
+      width: 100%;
+
+      overflow: hidden;
+
+      border-radius: 12px;
+
+    }
+
+
+    .status {
+
+      display: none;
+
+      margin-top: 15px;
+
+      padding: 20px;
+
+      border-radius: 12px;
+
+    }
+
+
+    .status.valid {
+
+      display: block;
+
+      background: #062713;
+
+      border: 2px solid #15c75b;
+
+    }
+
+
+    .status.used {
+
+      display: block;
+
+      background: #302600;
+
+      border: 2px solid #e2b900;
+
+    }
+
+
+    .status.invalid {
+
+      display: block;
+
+      background: #300000;
+
+      border: 2px solid #e00000;
+
+    }
+
+
+    .status.error {
+
+      display: block;
+
+      background: #181818;
+
+      border: 2px solid #666666;
+
+    }
+
+
+    .status.checking {
+
+      display: block;
+
+      background: #151515;
+
+      border: 2px solid #777777;
+
+    }
+
+
+    .status-title {
+
+      font-size: 26px;
+
+      font-weight: 900;
+
+      margin-bottom: 12px;
+
+    }
+
+
+    .status-detail {
+
+      font-size: 14px;
+
+      line-height: 1.7;
+
+      color: #dddddd;
+
+    }
+
+
+    .status-detail b {
+
+      color: #ffffff;
+
+    }
+
+
+    .scan-again {
+
+      width: 100%;
+
+      margin-top: 18px;
+
+      padding: 14px;
+
+      background: #e00000;
+
+      border: none;
+
+      border-radius: 8px;
+
+      color: #ffffff;
+
+      font-size: 14px;
+
+      font-weight: 900;
+
+      letter-spacing: 1px;
+
+      cursor: pointer;
+
+    }
+
+
+    .scan-again:active {
+
+      transform: scale(0.98);
+
+    }
+
+
+    .footer {
+
+      margin-top: 20px;
+
+      color: #555555;
+
+      font-size: 9px;
+
+      letter-spacing: 3px;
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+  <div class="brand">
+    BOLD <span class="red">AFTER DARK</span>
+  </div>
+
+
+  <div class="subtitle">
+    EVENT CHECK-IN
+  </div>
+
+
+  <div class="scanner-card">
+
+
+    <div id="reader"></div>
+
+
+    <div
+      id="status"
+      class="status"
+    >
+
+      <div
+        id="statusTitle"
+        class="status-title">
+      </div>
+
+
+      <div
+        id="statusDetail"
+        class="status-detail">
+      </div>
+
+
+      <button
+        id="scanAgainButton"
+        class="scan-again"
+        onclick="restartScanner()">
+        SCAN BERIKUTNYA
+      </button>
+
+    </div>
+
+
+  </div>
+
+
+  <div class="footer">
+    BOLD AFTER DARK • THE NIGHT STARTS HERE
+  </div>
+
+
+</div>
+
+
+<script>
+
+
+/*
+===========================================================
+APPS SCRIPT WEB APP URL
+===========================================================
+
+GANTI bagian ini dengan URL Web App Apps Script Anda.
+
+Contoh:
+
+https://script.google.com/macros/s/XXXXXXXXXXXX/exec
+
+===========================================================
+*/
+
+const API_URL =
+  'PASTE_APPS_SCRIPT_WEB_APP_URL_HERE';
+
+
+/*
+===========================================================
+VARIABLE
+===========================================================
+*/
+
+let scanner = null;
+
+let processing = false;
+
+
+/*
+===========================================================
+START SCANNER
+===========================================================
+*/
+
+function startScanner() {
+
+  processing = false;
+
+
+  document.getElementById(
+    'status'
+  ).style.display = 'none';
+
+
+  scanner =
+    new Html5QrcodeScanner(
+
+      'reader',
+
+      {
+
+        fps: 10,
+
+        qrbox: {
+          width: 250,
+          height: 250
+        },
+
+        rememberLastUsedCamera: true,
+
+        supportedScanTypes: [
+          Html5QrcodeScanType.SCAN_TYPE_CAMERA,
+          Html5QrcodeScanType.SCAN_TYPE_FILE
+        ]
+
+      },
+
+      false
+
+    );
+
+
+  scanner.render(
+    onScanSuccess,
+    onScanError
+  );
+
+}
+
+
+/*
+===========================================================
+QR BERHASIL DIBACA
+===========================================================
+*/
+
+function onScanSuccess(decodedText) {
+
+  if (processing) {
+
+    return;
+
+  }
+
+
+  processing = true;
+
+
+  stopScanner();
+
+
+  checkToken(
+    decodedText
+  );
+
+}
+
+
+/*
+===========================================================
+SCANNER ERROR
+===========================================================
+*/
+
+function onScanError(errorMessage) {
+
+  /*
+  Tidak perlu menampilkan error
+  karena scanner akan terus mencari QR.
+  */
+
+}
+
+
+/*
+===========================================================
+STOP SCANNER
+===========================================================
+*/
+
+function stopScanner() {
+
+  if (!scanner) {
+
+    return;
+
+  }
+
+
+  scanner
+    .clear()
+    .catch(
+      function(error) {
+
+        console.log(
+          'Scanner clear:',
+          error
+        );
+
+      }
+    );
+
+}
+
+
+/*
+===========================================================
+CHECK TOKEN KE APPS SCRIPT
+===========================================================
+*/
+
+function checkToken(token) {
+
+
+  showChecking();
+
+
+  /*
+  ---------------------------------------------------------
+  Nama callback JSONP
+  ---------------------------------------------------------
+  */
+
+  const callbackName =
+    'badCallback_' +
+    Date.now();
+
+
+  /*
+  ---------------------------------------------------------
+  Fungsi callback
+  ---------------------------------------------------------
+  */
+
+  window[callbackName] =
+    function(result) {
+
+
+      try {
+
+        delete window[
+          callbackName
+        ];
+
+      } catch (error) {}
+
+
+      const script =
+        document.getElementById(
+          callbackName
+        );
+
+
+      if (script) {
+
+        script.remove();
+
+      }
+
+
+      showResult(
+        result
+      );
+
+    };
+
+
+  /*
+  ---------------------------------------------------------
+  URL API
+  ---------------------------------------------------------
+  */
+
+  const url =
+    API_URL +
+    '?action=checkIn' +
+    '&token=' +
+    encodeURIComponent(token) +
+    '&callback=' +
+    encodeURIComponent(callbackName);
+
+
+  /*
+  ---------------------------------------------------------
+  JSONP SCRIPT
+  ---------------------------------------------------------
+  */
+
+  const script =
+    document.createElement(
+      'script'
+    );
+
+
+  script.id =
+    callbackName;
+
+
+  script.src =
+    url;
+
+
+  script.onerror =
+    function() {
+
+      showError(
+        'Tidak dapat menghubungi server check-in.'
+      );
+
+    };
+
+
+  document
+    .body
+    .appendChild(
+      script
+    );
+
+}
+
+
+/*
+===========================================================
+CHECKING
+===========================================================
+*/
+
+function showChecking() {
+
+  const box =
+    document.getElementById(
+      'status'
+    );
+
+
+  box.className =
+    'status checking';
+
+
+  box.style.display =
+    'block';
+
+
+  document.getElementById(
+    'statusTitle'
+  ).textContent =
+    'CHECKING...';
+
+
+  document.getElementById(
+    'statusDetail'
+  ).textContent =
+    'Memverifikasi QR token...';
+
+}
+
+
+/*
+===========================================================
+HASIL SCAN
+===========================================================
+*/
+
+function showResult(result) {
+
+
+  const box =
+    document.getElementById(
+      'status'
+    );
+
+
+  const title =
+    document.getElementById(
+      'statusTitle'
+    );
+
+
+  const detail =
+    document.getElementById(
+      'statusDetail'
+    );
+
+
+  /*
+  =========================================================
+  VALID
+  =========================================================
+  */
+
+  if (
+    result.status ===
+    'VALID'
+  ) {
+
+
+    box.className =
+      'status valid';
+
+
+    title.textContent =
+      '✓ ENTRY APPROVED';
+
+
+    detail.innerHTML =
+
+      '<b>' +
+      escapeHtml(result.name) +
+      '</b><br><br>' +
+
+      'PASS ID: ' +
+      escapeHtml(result.passId) +
+      '<br>' +
+
+      'ACCESS: ' +
+      escapeHtml(result.accessType) +
+      '<br>' +
+
+      'CHECK-IN: ' +
+      escapeHtml(result.checkInTime);
+
+
+  }
+
+
+  /*
+  =========================================================
+  ALREADY USED
+  =========================================================
+  */
+
+  else if (
+    result.status ===
+    'ALREADY_USED'
+  ) {
+
+
+    box.className =
+      'status used';
+
+
+    title.textContent =
+      '⚠ ALREADY USED';
+
+
+    detail.innerHTML =
+
+      '<b>' +
+      escapeHtml(result.name) +
+      '</b><br><br>' +
+
+      'PASS ID: ' +
+      escapeHtml(result.passId) +
+      '<br>' +
+
+      'CHECK-IN SEBELUMNYA: ' +
+      escapeHtml(result.checkInTime);
+
+
+  }
+
+
+  /*
+  =========================================================
+  INVALID
+  =========================================================
+  */
+
+  else if (
+    result.status ===
+    'INVALID'
+  ) {
+
+
+    box.className =
+      'status invalid';
+
+
+    title.textContent =
+      '✕ INVALID QR';
+
+
+    detail.textContent =
+      result.message ||
+      'QR tidak terdaftar.';
+
+
+  }
+
+
+  /*
+  =========================================================
+  ERROR
+  =========================================================
+  */
+
+  else {
+
+
+    showError(
+      result.message ||
+      'Terjadi kesalahan sistem.'
+    );
+
+
+    return;
+
+  }
+
+
+  box.style.display =
+    'block';
+
+}
+
+
+/*
+===========================================================
+SYSTEM ERROR
+===========================================================
+*/
+
+function showError(message) {
+
+
+  const box =
+    document.getElementById(
+      'status'
+    );
+
+
+  box.className =
+    'status error';
+
+
+  box.style.display =
+    'block';
+
+
+  document.getElementById(
+    'statusTitle'
+  ).textContent =
+    'SYSTEM ERROR';
+
+
+  document.getElementById(
+    'statusDetail'
+  ).textContent =
+    message;
+
+}
+
+
+/*
+===========================================================
+SCAN BERIKUTNYA
+===========================================================
+*/
+
+function restartScanner() {
+
+
+  stopScanner();
+
+
+  document.getElementById(
+    'status'
+  ).style.display =
+    'none';
+
+
+  document.getElementById(
+    'reader'
+  ).innerHTML =
+    '';
+
+
+  setTimeout(
+    function() {
+
+      startScanner();
+
+    },
+    300
+  );
+
+}
+
+
+/*
+===========================================================
+HTML ESCAPE
+===========================================================
+*/
+
+function escapeHtml(value) {
+
+  return String(
+    value || ''
+  )
+
+    .replace(
+      /&/g,
+      '&amp;'
+    )
+
+    .replace(
+      /</g,
+      '&lt;'
+    )
+
+    .replace(
+      />/g,
+      '&gt;'
+    )
+
+    .replace(
+      /"/g,
+      '&quot;'
+    )
+
+    .replace(
+      /'/g,
+      '&#039;'
+    );
+
+}
+
+
+/*
+===========================================================
+START
+===========================================================
+*/
+
+window.onload =
+  function() {
+
+    startScanner();
+
+  };
+
+
+</script>
+
+</body>
+
+</html>
