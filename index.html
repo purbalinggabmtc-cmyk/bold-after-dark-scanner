@@ -3,26 +3,20 @@
 
 <head>
 
-  <base target="_top">
-
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
 
   <title>BOLD AFTER DARK — CHECK IN</title>
 
-
-  <!-- HTML5 QR CODE -->
   <script
     src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
   </script>
-
 
   <style>
 
     * {
       box-sizing: border-box;
     }
-
 
     body {
 
@@ -55,7 +49,6 @@
 
     }
 
-
     .container {
 
       width: 100%;
@@ -65,7 +58,6 @@
       text-align: center;
 
     }
-
 
     .brand {
 
@@ -79,13 +71,11 @@
 
     }
 
-
     .brand span {
 
       color: #e00000;
 
     }
-
 
     .subtitle {
 
@@ -98,7 +88,6 @@
       margin-bottom: 24px;
 
     }
-
 
     .scanner-card {
 
@@ -115,7 +104,6 @@
 
     }
 
-
     #reader {
 
       width: 100%;
@@ -126,7 +114,6 @@
 
     }
 
-
     .manual {
 
       margin-top: 18px;
@@ -136,7 +123,6 @@
       gap: 8px;
 
     }
-
 
     .manual input {
 
@@ -160,7 +146,6 @@
 
     }
 
-
     .manual button {
 
       padding: 14px 18px;
@@ -179,7 +164,6 @@
 
     }
 
-
     .result {
 
       margin-top: 18px;
@@ -192,7 +176,6 @@
 
     }
 
-
     .result.valid {
 
       display: block;
@@ -202,7 +185,6 @@
       border: 2px solid #16c75a;
 
     }
-
 
     .result.used {
 
@@ -214,7 +196,6 @@
 
     }
 
-
     .result.invalid {
 
       display: block;
@@ -224,7 +205,6 @@
       border: 2px solid #e00000;
 
     }
-
 
     .result.error {
 
@@ -236,7 +216,6 @@
 
     }
 
-
     .result-title {
 
       font-size: 28px;
@@ -247,13 +226,11 @@
 
     }
 
-
     .valid .result-title {
 
       color: #16c75a;
 
     }
-
 
     .used .result-title {
 
@@ -261,13 +238,11 @@
 
     }
 
-
     .invalid .result-title {
 
       color: #ff3333;
 
     }
-
 
     .detail {
 
@@ -277,15 +252,15 @@
 
       color: #ddd;
 
-    }
+      line-height: 1.5;
 
+    }
 
     .detail strong {
 
       color: white;
 
     }
-
 
     .reset {
 
@@ -295,11 +270,11 @@
 
       padding: 14px;
 
-      background: transparent;
+      background: #e00000;
 
       color: white;
 
-      border: 1px solid #555;
+      border: none;
 
       border-radius: 8px;
 
@@ -307,8 +282,15 @@
 
       cursor: pointer;
 
+      font-size: 15px;
+
     }
 
+    .reset:active {
+
+      transform: scale(.98);
+
+    }
 
     .footer {
 
@@ -358,8 +340,12 @@
           autocomplete="off"
         >
 
-        <button onclick="manualCheckIn()">
+        <button
+          type="button"
+          onclick="manualCheckIn()">
+
           CHECK
+
         </button>
 
       </div>
@@ -382,9 +368,12 @@
 
 
         <button
+          type="button"
           class="reset"
           onclick="resetScanner()">
+
           SCAN BERIKUTNYA
+
         </button>
 
       </div>
@@ -394,7 +383,9 @@
 
 
     <div class="footer">
+
       BOLD AFTER DARK • THE NIGHT STARTS HERE
+
     </div>
 
 
@@ -403,15 +394,16 @@
 
   <script>
 
+
     // =====================================================
-    // APPS SCRIPT WEB APP URL
+    // APPS SCRIPT WEB APP VERSI 6
     // =====================================================
 
     const API_URL =
-      'https://script.google.com/macros/s/AKfycbyK1Z2di-NVODR-w9f9GEv8zhmPmQBsb9S1kf44DDu53ln3yo9N6XEBBi_2gbzR-VxwtA/exec';
+      'https://script.google.com/macros/s/AKfycbxqNhg6h0g-mAEvkaFW5RPJEJGQZuql8QG5U2p8XzzNxx-y4tmcOgZk1qMC01Hak_I3dA/exec';
 
 
-    let scanner;
+    let scanner = null;
 
     let processing = false;
 
@@ -421,6 +413,24 @@
     // =====================================================
 
     function startScanner() {
+
+      processing = false;
+
+
+      if (scanner) {
+
+        try {
+
+          scanner.clear();
+
+        } catch (error) {
+
+        }
+
+        scanner = null;
+
+      }
+
 
       scanner =
         new Html5QrcodeScanner(
@@ -432,15 +442,21 @@
             fps: 10,
 
             qrbox: {
+
               width: 250,
+
               height: 250
+
             },
 
             rememberLastUsedCamera: true,
 
             supportedScanTypes: [
+
               Html5QrcodeScanType.SCAN_TYPE_CAMERA,
+
               Html5QrcodeScanType.SCAN_TYPE_FILE
+
             ]
 
           },
@@ -451,8 +467,11 @@
 
 
       scanner.render(
+
         onScanSuccess,
+
         onScanError
+
       );
 
     }
@@ -465,17 +484,19 @@
     function onScanSuccess(decodedText) {
 
       if (processing) {
+
         return;
+
       }
 
 
       processing = true;
 
 
-      // Hentikan scanner sementara
       if (scanner) {
 
         scanner.clear()
+
           .catch(function() {});
 
       }
@@ -492,20 +513,14 @@
 
     function onScanError(errorMessage) {
 
-      // Sengaja dikosongkan.
-      // Scanner akan terus mencoba membaca QR.
+      // Tidak menampilkan error scan
+      // agar scanner tetap berjalan.
 
     }
 
 
     // =====================================================
     // PROSES TOKEN
-    // =====================================================
-    //
-    // GitHub Pages tidak memiliki google.script.run.
-    //
-    // Karena itu token dikirim ke Apps Script Web App
-    // menggunakan JSONP.
     // =====================================================
 
     function processToken(token) {
@@ -514,11 +529,29 @@
 
 
       const callbackName =
-        'checkInCallback_' + Date.now();
+        'checkInCallback_' +
+        Date.now() +
+        '_' +
+        Math.floor(
+          Math.random() * 100000
+        );
+
+
+      let finished = false;
 
 
       window[callbackName] =
         function(result) {
+
+          if (finished) {
+
+            return;
+
+          }
+
+
+          finished = true;
+
 
           try {
 
@@ -526,22 +559,50 @@
 
           }
 
-          finally {
+          catch (error) {
 
-            delete window[callbackName];
+            showServerError({
 
-            const oldScript =
-              document.getElementById(
-                callbackName
-              );
+              message:
+                error.message ||
+                'Terjadi kesalahan saat menampilkan hasil.'
 
-            if (oldScript) {
-              oldScript.remove();
-            }
+            });
 
           }
 
+
+          cleanup();
+
         };
+
+
+      function cleanup() {
+
+        try {
+
+          delete window[callbackName];
+
+        }
+
+        catch (error) {
+
+        }
+
+
+        const oldScript =
+          document.getElementById(
+            callbackName
+          );
+
+
+        if (oldScript) {
+
+          oldScript.remove();
+
+        }
+
+      }
 
 
       const script =
@@ -550,6 +611,9 @@
 
       script.id =
         callbackName;
+
+
+      script.async = true;
 
 
       script.src =
@@ -564,9 +628,17 @@
       script.onerror =
         function() {
 
-          delete window[callbackName];
+          if (finished) {
 
-          script.remove();
+            return;
+
+          }
+
+
+          finished = true;
+
+
+          cleanup();
 
 
           showServerError({
@@ -581,6 +653,41 @@
 
       document.body.appendChild(script);
 
+
+      // ===================================================
+      // TIMEOUT
+      // ===================================================
+
+      setTimeout(
+
+        function() {
+
+          if (finished) {
+
+            return;
+
+          }
+
+
+          finished = true;
+
+
+          cleanup();
+
+
+          showServerError({
+
+            message:
+              'Server check-in tidak memberikan respons.'
+
+          });
+
+        },
+
+        15000
+
+      );
+
     }
 
 
@@ -591,13 +698,15 @@
     function manualCheckIn() {
 
       if (processing) {
+
         return;
+
       }
 
 
       const input =
         document.getElementById(
-          "manualToken"
+          'manualToken'
         );
 
 
@@ -608,7 +717,7 @@
       if (!token) {
 
         showTemporaryError(
-          "QR TOKEN KOSONG"
+          'QR TOKEN KOSONG'
         );
 
         return;
@@ -622,6 +731,7 @@
       if (scanner) {
 
         scanner.clear()
+
           .catch(function() {});
 
       }
@@ -633,30 +743,31 @@
 
 
     // =====================================================
-    // HASIL DARI SERVER
+    // HASIL SERVER
     // =====================================================
 
     function showResult(result) {
 
       const box =
         document.getElementById(
-          "result"
+          'result'
         );
 
 
       const title =
         document.getElementById(
-          "resultTitle"
+          'resultTitle'
         );
 
 
       const details =
         document.getElementById(
-          "resultDetails"
+          'resultDetails'
         );
 
 
-      box.className = "result";
+      box.className =
+        'result';
 
 
       // ===================================================
@@ -665,106 +776,124 @@
 
       if (
         result &&
-        result.status === "VALID"
+        result.status === 'VALID'
       ) {
 
-        box.classList.add("valid");
+        box.classList.add(
+          'valid'
+        );
 
 
         title.textContent =
-          "✓ ENTRY APPROVED";
+          '✓ ENTRY APPROVED';
 
 
         details.innerHTML =
 
-          "<div class='detail'>" +
+          '<div class="detail">' +
 
-          "<strong>NAMA</strong><br>" +
+          '<strong>NAMA</strong><br>' +
 
-          escapeHtml(result.name) +
+          escapeHtml(
+            result.name
+          ) +
 
-          "</div>" +
-
-
-          "<div class='detail'>" +
-
-          "<strong>PASS ID</strong><br>" +
-
-          escapeHtml(result.passId) +
-
-          "</div>" +
+          '</div>' +
 
 
-          "<div class='detail'>" +
+          '<div class="detail">' +
 
-          "<strong>ACCESS</strong><br>" +
+          '<strong>PASS ID</strong><br>' +
 
-          escapeHtml(result.accessType) +
+          escapeHtml(
+            result.passId
+          ) +
 
-          "</div>" +
+          '</div>' +
 
 
-          "<div class='detail'>" +
+          '<div class="detail">' +
 
-          "<strong>CHECK-IN</strong><br>" +
+          '<strong>ACCESS</strong><br>' +
 
-          escapeHtml(result.checkInTime) +
+          escapeHtml(
+            result.accessType
+          ) +
 
-          "</div>";
+          '</div>' +
+
+
+          '<div class="detail">' +
+
+          '<strong>CHECK-IN</strong><br>' +
+
+          escapeHtml(
+            result.checkInTime
+          ) +
+
+          '</div>';
 
       }
 
 
       // ===================================================
-      // SUDAH DIGUNAKAN
+      // ALREADY USED
       // ===================================================
 
       else if (
         result &&
-        result.status === "ALREADY_USED"
+        result.status === 'ALREADY_USED'
       ) {
 
-        box.classList.add("used");
+        box.classList.add(
+          'used'
+        );
 
 
         title.textContent =
-          "⚠ ALREADY USED";
+          '⚠ ALREADY USED';
 
 
         details.innerHTML =
 
-          "<div class='detail'>" +
+          '<div class="detail">' +
 
-          "QR ini sudah digunakan." +
+          '<strong>QR INI SUDAH DIGUNAKAN</strong>' +
 
-          "</div>" +
-
-
-          "<div class='detail'>" +
-
-          "<strong>NAMA</strong><br>" +
-
-          escapeHtml(result.name) +
-
-          "</div>" +
+          '</div>' +
 
 
-          "<div class='detail'>" +
+          '<div class="detail">' +
 
-          "<strong>PASS ID</strong><br>" +
+          '<strong>NAMA</strong><br>' +
 
-          escapeHtml(result.passId) +
+          escapeHtml(
+            result.name
+          ) +
 
-          "</div>" +
+          '</div>' +
 
 
-          "<div class='detail'>" +
+          '<div class="detail">' +
 
-          "<strong>CHECK-IN</strong><br>" +
+          '<strong>PASS ID</strong><br>' +
 
-          escapeHtml(result.checkInTime) +
+          escapeHtml(
+            result.passId
+          ) +
 
-          "</div>";
+          '</div>' +
+
+
+          '<div class="detail">' +
+
+          '<strong>CHECK-IN</strong><br>' +
+
+          escapeHtml(
+            result.checkInTime
+          ) +
+
+          '</div>';
 
       }
 
@@ -775,26 +904,31 @@
 
       else if (
         result &&
-        result.status === "INVALID"
+        result.status === 'INVALID'
       ) {
 
-        box.classList.add("invalid");
+        box.classList.add(
+          'invalid'
+        );
 
 
         title.textContent =
-          "✕ INVALID QR";
+          '✕ INVALID QR';
 
 
         details.innerHTML =
 
-          "<div class='detail'>" +
+          '<div class="detail">' +
 
           escapeHtml(
+
             result.message ||
-            "QR tidak valid."
+
+            'QR tidak terdaftar.'
+
           ) +
 
-          "</div>";
+          '</div>';
 
       }
 
@@ -805,16 +939,18 @@
 
       else {
 
-        box.classList.add("error");
+        box.classList.add(
+          'error'
+        );
 
 
         title.textContent =
-          "SYSTEM ERROR";
+          'SYSTEM ERROR';
 
 
         details.innerHTML =
 
-          "<div class='detail'>" +
+          '<div class="detail">' +
 
           escapeHtml(
 
@@ -823,16 +959,17 @@
 
               ? result.message
 
-              : "Terjadi kesalahan pada server."
+              : 'Terjadi kesalahan pada server check-in.'
 
           ) +
 
-          "</div>";
+          '</div>';
 
       }
 
 
-      box.style.display = "block";
+      box.style.display =
+        'block';
 
     }
 
@@ -845,84 +982,84 @@
 
       const box =
         document.getElementById(
-          "result"
+          'result'
         );
 
 
       const title =
         document.getElementById(
-          "resultTitle"
+          'resultTitle'
         );
 
 
       const details =
         document.getElementById(
-          "resultDetails"
+          'resultDetails'
         );
 
 
       box.className =
-        "result error";
+        'result error';
 
 
       box.style.display =
-        "block";
+        'block';
 
 
       title.textContent =
-        "CHECKING...";
+        'CHECKING...';
 
 
       details.innerHTML =
 
-        "<div class='detail'>" +
+        '<div class="detail">' +
 
-        "Memverifikasi QR..." +
+        'Memverifikasi QR ke server...' +
 
-        "</div>";
+        '</div>';
 
     }
 
 
     // =====================================================
-    // ERROR SERVER
+    // SERVER ERROR
     // =====================================================
 
     function showServerError(error) {
 
       const box =
         document.getElementById(
-          "result"
+          'result'
         );
 
 
       const title =
         document.getElementById(
-          "resultTitle"
+          'resultTitle'
         );
 
 
       const details =
         document.getElementById(
-          "resultDetails"
+          'resultDetails'
         );
 
 
       box.className =
-        "result error";
+        'result error';
 
 
       box.style.display =
-        "block";
+        'block';
 
 
       title.textContent =
-        "SYSTEM ERROR";
+        'SYSTEM ERROR';
 
 
       details.innerHTML =
 
-        "<div class='detail'>" +
+        '<div class="detail">' +
 
         escapeHtml(
 
@@ -931,79 +1068,90 @@
 
             ? error.message
 
-            : "Tidak dapat menghubungi server."
+            : 'Tidak dapat menghubungi server check-in.'
 
         ) +
 
-        "</div>";
+        '</div>';
 
     }
 
 
     // =====================================================
-    // ERROR SEMENTARA
+    // TEMPORARY ERROR
     // =====================================================
 
     function showTemporaryError(message) {
 
       const box =
         document.getElementById(
-          "result"
+          'result'
         );
 
 
       const title =
         document.getElementById(
-          "resultTitle"
+          'resultTitle'
         );
 
 
       const details =
         document.getElementById(
-          "resultDetails"
+          'resultDetails'
         );
 
 
       box.className =
-        "result invalid";
+        'result invalid';
 
 
       box.style.display =
-        "block";
+        'block';
 
 
       title.textContent =
-        "✕ INVALID";
+        '✕ INVALID';
 
 
       details.innerHTML =
 
-        "<div class='detail'>" +
+        '<div class="detail">' +
 
         escapeHtml(message) +
 
-        "</div>";
+        '</div>';
 
     }
 
 
     // =====================================================
-    // RESET
+    // RESET SCANNER
     // =====================================================
 
     function resetScanner() {
 
-      processing = false;
+      const box =
+        document.getElementById(
+          'result'
+        );
 
 
-      document.getElementById(
-        "result"
-      ).style.display = "none";
+      box.style.display =
+        'none';
 
 
-      document.getElementById(
-        "manualToken"
-      ).value = "";
+      const input =
+        document.getElementById(
+          'manualToken'
+        );
+
+
+      input.value =
+        '';
+
+
+      processing =
+        false;
 
 
       startScanner();
@@ -1012,51 +1160,58 @@
 
 
     // =====================================================
-    // HTML ESCAPE
+    // ESCAPE HTML
     // =====================================================
 
     function escapeHtml(value) {
 
-      return String(value || "")
+      return String(
+        value == null
+          ? ''
+          : value
+      )
 
         .replace(
           /&/g,
-          "&amp;"
+          '&amp;'
         )
 
         .replace(
           /</g,
-          "&lt;"
+          '&lt;'
         )
 
         .replace(
           />/g,
-          "&gt;"
+          '&gt;'
         )
 
         .replace(
           /"/g,
-          "&quot;"
+          '&quot;'
         )
 
         .replace(
           /'/g,
-          "&#039;"
+          '&#039;'
         );
 
     }
 
 
     // =====================================================
-    // START
+    // START SAAT HALAMAN DIBUKA
     // =====================================================
 
-    window.onload =
+    window.addEventListener(
+      'load',
       function() {
 
         startScanner();
 
-      };
+      }
+    );
+
 
   </script>
 
