@@ -396,11 +396,11 @@
 
 
     // =====================================================
-    // APPS SCRIPT WEB APP VERSI 6
+    // APPS SCRIPT WEB APP VERSI 8
     // =====================================================
 
     const API_URL =
-      'https://script.google.com/macros/s/AKfycbxqNhg6h0g-mAEvkaFW5RPJEJGQZuql8QG5U2p8XzzNxx-y4tmcOgZk1qMC01Hak_I3dA/exec';
+      'https://script.google.com/macros/s/AKfycbyMcVKQiH1qXxYK86_QKSfoFq88GJcrNB7xUqmByGkJzFCTizvLASk8naeCOI1RVA4opQ/exec';
 
 
     let scanner = null;
@@ -513,8 +513,7 @@
 
     function onScanError(errorMessage) {
 
-      // Tidak menampilkan error scan
-      // agar scanner tetap berjalan.
+      // Sengaja tidak menampilkan error scan.
 
     }
 
@@ -622,7 +621,9 @@
         '&token=' +
         encodeURIComponent(token) +
         '&callback=' +
-        encodeURIComponent(callbackName);
+        encodeURIComponent(callbackName) +
+        '&_=' +
+        Date.now();
 
 
       script.onerror =
