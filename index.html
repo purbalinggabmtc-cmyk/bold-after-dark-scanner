@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>BOLD AFTER DARK — CHECK IN</title>
 
   <script
-    src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
-  </script>
+    src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"
+  ></script>
 
   <style>
 
@@ -100,7 +104,7 @@
       padding: 16px;
 
       box-shadow:
-        0 0 30px rgba(255,0,0,.12);
+        0 0 30px rgba(255, 0, 0, .12);
 
     }
 
@@ -146,6 +150,12 @@
 
     }
 
+    .manual input:focus {
+
+      border-color: #e00000;
+
+    }
+
     .manual button {
 
       padding: 14px 18px;
@@ -161,6 +171,14 @@
       font-weight: bold;
 
       cursor: pointer;
+
+    }
+
+    .manual button:disabled {
+
+      opacity: .5;
+
+      cursor: not-allowed;
 
     }
 
@@ -244,6 +262,12 @@
 
     }
 
+    .error .result-title {
+
+      color: #ff9999;
+
+    }
+
     .detail {
 
       margin-top: 8px;
@@ -292,6 +316,14 @@
 
     }
 
+    .reset:disabled {
+
+      opacity: .5;
+
+      cursor: not-allowed;
+
+    }
+
     .footer {
 
       margin-top: 20px;
@@ -316,12 +348,16 @@
 
 
     <div class="brand">
+
       BOLD <span>AFTER DARK</span>
+
     </div>
 
 
     <div class="subtitle">
+
       EVENT CHECK-IN
+
     </div>
 
 
@@ -342,10 +378,10 @@
 
         <button
           type="button"
-          onclick="manualCheckIn()">
-
+          id="manualButton"
+          onclick="manualCheckIn()"
+        >
           CHECK
-
         </button>
 
       </div>
@@ -358,22 +394,22 @@
 
         <div
           id="resultTitle"
-          class="result-title">
-        </div>
+          class="result-title"
+        ></div>
 
 
         <div
-          id="resultDetails">
-        </div>
+          id="resultDetails"
+        ></div>
 
 
         <button
           type="button"
+          id="resetButton"
           class="reset"
-          onclick="resetScanner()">
-
+          onclick="resetScanner()"
+        >
           SCAN BERIKUTNYA
-
         </button>
 
       </div>
@@ -394,18 +430,40 @@
 
   <script>
 
-
     // =====================================================
-    // APPS SCRIPT WEB APP VERSI 8
+    // SUPABASE CONFIGURATION
     // =====================================================
 
     const API_URL =
-      'https://script.google.com/macros/s/AKfycbyMcVKQiH1qXxYK86_QKSfoFq88GJcrNB7xUqmByGkJzFCTizvLASk8naeCOI1RVA4opQ/exec';
+      "https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/dynamic-service";
 
+
+    /*
+      GANTI NILAI DI BAWAH INI DENGAN
+      SUPABASE PUBLISHABLE KEY KAMU.
+
+      Contoh format:
+
+      sb_publishable_xxxxxxxxxxxxxxxxx
+
+      JANGAN gunakan:
+
+      sb_secret_...
+    */
+
+    const SUPABASE_KEY =
+      "sb_publishable_YGi3tPBuF9tW4KKnLJ5dDQ_AcBZ19WH";
+
+
+    // =====================================================
+    // STATE
+    // =====================================================
 
     let scanner = null;
 
     let processing = false;
+
+    let requestController = null;
 
 
     // =====================================================
@@ -423,7 +481,14 @@
 
           scanner.clear();
 
-        } catch (error) {
+        }
+
+        catch (error) {
+
+          console.warn(
+            "Scanner clear error:",
+            error
+          );
 
         }
 
@@ -497,7 +562,9 @@
 
         scanner.clear()
 
-          .catch(function() {});
+          .catch(
+            function () {}
+          );
 
       }
 
@@ -508,186 +575,262 @@
 
 
     // =====================================================
-    // ERROR SCANNER
+    // SCAN ERROR
     // =====================================================
 
     function onScanError(errorMessage) {
 
-      // Sengaja tidak menampilkan error scan.
+      // Sengaja tidak menampilkan
+      // error scanner ke user.
 
     }
 
 
     // =====================================================
-    // PROSES TOKEN
+    // PROCESS TOKEN
     // =====================================================
 
-    function processToken(token) {
+    async function processToken(token) {
 
       showLoading();
 
 
-      const callbackName =
-        'checkInCallback_' +
-        Date.now() +
-        '_' +
-        Math.floor(
-          Math.random() * 100000
+      token =
+        String(
+          token || ""
+        ).trim();
+
+
+      if (!token) {
+
+        showTemporaryError(
+          "QR TOKEN KOSONG"
         );
 
+        processing = false;
 
-      let finished = false;
+        return;
 
-
-      window[callbackName] =
-        function(result) {
-
-          if (finished) {
-
-            return;
-
-          }
+      }
 
 
-          finished = true;
+      if (
+        !SUPABASE_KEY ||
+        SUPABASE_KEY ===
+          "PASTE_PUBLISHABLE_KEY_DI_SINI"
+      ) {
+
+        showServerError({
+
+          message:
+            "Supabase Publishable Key belum diisi."
+
+        });
+
+        processing = false;
+
+        return;
+
+      }
 
 
-          try {
+      try {
 
-            showResult(result);
+        // -------------------------------------------------
+        // ABORT CONTROLLER
+        // -------------------------------------------------
 
-          }
-
-          catch (error) {
-
-            showServerError({
-
-              message:
-                error.message ||
-                'Terjadi kesalahan saat menampilkan hasil.'
-
-            });
-
-          }
+        requestController =
+          new AbortController();
 
 
-          cleanup();
+        const timeout =
+          setTimeout(
 
-        };
+            function () {
 
+              requestController.abort();
 
-      function cleanup() {
+            },
 
-        try {
+            15000
 
-          delete window[callbackName];
-
-        }
-
-        catch (error) {
-
-        }
-
-
-        const oldScript =
-          document.getElementById(
-            callbackName
           );
 
 
-        if (oldScript) {
+        // -------------------------------------------------
+        // SEND TO SUPABASE EDGE FUNCTION
+        // -------------------------------------------------
 
-          oldScript.remove();
+        const response =
+          await fetch(
+
+            API_URL,
+
+            {
+
+              method:
+                "POST",
+
+              headers: {
+
+                "Content-Type":
+                  "application/json",
+
+                "apikey":
+                  SUPABASE_KEY,
+
+                "Authorization":
+                  "Bearer " +
+                  SUPABASE_KEY
+
+              },
+
+              body:
+                JSON.stringify({
+
+                  action:
+                    "checkIn",
+
+                  token:
+                    token
+
+                }),
+
+              signal:
+                requestController.signal
+
+            }
+
+          );
+
+
+        clearTimeout(timeout);
+
+
+        // -------------------------------------------------
+        // READ RESPONSE
+        // -------------------------------------------------
+
+        const raw =
+          await response.text();
+
+
+        console.log(
+          "CHECK-IN HTTP STATUS:",
+          response.status
+        );
+
+
+        console.log(
+          "CHECK-IN RAW RESPONSE:",
+          raw
+        );
+
+
+        let data = null;
+
+
+        try {
+
+          data =
+            JSON.parse(raw);
+
+        }
+
+        catch (parseError) {
+
+          throw new Error(
+            "Server mengembalikan response yang bukan JSON."
+          );
+
+        }
+
+
+        console.log(
+          "CHECK-IN JSON:",
+          data
+        );
+
+
+        // -------------------------------------------------
+        // HTTP ERROR
+        // -------------------------------------------------
+
+        if (!response.ok) {
+
+          throw new Error(
+
+            data &&
+            data.message
+
+              ? data.message
+
+              : "Server check-in error."
+
+          );
+
+        }
+
+
+        // -------------------------------------------------
+        // SHOW RESULT
+        // -------------------------------------------------
+
+        showResult(data);
+
+      }
+
+
+      catch (error) {
+
+        console.error(
+          "CHECK-IN ERROR:",
+          error
+        );
+
+
+        if (
+          error &&
+          error.name ===
+            "AbortError"
+        ) {
+
+          showServerError({
+
+            message:
+              "Server check-in tidak memberikan respons dalam 15 detik."
+
+          });
+
+        }
+
+        else {
+
+          showServerError({
+
+            message:
+
+              error &&
+              error.message
+
+                ? error.message
+
+                : "Tidak dapat menghubungi server check-in."
+
+          });
 
         }
 
       }
 
 
-      const script =
-        document.createElement('script');
+      finally {
 
+        requestController =
+          null;
 
-      script.id =
-        callbackName;
-
-
-      script.async = true;
-
-
-      script.src =
-        API_URL +
-        '?action=checkIn' +
-        '&token=' +
-        encodeURIComponent(token) +
-        '&callback=' +
-        encodeURIComponent(callbackName) +
-        '&_=' +
-        Date.now();
-
-
-      script.onerror =
-        function() {
-
-          if (finished) {
-
-            return;
-
-          }
-
-
-          finished = true;
-
-
-          cleanup();
-
-
-          showServerError({
-
-            message:
-              'Tidak dapat menghubungi server check-in.'
-
-          });
-
-        };
-
-
-      document.body.appendChild(script);
-
-
-      // ===================================================
-      // TIMEOUT
-      // ===================================================
-
-      setTimeout(
-
-        function() {
-
-          if (finished) {
-
-            return;
-
-          }
-
-
-          finished = true;
-
-
-          cleanup();
-
-
-          showServerError({
-
-            message:
-              'Server check-in tidak memberikan respons.'
-
-          });
-
-        },
-
-        15000
-
-      );
+      }
 
     }
 
@@ -707,7 +850,7 @@
 
       const input =
         document.getElementById(
-          'manualToken'
+          "manualToken"
         );
 
 
@@ -718,7 +861,7 @@
       if (!token) {
 
         showTemporaryError(
-          'QR TOKEN KOSONG'
+          "QR TOKEN KOSONG"
         );
 
         return;
@@ -733,7 +876,9 @@
 
         scanner.clear()
 
-          .catch(function() {});
+          .catch(
+            function () {}
+          );
 
       }
 
@@ -744,31 +889,31 @@
 
 
     // =====================================================
-    // HASIL SERVER
+    // SHOW RESULT
     // =====================================================
 
     function showResult(result) {
 
       const box =
         document.getElementById(
-          'result'
+          "result"
         );
 
 
       const title =
         document.getElementById(
-          'resultTitle'
+          "resultTitle"
         );
 
 
       const details =
         document.getElementById(
-          'resultDetails'
+          "resultDetails"
         );
 
 
       box.className =
-        'result';
+        "result";
 
 
       // ===================================================
@@ -776,63 +921,124 @@
       // ===================================================
 
       if (
+
         result &&
-        result.status === 'VALID'
+
+        result.status ===
+          "VALID"
+
       ) {
 
         box.classList.add(
-          'valid'
+          "valid"
         );
 
 
         title.textContent =
-          '✓ ENTRY APPROVED';
+          "✓ ENTRY APPROVED";
 
 
-        details.innerHTML =
+        let html = "";
+
+
+        html +=
 
           '<div class="detail">' +
 
-          '<strong>NAMA</strong><br>' +
+          "<strong>NAMA</strong><br>" +
 
           escapeHtml(
             result.name
           ) +
 
-          '</div>' +
+          "</div>";
 
+
+        html +=
 
           '<div class="detail">' +
 
-          '<strong>PASS ID</strong><br>' +
+          "<strong>PASS ID</strong><br>" +
 
           escapeHtml(
             result.passId
           ) +
 
-          '</div>' +
+          "</div>";
 
+
+        html +=
 
           '<div class="detail">' +
 
-          '<strong>ACCESS</strong><br>' +
+          "<strong>ACCESS</strong><br>" +
 
           escapeHtml(
             result.accessType
           ) +
 
-          '</div>' +
+          "</div>";
 
 
-          '<div class="detail">' +
+        if (
+          result.tablePackage
+        ) {
 
-          '<strong>CHECK-IN</strong><br>' +
+          html +=
 
-          escapeHtml(
-            result.checkInTime
-          ) +
+            '<div class="detail">' +
 
-          '</div>';
+            "<strong>TABLE</strong><br>" +
+
+            escapeHtml(
+              result.tablePackage
+            ) +
+
+            "</div>";
+
+        }
+
+
+        if (
+          result.checkInTime
+        ) {
+
+          html +=
+
+            '<div class="detail">' +
+
+            "<strong>CHECK-IN</strong><br>" +
+
+            escapeHtml(
+              result.checkInTime
+            ) +
+
+            "</div>";
+
+        }
+
+
+        if (
+          result.checkedInBy
+        ) {
+
+          html +=
+
+            '<div class="detail">' +
+
+            "<strong>CHECKED IN BY</strong><br>" +
+
+            escapeHtml(
+              result.checkedInBy
+            ) +
+
+            "</div>";
+
+        }
+
+
+        details.innerHTML =
+          html;
 
       }
 
@@ -842,59 +1048,114 @@
       // ===================================================
 
       else if (
+
         result &&
-        result.status === 'ALREADY_USED'
+
+        result.status ===
+          "ALREADY_USED"
+
       ) {
 
         box.classList.add(
-          'used'
+          "used"
         );
 
 
         title.textContent =
-          '⚠ ALREADY USED';
+          "⚠ ALREADY USED";
 
 
-        details.innerHTML =
+        let html = "";
 
-          '<div class="detail">' +
 
-          '<strong>QR INI SUDAH DIGUNAKAN</strong>' +
-
-          '</div>' +
-
+        html +=
 
           '<div class="detail">' +
 
-          '<strong>NAMA</strong><br>' +
+          "<strong>QR INI SUDAH DIGUNAKAN</strong>" +
+
+          "</div>";
+
+
+        html +=
+
+          '<div class="detail">' +
+
+          "<strong>NAMA</strong><br>" +
 
           escapeHtml(
             result.name
           ) +
 
-          '</div>' +
+          "</div>";
 
+
+        html +=
 
           '<div class="detail">' +
 
-          '<strong>PASS ID</strong><br>' +
+          "<strong>PASS ID</strong><br>" +
 
           escapeHtml(
             result.passId
           ) +
 
-          '</div>' +
+          "</div>";
 
+
+        html +=
 
           '<div class="detail">' +
 
-          '<strong>CHECK-IN</strong><br>' +
+          "<strong>ACCESS</strong><br>" +
 
           escapeHtml(
-            result.checkInTime
+            result.accessType
           ) +
 
-          '</div>';
+          "</div>";
+
+
+        if (
+          result.checkInTime
+        ) {
+
+          html +=
+
+            '<div class="detail">' +
+
+            "<strong>CHECK-IN</strong><br>" +
+
+            escapeHtml(
+              result.checkInTime
+            ) +
+
+            "</div>";
+
+        }
+
+
+        if (
+          result.checkedInBy
+        ) {
+
+          html +=
+
+            '<div class="detail">' +
+
+            "<strong>CHECKED IN BY</strong><br>" +
+
+            escapeHtml(
+              result.checkedInBy
+            ) +
+
+            "</div>";
+
+        }
+
+
+        details.innerHTML =
+          html;
 
       }
 
@@ -904,17 +1165,21 @@
       // ===================================================
 
       else if (
+
         result &&
-        result.status === 'INVALID'
+
+        result.status ===
+          "INVALID"
+
       ) {
 
         box.classList.add(
-          'invalid'
+          "invalid"
         );
 
 
         title.textContent =
-          '✕ INVALID QR';
+          "✕ INVALID QR";
 
 
         details.innerHTML =
@@ -925,28 +1190,28 @@
 
             result.message ||
 
-            'QR tidak terdaftar.'
+            "QR tidak terdaftar."
 
           ) +
 
-          '</div>';
+          "</div>";
 
       }
 
 
       // ===================================================
-      // ERROR
+      // OTHER SERVER RESPONSE
       // ===================================================
 
       else {
 
         box.classList.add(
-          'error'
+          "error"
         );
 
 
         title.textContent =
-          'SYSTEM ERROR';
+          "SYSTEM ERROR";
 
 
         details.innerHTML =
@@ -960,17 +1225,17 @@
 
               ? result.message
 
-              : 'Terjadi kesalahan pada server check-in.'
+              : "Terjadi kesalahan pada server check-in."
 
           ) +
 
-          '</div>';
+          "</div>";
 
       }
 
 
       box.style.display =
-        'block';
+        "block";
 
     }
 
@@ -983,41 +1248,41 @@
 
       const box =
         document.getElementById(
-          'result'
+          "result"
         );
 
 
       const title =
         document.getElementById(
-          'resultTitle'
+          "resultTitle"
         );
 
 
       const details =
         document.getElementById(
-          'resultDetails'
+          "resultDetails"
         );
 
 
       box.className =
-        'result error';
+        "result error";
 
 
       box.style.display =
-        'block';
+        "block";
 
 
       title.textContent =
-        'CHECKING...';
+        "CHECKING...";
 
 
       details.innerHTML =
 
         '<div class="detail">' +
 
-        'Memverifikasi QR ke server...' +
+        "Memverifikasi QR ke Supabase..." +
 
-        '</div>';
+        "</div>";
 
     }
 
@@ -1030,32 +1295,32 @@
 
       const box =
         document.getElementById(
-          'result'
+          "result"
         );
 
 
       const title =
         document.getElementById(
-          'resultTitle'
+          "resultTitle"
         );
 
 
       const details =
         document.getElementById(
-          'resultDetails'
+          "resultDetails"
         );
 
 
       box.className =
-        'result error';
+        "result error";
 
 
       box.style.display =
-        'block';
+        "block";
 
 
       title.textContent =
-        'SYSTEM ERROR';
+        "SYSTEM ERROR";
 
 
       details.innerHTML =
@@ -1069,11 +1334,11 @@
 
             ? error.message
 
-            : 'Tidak dapat menghubungi server check-in.'
+            : "Tidak dapat menghubungi server check-in."
 
         ) +
 
-        '</div>';
+        "</div>";
 
     }
 
@@ -1086,41 +1351,43 @@
 
       const box =
         document.getElementById(
-          'result'
+          "result"
         );
 
 
       const title =
         document.getElementById(
-          'resultTitle'
+          "resultTitle"
         );
 
 
       const details =
         document.getElementById(
-          'resultDetails'
+          "resultDetails"
         );
 
 
       box.className =
-        'result invalid';
+        "result invalid";
 
 
       box.style.display =
-        'block';
+        "block";
 
 
       title.textContent =
-        '✕ INVALID';
+        "✕ INVALID";
 
 
       details.innerHTML =
 
         '<div class="detail">' +
 
-        escapeHtml(message) +
+        escapeHtml(
+          message
+        ) +
 
-        '</div>';
+        "</div>";
 
     }
 
@@ -1133,22 +1400,22 @@
 
       const box =
         document.getElementById(
-          'result'
+          "result"
         );
 
 
       box.style.display =
-        'none';
+        "none";
 
 
       const input =
         document.getElementById(
-          'manualToken'
+          "manualToken"
         );
 
 
       input.value =
-        '';
+        "";
 
 
       processing =
@@ -1167,52 +1434,80 @@
     function escapeHtml(value) {
 
       return String(
+
         value == null
-          ? ''
+          ? ""
           : value
+
       )
 
         .replace(
           /&/g,
-          '&amp;'
+          "&amp;"
         )
 
         .replace(
           /</g,
-          '&lt;'
+          "&lt;"
         )
 
         .replace(
           />/g,
-          '&gt;'
+          "&gt;"
         )
 
         .replace(
           /"/g,
-          '&quot;'
+          "&quot;"
         )
 
         .replace(
           /'/g,
-          '&#039;'
+          "&#039;"
         );
 
     }
 
 
     // =====================================================
-    // START SAAT HALAMAN DIBUKA
+    // MANUAL INPUT ENTER
+    // =====================================================
+
+    document
+      .getElementById(
+        "manualToken"
+      )
+      .addEventListener(
+        "keydown",
+        function(event) {
+
+          if (
+            event.key ===
+            "Enter"
+          ) {
+
+            event.preventDefault();
+
+            manualCheckIn();
+
+          }
+
+        }
+      );
+
+
+    // =====================================================
+    // START WHEN PAGE LOADS
     // =====================================================
 
     window.addEventListener(
-      'load',
+      "load",
       function() {
 
         startScanner();
 
       }
     );
-
 
   </script>
 
