@@ -784,7 +784,7 @@
         >
 
 
-          <!-- ACCESS -->
+          <!-- ACCESS TYPE -->
 
           <div class="field">
 
@@ -819,7 +819,7 @@
           </div>
 
 
-          <!-- VIP -->
+          <!-- VIP FIELDS -->
 
           <div id="vipFields">
 
@@ -830,11 +830,13 @@
               </div>
 
               <div class="vip-description">
-                Select your table package if applicable.
+                Table package is required for VIP access.
               </div>
 
             </div>
 
+
+            <!-- TABLE PACKAGE -->
 
             <div class="field">
 
@@ -843,6 +845,7 @@
                 for="tablePackage"
               >
                 Table Package
+                <span class="required">*</span>
               </label>
 
               <select
@@ -851,7 +854,7 @@
               >
 
                 <option value="">
-                  Select table package — optional
+                  Select table package
                 </option>
 
                 <option value="VIP TABLE - 1 PAX">
@@ -1285,11 +1288,17 @@
             "visible"
           );
 
+          tablePackage.required =
+            true;
+
         } else {
 
           vipFields.classList.remove(
             "visible"
           );
+
+          tablePackage.required =
+            false;
 
           tablePackage.value =
             "";
@@ -1359,6 +1368,16 @@
       ) {
 
         return "Please enter your WhatsApp number.";
+
+      }
+
+
+      if (
+        accessType.value === "VIP" &&
+        !tablePackage.value.trim()
+      ) {
+
+        return "Please choose your table package.";
 
       }
 
@@ -1803,6 +1822,9 @@
         vipFields.classList.remove(
           "visible"
         );
+
+        tablePackage.required =
+          false;
 
         tablePackage.value =
           "";
