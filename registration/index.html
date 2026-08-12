@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>BOLD AFTER DARK — Registration</title>
 
   <style>
@@ -60,8 +59,8 @@
 
     .registration-title {
       color: var(--red);
-      font-size: 18px;
-      font-weight: 800;
+      font-size: 20px;
+      font-weight: 900;
       letter-spacing: .20em;
       text-transform: uppercase;
       margin-bottom: 12px;
@@ -223,8 +222,6 @@
       background: rgba(255,80,80,.07);
       border: 1px solid rgba(255,80,80,.20);
     }
-
-    /* DIGITAL PASS */
 
     #passSection {
       display: none;
@@ -410,14 +407,9 @@
   </style>
 </head>
 
-
 <body>
 
 <div class="page">
-
-  <!-- =========================
-       REGISTRATION
-       ========================= -->
 
   <section id="registrationSection">
 
@@ -428,9 +420,7 @@
       </div>
 
       <h1 class="brand-title">
-        BOLD
-        <span class="after">AFTER</span>
-        DARK
+        BOLD <span class="after">AFTER</span> DARK
       </h1>
 
       <div class="brand-subtitle">
@@ -438,7 +428,6 @@
       </div>
 
     </div>
-
 
     <div class="card">
 
@@ -450,10 +439,7 @@
         Complete your registration below.
       </p>
 
-
       <form id="registrationForm">
-
-        <!-- ACCESS -->
 
         <div class="field">
 
@@ -462,10 +448,7 @@
             <span class="required">*</span>
           </label>
 
-          <select
-            id="accessType"
-            required
-          >
+          <select id="accessType" required>
 
             <option value="">
               Select access
@@ -483,9 +466,6 @@
 
         </div>
 
-
-        <!-- VIP TABLE -->
-
         <div id="vipFields">
 
           <div class="vip-box">
@@ -499,7 +479,6 @@
             </div>
 
           </div>
-
 
           <div class="field">
 
@@ -552,9 +531,6 @@
 
         </div>
 
-
-        <!-- NAME -->
-
         <div class="field">
 
           <label for="name">
@@ -571,9 +547,6 @@
           >
 
         </div>
-
-
-        <!-- WHATSAPP -->
 
         <div class="field">
 
@@ -592,9 +565,6 @@
 
         </div>
 
-
-        <!-- STAY CONNECTED -->
-
         <div class="field">
 
           <label for="stayConnected">
@@ -609,9 +579,6 @@
           >
 
         </div>
-
-
-        <!-- COMMUNITY -->
 
         <div class="field">
 
@@ -628,7 +595,6 @@
 
         </div>
 
-
         <button
           id="registerButton"
           class="register-button"
@@ -639,20 +605,11 @@
 
       </form>
 
-
-      <div
-        id="message"
-        class="message"
-      ></div>
+      <div id="message" class="message"></div>
 
     </div>
 
   </section>
-
-
-  <!-- =========================
-       DIGITAL PASS
-       ========================= -->
 
   <section id="passSection">
 
@@ -665,9 +622,7 @@
         </div>
 
         <div class="pass-title">
-          BOLD
-          <span class="after">AFTER</span>
-          DARK
+          BOLD <span class="after">AFTER</span> DARK
         </div>
 
         <div class="status">
@@ -677,23 +632,15 @@
 
       </div>
 
-
       <div class="pass-body">
 
-        <div
-          id="passName"
-          class="pass-name"
-        >
+        <div id="passName" class="pass-name">
           -
         </div>
 
-        <div
-          id="passAccess"
-          class="pass-access"
-        >
+        <div id="passAccess" class="pass-access">
           -
         </div>
-
 
         <div class="pass-grid">
 
@@ -703,15 +650,11 @@
               Pass ID
             </div>
 
-            <div
-              id="passId"
-              class="pass-value"
-            >
+            <div id="passId" class="pass-value">
               -
             </div>
 
           </div>
-
 
           <div
             id="tablePackageBox"
@@ -734,7 +677,6 @@
 
         </div>
 
-
         <div class="qr">
 
           <img
@@ -744,13 +686,11 @@
 
         </div>
 
-
         <div class="qr-note">
           Present this QR code at the entrance.
         </div>
 
       </div>
-
 
       <div class="pass-footer">
 
@@ -772,7 +712,6 @@
 
   </section>
 
-
   <div class="footer">
     BOLD AFTER DARK
   </div>
@@ -783,7 +722,7 @@
 <script>
 
 /* =====================================================
-   CONFIGURATION
+   WEB APP URL
    ===================================================== */
 
 const API_URL =
@@ -853,7 +792,7 @@ const newRegistration =
 
 
 /* =====================================================
-   VIP TOGGLE
+   VIP
    ===================================================== */
 
 accessType.addEventListener(
@@ -901,7 +840,8 @@ function hideMessage() {
 
   message.textContent = "";
 
-  message.className = "message";
+  message.className =
+    "message";
 
 }
 
@@ -945,12 +885,10 @@ function validate() {
 
 
 /* =====================================================
-   JSONP REQUEST
+   JSONP
    ===================================================== */
 
-function registerViaJSONP(
-  data
-) {
+function registerViaJSONP(data) {
 
   return new Promise(
     function(resolve, reject) {
@@ -963,42 +901,38 @@ function registerViaJSONP(
           Math.random() * 1000000
         );
 
-
-      let completed = false;
-
+      let finished = false;
 
       const script =
         document.createElement("script");
 
+      const cleanup =
+        function() {
 
-      let timer;
+          clearTimeout(timeout);
 
+          try {
+            delete window[callbackName];
+          } catch (e) {
+            window[callbackName] =
+              undefined;
+          }
 
-      function cleanup() {
+          if (script.parentNode) {
+            script.parentNode.removeChild(script);
+          }
 
-        clearTimeout(timer);
-
-        try {
-          delete window[callbackName];
-        } catch (e) {
-          window[callbackName] = undefined;
-        }
-
-        if (script.parentNode) {
-          script.parentNode.removeChild(script);
-        }
-
-      }
+        };
 
 
       window[callbackName] =
         function(response) {
 
-          if (completed) {
+          if (finished) {
             return;
           }
 
-          completed = true;
+          finished = true;
 
           cleanup();
 
@@ -1007,69 +941,59 @@ function registerViaJSONP(
         };
 
 
-      const query =
+      const params =
         new URLSearchParams();
 
 
-      query.append(
+      params.set(
         "action",
         "register"
       );
 
-      query.append(
+      params.set(
         "accessType",
         data.accessType
       );
 
-      query.append(
+      params.set(
         "name",
         data.name
       );
 
-      query.append(
+      params.set(
         "whatsapp",
         data.whatsapp
       );
 
-      query.append(
+      params.set(
         "stayConnected",
         data.stayConnected
       );
 
-      query.append(
+      params.set(
         "community",
         data.community
       );
 
-      query.append(
+      params.set(
         "tablePackage",
         data.tablePackage
       );
 
-      query.append(
+      params.set(
         "callback",
         callbackName
       );
 
 
+      /*
+       * Use the exact public Web App URL.
+       */
+
       script.src =
         API_URL +
         "?" +
-        query.toString();
-
-
-      /*
-       * IMPORTANT:
-       *
-       * Do not use script.onerror
-       * to reject the request.
-       *
-       * Apps Script JSONP has already been
-       * verified manually to return:
-       *
-       * callback({...});
-       *
-       */
+        params.toString();
 
 
       script.async = true;
@@ -1080,15 +1004,15 @@ function registerViaJSONP(
       );
 
 
-      timer =
+      const timeout =
         setTimeout(
           function() {
 
-            if (completed) {
+            if (finished) {
               return;
             }
 
-            completed = true;
+            finished = true;
 
             cleanup();
 
@@ -1118,18 +1042,15 @@ form.addEventListener(
 
     event.preventDefault();
 
-
     hideMessage();
 
-
-    const error =
+    const validationError =
       validate();
 
-
-    if (error) {
+    if (validationError) {
 
       showMessage(
-        error,
+        validationError,
         "error"
       );
 
@@ -1203,23 +1124,20 @@ form.addEventListener(
       }
 
 
-      /* =========================
-         DISPLAY DIGITAL PASS
-         ========================= */
-
       passName.textContent =
-        response.name || data.name;
+        response.name ||
+        data.name;
 
       passAccess.textContent =
-        response.accessType || data.accessType;
+        response.accessType ||
+        data.accessType;
 
       passId.textContent =
-        response.passId || "-";
+        response.passId ||
+        "-";
 
 
-      if (
-        response.qrCodeUrl
-      ) {
+      if (response.qrCodeUrl) {
 
         passQr.src =
           response.qrCodeUrl;
@@ -1227,9 +1145,7 @@ form.addEventListener(
       }
 
 
-      if (
-        response.tablePackage
-      ) {
+      if (response.tablePackage) {
 
         tablePackageBox.style.display =
           "block";
@@ -1252,7 +1168,6 @@ form.addEventListener(
         "show"
       );
 
-
       hideMessage();
 
 
@@ -1262,7 +1177,7 @@ form.addEventListener(
       });
 
 
-    } catch(error) {
+    } catch (error) {
 
       console.error(
         "Registration failed:",
@@ -1299,7 +1214,6 @@ newRegistration.addEventListener(
   function() {
 
     form.reset();
-
 
     vipFields.classList.remove(
       "show"
