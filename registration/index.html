@@ -11,13 +11,14 @@
   <title>BOLD AFTER DARK — Registration</title>
 
   <style>
-
     * {
       box-sizing: border-box;
     }
 
     body {
       margin: 0;
+      padding: 30px 15px;
+
       min-height: 100vh;
 
       background:
@@ -38,8 +39,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-
-      padding: 30px 15px;
     }
 
     .registration-container {
@@ -55,13 +54,14 @@
       padding: 30px 25px 35px;
 
       box-shadow:
-        0 20px 60px rgba(0,0,0,0.55);
+        0 20px 60px rgba(0, 0, 0, 0.55);
     }
 
     .registration-label {
       text-align: center;
 
       font-size: 18px;
+
       font-weight: 700;
 
       color: #ff1e1e;
@@ -77,6 +77,7 @@
       text-align: center;
 
       font-size: 34px;
+
       line-height: 1.1;
 
       font-weight: 900;
@@ -130,7 +131,6 @@
 
     input,
     select {
-
       width: 100%;
 
       padding: 13px 14px;
@@ -154,11 +154,10 @@
 
     input:focus,
     select:focus {
-
       border-color: #ff1e1e;
 
       box-shadow:
-        0 0 0 2px rgba(255,30,30,0.12);
+        0 0 0 2px rgba(255, 30, 30, 0.12);
     }
 
     select {
@@ -167,6 +166,7 @@
 
     select option {
       background: #171717;
+
       color: #ffffff;
     }
 
@@ -175,7 +175,6 @@
     }
 
     .submit-button {
-
       width: 100%;
 
       margin-top: 10px;
@@ -208,7 +207,6 @@
     }
 
     .submit-button:disabled {
-
       opacity: 0.5;
 
       cursor: not-allowed;
@@ -217,7 +215,6 @@
     }
 
     .message {
-
       margin-top: 18px;
 
       padding: 14px;
@@ -232,29 +229,26 @@
     }
 
     .message.success {
-
       display: block;
 
-      background: rgba(0,180,80,0.12);
+      background: rgba(0, 180, 80, 0.12);
 
-      border: 1px solid rgba(0,180,80,0.35);
+      border: 1px solid rgba(0, 180, 80, 0.35);
 
       color: #8cffb5;
     }
 
     .message.error {
-
       display: block;
 
-      background: rgba(255,30,30,0.10);
+      background: rgba(255, 30, 30, 0.10);
 
-      border: 1px solid rgba(255,30,30,0.35);
+      border: 1px solid rgba(255, 30, 30, 0.35);
 
       color: #ff8f8f;
     }
 
     .pass-result {
-
       display: none;
 
       margin-top: 22px;
@@ -271,7 +265,6 @@
     }
 
     .pass-result h3 {
-
       margin-top: 0;
 
       margin-bottom: 15px;
@@ -280,7 +273,6 @@
     }
 
     .pass-id {
-
       font-size: 20px;
 
       font-weight: 800;
@@ -291,7 +283,6 @@
     }
 
     .pass-info {
-
       font-size: 13px;
 
       color: #bbbbbb;
@@ -300,7 +291,6 @@
     }
 
     .qr-image {
-
       width: 220px;
 
       max-width: 100%;
@@ -314,8 +304,45 @@
       padding: 5px;
     }
 
-    @media (max-width: 480px) {
+    .new-registration-button {
+      width: 100%;
 
+      margin-top: 18px;
+
+      padding: 12px;
+
+      border-radius: 9px;
+
+      border: 1px solid #444444;
+
+      background: #222222;
+
+      color: #ffffff;
+
+      font-size: 14px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+    .new-registration-button:hover {
+      background: #2b2b2b;
+    }
+
+    .loading-text {
+      text-align: center;
+
+      margin-top: 12px;
+
+      color: #888888;
+
+      font-size: 12px;
+
+      display: none;
+    }
+
+    @media (max-width: 480px) {
       .registration-container {
         padding: 25px 18px 30px;
       }
@@ -327,23 +354,23 @@
       .registration-label {
         font-size: 16px;
       }
-
     }
-
   </style>
-
 </head>
 
 <body>
 
   <div class="registration-container">
 
+    <!-- =========================================
+         REGISTRATION HEADER
+         ========================================= -->
+
     <div class="registration-label">
       REGISTRATION
     </div>
 
     <div class="title">
-
       <span class="title-bold">
         BOLD
       </span>
@@ -355,9 +382,12 @@
       <span class="title-dark">
         DARK
       </span>
-
     </div>
 
+
+    <!-- =========================================
+         REGISTRATION FORM
+         ========================================= -->
 
     <form id="registrationForm">
 
@@ -366,10 +396,8 @@
       <div class="form-group">
 
         <label for="accessType">
-
           Choose your access below.
           <span class="required">*</span>
-
         </label>
 
         <select
@@ -405,7 +433,10 @@
         <label for="tablePackage">
 
           Table Package
-          <span class="required">*</span>
+
+          <span class="required">
+            *
+          </span>
 
         </label>
 
@@ -422,32 +453,32 @@
             VIP TABLE - 1 PAX
           </option>
 
-          <option value="VIP TABLE - 2 PAX">
-            VIP TABLE - 2 PAX
+          <option value="VIP TABLE — 2 PAX">
+            VIP TABLE — 2 PAX
           </option>
 
-          <option value="VIP TABLE - 3 PAX">
-            VIP TABLE - 3 PAX
+          <option value="VIP TABLE — 3 PAX">
+            VIP TABLE — 3 PAX
           </option>
 
-          <option value="VIP TABLE - 4 PAX">
-            VIP TABLE - 4 PAX
+          <option value="VIP TABLE — 4 PAX">
+            VIP TABLE — 4 PAX
           </option>
 
-          <option value="VIP TABLE - 5 PAX">
-            VIP TABLE - 5 PAX
+          <option value="VIP TABLE — 5 PAX">
+            VIP TABLE — 5 PAX
           </option>
 
-          <option value="VIP TABLE - 6 PAX">
-            VIP TABLE - 6 PAX
+          <option value="VIP TABLE — 6 PAX">
+            VIP TABLE — 6 PAX
           </option>
 
-          <option value="VIP TABLE - 7 PAX">
-            VIP TABLE - 7 PAX
+          <option value="VIP TABLE — 7 PAX">
+            VIP TABLE — 7 PAX
           </option>
 
-          <option value="VIP TABLE - 8 PAX">
-            VIP TABLE - 8 PAX
+          <option value="VIP TABLE — 8 PAX">
+            VIP TABLE — 8 PAX
           </option>
 
         </select>
@@ -462,7 +493,10 @@
         <label for="name">
 
           Your Name
-          <span class="required">*</span>
+
+          <span class="required">
+            *
+          </span>
 
         </label>
 
@@ -472,6 +506,7 @@
           name="name"
           placeholder="Enter your name"
           maxlength="100"
+          autocomplete="name"
           required
         >
 
@@ -485,7 +520,10 @@
         <label for="whatsapp">
 
           WhatsApp
-          <span class="required">*</span>
+
+          <span class="required">
+            *
+          </span>
 
         </label>
 
@@ -495,6 +533,7 @@
           name="whatsapp"
           placeholder="08xxxxxxxxxx"
           maxlength="20"
+          autocomplete="tel"
           required
         >
 
@@ -508,6 +547,7 @@
         <label for="stayConnected">
 
           Stay Connected
+
           <span class="optional">
             Optional
           </span>
@@ -532,6 +572,7 @@
         <label for="community">
 
           Your Community
+
           <span class="optional">
             Optional
           </span>
@@ -549,6 +590,8 @@
       </div>
 
 
+      <!-- SUBMIT -->
+
       <button
         type="submit"
         id="submitButton"
@@ -557,10 +600,19 @@
         REGISTER
       </button>
 
+      <div
+        id="loadingText"
+        class="loading-text"
+      >
+        Connecting to registration server...
+      </div>
+
     </form>
 
 
-    <!-- MESSAGE -->
+    <!-- =========================================
+         MESSAGE
+         ========================================= -->
 
     <div
       id="message"
@@ -568,7 +620,9 @@
     ></div>
 
 
-    <!-- RESULT -->
+    <!-- =========================================
+         PASS RESULT
+         ========================================= -->
 
     <div
       id="passResult"
@@ -595,715 +649,741 @@
         alt="QR Code"
       >
 
+      <button
+        type="button"
+        id="newRegistrationButton"
+        class="new-registration-button"
+      >
+        NEW REGISTRATION
+      </button>
+
     </div>
 
   </div>
 
 
-<script>
+  <script>
 
-/* =========================================================
-   GOOGLE APPS SCRIPT API
-   ========================================================= */
+    /* =====================================================
+       SUPABASE EDGE FUNCTION
+       =====================================================
 
-const API_URL =
-  'https://script.google.com/macros/s/AKfycbwDlByPLDkvNi000w-2A2_XkA8lfQ9BnhU1cVKV6VxuTY2z5YWU_ZqedEEGLn8bouzBNg/exec';
+       Google Apps Script SUDAH TIDAK DIGUNAKAN.
 
+       Endpoint:
+       Supabase Edge Function dynamic-service
 
-/* =========================================================
-   ELEMENTS
-   ========================================================= */
+       IMPORTANT:
+       Jangan masukkan sb_secret_... di frontend.
+       ===================================================== */
 
-const form =
-  document.getElementById('registrationForm');
-
-const accessType =
-  document.getElementById('accessType');
-
-const tablePackageGroup =
-  document.getElementById('tablePackageGroup');
-
-const tablePackage =
-  document.getElementById('tablePackage');
-
-const submitButton =
-  document.getElementById('submitButton');
-
-const message =
-  document.getElementById('message');
-
-const passResult =
-  document.getElementById('passResult');
-
-const passId =
-  document.getElementById('passId');
-
-const passInfo =
-  document.getElementById('passInfo');
-
-const qrImage =
-  document.getElementById('qrImage');
+    const API_URL =
+      'https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/dynamic-service';
 
 
-/* =========================================================
-   ACCESS TYPE
-   ========================================================= */
+    /* =====================================================
+       ELEMENTS
+       ===================================================== */
 
-accessType.addEventListener(
-  'change',
-  function () {
+    const form =
+      document.getElementById(
+        'registrationForm'
+      );
 
-    if (this.value === 'VIP') {
+    const accessType =
+      document.getElementById(
+        'accessType'
+      );
 
-      tablePackageGroup
-        .classList
-        .remove('hidden');
+    const tablePackageGroup =
+      document.getElementById(
+        'tablePackageGroup'
+      );
 
-      tablePackage.required = true;
+    const tablePackage =
+      document.getElementById(
+        'tablePackage'
+      );
 
-    } else {
+    const submitButton =
+      document.getElementById(
+        'submitButton'
+      );
 
-      tablePackageGroup
-        .classList
-        .add('hidden');
+    const loadingText =
+      document.getElementById(
+        'loadingText'
+      );
 
-      tablePackage.required = false;
+    const message =
+      document.getElementById(
+        'message'
+      );
 
-      tablePackage.value = '';
+    const passResult =
+      document.getElementById(
+        'passResult'
+      );
 
-    }
+    const passId =
+      document.getElementById(
+        'passId'
+      );
 
-  }
-);
+    const passInfo =
+      document.getElementById(
+        'passInfo'
+      );
 
+    const qrImage =
+      document.getElementById(
+        'qrImage'
+      );
 
-/* =========================================================
-   MESSAGE
-   ========================================================= */
-
-function showMessage(text, type) {
-
-  message.textContent = text;
-
-  message.className =
-    'message ' + type;
-
-}
-
-
-function clearMessage() {
-
-  message.textContent = '';
-
-  message.className = 'message';
-
-}
-
-
-/* =========================================================
-   JSONP
-   ========================================================= */
-
-function registerViaJsonp(params) {
-
-  return new Promise(function(resolve, reject) {
-
-    /*
-     * Gunakan callback yang sangat sederhana.
-     *
-     * Jangan gunakan nama dengan karakter aneh.
-     */
-
-    const callbackName =
-      'registerCallback' +
-      Date.now() +
-      Math.floor(
-        Math.random() * 100000
+    const newRegistrationButton =
+      document.getElementById(
+        'newRegistrationButton'
       );
 
 
-    let script = null;
+    /* =====================================================
+       ACCESS TYPE CHANGE
+       ===================================================== */
 
-    let finished = false;
+    accessType.addEventListener(
+      'change',
+      function () {
 
-    let timeout = null;
+        if (
+          this.value === 'VIP'
+        ) {
 
+          tablePackageGroup
+            .classList
+            .remove('hidden');
 
-    function cleanup() {
+          tablePackage.required =
+            true;
 
-      if (timeout) {
+        }
 
-        clearTimeout(timeout);
+        else {
 
-        timeout = null;
+          tablePackageGroup
+            .classList
+            .add('hidden');
 
-      }
+          tablePackage.required =
+            false;
 
-
-      if (script) {
-
-        script.onload = null;
-        script.onerror = null;
-
-        if (script.parentNode) {
-
-          script.parentNode.removeChild(
-            script
-          );
+          tablePackage.value =
+            '';
 
         }
 
       }
+    );
 
+
+    /* =====================================================
+       MESSAGE HELPERS
+       ===================================================== */
+
+    function showMessage(
+      text,
+      type
+    ) {
+
+      message.textContent =
+        text;
+
+      message.className =
+        'message ' + type;
+
+    }
+
+
+    function clearMessage() {
+
+      message.textContent =
+        '';
+
+      message.className =
+        'message';
+
+    }
+
+
+    /* =====================================================
+       RESET RESULT
+       ===================================================== */
+
+    function hideResult() {
+
+      passResult.style.display =
+        'none';
+
+      passId.textContent =
+        '';
+
+      passInfo.innerHTML =
+        '';
+
+      qrImage.removeAttribute(
+        'src'
+      );
+
+    }
+
+
+    /* =====================================================
+       SUPABASE REGISTRATION
+       ===================================================== */
+
+    async function registerWithSupabase(
+      params
+    ) {
+
+      const response =
+        await fetch(
+          API_URL,
+          {
+            method: 'POST',
+
+            headers: {
+              'Content-Type':
+                'application/json'
+            },
+
+            body:
+              JSON.stringify(
+                params
+              )
+          }
+        );
+
+
+      /* ---------------------------------------------
+         READ RESPONSE
+         --------------------------------------------- */
+
+      let data = null;
 
       try {
 
-        delete window[callbackName];
-
-      } catch (error) {
-
-        window[callbackName] =
-          undefined;
+        data =
+          await response.json();
 
       }
 
-    }
+      catch (error) {
 
-
-    window[callbackName] =
-      function(response) {
-
-        if (finished) {
-          return;
-        }
-
-        finished = true;
-
-        cleanup();
-
-        resolve(response);
-
-      };
-
-
-    const query =
-      new URLSearchParams();
-
-
-    query.set(
-      'action',
-      'register'
-    );
-
-    query.set(
-      'accessType',
-      params.accessType || ''
-    );
-
-    query.set(
-      'name',
-      params.name || ''
-    );
-
-    query.set(
-      'whatsapp',
-      params.whatsapp || ''
-    );
-
-    query.set(
-      'stayConnected',
-      params.stayConnected || ''
-    );
-
-    query.set(
-      'community',
-      params.community || ''
-    );
-
-    query.set(
-      'tablePackage',
-      params.tablePackage || ''
-    );
-
-    query.set(
-      'callback',
-      callbackName
-    );
-
-
-    /*
-     * Cache buster.
-     *
-     * Membantu mencegah browser menggunakan
-     * response lama.
-     */
-
-    query.set(
-      '_',
-      Date.now().toString()
-    );
-
-
-    const requestUrl =
-      API_URL +
-      '?' +
-      query.toString();
-
-
-    console.log(
-      'Registration API:',
-      requestUrl
-    );
-
-
-    script =
-      document.createElement('script');
-
-
-    script.async = true;
-
-
-    script.src =
-      requestUrl;
-
-
-    /*
-     * IMPORTANT:
-     *
-     * Jangan mengandalkan onerror saja.
-     *
-     * Apps Script dapat melakukan redirect
-     * sebelum response JSONP diterima.
-     */
-
-    script.onload =
-      function() {
-
-        /*
-         * Jika Apps Script mengirim response
-         * tetapi callback tidak dieksekusi,
-         * tunggu sebentar agar callback punya
-         * kesempatan dijalankan.
-         */
-
-        setTimeout(function() {
-
-          if (finished) {
-            return;
-          }
-
-          finished = true;
-
-          cleanup();
-
-          reject(
-            new Error(
-              'Registration server returned an invalid response.'
-            )
-          );
-
-        }, 300);
-
-      };
-
-
-    script.onerror =
-      function() {
-
-        if (finished) {
-          return;
-        }
-
-        /*
-         * Jangan langsung menganggap API mati.
-         *
-         * Beri sedikit waktu karena Apps Script
-         * menggunakan redirect.
-         */
-
-        setTimeout(function() {
-
-          if (finished) {
-            return;
-          }
-
-          finished = true;
-
-          cleanup();
-
-          reject(
-            new Error(
-              'Browser gagal memuat response dari registration server. Pastikan deployment Apps Script dapat diakses oleh siapa saja.'
-            )
-          );
-
-        }, 1000);
-
-      };
-
-
-    timeout =
-      setTimeout(function() {
-
-        if (finished) {
-          return;
-        }
-
-        finished = true;
-
-        cleanup();
-
-        reject(
-          new Error(
-            'Registration server tidak memberikan response dalam 15 detik.'
-          )
+        throw new Error(
+          'Registration server returned an invalid response.'
         );
 
-      }, 15000);
+      }
 
 
-    document.head.appendChild(
-      script
-    );
+      /* ---------------------------------------------
+         HTTP ERROR
+         --------------------------------------------- */
 
-  });
+      if (!response.ok) {
 
-}
+        throw new Error(
+          data &&
+          data.message
+            ? data.message
+            : 'Registration server error.'
+        );
 
+      }
 
-/* =========================================================
-   FORM SUBMIT
-   ========================================================= */
 
-form.addEventListener(
-  'submit',
-  async function(event) {
-
-    event.preventDefault();
-
-
-    clearMessage();
-
-    passResult.style.display =
-      'none';
-
-
-    const access =
-      accessType.value.trim();
-
-
-    const selectedTable =
-      tablePackage.value.trim();
-
-
-    const name =
-      document
-        .getElementById('name')
-        .value
-        .trim();
-
-
-    const whatsapp =
-      document
-        .getElementById('whatsapp')
-        .value
-        .trim();
-
-
-    const stayConnected =
-      document
-        .getElementById('stayConnected')
-        .value
-        .trim();
-
-
-    const community =
-      document
-        .getElementById('community')
-        .value
-        .trim();
-
-
-    /* =====================================================
-       VALIDATION
-       ===================================================== */
-
-    if (!access) {
-
-      showMessage(
-        'Please choose your access.',
-        'error'
-      );
-
-      return;
-
-    }
-
-
-    if (!name) {
-
-      showMessage(
-        'Please enter your name.',
-        'error'
-      );
-
-      return;
-
-    }
-
-
-    if (!whatsapp) {
-
-      showMessage(
-        'Please enter your WhatsApp number.',
-        'error'
-      );
-
-      return;
-
-    }
-
-
-    if (
-      access === 'VIP' &&
-      !selectedTable
-    ) {
-
-      showMessage(
-        'Please select your VIP Table Package.',
-        'error'
-      );
-
-      return;
-
-    }
-
-
-    /* =====================================================
-       PROCESSING
-       ===================================================== */
-
-    submitButton.disabled =
-      true;
-
-    submitButton.textContent =
-      'PROCESSING...';
-
-
-    try {
-
-      console.log(
-        'Sending registration...'
-      );
-
-
-      const response =
-        await registerViaJsonp({
-
-          accessType:
-            access,
-
-          tablePackage:
-            selectedTable,
-
-          name:
-            name,
-
-          whatsapp:
-            whatsapp,
-
-          stayConnected:
-            stayConnected,
-
-          community:
-            community
-
-        });
-
-
-      console.log(
-        'Registration response:',
-        response
-      );
-
-
-      /* ===================================================
+      /* ---------------------------------------------
          API ERROR
-         =================================================== */
+         --------------------------------------------- */
 
       if (
-        !response ||
-        response.success !== true
+        !data ||
+        data.success !== true
       ) {
 
         throw new Error(
-          response &&
-          response.message
-            ? response.message
+          data &&
+          data.message
+            ? data.message
             : 'Registration failed.'
         );
 
       }
 
 
-      /* ===================================================
-         SUCCESS
-         =================================================== */
+      return data;
 
-      showMessage(
-        'Registration berhasil.',
-        'success'
-      );
+    }
 
 
-      passId.textContent =
-        response.passId || '';
+    /* =====================================================
+       FORM SUBMIT
+       ===================================================== */
+
+    form.addEventListener(
+      'submit',
+      async function (event) {
+
+        event.preventDefault();
 
 
-      let infoText =
-        'Access: ' +
-        (
-          response.accessType ||
-          ''
-        );
+        clearMessage();
+
+        hideResult();
 
 
-      if (
-        response.tablePackage
-      ) {
+        /* ---------------------------------------------
+           READ VALUES
+           --------------------------------------------- */
 
-        infoText +=
-          '<br>Table: ' +
-          response.tablePackage;
+        const access =
+          accessType.value.trim();
+
+        const selectedTable =
+          tablePackage.value.trim();
+
+        const name =
+          document
+            .getElementById(
+              'name'
+            )
+            .value
+            .trim();
+
+        const whatsapp =
+          document
+            .getElementById(
+              'whatsapp'
+            )
+            .value
+            .trim();
+
+        const stayConnected =
+          document
+            .getElementById(
+              'stayConnected'
+            )
+            .value
+            .trim();
+
+        const community =
+          document
+            .getElementById(
+              'community'
+            )
+            .value
+            .trim();
+
+
+        /* ---------------------------------------------
+           FRONTEND VALIDATION
+           --------------------------------------------- */
+
+        if (!access) {
+
+          showMessage(
+            'Please choose your access.',
+            'error'
+          );
+
+          accessType.focus();
+
+          return;
+
+        }
+
+
+        if (!name) {
+
+          showMessage(
+            'Please enter your name.',
+            'error'
+          );
+
+          document
+            .getElementById(
+              'name'
+            )
+            .focus();
+
+          return;
+
+        }
+
+
+        if (!whatsapp) {
+
+          showMessage(
+            'Please enter your WhatsApp number.',
+            'error'
+          );
+
+          document
+            .getElementById(
+              'whatsapp'
+            )
+            .focus();
+
+          return;
+
+        }
+
+
+        if (
+          access === 'VIP' &&
+          !selectedTable
+        ) {
+
+          showMessage(
+            'Please select your VIP Table Package.',
+            'error'
+          );
+
+          tablePackage.focus();
+
+          return;
+
+        }
+
+
+        /* ---------------------------------------------
+           DISABLE FORM
+           --------------------------------------------- */
+
+        submitButton.disabled =
+          true;
+
+        submitButton.textContent =
+          'PROCESSING...';
+
+        loadingText.style.display =
+          'block';
+
+
+        try {
+
+          /* -------------------------------------------
+             SEND TO SUPABASE
+             ------------------------------------------- */
+
+          const response =
+            await registerWithSupabase(
+              {
+
+                accessType:
+                  access,
+
+                tablePackage:
+                  selectedTable,
+
+                name:
+                  name,
+
+                whatsapp:
+                  whatsapp,
+
+                stayConnected:
+                  stayConnected,
+
+                community:
+                  community
+
+              }
+            );
+
+
+          /* -------------------------------------------
+             SUCCESS MESSAGE
+             ------------------------------------------- */
+
+          showMessage(
+            'Registration berhasil.',
+            'success'
+          );
+
+
+          /* -------------------------------------------
+             PASS ID
+             ------------------------------------------- */
+
+          passId.textContent =
+            response.passId || '';
+
+
+          /* -------------------------------------------
+             PASS INFORMATION
+             ------------------------------------------- */
+
+          let infoText =
+            'Access: ' +
+            escapeHtml(
+              response.accessType || ''
+            );
+
+
+          if (
+            response.tablePackage
+          ) {
+
+            infoText +=
+              '<br>Table: ' +
+              escapeHtml(
+                response.tablePackage
+              );
+
+          }
+
+
+          infoText +=
+            '<br>Name: ' +
+            escapeHtml(
+              response.name || ''
+            );
+
+
+          infoText +=
+            '<br>WhatsApp: ' +
+            escapeHtml(
+              response.whatsapp || ''
+            );
+
+
+          if (
+            response.community
+          ) {
+
+            infoText +=
+              '<br>Community: ' +
+              escapeHtml(
+                response.community
+              );
+
+          }
+
+
+          if (
+            response.stayConnected
+          ) {
+
+            infoText +=
+              '<br>Stay Connected: ' +
+              escapeHtml(
+                response.stayConnected
+              );
+
+          }
+
+
+          passInfo.innerHTML =
+            infoText;
+
+
+          /* -------------------------------------------
+             QR CODE
+             ------------------------------------------- */
+
+          if (
+            response.qrCodeUrl
+          ) {
+
+            qrImage.src =
+              response.qrCodeUrl;
+
+            qrImage.style.display =
+              'inline-block';
+
+          }
+
+          else {
+
+            qrImage.removeAttribute(
+              'src'
+            );
+
+            qrImage.style.display =
+              'none';
+
+          }
+
+
+          /* -------------------------------------------
+             SHOW RESULT
+             ------------------------------------------- */
+
+          passResult.style.display =
+            'block';
+
+
+          /* -------------------------------------------
+             RESET FORM
+             ------------------------------------------- */
+
+          form.reset();
+
+
+          tablePackageGroup
+            .classList
+            .add('hidden');
+
+          tablePackage.required =
+            false;
+
+
+          /* -------------------------------------------
+             SCROLL TO RESULT
+             ------------------------------------------- */
+
+          setTimeout(
+            function () {
+
+              passResult.scrollIntoView(
+                {
+                  behavior:
+                    'smooth',
+                  block:
+                    'start'
+                }
+              );
+
+            },
+            100
+          );
+
+
+        }
+
+        catch (error) {
+
+          console.error(
+            'Registration failed:',
+            error
+          );
+
+
+          let errorMessage =
+            'Registration failed.';
+
+
+          if (
+            error &&
+            error.message
+          ) {
+
+            errorMessage =
+              error.message;
+
+          }
+
+
+          showMessage(
+            errorMessage,
+            'error'
+          );
+
+        }
+
+        finally {
+
+          submitButton.disabled =
+            false;
+
+          submitButton.textContent =
+            'REGISTER';
+
+          loadingText.style.display =
+            'none';
+
+        }
 
       }
+    );
 
 
-      infoText +=
-        '<br>Name: ' +
-        (
-          response.name ||
-          ''
+    /* =====================================================
+       NEW REGISTRATION
+       ===================================================== */
+
+    newRegistrationButton.addEventListener(
+      'click',
+      function () {
+
+        hideResult();
+
+        clearMessage();
+
+        window.scrollTo(
+          {
+            top: 0,
+            behavior: 'smooth'
+          }
         );
-
-
-      infoText +=
-        '<br>WhatsApp: ' +
-        (
-          response.whatsapp ||
-          ''
-        );
-
-
-      passInfo.innerHTML =
-        infoText;
-
-
-      /* ===================================================
-         QR CODE
-         =================================================== */
-
-      if (
-        response.qrCodeUrl
-      ) {
-
-        qrImage.src =
-          response.qrCodeUrl;
-
-        qrImage.style.display =
-          'inline-block';
-
-      } else {
-
-        qrImage.style.display =
-          'none';
 
       }
+    );
 
 
-      passResult.style.display =
-        'block';
+    /* =====================================================
+       HTML ESCAPE
+       =====================================================
 
+       Dipakai sebelum data API dimasukkan
+       ke innerHTML.
+       ===================================================== */
 
-      /* ===================================================
-         RESET FORM
-         =================================================== */
+    function escapeHtml(
+      value
+    ) {
 
-      form.reset();
-
-
-      tablePackageGroup
-        .classList
-        .add('hidden');
-
-
-      tablePackage.required =
-        false;
-
-
-      /*
-       * Scroll ke hasil registrasi.
-       */
-
-      setTimeout(function() {
-
-        passResult.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center'
-        });
-
-      }, 100);
-
-
-    }
-
-    catch (error) {
-
-      console.error(
-        'Registration failed:',
-        error
-      );
-
-
-      showMessage(
-        error &&
-        error.message
-          ? error.message
-          : 'Registration failed.',
-        'error'
-      );
+      return String(
+        value
+      )
+        .replace(
+          /&/g,
+          '&amp;'
+        )
+        .replace(
+          /</g,
+          '&lt;'
+        )
+        .replace(
+          />/g,
+          '&gt;'
+        )
+        .replace(
+          /"/g,
+          '&quot;'
+        )
+        .replace(
+          /'/g,
+          '&#039;'
+        );
 
     }
 
 
-    finally {
+    /* =====================================================
+       INITIAL STATE
+       ===================================================== */
 
-      submitButton.disabled =
-        false;
+    tablePackageGroup
+      .classList
+      .add('hidden');
 
-      submitButton.textContent =
-        'REGISTER';
+    tablePackage.required =
+      false;
 
-    }
+    hideResult();
 
-  }
-);
-
-
-/* =========================================================
-   DEBUG
-   ========================================================= */
-
-console.log(
-  'BOLD AFTER DARK Registration loaded.'
-);
-
-console.log(
-  'API_URL:',
-  API_URL
-);
-
-</script>
+  </script>
 
 </body>
 </html>
