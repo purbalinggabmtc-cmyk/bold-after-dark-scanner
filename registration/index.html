@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -11,14 +12,19 @@
 
   <title>BOLD AFTER DARK — Registration</title>
 
+
   <style>
+
     * {
       box-sizing: border-box;
     }
 
+
     body {
+
       margin: 0;
       padding: 30px 15px;
+
       min-height: 100vh;
 
       background:
@@ -39,27 +45,35 @@
       display: flex;
       justify-content: center;
       align-items: center;
+
     }
 
+
     .registration-container {
+
       width: 100%;
       max-width: 520px;
 
       background: #111111;
 
       border: 1px solid #2c2c2c;
+
       border-radius: 18px;
 
       padding: 30px 25px 35px;
 
       box-shadow:
         0 20px 60px rgba(0, 0, 0, 0.55);
+
     }
 
+
     .registration-label {
+
       text-align: center;
 
       font-size: 18px;
+
       font-weight: 700;
 
       color: #ff1e1e;
@@ -69,12 +83,16 @@
       margin-bottom: 8px;
 
       text-transform: uppercase;
+
     }
 
+
     .title {
+
       text-align: center;
 
       font-size: 34px;
+
       line-height: 1.1;
 
       font-weight: 900;
@@ -82,50 +100,66 @@
       letter-spacing: 1px;
 
       margin-bottom: 28px;
+
     }
+
 
     .title-bold {
       color: #ffffff;
     }
 
+
     .title-after {
       color: #ff1e1e;
     }
+
 
     .title-dark {
       color: #ffffff;
     }
 
+
     .form-group {
       margin-bottom: 18px;
     }
 
+
     label {
+
       display: block;
 
       margin-bottom: 8px;
 
       font-size: 14px;
+
       font-weight: 700;
 
       color: #eeeeee;
+
     }
+
 
     .required {
       color: #ff1e1e;
     }
 
+
     .optional {
+
       color: #888888;
 
       font-size: 12px;
+
       font-weight: 400;
 
       margin-left: 5px;
+
     }
+
 
     input,
     select {
+
       width: 100%;
 
       padding: 13px 14px;
@@ -145,30 +179,42 @@
       transition:
         border-color 0.2s,
         box-shadow 0.2s;
+
     }
+
 
     input:focus,
     select:focus {
+
       border-color: #ff1e1e;
 
       box-shadow:
         0 0 0 2px rgba(255, 30, 30, 0.12);
+
     }
+
 
     select {
       cursor: pointer;
     }
 
+
     select option {
+
       background: #171717;
+
       color: #ffffff;
+
     }
+
 
     .hidden {
       display: none;
     }
 
+
     .submit-button {
+
       width: 100%;
 
       margin-top: 10px;
@@ -176,6 +222,7 @@
       padding: 15px;
 
       border: none;
+
       border-radius: 10px;
 
       background: #ff1e1e;
@@ -183,6 +230,7 @@
       color: #ffffff;
 
       font-size: 16px;
+
       font-weight: 800;
 
       letter-spacing: 1px;
@@ -192,19 +240,30 @@
       transition:
         transform 0.15s,
         opacity 0.15s;
+
     }
+
 
     .submit-button:hover {
+
       transform: translateY(-1px);
+
     }
+
 
     .submit-button:disabled {
+
       opacity: 0.5;
+
       cursor: not-allowed;
+
       transform: none;
+
     }
 
+
     .message {
+
       margin-top: 18px;
 
       padding: 14px;
@@ -212,12 +271,16 @@
       border-radius: 9px;
 
       font-size: 14px;
+
       line-height: 1.5;
 
       display: none;
+
     }
 
+
     .message.success {
+
       display: block;
 
       background: rgba(0, 180, 80, 0.12);
@@ -225,9 +288,12 @@
       border: 1px solid rgba(0, 180, 80, 0.35);
 
       color: #8cffb5;
+
     }
 
+
     .message.error {
+
       display: block;
 
       background: rgba(255, 30, 30, 0.10);
@@ -235,9 +301,12 @@
       border: 1px solid rgba(255, 30, 30, 0.35);
 
       color: #ff8f8f;
+
     }
 
+
     .pass-result {
+
       display: none;
 
       margin-top: 22px;
@@ -251,16 +320,23 @@
       border: 1px solid #333333;
 
       text-align: center;
+
     }
 
+
     .pass-result h3 {
+
       margin-top: 0;
+
       margin-bottom: 15px;
 
       color: #ff1e1e;
+
     }
 
+
     .pass-id {
+
       font-size: 20px;
 
       font-weight: 800;
@@ -268,18 +344,25 @@
       letter-spacing: 1px;
 
       margin-bottom: 12px;
+
     }
 
+
     .pass-info {
+
       font-size: 13px;
 
       color: #bbbbbb;
 
       line-height: 1.7;
+
     }
 
+
     .qr-image {
+
       width: 220px;
+
       max-width: 100%;
 
       margin-top: 18px;
@@ -289,65 +372,79 @@
       background: #ffffff;
 
       padding: 5px;
+
     }
+
 
     .qr-token {
+
       margin-top: 12px;
 
-      padding: 10px;
+      font-size: 11px;
 
-      background: #0d0d0d;
-
-      border: 1px solid #333333;
-
-      border-radius: 8px;
-
-      font-size: 12px;
-
-      color: #999999;
+      color: #777777;
 
       word-break: break-all;
+
     }
 
-    .new-registration {
+
+    .new-registration-button {
+
       width: 100%;
 
       margin-top: 15px;
 
-      padding: 13px;
-
-      border: 1px solid #444444;
+      padding: 12px;
 
       border-radius: 9px;
+
+      border: 1px solid #444444;
 
       background: #222222;
 
       color: #ffffff;
 
+      cursor: pointer;
+
       font-size: 14px;
 
       font-weight: 700;
 
-      cursor: pointer;
     }
 
-    .new-registration:hover {
-      background: #2a2a2a;
+
+    .new-registration-button:hover {
+
+      background: #2b2b2b;
+
     }
+
 
     @media (max-width: 480px) {
+
       .registration-container {
+
         padding: 25px 18px 30px;
+
       }
+
 
       .title {
+
         font-size: 28px;
+
       }
 
+
       .registration-label {
+
         font-size: 16px;
+
       }
+
     }
+
   </style>
 
 </head>
@@ -355,33 +452,53 @@
 
 <body>
 
+
   <div class="registration-container">
+
+
+    <!-- REGISTRATION -->
 
     <div class="registration-label">
       REGISTRATION
     </div>
 
+
+    <!-- TITLE -->
+
     <div class="title">
-      <span class="title-bold">BOLD</span>
-      <span class="title-after"> AFTER </span>
-      <span class="title-dark">DARK</span>
+
+      <span class="title-bold">
+        BOLD
+      </span>
+
+      <span class="title-after">
+        AFTER
+      </span>
+
+      <span class="title-dark">
+        DARK
+      </span>
+
     </div>
 
 
-    <!-- ==============================
-         REGISTRATION FORM
-         ============================== -->
+    <!-- FORM -->
 
     <form id="registrationForm">
+
 
       <!-- ACCESS -->
 
       <div class="form-group">
 
         <label for="accessType">
+
           Choose your access below.
+
           <span class="required">*</span>
+
         </label>
+
 
         <select
           id="accessType"
@@ -417,11 +534,10 @@
 
           Table Package
 
-          <span class="required">
-            *
-          </span>
+          <span class="required">*</span>
 
         </label>
+
 
         <select
           id="tablePackage"
@@ -436,32 +552,32 @@
             VIP TABLE - 1 PAX
           </option>
 
-          <option value="VIP TABLE - 2 PAX">
-            VIP TABLE - 2 PAX
+          <option value="VIP TABLE — 2 PAX">
+            VIP TABLE — 2 PAX
           </option>
 
-          <option value="VIP TABLE - 3 PAX">
-            VIP TABLE - 3 PAX
+          <option value="VIP TABLE — 3 PAX">
+            VIP TABLE — 3 PAX
           </option>
 
-          <option value="VIP TABLE - 4 PAX">
-            VIP TABLE - 4 PAX
+          <option value="VIP TABLE — 4 PAX">
+            VIP TABLE — 4 PAX
           </option>
 
-          <option value="VIP TABLE - 5 PAX">
-            VIP TABLE - 5 PAX
+          <option value="VIP TABLE — 5 PAX">
+            VIP TABLE — 5 PAX
           </option>
 
-          <option value="VIP TABLE - 6 PAX">
-            VIP TABLE - 6 PAX
+          <option value="VIP TABLE — 6 PAX">
+            VIP TABLE — 6 PAX
           </option>
 
-          <option value="VIP TABLE - 7 PAX">
-            VIP TABLE - 7 PAX
+          <option value="VIP TABLE — 7 PAX">
+            VIP TABLE — 7 PAX
           </option>
 
-          <option value="VIP TABLE - 8 PAX">
-            VIP TABLE - 8 PAX
+          <option value="VIP TABLE — 8 PAX">
+            VIP TABLE — 8 PAX
           </option>
 
         </select>
@@ -477,11 +593,10 @@
 
           Your Name
 
-          <span class="required">
-            *
-          </span>
+          <span class="required">*</span>
 
         </label>
+
 
         <input
           type="text"
@@ -504,11 +619,10 @@
 
           WhatsApp
 
-          <span class="required">
-            *
-          </span>
+          <span class="required">*</span>
 
         </label>
+
 
         <input
           type="tel"
@@ -537,6 +651,7 @@
 
         </label>
 
+
         <input
           type="text"
           id="stayConnected"
@@ -562,6 +677,7 @@
 
         </label>
 
+
         <input
           type="text"
           id="community"
@@ -573,20 +689,23 @@
       </div>
 
 
+      <!-- SUBMIT -->
+
       <button
         type="submit"
         id="submitButton"
         class="submit-button"
       >
+
         REGISTER
+
       </button>
+
 
     </form>
 
 
-    <!-- ==============================
-         MESSAGE
-         ============================== -->
+    <!-- MESSAGE -->
 
     <div
       id="message"
@@ -594,9 +713,7 @@
     ></div>
 
 
-    <!-- ==============================
-         REGISTRATION RESULT
-         ============================== -->
+    <!-- RESULT -->
 
     <div
       id="passResult"
@@ -607,15 +724,18 @@
         REGISTRATION SUCCESSFUL
       </h3>
 
+
       <div
         id="passId"
         class="pass-id"
       ></div>
 
+
       <div
         id="passInfo"
         class="pass-info"
       ></div>
+
 
       <img
         id="qrImage"
@@ -623,104 +743,123 @@
         alt="QR Code"
       >
 
+
       <div
         id="qrToken"
         class="qr-token"
       ></div>
 
+
       <button
         type="button"
-        class="new-registration"
         id="newRegistrationButton"
+        class="new-registration-button"
       >
         NEW REGISTRATION
       </button>
 
     </div>
 
+
   </div>
 
 
   <script>
 
-    // =====================================================
-    // GOOGLE APPS SCRIPT WEB APP
-    // =====================================================
-    //
-    // INI ADALAH URL DEPLOYMENT YANG SUDAH TERBUKTI
-    // BERHASIL MENGEMBALIKAN:
-    //
-    // status: REGISTERED
-    //
-    // PENTING:
-    // /macros/s/
-    //
-    // BUKAN:
-    // /macros/u/4/s/
-    // =====================================================
+
+    /* =====================================================
+       BOLD AFTER DARK
+       REGISTRATION API
+       ===================================================== */
+
+
+    /*
+     * PENTING
+     *
+     * Gunakan URL DEPLOYMENT resmi:
+     *
+     * /macros/s/
+     *
+     * BUKAN:
+     *
+     * /macros/u/4/s/
+     */
+
 
     const API_URL =
       'https://script.google.com/macros/s/AKfycbwDlByPLDkvNi000w-2A2_XkA8lfQ9BnhU1cVKV6VxuTY2z5YWU_ZqedEEGLn8bouzBNg/exec';
 
 
-    // =====================================================
-    // ELEMENTS
-    // =====================================================
+    /* =====================================================
+       ELEMENTS
+       ===================================================== */
+
 
     const form =
       document.getElementById(
         'registrationForm'
       );
 
+
     const accessType =
       document.getElementById(
         'accessType'
       );
+
 
     const tablePackageGroup =
       document.getElementById(
         'tablePackageGroup'
       );
 
+
     const tablePackage =
       document.getElementById(
         'tablePackage'
       );
+
 
     const submitButton =
       document.getElementById(
         'submitButton'
       );
 
+
     const message =
       document.getElementById(
         'message'
       );
+
 
     const passResult =
       document.getElementById(
         'passResult'
       );
 
-    const passIdElement =
+
+    const passId =
       document.getElementById(
         'passId'
       );
+
 
     const passInfo =
       document.getElementById(
         'passInfo'
       );
 
+
     const qrImage =
       document.getElementById(
         'qrImage'
       );
 
-    const qrTokenElement =
+
+    const qrToken =
       document.getElementById(
         'qrToken'
       );
+
 
     const newRegistrationButton =
       document.getElementById(
@@ -728,31 +867,50 @@
       );
 
 
-    // =====================================================
-    // ACCESS TYPE
-    // =====================================================
+    /* =====================================================
+       API DEBUG
+       ===================================================== */
+
+
+    console.log(
+      '[BOLD AFTER DARK] API URL:',
+      API_URL
+    );
+
+
+    /* =====================================================
+       ACCESS TYPE CHANGE
+       ===================================================== */
+
 
     accessType.addEventListener(
       'change',
       function () {
 
-        if (this.value === 'VIP') {
+        if (
+          this.value === 'VIP'
+        ) {
 
           tablePackageGroup
             .classList
             .remove('hidden');
 
-          tablePackage.required = true;
+          tablePackage.required =
+            true;
 
-        } else {
+        }
+
+        else {
 
           tablePackageGroup
             .classList
             .add('hidden');
 
-          tablePackage.required = false;
+          tablePackage.required =
+            false;
 
-          tablePackage.value = '';
+          tablePackage.value =
+            '';
 
         }
 
@@ -760,16 +918,18 @@
     );
 
 
-    // =====================================================
-    // MESSAGE
-    // =====================================================
+    /* =====================================================
+       MESSAGE
+       ===================================================== */
+
 
     function showMessage(
       text,
       type
     ) {
 
-      message.textContent = text;
+      message.textContent =
+        text;
 
       message.className =
         'message ' + type;
@@ -779,7 +939,8 @@
 
     function clearMessage() {
 
-      message.textContent = '';
+      message.textContent =
+        '';
 
       message.className =
         'message';
@@ -787,15 +948,14 @@
     }
 
 
-    // =====================================================
-    // JSONP REGISTRATION
-    // =====================================================
-    //
-    // Kita menggunakan JSONP karena halaman GitHub Pages
-    // berada di domain berbeda dengan Apps Script.
-    // =====================================================
+    /* =====================================================
+       JSONP REGISTRATION
+       ===================================================== */
 
-    function registerViaJsonp(params) {
+
+    function registerViaJsonp(
+      params
+    ) {
 
       return new Promise(
         function (
@@ -803,25 +963,36 @@
           reject
         ) {
 
+
+          /*
+           * Callback unik.
+           */
+
           const callbackName =
-            'BAD_REGISTER_' +
+            '__BAD_REGISTER_' +
             Date.now() +
             '_' +
-            Math.floor(
-              Math.random() * 1000000
-            );
+            Math
+              .random()
+              .toString(36)
+              .substring(2, 10);
 
 
-          const script =
+          let script =
             document.createElement(
               'script'
             );
 
 
-          let finished = false;
+          let finished =
+            false;
 
 
-          const timeout =
+          /*
+           * Timeout 20 detik.
+           */
+
+          const timeoutId =
             setTimeout(
               function () {
 
@@ -829,13 +1000,16 @@
                   return;
                 }
 
-                finished = true;
+                finished =
+                  true;
+
 
                 cleanup();
 
+
                 reject(
                   new Error(
-                    'Registration server timeout.'
+                    'Registration server timeout. Tidak ada response dari server dalam 20 detik.'
                   )
                 );
 
@@ -844,14 +1018,19 @@
             );
 
 
+          /*
+           * Cleanup.
+           */
+
           function cleanup() {
 
             clearTimeout(
-              timeout
+              timeoutId
             );
 
 
             if (
+              script &&
               script.parentNode
             ) {
 
@@ -869,7 +1048,9 @@
                 callbackName
               ];
 
-            } catch (error) {
+            }
+
+            catch (error) {
 
               window[
                 callbackName
@@ -877,12 +1058,16 @@
 
             }
 
+
+            script =
+              null;
+
           }
 
 
-          // =================================================
-          // CALLBACK
-          // =================================================
+          /*
+           * Callback global.
+           */
 
           window[
             callbackName
@@ -896,9 +1081,12 @@
               }
 
 
-              finished = true;
+              finished =
+                true;
+
 
               cleanup();
+
 
               resolve(
                 response
@@ -907,9 +1095,9 @@
             };
 
 
-          // =================================================
-          // QUERY
-          // =================================================
+          /*
+           * Build query.
+           */
 
           const query =
             new URLSearchParams();
@@ -963,6 +1151,20 @@
           );
 
 
+          /*
+           * Cache buster.
+           */
+
+          query.set(
+            '_',
+            Date.now().toString()
+          );
+
+
+          /*
+           * Final URL.
+           */
+
           const requestUrl =
             API_URL +
             '?' +
@@ -970,44 +1172,68 @@
 
 
           console.log(
-            'Registration API:',
+            '[BOLD AFTER DARK] Registration request:',
             requestUrl
           );
 
 
-          // =================================================
-          // SCRIPT
-          // =================================================
+          /*
+           * JSONP script.
+           */
+
+          script.async =
+            true;
+
+
+          script.type =
+            'text/javascript';
+
 
           script.src =
             requestUrl;
 
-          script.async = true;
 
+          /*
+           * Browser/network error.
+           */
 
           script.onerror =
-            function () {
+            function (
+              event
+            ) {
 
               if (finished) {
                 return;
               }
 
 
-              finished = true;
+              finished =
+                true;
+
 
               cleanup();
 
 
+              console.error(
+                '[BOLD AFTER DARK] JSONP network error:',
+                event
+              );
+
+
               reject(
                 new Error(
-                  'Unable to connect to the registration server.'
+                  'Browser gagal memuat response dari registration server. Pastikan deployment Apps Script dapat diakses oleh siapa saja.'
                 )
               );
 
             };
 
 
-          document.body.appendChild(
+          /*
+           * Tambahkan script ke HEAD.
+           */
+
+          document.head.appendChild(
             script
           );
 
@@ -1017,26 +1243,332 @@
     }
 
 
-    // =====================================================
-    // FORM SUBMIT
-    // =====================================================
+    /* =====================================================
+       VALIDATE API RESPONSE
+       ===================================================== */
+
+
+    function validateRegistrationResponse(
+      response
+    ) {
+
+      if (
+        !response
+      ) {
+
+        throw new Error(
+          'Server mengirim response kosong.'
+        );
+
+      }
+
+
+      if (
+        response.success !== true
+      ) {
+
+        throw new Error(
+          response.message ||
+          response.error ||
+          'Registration gagal.'
+        );
+
+      }
+
+
+      if (
+        !response.passId
+      ) {
+
+        console.warn(
+          '[BOLD AFTER DARK] Response tidak memiliki passId:',
+          response
+        );
+
+      }
+
+
+      return response;
+
+    }
+
+
+    /* =====================================================
+       DISPLAY RESULT
+       ===================================================== */
+
+
+    function displayRegistrationResult(
+      response
+    ) {
+
+
+      /*
+       * Pass ID
+       */
+
+      passId.textContent =
+        response.passId ||
+        '';
+
+
+      /*
+       * Information
+       */
+
+      let infoText =
+        '';
+
+
+      infoText +=
+        'Access: ' +
+        (
+          response.accessType ||
+          ''
+        );
+
+
+      if (
+        response.tablePackage
+      ) {
+
+        infoText +=
+          '<br>Table: ' +
+          escapeHtml(
+            response.tablePackage
+          );
+
+      }
+
+
+      infoText +=
+        '<br>Name: ' +
+        escapeHtml(
+          response.name ||
+          ''
+        );
+
+
+      infoText +=
+        '<br>WhatsApp: ' +
+        escapeHtml(
+          response.whatsapp ||
+          ''
+        );
+
+
+      if (
+        response.passStatus
+      ) {
+
+        infoText +=
+          '<br>Status: ' +
+          escapeHtml(
+            response.passStatus
+          );
+
+      }
+
+
+      passInfo.innerHTML =
+        infoText;
+
+
+      /*
+       * QR CODE
+       */
+
+      if (
+        response.qrCodeUrl
+      ) {
+
+        qrImage.src =
+          response.qrCodeUrl;
+
+        qrImage.style.display =
+          'inline-block';
+
+      }
+
+      else {
+
+        qrImage.removeAttribute(
+          'src'
+        );
+
+        qrImage.style.display =
+          'none';
+
+      }
+
+
+      /*
+       * QR TOKEN
+       */
+
+      if (
+        response.qrToken
+      ) {
+
+        qrToken.textContent =
+          'QR Token: ' +
+          response.qrToken;
+
+        qrToken.style.display =
+          'block';
+
+      }
+
+      else {
+
+        qrToken.textContent =
+          '';
+
+        qrToken.style.display =
+          'none';
+
+      }
+
+
+      /*
+       * Show result.
+       */
+
+      passResult.style.display =
+        'block';
+
+    }
+
+
+    /* =====================================================
+       HTML ESCAPE
+       ===================================================== */
+
+
+    function escapeHtml(
+      value
+    ) {
+
+      return String(
+        value || ''
+      )
+        .replace(
+          /&/g,
+          '&amp;'
+        )
+        .replace(
+          /</g,
+          '&lt;'
+        )
+        .replace(
+          />/g,
+          '&gt;'
+        )
+        .replace(
+          /"/g,
+          '&quot;'
+        )
+        .replace(
+          /'/g,
+          '&#039;'
+        );
+
+    }
+
+
+    /* =====================================================
+       RESET RESULT
+       ===================================================== */
+
+
+    function resetRegistration() {
+
+      form.style.display =
+        'block';
+
+
+      passResult.style.display =
+        'none';
+
+
+      passId.textContent =
+        '';
+
+
+      passInfo.textContent =
+        '';
+
+
+      qrToken.textContent =
+        '';
+
+
+      qrImage.removeAttribute(
+        'src'
+      );
+
+
+      qrImage.style.display =
+        'none';
+
+
+      clearMessage();
+
+
+      form.reset();
+
+
+      tablePackageGroup
+        .classList
+        .add('hidden');
+
+
+      tablePackage.required =
+        false;
+
+    }
+
+
+    /* =====================================================
+       NEW REGISTRATION
+       ===================================================== */
+
+
+    newRegistrationButton
+      .addEventListener(
+        'click',
+        function () {
+
+          resetRegistration();
+
+        }
+      );
+
+
+    /* =====================================================
+       FORM SUBMIT
+       ===================================================== */
+
 
     form.addEventListener(
       'submit',
-      async function (event) {
+      async function (
+        event
+      ) {
 
         event.preventDefault();
 
 
         clearMessage();
 
+
         passResult.style.display =
           'none';
 
 
-        // =================================================
-        // READ FORM
-        // =================================================
+        /*
+         * Read values.
+         */
 
         const access =
           accessType.value.trim();
@@ -1048,37 +1580,47 @@
 
         const name =
           document
-            .getElementById('name')
+            .getElementById(
+              'name'
+            )
             .value
             .trim();
 
 
         const whatsapp =
           document
-            .getElementById('whatsapp')
+            .getElementById(
+              'whatsapp'
+            )
             .value
             .trim();
 
 
         const stayConnected =
           document
-            .getElementById('stayConnected')
+            .getElementById(
+              'stayConnected'
+            )
             .value
             .trim();
 
 
         const community =
           document
-            .getElementById('community')
+            .getElementById(
+              'community'
+            )
             .value
             .trim();
 
 
-        // =================================================
-        // VALIDATION
-        // =================================================
+        /*
+         * Frontend validation.
+         */
 
-        if (!access) {
+        if (
+          !access
+        ) {
 
           showMessage(
             'Please choose your access.',
@@ -1090,7 +1632,9 @@
         }
 
 
-        if (!name) {
+        if (
+          !name
+        ) {
 
           showMessage(
             'Please enter your name.',
@@ -1102,7 +1646,9 @@
         }
 
 
-        if (!whatsapp) {
+        if (
+          !whatsapp
+        ) {
 
           showMessage(
             'Please enter your WhatsApp number.',
@@ -1129,11 +1675,13 @@
         }
 
 
-        // =================================================
-        // PROCESSING
-        // =================================================
+        /*
+         * Disable button.
+         */
 
-        submitButton.disabled = true;
+        submitButton.disabled =
+          true;
+
 
         submitButton.textContent =
           'PROCESSING...';
@@ -1141,9 +1689,10 @@
 
         try {
 
-          // ===============================================
-          // CALL SERVER
-          // ===============================================
+
+          /*
+           * Call API.
+           */
 
           const response =
             await registerViaJsonp({
@@ -1170,33 +1719,23 @@
 
 
           console.log(
-            'Registration response:',
+            '[BOLD AFTER DARK] API response:',
             response
           );
 
 
-          // ===============================================
-          // CHECK RESPONSE
-          // ===============================================
+          /*
+           * Validate response.
+           */
 
-          if (
-            !response ||
-            response.success !== true
-          ) {
-
-            throw new Error(
-              response &&
-              response.message
-                ? response.message
-                : 'Registration failed.'
-            );
-
-          }
+          validateRegistrationResponse(
+            response
+          );
 
 
-          // ===============================================
-          // SUCCESS
-          // ===============================================
+          /*
+           * Success.
+           */
 
           showMessage(
             'Registration berhasil.',
@@ -1204,145 +1743,26 @@
           );
 
 
-          passIdElement.textContent =
-            response.passId || '';
+          /*
+           * Display pass.
+           */
+
+          displayRegistrationResult(
+            response
+          );
 
 
-          // ===============================================
-          // INFO
-          // ===============================================
+          /*
+           * Hide form after success.
+           */
 
-          let infoHTML = '';
-
-
-          infoHTML +=
-            '<strong>Access:</strong> ' +
-            escapeHtml(
-              response.accessType || access
-            );
+          form.style.display =
+            'none';
 
 
-          if (
-            response.tablePackage
-          ) {
-
-            infoHTML +=
-              '<br><strong>Table:</strong> ' +
-              escapeHtml(
-                response.tablePackage
-              );
-
-          }
-
-
-          infoHTML +=
-            '<br><strong>Name:</strong> ' +
-            escapeHtml(
-              response.name || name
-            );
-
-
-          infoHTML +=
-            '<br><strong>WhatsApp:</strong> ' +
-            escapeHtml(
-              response.whatsapp || whatsapp
-            );
-
-
-          if (
-            response.passStatus
-          ) {
-
-            infoHTML +=
-              '<br><strong>Status:</strong> ' +
-              escapeHtml(
-                response.passStatus
-              );
-
-          }
-
-
-          passInfo.innerHTML =
-            infoHTML;
-
-
-          // ===============================================
-          // QR CODE
-          // ===============================================
-
-          if (
-            response.qrCodeUrl
-          ) {
-
-            qrImage.src =
-              response.qrCodeUrl;
-
-            qrImage.style.display =
-              'inline-block';
-
-          } else {
-
-            qrImage.removeAttribute(
-              'src'
-            );
-
-            qrImage.style.display =
-              'none';
-
-          }
-
-
-          // ===============================================
-          // QR TOKEN
-          // ===============================================
-
-          if (
-            response.qrToken
-          ) {
-
-            qrTokenElement.textContent =
-              'QR Token: ' +
-              response.qrToken;
-
-            qrTokenElement.style.display =
-              'block';
-
-          } else {
-
-            qrTokenElement.textContent =
-              '';
-
-            qrTokenElement.style.display =
-              'none';
-
-          }
-
-
-          // ===============================================
-          // SHOW RESULT
-          // ===============================================
-
-          passResult.style.display =
-            'block';
-
-
-          // ===============================================
-          // RESET FORM
-          // ===============================================
-
-          form.reset();
-
-
-          tablePackageGroup
-            .classList
-            .add('hidden');
-
-
-          tablePackage.required =
-            false;
-
-
-          // Scroll to result
+          /*
+           * Scroll to result.
+           */
 
           setTimeout(
             function () {
@@ -1357,19 +1777,27 @@
           );
 
 
-        } catch (error) {
+        }
+
+        catch (
+          error
+        ) {
 
           console.error(
-            'Registration failed:',
+            '[BOLD AFTER DARK] Registration failed:',
             error
           );
 
 
-          showMessage(
+          const errorMessage =
             error &&
             error.message
               ? error.message
-              : 'Registration failed.',
+              : 'Registration gagal.';
+
+
+          showMessage(
+            errorMessage,
             'error'
           );
 
@@ -1381,6 +1809,7 @@
           submitButton.disabled =
             false;
 
+
           submitButton.textContent =
             'REGISTER';
 
@@ -1390,84 +1819,31 @@
     );
 
 
-    // =====================================================
-    // NEW REGISTRATION
-    // =====================================================
+    /* =====================================================
+       INITIAL STATE
+       ===================================================== */
 
-    newRegistrationButton.addEventListener(
-      'click',
-      function () {
 
-        passResult.style.display =
-          'none';
+    qrImage.style.display =
+      'none';
 
-        clearMessage();
 
-        form.reset();
+    tablePackageGroup
+      .classList
+      .add('hidden');
 
-        tablePackageGroup
-          .classList
-          .add('hidden');
 
-        tablePackage.required =
-          false;
+    tablePackage.required =
+      false;
 
-        qrImage.removeAttribute(
-          'src'
-        );
 
-        qrTokenElement.textContent =
-          '';
-
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
-
-      }
+    console.log(
+      '[BOLD AFTER DARK] Registration page ready.'
     );
 
 
-    // =====================================================
-    // ESCAPE HTML
-    // =====================================================
-
-    function escapeHtml(value) {
-
-      return String(
-        value == null
-          ? ''
-          : value
-      )
-
-        .replace(
-          /&/g,
-          '&amp;'
-        )
-
-        .replace(
-          /</g,
-          '&lt;'
-        )
-
-        .replace(
-          />/g,
-          '&gt;'
-        )
-
-        .replace(
-          /"/g,
-          '&quot;'
-        )
-
-        .replace(
-          /'/g,
-          '&#039;'
-        );
-
-    }
-
   </script>
+
 
 </body>
 
