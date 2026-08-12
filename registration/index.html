@@ -77,10 +77,6 @@
       padding: 24px 16px 40px;
     }
 
-    /* =====================================================
-       BRAND
-       ===================================================== */
-
     .brand {
       text-align: center;
       padding: 18px 0 28px;
@@ -128,10 +124,6 @@
       text-transform: uppercase;
     }
 
-    /* =====================================================
-       CARD
-       ===================================================== */
-
     .card {
       background:
         linear-gradient(
@@ -165,10 +157,6 @@
 
       margin-bottom: 24px;
     }
-
-    /* =====================================================
-       FORM
-       ===================================================== */
 
     .field {
       margin-bottom: 18px;
@@ -251,18 +239,6 @@
       padding-right: 40px;
     }
 
-    .helper {
-      margin-top: 6px;
-
-      color: #707070;
-
-      font-size: 11px;
-    }
-
-    /* =====================================================
-       VIP
-       ===================================================== */
-
     #vipFields {
       display: none;
     }
@@ -309,10 +285,6 @@
 
       font-size: 12px;
     }
-
-    /* =====================================================
-       REGISTER BUTTON
-       ===================================================== */
 
     .register-button {
       width: 100%;
@@ -366,10 +338,6 @@
       box-shadow: none;
     }
 
-    /* =====================================================
-       MESSAGE
-       ===================================================== */
-
     .message {
       display: none;
 
@@ -409,10 +377,6 @@
       background:
         rgba(215, 181, 109, 0.07);
     }
-
-    /* =====================================================
-       DIGITAL PASS
-       ===================================================== */
 
     #passSection {
       display: none;
@@ -549,8 +513,7 @@
     .pass-grid {
       display: grid;
 
-      grid-template-columns:
-        1fr 1fr;
+      grid-template-columns: 1fr 1fr;
 
       gap: 12px;
 
@@ -674,10 +637,6 @@
       cursor: pointer;
     }
 
-    /* =====================================================
-       FOOTER
-       ===================================================== */
-
     .footer {
       padding: 22px 0 0;
 
@@ -689,10 +648,6 @@
 
       letter-spacing: 0.05em;
     }
-
-    /* =====================================================
-       RESPONSIVE
-       ===================================================== */
 
     @media (min-width: 640px) {
 
@@ -810,7 +765,7 @@
           </div>
 
 
-          <!-- VIP FIELDS -->
+          <!-- VIP -->
 
           <div id="vipFields">
 
@@ -826,8 +781,6 @@
 
             </div>
 
-
-            <!-- TABLE PACKAGE -->
 
             <div class="field">
 
@@ -980,8 +933,6 @@
 
           </div>
 
-
-          <!-- REGISTER -->
 
           <button
             id="registerButton"
@@ -1152,7 +1103,7 @@
   <script>
 
     /* =====================================================
-       API
+       APPS SCRIPT WEB APP
        ===================================================== */
 
     const API_URL =
@@ -1160,7 +1111,7 @@
 
 
     const REQUEST_TIMEOUT =
-      20000;
+      30000;
 
 
     /* =====================================================
@@ -1264,15 +1215,19 @@
 
 
     /* =====================================================
-       ACCESS TYPE
+       VIP DISPLAY
        ===================================================== */
 
     accessType.addEventListener(
       "change",
       function () {
 
+        const isVip =
+          accessType.value === "VIP";
+
+
         if (
-          accessType.value === "VIP"
+          isVip
         ) {
 
           vipFields.classList.add(
@@ -1379,22 +1334,26 @@
 
 
     /* =====================================================
-       JSONP REQUEST
+       CREATE JSONP CALLBACK
        ===================================================== */
 
     function createCallbackName() {
 
       return (
-        "boldAfterDarkCallback_" +
+        "boldAfterDark_" +
         Date.now() +
         "_" +
         Math.floor(
-          Math.random() * 100000
+          Math.random() * 1000000
         )
       );
 
     }
 
+
+    /* =====================================================
+       JSONP REGISTRATION REQUEST
+       ===================================================== */
 
     function requestRegistration(
       params
@@ -1409,34 +1368,35 @@
           const callbackName =
             createCallbackName();
 
-          let completed =
-            false;
-
           const script =
             document.createElement(
               "script"
             );
 
-          const timeout =
+          let finished =
+            false;
+
+
+          const timeoutId =
             setTimeout(
               function () {
 
                 if (
-                  completed
+                  finished
                 ) {
 
                   return;
 
                 }
 
-                completed =
+                finished =
                   true;
 
                 cleanup();
 
                 reject(
                   new Error(
-                    "The registration server did not respond. Please try again."
+                    "The registration server did not respond within the allowed time."
                   )
                 );
 
@@ -1448,8 +1408,9 @@
           function cleanup() {
 
             clearTimeout(
-              timeout
+              timeoutId
             );
+
 
             if (
               script.parentNode
@@ -1460,6 +1421,7 @@
               );
 
             }
+
 
             try {
 
@@ -1481,6 +1443,11 @@
           }
 
 
+          /*
+           * Callback HARUS dibuat sebelum
+           * script dimasukkan ke document.
+           */
+
           window[
             callbackName
           ] =
@@ -1489,14 +1456,14 @@
             ) {
 
               if (
-                completed
+                finished
               ) {
 
                 return;
 
               }
 
-              completed =
+              finished =
                 true;
 
               cleanup();
@@ -1534,17 +1501,17 @@
 
           query.set(
             "stayConnected",
-            params.stayConnected
+            params.stayConnected || ""
           );
 
           query.set(
             "community",
-            params.community
+            params.community || ""
           );
 
           query.set(
             "tablePackage",
-            params.tablePackage
+            params.tablePackage || ""
           );
 
           query.set(
@@ -1562,27 +1529,23 @@
             query.toString();
 
 
-          script.onerror =
+          /*
+           * Jangan menggunakan onerror
+           * sebagai penentu utama berhasil/gagal.
+           *
+           * Apps Script JSONP dapat tetap memanggil
+           * callback walaupun browser memberikan
+           * status error tertentu pada script element.
+           */
+
+          script.onload =
             function () {
 
-              if (
-                completed
-              ) {
-
-                return;
-
-              }
-
-              completed =
-                true;
-
-              cleanup();
-
-              reject(
-                new Error(
-                  "Unable to connect to the registration server."
-                )
-              );
+              /*
+               * Respons diproses oleh callback.
+               *
+               * Tidak melakukan apa pun di sini.
+               */
 
             };
 
@@ -1628,17 +1591,31 @@
         response.name ||
         "-";
 
+
       passAccess.textContent =
         response.accessType ||
         "-";
+
 
       passId.textContent =
         response.passId ||
         "-";
 
-      passQr.src =
-        response.qrCodeUrl ||
-        "";
+
+      if (
+        response.qrCodeUrl
+      ) {
+
+        passQr.src =
+          response.qrCodeUrl;
+
+      } else {
+
+        passQr.removeAttribute(
+          "src"
+        );
+
+      }
 
 
       if (
@@ -1665,6 +1642,7 @@
       registrationSection.style.display =
         "none";
 
+
       passSection.classList.add(
         "visible"
       );
@@ -1679,7 +1657,7 @@
 
 
     /* =====================================================
-       SUBMIT REGISTRATION
+       SUBMIT
        ===================================================== */
 
     registrationForm.addEventListener(
@@ -1689,6 +1667,7 @@
       ) {
 
         event.preventDefault();
+
 
         hideMessage();
 
@@ -1753,16 +1732,34 @@
             );
 
 
+          /*
+           * Apps Script mengembalikan:
+           *
+           * {
+           *   success: true,
+           *   status: "REGISTERED",
+           *   ...
+           * }
+           */
+
           if (
-            !response ||
+            !response
+          ) {
+
+            throw new Error(
+              "Empty response received from registration server."
+            );
+
+          }
+
+
+          if (
             response.success !== true
           ) {
 
             throw new Error(
-              response &&
-              response.message
-                ? response.message
-                : "Registration failed. Please try again."
+              response.message ||
+              "Registration failed. Please try again."
             );
 
           }
@@ -1779,6 +1776,12 @@
         } catch (
           error
         ) {
+
+          console.error(
+            "Registration error:",
+            error
+          );
+
 
           showMessage(
             error &&
@@ -1810,27 +1813,56 @@
 
         registrationForm.reset();
 
+
         vipFields.classList.remove(
           "visible"
         );
 
+
         tablePackage.required =
           false;
+
 
         tablePackage.value =
           "";
 
+
         hideMessage();
 
-        passQr.src =
+
+        passQr.removeAttribute(
+          "src"
+        );
+
+
+        passName.textContent =
+          "-";
+
+
+        passAccess.textContent =
+          "-";
+
+
+        passId.textContent =
+          "-";
+
+
+        passTablePackage.textContent =
           "";
+
+
+        tablePackageItem.style.display =
+          "none";
+
 
         passSection.classList.remove(
           "visible"
         );
 
+
         registrationSection.style.display =
           "block";
+
 
         window.scrollTo({
           top: 0,
