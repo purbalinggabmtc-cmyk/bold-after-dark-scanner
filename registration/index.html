@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+  />
+
+  <title>BOLD AFTER DARK — Registration</title>
+
+  <meta
+    name="description"
+    content="BOLD AFTER DARK registration"
+  />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #080808;
+      --card: #111111;
+      --card-soft: #171717;
+      --text: #f5f5f5;
+      --muted: #a7a7a7;
+      --line: #2a2a2a;
+      --gold: #d7b56d;
+      --gold-light: #f0d99b;
+      --danger: #ff6b6b;
+      --success: #69d391;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(
+          circle at top,
+          rgba(215, 181, 109, 0.12),
+          transparent 35%
+        ),
+        var(--bg);
+      color: var(--text);
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+      line-height: 1.5;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+
+    /* =====================================================
+       HEADER
+       ===================================================== */
+
+    .brand {
+      text-align: center;
+      padding: 18px 0 28px;
+    }
+
+    .brand-kicker {
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .brand-title {
+      font-size: clamp(34px, 10vw, 56px);
+      line-height: 0.95;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+    }
+
+    .brand-subtitle {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* =====================================================
+       CARD
+       ===================================================== */
+
+    .card {
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.035),
+          rgba(255, 255, 255, 0.015)
+        ),
+        var(--card);
+
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.45);
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .section-description {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    /* =====================================================
+       FORM
+       ===================================================== */
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #dedede;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .required {
+      color: var(--gold);
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 52px;
+      padding: 14px 15px;
+
+      border: 1px solid var(--line);
+      border-radius: 13px;
+
+      background: var(--card-soft);
+      color: var(--text);
+
+      outline: none;
+
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+    }
+
+    input::placeholder {
+      color: #666;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--gold);
+      box-shadow:
+        0 0 0 3px rgba(215, 181, 109, 0.1);
+    }
+
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+
+      background-image:
+        linear-gradient(45deg, transparent 50%, #aaa 50%),
+        linear-gradient(135deg, #aaa 50%, transparent 50%);
+
+      background-position:
+        calc(100% - 18px) 22px,
+        calc(100% - 13px) 22px;
+
+      background-size:
+        5px 5px,
+        5px 5px;
+
+      background-repeat: no-repeat;
+
+      padding-right: 40px;
+    }
+
+    .helper {
+      margin-top: 6px;
+      color: #707070;
+      font-size: 11px;
+    }
+
+    /* =====================================================
+       VIP FIELD
+       ===================================================== */
+
+    #vipFields {
+      display: none;
+    }
+
+    #vipFields.visible {
+      display: block;
+    }
+
+    .vip-box {
+      margin-bottom: 20px;
+      padding: 16px;
+
+      border: 1px solid rgba(215, 181, 109, 0.28);
+      border-radius: 16px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(215, 181, 109, 0.09),
+          rgba(215, 181, 109, 0.02)
+        );
+    }
+
+    .vip-label {
+      color: var(--gold-light);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .vip-description {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* =====================================================
+       REGISTER BUTTON
+       ===================================================== */
+
+    .register-button {
+      width: 100%;
+      min-height: 56px;
+
+      border: 0;
+      border-radius: 14px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--gold-light),
+          var(--gold)
+        );
+
+      color: #111;
+
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.2s ease,
+        opacity 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .register-button:hover {
+      box-shadow:
+        0 12px 30px rgba(215, 181, 109, 0.2);
+    }
+
+    .register-button:active {
+      transform: scale(0.985);
+    }
+
+    .register-button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* =====================================================
+       MESSAGE
+       ===================================================== */
+
+    .message {
+      display: none;
+      margin-top: 18px;
+      padding: 14px 15px;
+      border-radius: 13px;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      color: #ffd0d0;
+      border: 1px solid rgba(255, 107, 107, 0.25);
+      background: rgba(255, 107, 107, 0.08);
+    }
+
+    .message.loading {
+      color: #e7d7b3;
+      border: 1px solid rgba(215, 181, 109, 0.25);
+      background: rgba(215, 181, 109, 0.07);
+    }
+
+    /* =====================================================
+       DIGITAL PASS
+       ===================================================== */
+
+    #passSection {
+      display: none;
+    }
+
+    #passSection.visible {
+      display: block;
+    }
+
+    .pass {
+      overflow: hidden;
+
+      border: 1px solid rgba(215, 181, 109, 0.35);
+      border-radius: 24px;
+
+      background:
+        radial-gradient(
+          circle at top right,
+          rgba(215, 181, 109, 0.13),
+          transparent 38%
+        ),
+        #101010;
+
+      box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.5);
+    }
+
+    .pass-top {
+      padding: 24px 22px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .pass-event {
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .pass-title {
+      margin-top: 8px;
+      font-size: 30px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .pass-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+
+      margin-top: 16px;
+      padding: 7px 10px;
+
+      border-radius: 999px;
+
+      color: var(--success);
+      border: 1px solid rgba(105, 211, 145, 0.2);
+      background: rgba(105, 211, 145, 0.07);
+
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .pass-body {
+      padding: 22px;
+    }
+
+    .pass-name {
+      font-size: 25px;
+      font-weight: 800;
+      line-height: 1.1;
+      word-break: break-word;
+    }
+
+    .pass-access {
+      margin-top: 7px;
+      color: var(--gold-light);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .pass-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .pass-item {
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .pass-item-label {
+      color: #777;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .pass-item-value {
+      margin-top: 4px;
+      color: #eee;
+      font-size: 13px;
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    .qr-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      margin: 24px auto 18px;
+      padding: 16px;
+
+      width: min(100%, 290px);
+      aspect-ratio: 1 / 1;
+
+      border-radius: 18px;
+      background: #fff;
+    }
+
+    .qr-wrapper img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .qr-note {
+      text-align: center;
+      color: #777;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .pass-footer {
+      padding: 16px 22px 22px;
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .pass-footer-text {
+      color: #777;
+      font-size: 11px;
+    }
+
+    .new-registration {
+      width: 100%;
+      margin-top: 16px;
+
+      min-height: 48px;
+
+      border: 1px solid rgba(215, 181, 109, 0.4);
+      border-radius: 12px;
+
+      background: transparent;
+      color: var(--gold-light);
+
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+
+      cursor: pointer;
+    }
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+
+    .footer {
+      padding: 22px 0 0;
+      text-align: center;
+      color: #555;
+      font-size: 10px;
+      letter-spacing: 0.05em;
+    }
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+
+    @media (min-width: 640px) {
+      .page {
+        padding-top: 48px;
+      }
+
+      .card {
+        padding: 30px;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .pass-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="page">
+
+    <!-- ===================================================
+         REGISTRATION PAGE
+         =================================================== -->
+
+    <section id="registrationSection">
+
+      <header class="brand">
+        <div class="brand-kicker">
+          Registration
+        </div>
+
+        <h1 class="brand-title">
+          BOLD<br />AFTER DARK
+        </h1>
+
+        <p class="brand-subtitle">
+          Secure your access
+        </p>
+      </header>
+
+
+      <div class="card">
+
+        <h2 class="section-title">
+          Registration
+        </h2>
+
+        <p class="section-description">
+          Complete your registration below.
+        </p>
+
+
+        <form
+          id="registrationForm"
+          novalidate
+        >
+
+          <!-- =================================================
+               ACCESS TYPE
+               ================================================= -->
+
+          <div class="field">
+
+            <label
+              class="field-label"
+              for="accessType"
+            >
+              Choose your access
+              <span class="required">*</span>
+            </label>
+
+            <select
+              id="accessType"
+              name="accessType"
+              required
+            >
+              <option value="">
+                Select access
+              </option>
+
+              <option value="FREE">
+                FREE
+              </option>
+
+              <option value="VIP">
+                VIP
+              </option>
+            </select>
+
+          </div>
+
+
+          <!-- =================================================
+               VIP
+               ================================================= -->
+
+          <div id="vipFields">
+
+            <div class="vip-box">
+
+              <div class="vip-label">
+                VIP ACCESS
+              </div>
+
+              <div class="vip-description">
+                Complete your table package information.
+              </div>
+
+            </div>
+
+
+            <div class="field">
+
+              <label
+                class="field-label"
+                for="tablePackage"
+              >
+                Table Package
+                <span class="required">*</span>
+              </label>
+
+              <input
+                id="tablePackage"
+                name="tablePackage"
+                type="text"
+                autocomplete="off"
+                placeholder="Enter your table package"
+              />
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               NAME
+               ================================================= -->
+
+          <div class="field">
+
+            <label
+              class="field-label"
+              for="name"
+            >
+              Your Name
+              <span class="required">*</span>
+            </label>
+
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              maxlength="150"
+              placeholder="Enter your name"
+              required
+            />
+
+          </div>
+
+
+          <!-- =================================================
+               WHATSAPP
+               ================================================= -->
+
+          <div class="field">
+
+            <label
+              class="field-label"
+              for="whatsapp"
+            >
+              WhatsApp
+              <span class="required">*</span>
+            </label>
+
+            <input
+              id="whatsapp"
+              name="whatsapp"
+              type="tel"
+              autocomplete="tel"
+              maxlength="50"
+              placeholder="Enter your WhatsApp number"
+              required
+            />
+
+          </div>
+
+
+          <!-- =================================================
+               STAY CONNECTED
+               ================================================= -->
+
+          <div class="field">
+
+            <label
+              class="field-label"
+              for="stayConnected"
+            >
+              Stay Connected
+              <span class="required">*</span>
+            </label>
+
+            <input
+              id="stayConnected"
+              name="stayConnected"
+              type="text"
+              maxlength="150"
+              placeholder="Enter your information"
+              required
+            />
+
+          </div>
+
+
+          <!-- =================================================
+               COMMUNITY
+               ================================================= -->
+
+          <div class="field">
+
+            <label
+              class="field-label"
+              for="community"
+            >
+              Your Community
+              <span class="required">*</span>
+            </label>
+
+            <input
+              id="community"
+              name="community"
+              type="text"
+              maxlength="150"
+              placeholder="Enter your community"
+              required
+            />
+
+          </div>
+
+
+          <!-- =================================================
+               REGISTER
+               ================================================= -->
+
+          <button
+            id="registerButton"
+            class="register-button"
+            type="submit"
+          >
+            Register
+          </button>
+
+        </form>
+
+
+        <div
+          id="message"
+          class="message"
+          role="alert"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         DIGITAL PASS
+         ===================================================== -->
+
+    <section id="passSection">
+
+      <div class="pass">
+
+        <div class="pass-top">
+
+          <div class="pass-event">
+            Digital Pass
+          </div>
+
+          <div class="pass-title">
+            BOLD AFTER DARK
+          </div>
+
+          <div class="pass-status">
+            <span class="status-dot"></span>
+            UNUSED
+          </div>
+
+        </div>
+
+
+        <div class="pass-body">
+
+          <div
+            id="passName"
+            class="pass-name"
+          >
+            -
+          </div>
+
+          <div
+            id="passAccess"
+            class="pass-access"
+          >
+            -
+          </div>
+
+
+          <div class="pass-grid">
+
+            <div class="pass-item">
+
+              <div class="pass-item-label">
+                Pass ID
+              </div>
+
+              <div
+                id="passId"
+                class="pass-item-value"
+              >
+                -
+              </div>
+
+            </div>
+
+
+            <div
+              id="tablePackageItem"
+              class="pass-item"
+              style="display:none;"
+            >
+
+              <div class="pass-item-label">
+                Table Package
+              </div>
+
+              <div
+                id="passTablePackage"
+                class="pass-item-value"
+              >
+                -
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="qr-wrapper">
+
+            <img
+              id="passQr"
+              src=""
+              alt="Digital Pass QR Code"
+            />
+
+          </div>
+
+
+          <div class="qr-note">
+            Present this QR code at the entrance.
+          </div>
+
+        </div>
+
+
+        <div class="pass-footer">
+
+          <div class="pass-footer-text">
+            Keep this digital pass available on your phone.
+          </div>
+
+          <button
+            id="newRegistrationButton"
+            class="new-registration"
+            type="button"
+          >
+            New Registration
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <footer class="footer">
+      BOLD AFTER DARK
+    </footer>
+
+  </main>
+
+
+  <script>
+    /*
+     * =========================================================
+     * BOLD AFTER DARK
+     * REGISTRATION FRONTEND
+     * =========================================================
+     *
+     * GitHub Pages
+     *      ↓
+     * Google Apps Script Web App
+     *      ↓
+     * Google Sheets
+     *
+     * Communication method:
+     * JSONP
+     *
+     * This is intentionally used because the registration
+     * page is hosted on GitHub Pages while the API is hosted
+     * on Google Apps Script.
+     *
+     * =========================================================
+     */
+
+
+    /* ========================================================
+       CONFIGURATION
+       ======================================================== */
+
+    const API_URL =
+      "https://script.google.com/macros/s/AKfycbyzYCvOanxJJvlelGthp7hBoI_WL6lOpsvd3JVf4m5wVTWzzWM6v2nGvVuCXBVbB4nomQ/exec";
+
+
+    const REQUEST_TIMEOUT =
+      20000;
+
+
+    /* ========================================================
+       DOM
+       ======================================================== */
+
+    const registrationSection =
+      document.getElementById(
+        "registrationSection"
+      );
+
+
+    const passSection =
+      document.getElementById(
+        "passSection"
+      );
+
+
+    const registrationForm =
+      document.getElementById(
+        "registrationForm"
+      );
+
+
+    const accessType =
+      document.getElementById(
+        "accessType"
+      );
+
+
+    const vipFields =
+      document.getElementById(
+        "vipFields"
+      );
+
+
+    const tablePackage =
+      document.getElementById(
+        "tablePackage"
+      );
+
+
+    const nameInput =
+      document.getElementById(
+        "name"
+      );
+
+
+    const whatsappInput =
+      document.getElementById(
+        "whatsapp"
+      );
+
+
+    const stayConnectedInput =
+      document.getElementById(
+        "stayConnected"
+      );
+
+
+    const communityInput =
+      document.getElementById(
+        "community"
+      );
+
+
+    const registerButton =
+      document.getElementById(
+        "registerButton"
+      );
+
+
+    const message =
+      document.getElementById(
+        "message"
+      );
+
+
+    const passName =
+      document.getElementById(
+        "passName"
+      );
+
+
+    const passAccess =
+      document.getElementById(
+        "passAccess"
+      );
+
+
+    const passId =
+      document.getElementById(
+        "passId"
+      );
+
+
+    const passQr =
+      document.getElementById(
+        "passQr"
+      );
+
+
+    const tablePackageItem =
+      document.getElementById(
+        "tablePackageItem"
+      );
+
+
+    const passTablePackage =
+      document.getElementById(
+        "passTablePackage"
+      );
+
+
+    const newRegistrationButton =
+      document.getElementById(
+        "newRegistrationButton"
+      );
+
+
+    /* ========================================================
+       ACCESS TYPE
+       ======================================================== */
+
+    accessType.addEventListener(
+      "change",
+      function () {
+
+        const selected =
+          accessType.value;
+
+
+        if (
+          selected === "VIP"
+        ) {
+
+          vipFields.classList.add(
+            "visible"
+          );
+
+          tablePackage.required =
+            true;
+
+        } else {
+
+          vipFields.classList.remove(
+            "visible"
+          );
+
+          tablePackage.required =
+            false;
+
+          tablePackage.value =
+            "";
+
+        }
+
+      }
+    );
+
+
+    /* ========================================================
+       MESSAGE
+       ======================================================== */
+
+    function showMessage(
+      text,
+      type
+    ) {
+
+      message.textContent =
+        text;
+
+
+      message.className =
+        "message show " +
+        type;
+
+    }
+
+
+    function hideMessage() {
+
+      message.textContent =
+        "";
+
+      message.className =
+        "message";
+
+    }
+
+
+    /* ========================================================
+       VALIDATION
+       ======================================================== */
+
+    function validateForm() {
+
+      const selectedAccess =
+        accessType.value.trim();
+
+
+      const name =
+        nameInput.value.trim();
+
+
+      const whatsapp =
+        whatsappInput.value.trim();
+
+
+      const stayConnected =
+        stayConnectedInput.value.trim();
+
+
+      const community =
+        communityInput.value.trim();
+
+
+      const packageValue =
+        tablePackage.value.trim();
+
+
+      if (
+        !selectedAccess
+      ) {
+
+        return "Please choose your access.";
+
+      }
+
+
+      if (
+        selectedAccess !== "FREE" &&
+        selectedAccess !== "VIP"
+      ) {
+
+        return "Invalid access type.";
+
+      }
+
+
+      if (
+        !name
+      ) {
+
+        return "Please enter your name.";
+
+      }
+
+
+      if (
+        !whatsapp
+      ) {
+
+        return "Please enter your WhatsApp number.";
+
+      }
+
+
+      if (
+        !stayConnected
+      ) {
+
+        return "Please complete Stay Connected.";
+
+      }
+
+
+      if (
+        !community
+      ) {
+
+        return "Please enter your community.";
+
+      }
+
+
+      if (
+        selectedAccess === "VIP" &&
+        !packageValue
+      ) {
+
+        return "Please enter your Table Package.";
+
+      }
+
+
+      return "";
+
+    }
+
+
+    /* ========================================================
+       JSONP CALLBACK NAME
+       ======================================================== */
+
+    function createCallbackName() {
+
+      return (
+        "boldAfterDarkCallback_" +
+        Date.now() +
+        "_" +
+        Math.floor(
+          Math.random() * 100000
+        )
+      );
+
+    }
+
+
+    /* ========================================================
+       JSONP REQUEST
+       ======================================================== */
+
+    function requestRegistration(
+      params
+    ) {
+
+      return new Promise(
+        function (
+          resolve,
+          reject
+        ) {
+
+          const callbackName =
+            createCallbackName();
+
+
+          let completed =
+            false;
+
+
+          const script =
+            document.createElement(
+              "script"
+            );
+
+
+          const timeout =
+            setTimeout(
+              function () {
+
+                if (
+                  completed
+                ) {
+
+                  return;
+
+                }
+
+
+                completed =
+                  true;
+
+
+                cleanup();
+
+
+                reject(
+                  new Error(
+                    "The registration server did not respond. Please try again."
+                  )
+                );
+
+              },
+              REQUEST_TIMEOUT
+            );
+
+
+          function cleanup() {
+
+            clearTimeout(
+              timeout
+            );
+
+
+            if (
+              script.parentNode
+            ) {
+
+              script.parentNode.removeChild(
+                script
+              );
+
+            }
+
+
+            try {
+
+              delete window[
+                callbackName
+              ];
+
+            } catch (
+              error
+            ) {
+
+              window[
+                callbackName
+              ] =
+                undefined;
+
+            }
+
+          }
+
+
+          window[
+            callbackName
+          ] =
+            function (
+              response
+            ) {
+
+              if (
+                completed
+              ) {
+
+                return;
+
+              }
+
+
+              completed =
+                true;
+
+
+              cleanup();
+
+
+              resolve(
+                response
+              );
+
+            };
+
+
+          const query =
+            new URLSearchParams();
+
+
+          query.set(
+            "action",
+            "register"
+          );
+
+
+          query.set(
+            "accessType",
+            params.accessType
+          );
+
+
+          query.set(
+            "name",
+            params.name
+          );
+
+
+          query.set(
+            "whatsapp",
+            params.whatsapp
+          );
+
+
+          query.set(
+            "stayConnected",
+            params.stayConnected
+          );
+
+
+          query.set(
+            "community",
+            params.community
+          );
+
+
+          if (
+            params.accessType ===
+            "VIP"
+          ) {
+
+            query.set(
+              "tablePackage",
+              params.tablePackage
+            );
+
+          }
+
+
+          query.set(
+            "callback",
+            callbackName
+          );
+
+
+          script.async =
+            true;
+
+
+          script.src =
+            API_URL +
+            "?" +
+            query.toString();
+
+
+          script.onerror =
+            function () {
+
+              if (
+                completed
+              ) {
+
+                return;
+
+              }
+
+
+              completed =
+                true;
+
+
+              cleanup();
+
+
+              reject(
+                new Error(
+                  "Unable to connect to the registration server."
+                )
+              );
+
+            };
+
+
+          document.body.appendChild(
+            script
+          );
+
+        }
+      );
+
+    }
+
+
+    /* ========================================================
+       DISABLE / ENABLE BUTTON
+       ======================================================== */
+
+    function setLoading(
+      loading
+    ) {
+
+      registerButton.disabled =
+        loading;
+
+
+      if (
+        loading
+      ) {
+
+        registerButton.textContent =
+          "Registering...";
+
+      } else {
+
+        registerButton.textContent =
+          "Register";
+
+      }
+
+    }
+
+
+    /* ========================================================
+       DISPLAY DIGITAL PASS
+       ======================================================== */
+
+    function displayDigitalPass(
+      pass
+    ) {
+
+      if (
+        !pass
+      ) {
+
+        throw new Error(
+          "Digital pass data is missing."
+        );
+
+      }
+
+
+      passName.textContent =
+        pass.name ||
+        "-";
+
+
+      passAccess.textContent =
+        pass.accessType ||
+        "-";
+
+
+      passId.textContent =
+        pass.passId ||
+        "-";
+
+
+      passQr.src =
+        pass.qrCodeUrl ||
+        "";
+
+
+      if (
+        String(
+          pass.accessType || ""
+        ).toUpperCase() ===
+        "VIP"
+      ) {
+
+        tablePackageItem.style.display =
+          "block";
+
+
+        passTablePackage.textContent =
+          pass.tablePackage ||
+          "-";
+
+      } else {
+
+        tablePackageItem.style.display =
+          "none";
+
+
+        passTablePackage.textContent =
+          "";
+
+      }
+
+
+      registrationSection.style.display =
+        "none";
+
+
+      passSection.classList.add(
+        "visible"
+      );
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    /* ========================================================
+       REGISTRATION SUBMIT
+       ======================================================== */
+
+    registrationForm.addEventListener(
+      "submit",
+      async function (
+        event
+      ) {
+
+        event.preventDefault();
+
+
+        hideMessage();
+
+
+        const validationError =
+          validateForm();
+
+
+        if (
+          validationError
+        ) {
+
+          showMessage(
+            validationError,
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        const params = {
+
+          accessType:
+            accessType.value.trim(),
+
+          name:
+            nameInput.value.trim(),
+
+          whatsapp:
+            whatsappInput.value.trim(),
+
+          stayConnected:
+            stayConnectedInput.value.trim(),
+
+          community:
+            communityInput.value.trim(),
+
+          tablePackage:
+            tablePackage.value.trim()
+
+        };
+
+
+        setLoading(
+          true
+        );
+
+
+        showMessage(
+          "Processing your registration...",
+          "loading"
+        );
+
+
+        try {
+
+          const response =
+            await requestRegistration(
+              params
+            );
+
+
+          if (
+            !response ||
+            response.success !== true
+          ) {
+
+            const serverMessage =
+              response &&
+              response.message
+                ? response.message
+                : "Registration failed. Please try again.";
+
+
+            throw new Error(
+              serverMessage
+            );
+
+          }
+
+
+          if (
+            !response.pass
+          ) {
+
+            throw new Error(
+              "Registration succeeded but digital pass data was not returned."
+            );
+
+          }
+
+
+          hideMessage();
+
+
+          displayDigitalPass(
+            response.pass
+          );
+
+
+        }
+        catch (
+          error
+        ) {
+
+          showMessage(
+            error &&
+            error.message
+              ? error.message
+              : "Registration failed. Please try again.",
+            "error"
+          );
+
+        }
+        finally {
+
+          setLoading(
+            false
+          );
+
+        }
+
+      }
+    );
+
+
+    /* ========================================================
+       NEW REGISTRATION
+       ======================================================== */
+
+    newRegistrationButton.addEventListener(
+      "click",
+      function () {
+
+        registrationForm.reset();
+
+
+        vipFields.classList.remove(
+          "visible"
+        );
+
+
+        tablePackage.required =
+          false;
+
+
+        tablePackage.value =
+          "";
+
+
+        hideMessage();
+
+
+        passQr.src =
+          "";
+
+
+        passSection.classList.remove(
+          "visible"
+        );
+
+
+        registrationSection.style.display =
+          "block";
+
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+      }
+    );
+
+
+    /* ========================================================
+       INITIAL STATE
+       ======================================================== */
+
+    vipFields.classList.remove(
+      "visible"
+    );
+
+
+    tablePackage.required =
+      false;
+
+  </script>
+
+</body>
+</html>
