@@ -2,406 +2,243 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>BOLD AFTER DARK — Registration</title>
 
   <style>
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
-    :root {
-      --bg: #080808;
-      --card: #111111;
-      --card2: #171717;
-      --text: #f5f5f5;
-      --muted: #929292;
-      --line: #292929;
-      --red: #d71920;
-      --red2: #ef3038;
-      --gold: #d7b56d;
-      --green: #69d391;
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
     }
 
     body {
-      min-height: 100vh;
-      background:
-        radial-gradient(
-          circle at top,
-          rgba(215,181,109,.10),
-          transparent 38%
-        ),
-        var(--bg);
-      color: var(--text);
-      font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
+      background: #000;
+      color: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 16px;
     }
 
-    .page {
+    .container {
       width: 100%;
-      max-width: 620px;
-      margin: auto;
-      padding: 28px 16px 40px;
+      max-width: 520px;
     }
 
-    .brand {
+    .registration-label {
       text-align: center;
-      padding: 10px 0 28px;
-    }
-
-    .registration-title {
-      color: var(--red);
-      font-size: 20px;
-      font-weight: 900;
-      letter-spacing: .20em;
-      text-transform: uppercase;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: #ff0000;
       margin-bottom: 12px;
-    }
-
-    .brand-title {
-      font-size: clamp(34px, 10vw, 56px);
-      line-height: .95;
-      font-weight: 900;
-      letter-spacing: -.05em;
-    }
-
-    .brand-title .after {
-      color: var(--red);
-    }
-
-    .brand-subtitle {
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: .10em;
       text-transform: uppercase;
     }
 
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 24px;
-      box-shadow: 0 24px 70px rgba(0,0,0,.45);
+    .title {
+      text-align: center;
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      line-height: 1.1;
+      margin-bottom: 35px;
     }
 
-    .section-title {
-      font-size: 21px;
-      font-weight: 800;
-      margin-bottom: 6px;
+    .title .after {
+      color: #ff0000;
     }
 
-    .section-description {
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 24px;
+    .title .bold,
+    .title .dark {
+      color: #fff;
+    }
+
+    form {
+      width: 100%;
     }
 
     .field {
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     label {
       display: block;
       margin-bottom: 8px;
-      color: #dedede;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 700;
-      letter-spacing: .08em;
-      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #fff;
     }
 
     .required {
-      color: var(--red);
+      color: #ff0000;
+      margin-left: 3px;
     }
 
     input,
     select {
       width: 100%;
-      min-height: 52px;
-      padding: 14px 15px;
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      background: var(--card2);
-      color: var(--text);
+      height: 48px;
+      border: 1px solid #555;
+      border-radius: 6px;
+      padding: 0 14px;
+      background: #111;
+      color: #fff;
+      font-size: 15px;
       outline: none;
-    }
-
-    input::placeholder {
-      color: #666;
     }
 
     input:focus,
     select:focus {
-      border-color: var(--red);
-      box-shadow: 0 0 0 3px rgba(215,25,32,.10);
+      border-color: #ff0000;
     }
 
-    #vipFields {
-      display: none;
-    }
-
-    #vipFields.show {
-      display: block;
-    }
-
-    .vip-box {
-      padding: 15px;
-      margin-bottom: 18px;
-      border: 1px solid rgba(215,181,109,.28);
-      border-radius: 15px;
-      background: rgba(215,181,109,.05);
-    }
-
-    .vip-box-title {
-      color: var(--gold);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-
-    .vip-box-text {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 4px;
-    }
-
-    .register-button {
-      width: 100%;
-      min-height: 56px;
-      border: 0;
-      border-radius: 14px;
-      background: linear-gradient(
-        135deg,
-        var(--red2),
-        var(--red)
-      );
-      color: white;
-      font-size: 14px;
-      font-weight: 900;
-      letter-spacing: .12em;
-      text-transform: uppercase;
+    select {
       cursor: pointer;
     }
 
-    .register-button:disabled {
-      opacity: .55;
-      cursor: wait;
+    select option {
+      background: #111;
+      color: #fff;
+    }
+
+    .optional {
+      color: #999;
+      font-weight: 400;
+      font-size: 12px;
+      margin-left: 4px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .submit-button {
+      width: 100%;
+      height: 52px;
+      border: none;
+      border-radius: 6px;
+      background: #ff0000;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: opacity 0.2s ease;
+    }
+
+    .submit-button:hover {
+      opacity: 0.88;
+    }
+
+    .submit-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
     .message {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 6px;
       display: none;
-      margin-top: 16px;
-      padding: 14px;
-      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.5;
       text-align: center;
-      font-size: 13px;
-    }
-
-    .message.show {
-      display: block;
-    }
-
-    .message.loading {
-      color: #e8d8b3;
-      background: rgba(215,181,109,.07);
-      border: 1px solid rgba(215,181,109,.20);
     }
 
     .message.error {
-      color: #ffd0d0;
-      background: rgba(255,80,80,.07);
-      border: 1px solid rgba(255,80,80,.20);
-    }
-
-    #passSection {
-      display: none;
-    }
-
-    #passSection.show {
       display: block;
+      background: #260000;
+      border: 1px solid #ff0000;
+      color: #fff;
     }
 
-    .pass {
-      overflow: hidden;
-      border: 1px solid rgba(215,181,109,.35);
-      border-radius: 24px;
-      background:
-        radial-gradient(
-          circle at top right,
-          rgba(215,181,109,.13),
-          transparent 38%
-        ),
-        #101010;
-      box-shadow: 0 25px 80px rgba(0,0,0,.5);
+    .message.success {
+      display: block;
+      background: #071f0b;
+      border: 1px solid #22c55e;
+      color: #fff;
     }
 
-    .pass-top {
-      padding: 24px 22px 18px;
-      border-bottom: 1px solid var(--line);
+    .pass-result {
+      margin-top: 20px;
+      display: none;
+      text-align: center;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 22px 16px;
+      background: #0b0b0b;
     }
 
-    .pass-event {
-      color: var(--red);
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: .22em;
-      text-transform: uppercase;
+    .pass-result h2 {
+      margin: 0 0 15px;
+      color: #ff0000;
+      font-size: 22px;
     }
 
-    .pass-title {
-      margin-top: 8px;
-      font-size: 30px;
-      line-height: 1;
-      font-weight: 900;
+    .pass-info {
+      text-align: left;
+      margin-top: 15px;
     }
 
-    .pass-title .after {
-      color: var(--red);
+    .pass-info div {
+      padding: 8px 0;
+      border-bottom: 1px solid #222;
+      font-size: 14px;
     }
 
-    .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      margin-top: 16px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      color: var(--green);
-      border: 1px solid rgba(105,211,145,.2);
-      background: rgba(105,211,145,.07);
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: .1em;
+    .pass-info strong {
+      display: inline-block;
+      min-width: 115px;
+      color: #aaa;
     }
 
-    .status-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: currentColor;
+    .qr-wrapper {
+      margin-top: 20px;
     }
 
-    .pass-body {
-      padding: 22px;
+    .qr-wrapper img {
+      width: 250px;
+      max-width: 100%;
+      height: auto;
+      background: #fff;
+      padding: 8px;
+      border-radius: 6px;
     }
 
-    .pass-name {
-      font-size: 25px;
-      font-weight: 800;
-    }
-
-    .pass-access {
-      margin-top: 7px;
-      color: var(--gold);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: .12em;
-    }
-
-    .pass-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 22px;
-    }
-
-    .pass-item {
-      padding: 13px;
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      background: rgba(255,255,255,.02);
-    }
-
-    .pass-label {
-      color: #777;
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-
-    .pass-value {
-      margin-top: 4px;
-      color: #eee;
-      font-size: 13px;
-      font-weight: 700;
-      word-break: break-word;
-    }
-
-    .qr {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: min(100%, 290px);
-      aspect-ratio: 1;
-      margin: 24px auto 16px;
-      padding: 16px;
-      border-radius: 18px;
-      background: white;
-    }
-
-    .qr img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .qr-note {
+    .note {
+      margin-top: 25px;
       color: #777;
       font-size: 11px;
       text-align: center;
+      line-height: 1.5;
     }
 
-    .pass-footer {
-      padding: 18px 22px 22px;
-      border-top: 1px solid var(--line);
-      text-align: center;
-    }
-
-    .pass-footer-text {
-      color: #777;
-      font-size: 11px;
-    }
-
-    .new-registration {
-      width: 100%;
-      min-height: 48px;
-      margin-top: 16px;
-      border: 1px solid rgba(215,25,32,.55);
-      border-radius: 12px;
-      background: transparent;
-      color: var(--red2);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
-
-    .footer {
-      padding-top: 22px;
-      text-align: center;
-      color: #555;
-      font-size: 10px;
-    }
-
-    @media (max-width: 420px) {
-      .card {
-        padding: 20px;
+    @media (max-width: 600px) {
+      body {
+        padding: 28px 14px;
       }
 
-      .pass-grid {
-        grid-template-columns: 1fr;
+      .registration-label {
+        font-size: 19px;
+      }
+
+      .title {
+        font-size: 31px;
+        margin-bottom: 30px;
       }
     }
   </style>
@@ -409,857 +246,831 @@
 
 <body>
 
-<div class="page">
+  <div class="container">
 
-  <section id="registrationSection">
+    <!-- =====================================================
+         REGISTRATION TITLE
+         ===================================================== -->
 
-    <div class="brand">
-
-      <div class="registration-title">
-        REGISTRATION
-      </div>
-
-      <h1 class="brand-title">
-        BOLD <span class="after">AFTER</span> DARK
-      </h1>
-
-      <div class="brand-subtitle">
-        Secure your access
-      </div>
-
+    <div class="registration-label">
+      REGISTRATION
     </div>
 
-    <div class="card">
+    <div class="title">
+      <span class="bold">BOLD</span>
+      <span class="after">AFTER</span>
+      <span class="dark">DARK</span>
+    </div>
 
-      <h2 class="section-title">
-        Registration
+
+    <!-- =====================================================
+         REGISTRATION FORM
+         ===================================================== -->
+
+    <form id="registrationForm">
+
+      <!-- ACCESS -->
+      <div class="field">
+
+        <label for="accessType">
+          CHOOSE YOUR ACCESS
+          <span class="required">*</span>
+        </label>
+
+        <select
+          id="accessType"
+          name="accessType"
+          required
+        >
+
+          <option value="">
+            Select Access
+          </option>
+
+          <option value="FREE">
+            FREE
+          </option>
+
+          <option value="VIP">
+            VIP
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- VIP TABLE PACKAGE -->
+      <div
+        class="field hidden"
+        id="tablePackageField"
+      >
+
+        <label for="tablePackage">
+          TABLE PACKAGE
+          <span class="required">*</span>
+        </label>
+
+        <select
+          id="tablePackage"
+          name="tablePackage"
+        >
+
+          <option value="">
+            Select Table Package
+          </option>
+
+          <option value="VIP TABLE - 1 PAX">
+            VIP TABLE - 1 PAX
+          </option>
+
+          <option value="VIP TABLE — 2 PAX">
+            VIP TABLE — 2 PAX
+          </option>
+
+          <option value="VIP TABLE — 3 PAX">
+            VIP TABLE — 3 PAX
+          </option>
+
+          <option value="VIP TABLE — 4 PAX">
+            VIP TABLE — 4 PAX
+          </option>
+
+          <option value="VIP TABLE — 5 PAX">
+            VIP TABLE — 5 PAX
+          </option>
+
+          <option value="VIP TABLE — 6 PAX">
+            VIP TABLE — 6 PAX
+          </option>
+
+          <option value="VIP TABLE — 7 PAX">
+            VIP TABLE — 7 PAX
+          </option>
+
+          <option value="VIP TABLE — 8 PAX">
+            VIP TABLE — 8 PAX
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- NAME -->
+      <div class="field">
+
+        <label for="name">
+          YOUR NAME
+          <span class="required">*</span>
+        </label>
+
+        <input
+          type="text"
+          id="name"
+          name="name"
+          maxlength="100"
+          autocomplete="name"
+          required
+        >
+
+      </div>
+
+
+      <!-- WHATSAPP -->
+      <div class="field">
+
+        <label for="whatsapp">
+          WHATSAPP
+          <span class="required">*</span>
+        </label>
+
+        <input
+          type="tel"
+          id="whatsapp"
+          name="whatsapp"
+          maxlength="20"
+          autocomplete="tel"
+          placeholder="08xxxxxxxxxx"
+          required
+        >
+
+      </div>
+
+
+      <!-- STAY CONNECTED -->
+      <div class="field">
+
+        <label for="stayConnected">
+          STAY CONNECTED
+          <span class="optional">
+            Optional
+          </span>
+        </label>
+
+        <input
+          type="text"
+          id="stayConnected"
+          name="stayConnected"
+          maxlength="150"
+          placeholder="Instagram / Social Media"
+        >
+
+      </div>
+
+
+      <!-- COMMUNITY -->
+      <div class="field">
+
+        <label for="community">
+          YOUR COMMUNITY
+          <span class="optional">
+            Optional
+          </span>
+        </label>
+
+        <input
+          type="text"
+          id="community"
+          name="community"
+          maxlength="150"
+          placeholder="Community"
+        >
+
+      </div>
+
+
+      <!-- SUBMIT -->
+      <button
+        type="submit"
+        id="submitButton"
+        class="submit-button"
+      >
+        REGISTER
+      </button>
+
+    </form>
+
+
+    <!-- =====================================================
+         MESSAGE
+         ===================================================== -->
+
+    <div
+      id="message"
+      class="message"
+    ></div>
+
+
+    <!-- =====================================================
+         PASS RESULT
+         ===================================================== -->
+
+    <div
+      id="passResult"
+      class="pass-result"
+    >
+
+      <h2>
+        REGISTRATION SUCCESSFUL
       </h2>
 
-      <p class="section-description">
-        Complete your registration below.
-      </p>
+      <div class="pass-info">
 
-      <form id="registrationForm">
-
-        <div class="field">
-
-          <label for="accessType">
-            Choose your access
-            <span class="required">*</span>
-          </label>
-
-          <select id="accessType" required>
-
-            <option value="">
-              Select access
-            </option>
-
-            <option value="FREE">
-              FREE
-            </option>
-
-            <option value="VIP">
-              VIP
-            </option>
-
-          </select>
-
+        <div>
+          <strong>NAME</strong>
+          <span id="resultName"></span>
         </div>
 
-        <div id="vipFields">
-
-          <div class="vip-box">
-
-            <div class="vip-box-title">
-              VIP ACCESS
-            </div>
-
-            <div class="vip-box-text">
-              Table package is required for VIP access.
-            </div>
-
-          </div>
-
-          <div class="field">
-
-            <label for="tablePackage">
-              Table Package
-              <span class="required">*</span>
-            </label>
-
-            <select id="tablePackage">
-
-              <option value="">
-                Select table package
-              </option>
-
-              <option value="VIP TABLE - 1 PAX">
-                VIP TABLE - 1 PAX
-              </option>
-
-              <option value="VIP TABLE — 2 PAX">
-                VIP TABLE — 2 PAX
-              </option>
-
-              <option value="VIP TABLE — 3 PAX">
-                VIP TABLE — 3 PAX
-              </option>
-
-              <option value="VIP TABLE — 4 PAX">
-                VIP TABLE — 4 PAX
-              </option>
-
-              <option value="VIP TABLE — 5 PAX">
-                VIP TABLE — 5 PAX
-              </option>
-
-              <option value="VIP TABLE — 6 PAX">
-                VIP TABLE — 6 PAX
-              </option>
-
-              <option value="VIP TABLE — 7 PAX">
-                VIP TABLE — 7 PAX
-              </option>
-
-              <option value="VIP TABLE — 8 PAX">
-                VIP TABLE — 8 PAX
-              </option>
-
-            </select>
-
-          </div>
-
+        <div>
+          <strong>WHATSAPP</strong>
+          <span id="resultWhatsapp"></span>
         </div>
 
-        <div class="field">
-
-          <label for="name">
-            Your Name
-            <span class="required">*</span>
-          </label>
-
-          <input
-            id="name"
-            type="text"
-            placeholder="Enter your name"
-            maxlength="150"
-            required
-          >
-
+        <div>
+          <strong>ACCESS</strong>
+          <span id="resultAccess"></span>
         </div>
 
-        <div class="field">
-
-          <label for="whatsapp">
-            WhatsApp
-            <span class="required">*</span>
-          </label>
-
-          <input
-            id="whatsapp"
-            type="tel"
-            placeholder="Enter your WhatsApp number"
-            maxlength="50"
-            required
-          >
-
+        <div id="resultTableRow">
+          <strong>TABLE</strong>
+          <span id="resultTable"></span>
         </div>
 
-        <div class="field">
-
-          <label for="stayConnected">
-            Stay Connected
-          </label>
-
-          <input
-            id="stayConnected"
-            type="text"
-            placeholder="Optional"
-            maxlength="150"
-          >
-
+        <div>
+          <strong>PASS ID</strong>
+          <span id="resultPassId"></span>
         </div>
 
-        <div class="field">
-
-          <label for="community">
-            Your Community
-          </label>
-
-          <input
-            id="community"
-            type="text"
-            placeholder="Optional"
-            maxlength="150"
-          >
-
-        </div>
-
-        <button
-          id="registerButton"
-          class="register-button"
-          type="submit"
-        >
-          Register
-        </button>
-
-      </form>
-
-      <div id="message" class="message"></div>
-
-    </div>
-
-  </section>
-
-  <section id="passSection">
-
-    <div class="pass">
-
-      <div class="pass-top">
-
-        <div class="pass-event">
-          Digital Pass
-        </div>
-
-        <div class="pass-title">
-          BOLD <span class="after">AFTER</span> DARK
-        </div>
-
-        <div class="status">
-          <span class="status-dot"></span>
-          UNUSED
+        <div>
+          <strong>STATUS</strong>
+          <span id="resultStatus"></span>
         </div>
 
       </div>
 
-      <div class="pass-body">
+      <div class="qr-wrapper">
 
-        <div id="passName" class="pass-name">
-          -
-        </div>
-
-        <div id="passAccess" class="pass-access">
-          -
-        </div>
-
-        <div class="pass-grid">
-
-          <div class="pass-item">
-
-            <div class="pass-label">
-              Pass ID
-            </div>
-
-            <div id="passId" class="pass-value">
-              -
-            </div>
-
-          </div>
-
-          <div
-            id="tablePackageBox"
-            class="pass-item"
-            style="display:none"
-          >
-
-            <div class="pass-label">
-              Table Package
-            </div>
-
-            <div
-              id="passTablePackage"
-              class="pass-value"
-            >
-              -
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="qr">
-
-          <img
-            id="passQr"
-            alt="QR Code"
-          >
-
-        </div>
-
-        <div class="qr-note">
-          Present this QR code at the entrance.
-        </div>
+        <img
+          id="resultQr"
+          src=""
+          alt="QR Code"
+        >
 
       </div>
 
-      <div class="pass-footer">
-
-        <div class="pass-footer-text">
-          Keep this digital pass available on your phone.
-        </div>
-
-        <button
-          id="newRegistration"
-          class="new-registration"
-          type="button"
-        >
-          New Registration
-        </button>
-
+      <div class="note">
+        Please keep your digital pass and QR code.
       </div>
 
     </div>
 
-  </section>
-
-  <div class="footer">
-    BOLD AFTER DARK
   </div>
 
-</div>
 
+  <script>
 
-<script>
+    /* =======================================================
+       API CONFIGURATION
+       =======================================================
 
-/* =====================================================
-   WEB APP URL
-   ===================================================== */
+       PENTING:
 
-const API_URL =
-  "https://script.google.com/macros/s/AKfycbwDlByPLDkvNi000w-2A2_XkA8lfQ9BnhU1cVKV6VxuTY2z5YWU_ZqedEEGLn8bouzBNg/exec";
+       URL INI TIDAK MENGGUNAKAN /u/4/
 
+       BENAR:
+       /macros/s/DEPLOYMENT_ID/exec
 
-/* =====================================================
-   ELEMENTS
-   ===================================================== */
+       SALAH:
+       /macros/u/4/s/DEPLOYMENT_ID/exec
 
-const form =
-  document.getElementById("registrationForm");
+       ======================================================= */
 
-const accessType =
-  document.getElementById("accessType");
+    const API_URL =
+      'https://script.google.com/macros/s/AKfycbwDlByPLDkvNi000w-2A2_XkA8lfQ9BnhU1cVKV6VxuTY2z5YWU_ZqedEEGLn8bouzBNg/exec';
 
-const vipFields =
-  document.getElementById("vipFields");
 
-const tablePackage =
-  document.getElementById("tablePackage");
+    /* =======================================================
+       ELEMENTS
+       ======================================================= */
 
-const nameInput =
-  document.getElementById("name");
-
-const whatsappInput =
-  document.getElementById("whatsapp");
-
-const stayConnectedInput =
-  document.getElementById("stayConnected");
-
-const communityInput =
-  document.getElementById("community");
-
-const registerButton =
-  document.getElementById("registerButton");
-
-const message =
-  document.getElementById("message");
-
-const registrationSection =
-  document.getElementById("registrationSection");
-
-const passSection =
-  document.getElementById("passSection");
-
-const passName =
-  document.getElementById("passName");
-
-const passAccess =
-  document.getElementById("passAccess");
-
-const passId =
-  document.getElementById("passId");
-
-const passQr =
-  document.getElementById("passQr");
-
-const tablePackageBox =
-  document.getElementById("tablePackageBox");
-
-const passTablePackage =
-  document.getElementById("passTablePackage");
-
-const newRegistration =
-  document.getElementById("newRegistration");
-
-
-/* =====================================================
-   VIP
-   ===================================================== */
-
-accessType.addEventListener(
-  "change",
-  function () {
-
-    if (accessType.value === "VIP") {
-
-      vipFields.classList.add("show");
-
-      tablePackage.required = true;
-
-    } else {
-
-      vipFields.classList.remove("show");
-
-      tablePackage.required = false;
-
-      tablePackage.value = "";
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   MESSAGE
-   ===================================================== */
-
-function showMessage(
-  text,
-  type
-) {
-
-  message.textContent = text;
-
-  message.className =
-    "message show " + type;
-
-}
-
-
-function hideMessage() {
-
-  message.textContent = "";
-
-  message.className =
-    "message";
-
-}
-
-
-/* =====================================================
-   VALIDATION
-   ===================================================== */
-
-function validate() {
-
-  if (!accessType.value) {
-
-    return "Please choose your access.";
-
-  }
-
-  if (!nameInput.value.trim()) {
-
-    return "Please enter your name.";
-
-  }
-
-  if (!whatsappInput.value.trim()) {
-
-    return "Please enter your WhatsApp number.";
-
-  }
-
-  if (
-    accessType.value === "VIP" &&
-    !tablePackage.value
-  ) {
-
-    return "Please choose your table package.";
-
-  }
-
-  return null;
-
-}
-
-
-/* =====================================================
-   JSONP
-   ===================================================== */
-
-function registerViaJSONP(data) {
-
-  return new Promise(
-    function(resolve, reject) {
-
-      const callbackName =
-        "BAD_REGISTER_" +
-        Date.now() +
-        "_" +
-        Math.floor(
-          Math.random() * 1000000
-        );
-
-      let finished = false;
-
-      const script =
-        document.createElement("script");
-
-      const cleanup =
-        function() {
-
-          clearTimeout(timeout);
-
-          try {
-            delete window[callbackName];
-          } catch (e) {
-            window[callbackName] =
-              undefined;
-          }
-
-          if (script.parentNode) {
-            script.parentNode.removeChild(script);
-          }
-
-        };
-
-
-      window[callbackName] =
-        function(response) {
-
-          if (finished) {
-            return;
-          }
-
-          finished = true;
-
-          cleanup();
-
-          resolve(response);
-
-        };
-
-
-      const params =
-        new URLSearchParams();
-
-
-      params.set(
-        "action",
-        "register"
+    const registrationForm =
+      document.getElementById(
+        'registrationForm'
       );
 
-      params.set(
-        "accessType",
-        data.accessType
+    const accessType =
+      document.getElementById(
+        'accessType'
       );
 
-      params.set(
-        "name",
-        data.name
+    const tablePackageField =
+      document.getElementById(
+        'tablePackageField'
       );
 
-      params.set(
-        "whatsapp",
-        data.whatsapp
+    const tablePackage =
+      document.getElementById(
+        'tablePackage'
       );
 
-      params.set(
-        "stayConnected",
-        data.stayConnected
+    const submitButton =
+      document.getElementById(
+        'submitButton'
       );
 
-      params.set(
-        "community",
-        data.community
+    const message =
+      document.getElementById(
+        'message'
       );
 
-      params.set(
-        "tablePackage",
-        data.tablePackage
-      );
-
-      params.set(
-        "callback",
-        callbackName
+    const passResult =
+      document.getElementById(
+        'passResult'
       );
 
 
-      /*
-       * Use the exact public Web App URL.
-       */
+    /* =======================================================
+       ACCESS TYPE CHANGE
+       ======================================================= */
 
-      script.src =
-        API_URL +
-        "?" +
-        params.toString();
+    accessType.addEventListener(
+      'change',
+      function () {
 
+        if (
+          accessType.value === 'VIP'
+        ) {
 
-      script.async = true;
+          tablePackageField
+            .classList
+            .remove('hidden');
 
+          tablePackage.required = true;
 
-      document.body.appendChild(
-        script
-      );
+        }
+        else {
 
+          tablePackageField
+            .classList
+            .add('hidden');
 
-      const timeout =
-        setTimeout(
-          function() {
+          tablePackage.required = false;
 
-            if (finished) {
-              return;
-            }
+          tablePackage.value = '';
 
-            finished = true;
+        }
 
-            cleanup();
-
-            reject(
-              new Error(
-                "The registration server did not respond within the allowed time."
-              )
-            );
-
-          },
-          30000
-        );
-
-    }
-  );
-
-}
-
-
-/* =====================================================
-   SUBMIT
-   ===================================================== */
-
-form.addEventListener(
-  "submit",
-  async function(event) {
-
-    event.preventDefault();
-
-    hideMessage();
-
-    const validationError =
-      validate();
-
-    if (validationError) {
-
-      showMessage(
-        validationError,
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    const data = {
-
-      accessType:
-        accessType.value,
-
-      name:
-        nameInput.value.trim(),
-
-      whatsapp:
-        whatsappInput.value.trim(),
-
-      stayConnected:
-        stayConnectedInput.value.trim(),
-
-      community:
-        communityInput.value.trim(),
-
-      tablePackage:
-        tablePackage.value
-
-    };
-
-
-    registerButton.disabled =
-      true;
-
-    registerButton.textContent =
-      "Registering...";
-
-
-    showMessage(
-      "Processing your registration...",
-      "loading"
+      }
     );
 
 
-    try {
+    /* =======================================================
+       MESSAGE HELPERS
+       ======================================================= */
 
-      const response =
-        await registerViaJSONP(
-          data
+    function showMessage(
+      text,
+      type
+    ) {
+
+      message.textContent = text;
+
+      message.className =
+        'message ' + type;
+
+    }
+
+
+    function clearMessage() {
+
+      message.textContent = '';
+
+      message.className =
+        'message';
+
+    }
+
+
+    /* =======================================================
+       DISPLAY PASS
+       ======================================================= */
+
+    function displayPass(
+      result
+    ) {
+
+      document.getElementById(
+        'resultName'
+      ).textContent =
+        result.name || '';
+
+
+      document.getElementById(
+        'resultWhatsapp'
+      ).textContent =
+        result.whatsapp || '';
+
+
+      document.getElementById(
+        'resultAccess'
+      ).textContent =
+        result.accessType || '';
+
+
+      document.getElementById(
+        'resultTable'
+      ).textContent =
+        result.tablePackage || '';
+
+
+      document.getElementById(
+        'resultPassId'
+      ).textContent =
+        result.passId || '';
+
+
+      document.getElementById(
+        'resultStatus'
+      ).textContent =
+        result.passStatus || '';
+
+
+      const resultTableRow =
+        document.getElementById(
+          'resultTableRow'
         );
-
-
-      console.log(
-        "Registration response:",
-        response
-      );
 
 
       if (
-        !response ||
-        response.success !== true
+        result.accessType === 'VIP'
       ) {
 
-        throw new Error(
-          response &&
-          response.message
-            ? response.message
-            : "Registration failed."
+        resultTableRow.style.display =
+          'block';
+
+      }
+      else {
+
+        resultTableRow.style.display =
+          'none';
+
+      }
+
+
+      const qr =
+        document.getElementById(
+          'resultQr'
         );
 
-      }
 
+      if (
+        result.qrCodeUrl
+      ) {
 
-      passName.textContent =
-        response.name ||
-        data.name;
-
-      passAccess.textContent =
-        response.accessType ||
-        data.accessType;
-
-      passId.textContent =
-        response.passId ||
-        "-";
-
-
-      if (response.qrCodeUrl) {
-
-        passQr.src =
-          response.qrCodeUrl;
+        qr.src =
+          result.qrCodeUrl;
 
       }
 
 
-      if (response.tablePackage) {
-
-        tablePackageBox.style.display =
-          "block";
-
-        passTablePackage.textContent =
-          response.tablePackage;
-
-      } else {
-
-        tablePackageBox.style.display =
-          "none";
-
-      }
+      passResult.style.display =
+        'block';
 
 
-      registrationSection.style.display =
-        "none";
-
-      passSection.classList.add(
-        "show"
-      );
-
-      hideMessage();
-
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+      passResult.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
       });
-
-
-    } catch (error) {
-
-      console.error(
-        "Registration failed:",
-        error
-      );
-
-
-      showMessage(
-        error.message ||
-        "Unable to complete registration.",
-        "error"
-      );
-
-    } finally {
-
-      registerButton.disabled =
-        false;
-
-      registerButton.textContent =
-        "Register";
 
     }
 
-  }
-);
+
+    /* =======================================================
+       SUBMIT REGISTRATION
+       ======================================================= */
+
+    registrationForm.addEventListener(
+      'submit',
+      async function (event) {
+
+        event.preventDefault();
+
+        clearMessage();
+
+        passResult.style.display =
+          'none';
 
 
-/* =====================================================
-   NEW REGISTRATION
-   ===================================================== */
+        /* ---------------------------------------------------
+           BASIC VALIDATION
+           --------------------------------------------------- */
 
-newRegistration.addEventListener(
-  "click",
-  function() {
+        if (
+          !accessType.value
+        ) {
 
-    form.reset();
+          showMessage(
+            'Please choose your access.',
+            'error'
+          );
 
-    vipFields.classList.remove(
-      "show"
+          return;
+
+        }
+
+
+        if (
+          !document
+            .getElementById('name')
+            .value
+            .trim()
+        ) {
+
+          showMessage(
+            'Please enter your name.',
+            'error'
+          );
+
+          return;
+
+        }
+
+
+        if (
+          !document
+            .getElementById('whatsapp')
+            .value
+            .trim()
+        ) {
+
+          showMessage(
+            'Please enter your WhatsApp number.',
+            'error'
+          );
+
+          return;
+
+        }
+
+
+        if (
+          accessType.value === 'VIP' &&
+          !tablePackage.value
+        ) {
+
+          showMessage(
+            'Please choose your VIP table package.',
+            'error'
+          );
+
+          return;
+
+        }
+
+
+        /* ---------------------------------------------------
+           BUTTON STATE
+           --------------------------------------------------- */
+
+        submitButton.disabled =
+          true;
+
+        submitButton.textContent =
+          'REGISTERING...';
+
+
+        /* ---------------------------------------------------
+           FORM DATA
+           --------------------------------------------------- */
+
+        const formData =
+          new URLSearchParams();
+
+
+        formData.append(
+          'action',
+          'register'
+        );
+
+
+        formData.append(
+          'accessType',
+          accessType.value
+        );
+
+
+        formData.append(
+          'name',
+          document
+            .getElementById('name')
+            .value
+            .trim()
+        );
+
+
+        formData.append(
+          'whatsapp',
+          document
+            .getElementById('whatsapp')
+            .value
+            .trim()
+        );
+
+
+        formData.append(
+          'stayConnected',
+          document
+            .getElementById('stayConnected')
+            .value
+            .trim()
+        );
+
+
+        formData.append(
+          'community',
+          document
+            .getElementById('community')
+            .value
+            .trim()
+        );
+
+
+        formData.append(
+          'tablePackage',
+          accessType.value === 'VIP'
+            ? tablePackage.value
+            : ''
+        );
+
+
+        /* ---------------------------------------------------
+           SEND TO GOOGLE APPS SCRIPT
+           --------------------------------------------------- */
+
+        try {
+
+          const response =
+            await fetch(
+              API_URL,
+              {
+                method: 'POST',
+
+                headers: {
+                  'Content-Type':
+                    'application/x-www-form-urlencoded;charset=UTF-8'
+                },
+
+                body:
+                  formData.toString(),
+
+                redirect: 'follow'
+              }
+            );
+
+
+          /* -------------------------------------------------
+             HTTP CHECK
+             ------------------------------------------------- */
+
+          if (
+            !response.ok
+          ) {
+
+            throw new Error(
+              'Registration server returned HTTP ' +
+              response.status +
+              '.'
+            );
+
+          }
+
+
+          /* -------------------------------------------------
+             READ RESPONSE
+             ------------------------------------------------- */
+
+          const text =
+            await response.text();
+
+
+          if (
+            !text
+          ) {
+
+            throw new Error(
+              'Registration server returned an empty response.'
+            );
+
+          }
+
+
+          let result;
+
+
+          try {
+
+            result =
+              JSON.parse(text);
+
+          }
+          catch (
+            jsonError
+          ) {
+
+            console.error(
+              'Invalid server response:',
+              text
+            );
+
+            throw new Error(
+              'Registration server returned an invalid response.'
+            );
+
+          }
+
+
+          /* -------------------------------------------------
+             SERVER VALIDATION
+             ------------------------------------------------- */
+
+          if (
+            !result.success
+          ) {
+
+            throw new Error(
+              result.message ||
+              'Registration failed.'
+            );
+
+          }
+
+
+          /* -------------------------------------------------
+             SUCCESS
+             ------------------------------------------------- */
+
+          showMessage(
+            result.message ||
+            'Registration berhasil.',
+            'success'
+          );
+
+
+          displayPass(
+            result
+          );
+
+
+          /* -------------------------------------------------
+             RESET FORM
+             ------------------------------------------------- */
+
+          registrationForm.reset();
+
+          tablePackageField
+            .classList
+            .add('hidden');
+
+          tablePackage.required =
+            false;
+
+        }
+
+        catch (
+          error
+        ) {
+
+          console.error(
+            'Registration failed:',
+            error
+          );
+
+
+          showMessage(
+            error &&
+            error.message
+              ? error.message
+              : 'Registration failed. Please try again.',
+            'error'
+          );
+
+        }
+
+        finally {
+
+          submitButton.disabled =
+            false;
+
+          submitButton.textContent =
+            'REGISTER';
+
+        }
+
+      }
     );
 
-    tablePackage.required =
-      false;
-
-
-    passSection.classList.remove(
-      "show"
-    );
-
-    registrationSection.style.display =
-      "block";
-
-
-    passName.textContent =
-      "-";
-
-    passAccess.textContent =
-      "-";
-
-    passId.textContent =
-      "-";
-
-    passQr.removeAttribute(
-      "src"
-    );
-
-    tablePackageBox.style.display =
-      "none";
-
-
-    hideMessage();
-
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-
-  }
-);
-
-</script>
+  </script>
 
 </body>
 </html>
