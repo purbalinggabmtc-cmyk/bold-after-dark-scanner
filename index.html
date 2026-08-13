@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta
@@ -12,22 +11,16 @@
 
   <title>BOLD AFTER DARK — CHECK IN</title>
 
-  <script
-    src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"
-  ></script>
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
   <style>
-
     * {
       box-sizing: border-box;
     }
 
     body {
-
       margin: 0;
-
       min-height: 100vh;
-
       background:
         radial-gradient(
           circle at top,
@@ -35,307 +28,164 @@
           #080808 45%,
           #000000 100%
         );
-
       color: white;
-
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+      font-family: Arial, Helvetica, sans-serif;
       display: flex;
-
       justify-content: center;
-
       align-items: center;
-
       padding: 20px;
-
     }
 
     .container {
-
       width: 100%;
-
       max-width: 480px;
-
       text-align: center;
-
     }
 
     .brand {
-
       font-size: 28px;
-
       font-weight: 900;
-
       letter-spacing: 4px;
-
       margin-bottom: 4px;
-
     }
 
     .brand span {
-
       color: #e00000;
-
     }
 
     .subtitle {
-
       font-size: 13px;
-
       letter-spacing: 3px;
-
       color: #aaa;
-
       margin-bottom: 24px;
-
     }
 
     .scanner-card {
-
       background: #111;
-
       border: 1px solid #333;
-
       border-radius: 18px;
-
       padding: 16px;
-
       box-shadow:
         0 0 30px rgba(255, 0, 0, .12);
-
     }
 
     #reader {
-
       width: 100%;
-
       overflow: hidden;
-
       border-radius: 12px;
-
     }
 
     .manual {
-
       margin-top: 18px;
-
       display: flex;
-
       gap: 8px;
-
     }
 
     .manual input {
-
       flex: 1;
-
       min-width: 0;
-
       padding: 14px;
-
       background: #1c1c1c;
-
       color: white;
-
       border: 1px solid #444;
-
       border-radius: 8px;
-
       font-size: 15px;
-
       outline: none;
-
-    }
-
-    .manual input:focus {
-
-      border-color: #e00000;
-
     }
 
     .manual button {
-
       padding: 14px 18px;
-
       background: #e00000;
-
       color: white;
-
       border: none;
-
       border-radius: 8px;
-
       font-weight: bold;
-
       cursor: pointer;
-
-    }
-
-    .manual button:disabled {
-
-      opacity: .5;
-
-      cursor: not-allowed;
-
     }
 
     .result {
-
       margin-top: 18px;
-
       padding: 20px;
-
       border-radius: 14px;
-
       display: none;
-
     }
 
     .result.valid {
-
       display: block;
-
       background: #062d16;
-
       border: 2px solid #16c75a;
-
     }
 
     .result.used {
-
       display: block;
-
       background: #2d2100;
-
       border: 2px solid #e2b400;
-
     }
 
     .result.invalid {
-
       display: block;
-
       background: #300000;
-
       border: 2px solid #e00000;
-
     }
 
     .result.error {
-
       display: block;
-
       background: #222;
-
       border: 2px solid #777;
-
     }
 
     .result-title {
-
       font-size: 28px;
-
       font-weight: 900;
-
       margin-bottom: 12px;
-
     }
 
     .valid .result-title {
-
       color: #16c75a;
-
     }
 
     .used .result-title {
-
       color: #e2b400;
-
     }
 
     .invalid .result-title {
-
       color: #ff3333;
-
-    }
-
-    .error .result-title {
-
-      color: #ff9999;
-
     }
 
     .detail {
-
       margin-top: 8px;
-
       font-size: 15px;
-
       color: #ddd;
-
       line-height: 1.5;
-
     }
 
     .detail strong {
-
       color: white;
-
     }
 
     .reset {
-
       margin-top: 18px;
-
       width: 100%;
-
       padding: 14px;
-
       background: #e00000;
-
       color: white;
-
       border: none;
-
       border-radius: 8px;
-
       font-weight: bold;
-
       cursor: pointer;
-
       font-size: 15px;
-
     }
 
     .reset:active {
-
       transform: scale(.98);
-
-    }
-
-    .reset:disabled {
-
-      opacity: .5;
-
-      cursor: not-allowed;
-
     }
 
     .footer {
-
       margin-top: 20px;
-
       font-size: 11px;
-
       color: #666;
-
       letter-spacing: 2px;
-
     }
-
   </style>
 
 </head>
@@ -343,29 +193,19 @@
 
 <body>
 
-
   <div class="container">
 
-
     <div class="brand">
-
       BOLD <span>AFTER DARK</span>
-
     </div>
-
 
     <div class="subtitle">
-
       EVENT CHECK-IN
-
     </div>
-
 
     <div class="scanner-card">
 
-
       <div id="reader"></div>
-
 
       <div class="manual">
 
@@ -378,14 +218,12 @@
 
         <button
           type="button"
-          id="manualButton"
           onclick="manualCheckIn()"
         >
           CHECK
         </button>
 
       </div>
-
 
       <div
         id="result"
@@ -397,15 +235,12 @@
           class="result-title"
         ></div>
 
-
         <div
           id="resultDetails"
         ></div>
 
-
         <button
           type="button"
-          id="resetButton"
           class="reset"
           onclick="resetScanner()"
         >
@@ -414,16 +249,11 @@
 
       </div>
 
-
     </div>
-
 
     <div class="footer">
-
       BOLD AFTER DARK • THE NIGHT STARTS HERE
-
     </div>
-
 
   </div>
 
@@ -431,39 +261,29 @@
   <script>
 
     // =====================================================
-    // SUPABASE CONFIGURATION
+    // SUPABASE DYNAMIC SERVICE
     // =====================================================
 
     const API_URL =
       "https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/dynamic-service";
 
 
-    /*
-      GANTI NILAI DI BAWAH INI DENGAN
-      SUPABASE PUBLISHABLE KEY KAMU.
-
-      Contoh format:
-
-      sb_publishable_xxxxxxxxxxxxxxxxx
-
-      JANGAN gunakan:
-
-      sb_secret_...
-    */
-
-    const SUPABASE_KEY =
-      "sb_publishable_YGi3tPBuF9tW4KKnLJ5dDQ_AcBZ19WH";
-
-
     // =====================================================
-    // STATE
+    // SUPABASE PUBLISHABLE KEY
+    //
+    // Ini adalah KEY yang sama yang sebelumnya berhasil
+    // digunakan pada test Console.
+    //
+    // Jangan masukkan SUPABASE SECRET KEY di sini.
     // =====================================================
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "GANTI_DENGAN_PUBLISHABLE_KEY_ANDA";
+
 
     let scanner = null;
 
     let processing = false;
-
-    let requestController = null;
 
 
     // =====================================================
@@ -474,71 +294,41 @@
 
       processing = false;
 
-
       if (scanner) {
 
         try {
-
           scanner.clear();
-
-        }
-
-        catch (error) {
-
-          console.warn(
-            "Scanner clear error:",
-            error
-          );
-
+        } catch (error) {
         }
 
         scanner = null;
-
       }
-
 
       scanner =
         new Html5QrcodeScanner(
-
           "reader",
-
           {
-
             fps: 10,
 
             qrbox: {
-
               width: 250,
-
               height: 250
-
             },
 
             rememberLastUsedCamera: true,
 
             supportedScanTypes: [
-
               Html5QrcodeScanType.SCAN_TYPE_CAMERA,
-
               Html5QrcodeScanType.SCAN_TYPE_FILE
-
             ]
-
           },
-
           false
-
         );
 
-
       scanner.render(
-
         onScanSuccess,
-
         onScanError
-
       );
-
     }
 
 
@@ -549,168 +339,70 @@
     function onScanSuccess(decodedText) {
 
       if (processing) {
-
         return;
-
       }
-
 
       processing = true;
 
-
       if (scanner) {
 
-        scanner.clear()
-
-          .catch(
-            function () {}
-          );
+        scanner
+          .clear()
+          .catch(function () {});
 
       }
 
-
       processToken(decodedText);
-
     }
 
 
     // =====================================================
-    // SCAN ERROR
+    // ERROR SCANNER
     // =====================================================
 
     function onScanError(errorMessage) {
 
-      // Sengaja tidak menampilkan
-      // error scanner ke user.
+      // Tidak menampilkan error scan secara realtime.
 
     }
 
 
     // =====================================================
-    // PROCESS TOKEN
+    // CHECK-IN KE SUPABASE
     // =====================================================
 
     async function processToken(token) {
 
       showLoading();
 
-
-      token =
-        String(
-          token || ""
-        ).trim();
-
-
-      if (!token) {
-
-        showTemporaryError(
-          "QR TOKEN KOSONG"
-        );
-
-        processing = false;
-
-        return;
-
-      }
-
-
-      if (
-        !SUPABASE_KEY ||
-        SUPABASE_KEY ===
-          "PASTE_PUBLISHABLE_KEY_DI_SINI"
-      ) {
-
-        showServerError({
-
-          message:
-            "Supabase Publishable Key belum diisi."
-
-        });
-
-        processing = false;
-
-        return;
-
-      }
-
-
       try {
-
-        // -------------------------------------------------
-        // ABORT CONTROLLER
-        // -------------------------------------------------
-
-        requestController =
-          new AbortController();
-
-
-        const timeout =
-          setTimeout(
-
-            function () {
-
-              requestController.abort();
-
-            },
-
-            15000
-
-          );
-
-
-        // -------------------------------------------------
-        // SEND TO SUPABASE EDGE FUNCTION
-        // -------------------------------------------------
 
         const response =
           await fetch(
-
             API_URL,
-
             {
-
-              method:
-                "POST",
+              method: "POST",
 
               headers: {
-
-                "Content-Type":
-                  "application/json",
+                "Content-Type": "application/json",
 
                 "apikey":
-                  SUPABASE_KEY,
+                  SUPABASE_PUBLISHABLE_KEY,
 
                 "Authorization":
                   "Bearer " +
-                  SUPABASE_KEY
-
+                  SUPABASE_PUBLISHABLE_KEY
               },
 
               body:
                 JSON.stringify({
-
-                  action:
-                    "checkIn",
-
-                  token:
-                    token
-
-                }),
-
-              signal:
-                requestController.signal
-
+                  action: "checkIn",
+                  token: token,
+                  checkedInBy: "SCANNER"
+                })
             }
-
           );
 
-
-        clearTimeout(timeout);
-
-
-        // -------------------------------------------------
-        // READ RESPONSE
-        // -------------------------------------------------
 
         const raw =
           await response.text();
@@ -721,24 +413,20 @@
           response.status
         );
 
-
         console.log(
           "CHECK-IN RAW RESPONSE:",
           raw
         );
 
 
-        let data = null;
-
+        let result;
 
         try {
 
-          data =
+          result =
             JSON.parse(raw);
 
-        }
-
-        catch (parseError) {
+        } catch (error) {
 
           throw new Error(
             "Server mengembalikan response yang bukan JSON."
@@ -747,40 +435,19 @@
         }
 
 
-        console.log(
-          "CHECK-IN JSON:",
-          data
-        );
-
-
-        // -------------------------------------------------
-        // HTTP ERROR
-        // -------------------------------------------------
-
         if (!response.ok) {
 
           throw new Error(
-
-            data &&
-            data.message
-
-              ? data.message
-
-              : "Server check-in error."
-
+            result.message ||
+            "Check-in server error."
           );
 
         }
 
 
-        // -------------------------------------------------
-        // SHOW RESULT
-        // -------------------------------------------------
-
-        showResult(data);
+        showResult(result);
 
       }
-
 
       catch (error) {
 
@@ -789,46 +456,11 @@
           error
         );
 
-
-        if (
-          error &&
-          error.name ===
-            "AbortError"
-        ) {
-
-          showServerError({
-
-            message:
-              "Server check-in tidak memberikan respons dalam 15 detik."
-
-          });
-
-        }
-
-        else {
-
-          showServerError({
-
-            message:
-
-              error &&
-              error.message
-
-                ? error.message
-
-                : "Tidak dapat menghubungi server check-in."
-
-          });
-
-        }
-
-      }
-
-
-      finally {
-
-        requestController =
-          null;
+        showServerError({
+          message:
+            error.message ||
+            "Tidak dapat menghubungi server check-in."
+        });
 
       }
 
@@ -842,21 +474,16 @@
     function manualCheckIn() {
 
       if (processing) {
-
         return;
-
       }
-
 
       const input =
         document.getElementById(
           "manualToken"
         );
 
-
       const token =
         input.value.trim();
-
 
       if (!token) {
 
@@ -865,31 +492,24 @@
         );
 
         return;
-
       }
-
 
       processing = true;
 
-
       if (scanner) {
 
-        scanner.clear()
-
-          .catch(
-            function () {}
-          );
+        scanner
+          .clear()
+          .catch(function () {});
 
       }
 
-
       processToken(token);
-
     }
 
 
     // =====================================================
-    // SHOW RESULT
+    // HASIL SERVER
     // =====================================================
 
     function showResult(result) {
@@ -899,12 +519,10 @@
           "result"
         );
 
-
       const title =
         document.getElementById(
           "resultTitle"
         );
-
 
       const details =
         document.getElementById(
@@ -921,27 +539,19 @@
       // ===================================================
 
       if (
-
         result &&
-
-        result.status ===
-          "VALID"
-
+        result.status === "VALID"
       ) {
 
         box.classList.add(
           "valid"
         );
 
-
         title.textContent =
           "✓ ENTRY APPROVED";
 
 
-        let html = "";
-
-
-        html +=
+        details.innerHTML =
 
           '<div class="detail">' +
 
@@ -951,10 +561,8 @@
             result.name
           ) +
 
-          "</div>";
+          "</div>" +
 
-
-        html +=
 
           '<div class="detail">' +
 
@@ -964,10 +572,8 @@
             result.passId
           ) +
 
-          "</div>";
+          "</div>" +
 
-
-        html +=
 
           '<div class="detail">' +
 
@@ -977,68 +583,18 @@
             result.accessType
           ) +
 
+          "</div>" +
+
+
+          '<div class="detail">' +
+
+          "<strong>CHECK-IN</strong><br>" +
+
+          escapeHtml(
+            result.checkInTime
+          ) +
+
           "</div>";
-
-
-        if (
-          result.tablePackage
-        ) {
-
-          html +=
-
-            '<div class="detail">' +
-
-            "<strong>TABLE</strong><br>" +
-
-            escapeHtml(
-              result.tablePackage
-            ) +
-
-            "</div>";
-
-        }
-
-
-        if (
-          result.checkInTime
-        ) {
-
-          html +=
-
-            '<div class="detail">' +
-
-            "<strong>CHECK-IN</strong><br>" +
-
-            escapeHtml(
-              result.checkInTime
-            ) +
-
-            "</div>";
-
-        }
-
-
-        if (
-          result.checkedInBy
-        ) {
-
-          html +=
-
-            '<div class="detail">' +
-
-            "<strong>CHECKED IN BY</strong><br>" +
-
-            escapeHtml(
-              result.checkedInBy
-            ) +
-
-            "</div>";
-
-        }
-
-
-        details.innerHTML =
-          html;
 
       }
 
@@ -1048,36 +604,26 @@
       // ===================================================
 
       else if (
-
         result &&
-
-        result.status ===
-          "ALREADY_USED"
-
+        result.status === "ALREADY_USED"
       ) {
 
         box.classList.add(
           "used"
         );
 
-
         title.textContent =
           "⚠ ALREADY USED";
 
 
-        let html = "";
-
-
-        html +=
+        details.innerHTML =
 
           '<div class="detail">' +
 
           "<strong>QR INI SUDAH DIGUNAKAN</strong>" +
 
-          "</div>";
+          "</div>" +
 
-
-        html +=
 
           '<div class="detail">' +
 
@@ -1087,10 +633,8 @@
             result.name
           ) +
 
-          "</div>";
+          "</div>" +
 
-
-        html +=
 
           '<div class="detail">' +
 
@@ -1100,62 +644,18 @@
             result.passId
           ) +
 
-          "</div>";
+          "</div>" +
 
-
-        html +=
 
           '<div class="detail">' +
 
-          "<strong>ACCESS</strong><br>" +
+          "<strong>CHECK-IN</strong><br>" +
 
           escapeHtml(
-            result.accessType
+            result.checkInTime
           ) +
 
           "</div>";
-
-
-        if (
-          result.checkInTime
-        ) {
-
-          html +=
-
-            '<div class="detail">' +
-
-            "<strong>CHECK-IN</strong><br>" +
-
-            escapeHtml(
-              result.checkInTime
-            ) +
-
-            "</div>";
-
-        }
-
-
-        if (
-          result.checkedInBy
-        ) {
-
-          html +=
-
-            '<div class="detail">' +
-
-            "<strong>CHECKED IN BY</strong><br>" +
-
-            escapeHtml(
-              result.checkedInBy
-            ) +
-
-            "</div>";
-
-        }
-
-
-        details.innerHTML =
-          html;
 
       }
 
@@ -1165,18 +665,13 @@
       // ===================================================
 
       else if (
-
         result &&
-
-        result.status ===
-          "INVALID"
-
+        result.status === "INVALID"
       ) {
 
         box.classList.add(
           "invalid"
         );
-
 
         title.textContent =
           "✕ INVALID QR";
@@ -1187,11 +682,8 @@
           '<div class="detail">' +
 
           escapeHtml(
-
             result.message ||
-
             "QR tidak terdaftar."
-
           ) +
 
           "</div>";
@@ -1200,7 +692,7 @@
 
 
       // ===================================================
-      // OTHER SERVER RESPONSE
+      // ERROR
       // ===================================================
 
       else {
@@ -1208,7 +700,6 @@
         box.classList.add(
           "error"
         );
-
 
         title.textContent =
           "SYSTEM ERROR";
@@ -1219,14 +710,10 @@
           '<div class="detail">' +
 
           escapeHtml(
-
             result &&
             result.message
-
               ? result.message
-
               : "Terjadi kesalahan pada server check-in."
-
           ) +
 
           "</div>";
@@ -1236,7 +723,6 @@
 
       box.style.display =
         "block";
-
     }
 
 
@@ -1251,12 +737,10 @@
           "result"
         );
 
-
       const title =
         document.getElementById(
           "resultTitle"
         );
-
 
       const details =
         document.getElementById(
@@ -1266,7 +750,6 @@
 
       box.className =
         "result error";
-
 
       box.style.display =
         "block";
@@ -1280,10 +763,9 @@
 
         '<div class="detail">' +
 
-        "Memverifikasi QR ke Supabase..." +
+        "Memverifikasi QR ke server..." +
 
         "</div>";
-
     }
 
 
@@ -1298,12 +780,10 @@
           "result"
         );
 
-
       const title =
         document.getElementById(
           "resultTitle"
         );
-
 
       const details =
         document.getElementById(
@@ -1313,7 +793,6 @@
 
       box.className =
         "result error";
-
 
       box.style.display =
         "block";
@@ -1328,18 +807,13 @@
         '<div class="detail">' +
 
         escapeHtml(
-
           error &&
           error.message
-
             ? error.message
-
             : "Tidak dapat menghubungi server check-in."
-
         ) +
 
         "</div>";
-
     }
 
 
@@ -1354,12 +828,10 @@
           "result"
         );
 
-
       const title =
         document.getElementById(
           "resultTitle"
         );
-
 
       const details =
         document.getElementById(
@@ -1369,7 +841,6 @@
 
       box.className =
         "result invalid";
-
 
       box.style.display =
         "block";
@@ -1383,12 +854,9 @@
 
         '<div class="detail">' +
 
-        escapeHtml(
-          message
-        ) +
+        escapeHtml(message) +
 
         "</div>";
-
     }
 
 
@@ -1403,7 +871,6 @@
           "result"
         );
 
-
       box.style.display =
         "none";
 
@@ -1412,7 +879,6 @@
         document.getElementById(
           "manualToken"
         );
-
 
       input.value =
         "";
@@ -1423,7 +889,6 @@
 
 
       startScanner();
-
     }
 
 
@@ -1434,11 +899,9 @@
     function escapeHtml(value) {
 
       return String(
-
         value == null
           ? ""
           : value
-
       )
 
         .replace(
@@ -1465,44 +928,16 @@
           /'/g,
           "&#039;"
         );
-
     }
 
 
     // =====================================================
-    // MANUAL INPUT ENTER
-    // =====================================================
-
-    document
-      .getElementById(
-        "manualToken"
-      )
-      .addEventListener(
-        "keydown",
-        function(event) {
-
-          if (
-            event.key ===
-            "Enter"
-          ) {
-
-            event.preventDefault();
-
-            manualCheckIn();
-
-          }
-
-        }
-      );
-
-
-    // =====================================================
-    // START WHEN PAGE LOADS
+    // START SAAT HALAMAN DIBUKA
     // =====================================================
 
     window.addEventListener(
       "load",
-      function() {
+      function () {
 
         startScanner();
 
@@ -1510,7 +945,6 @@
     );
 
   </script>
-
 
 </body>
 
