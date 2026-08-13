@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -494,51 +495,28 @@
     // =====================================================
 
     const reader =
-      document.getElementById(
-        "reader"
-      );
-
+      document.getElementById("reader");
 
     const scannerStatus =
-      document.getElementById(
-        "scannerStatus"
-      );
-
+      document.getElementById("scannerStatus");
 
     const manualToken =
-      document.getElementById(
-        "manualToken"
-      );
-
+      document.getElementById("manualToken");
 
     const manualButton =
-      document.getElementById(
-        "manualButton"
-      );
-
+      document.getElementById("manualButton");
 
     const result =
-      document.getElementById(
-        "result"
-      );
-
+      document.getElementById("result");
 
     const resultTitle =
-      document.getElementById(
-        "resultTitle"
-      );
-
+      document.getElementById("resultTitle");
 
     const resultDetails =
-      document.getElementById(
-        "resultDetails"
-      );
-
+      document.getElementById("resultDetails");
 
     const resetButton =
-      document.getElementById(
-        "resetButton"
-      );
+      document.getElementById("resetButton");
 
 
     // =====================================================
@@ -549,6 +527,98 @@
 
       scannerStatus.textContent =
         text || "";
+
+    }
+
+
+    // =====================================================
+    // EXTRACT QR TOKEN
+    //
+    // Mendukung:
+    //
+    // 1. QR langsung berisi token
+    //
+    //    JebUnQtPMkWR2gVkxDQXyCFqWLjREhhq
+    //
+    // 2. QR berisi URL QuickChart:
+    //
+    //    https://quickchart.io/qr?text=TOKEN&size=300...
+    //
+    // =====================================================
+
+    function extractQrToken(decodedText) {
+
+      const raw =
+        String(
+          decodedText == null
+            ? ""
+            : decodedText
+        ).trim();
+
+
+      if (!raw) {
+
+        return "";
+
+      }
+
+
+      // ---------------------------------------------------
+      // CASE 1
+      // URL dengan parameter ?text=
+      // ---------------------------------------------------
+
+      try {
+
+        const parsed =
+          new URL(raw);
+
+
+        const textParameter =
+          parsed.searchParams.get("text");
+
+
+        if (textParameter) {
+
+          return decodeURIComponent(
+            textParameter
+          ).trim();
+
+        }
+
+      } catch (error) {
+
+        // Bukan URL.
+        // Lanjutkan ke pemeriksaan berikutnya.
+
+      }
+
+
+      // ---------------------------------------------------
+      // CASE 2
+      // Kalau hasil scanner berupa:
+      //
+      // text=TOKEN
+      // ---------------------------------------------------
+
+      if (
+        raw.toLowerCase()
+          .startsWith("text=")
+      ) {
+
+        return decodeURIComponent(
+          raw.substring(5)
+        ).trim();
+
+      }
+
+
+      // ---------------------------------------------------
+      // CASE 3
+      // QR langsung berisi token
+      // ---------------------------------------------------
+
+      return raw;
 
     }
 
@@ -664,13 +734,33 @@
       }
 
 
+      console.log(
+        "QR RAW TERBACA:",
+        decodedText
+      );
+
+
       const token =
-        String(
-          decodedText || ""
-        ).trim();
+        extractQrToken(
+          decodedText
+        );
+
+
+      console.log(
+        "QR TOKEN HASIL EXTRACT:",
+        token
+      );
 
 
       if (!token) {
+
+        console.warn(
+          "QR token kosong."
+        );
+
+        showTemporaryError(
+          "QR TOKEN KOSONG"
+        );
 
         return;
 
@@ -694,8 +784,8 @@
 
     function onScanError(errorMessage) {
 
-      // Sengaja tidak menampilkan
-      // error scan biasa.
+      // Error pembacaan QR biasa
+      // sengaja tidak ditampilkan.
 
     }
 
@@ -737,6 +827,33 @@
     // =====================================================
 
     async function processToken(token) {
+
+      const cleanToken =
+        String(
+          token == null
+            ? ""
+            : token
+        ).trim();
+
+
+      if (!cleanToken) {
+
+        processing = false;
+
+        showTemporaryError(
+          "QR TOKEN KOSONG"
+        );
+
+        return;
+
+      }
+
+
+      console.log(
+        "CHECK-IN TOKEN:",
+        cleanToken
+      );
+
 
       showLoading();
 
@@ -816,7 +933,7 @@
                 JSON.stringify({
 
                   token:
-                    token,
+                    cleanToken,
 
                   checkedInBy:
                     "SCANNER"
@@ -1023,7 +1140,7 @@
 
 
       // ===================================================
-      // VALID
+      // VALID / CHECKED IN
       // ===================================================
 
       if (
@@ -1391,6 +1508,17 @@
 
     async function resetScanner() {
 
+      if (requestTimeout) {
+
+        clearTimeout(
+          requestTimeout
+        );
+
+        requestTimeout = null;
+
+      }
+
+
       result.style.display =
         "none";
 
@@ -1519,3 +1647,4 @@
 </body>
 
 </html>
+```
