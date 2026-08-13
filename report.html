@@ -93,6 +93,15 @@
       font-size: 14px;
     }
 
+    button:active {
+      transform: scale(0.98);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
     .btn-red {
       background: #e00000;
       color: #fff;
@@ -102,10 +111,6 @@
       background: #292929;
       color: #fff;
       border: 1px solid #444;
-    }
-
-    button:active {
-      transform: scale(.98);
     }
 
     .stats {
@@ -134,6 +139,19 @@
     .stat-value {
       font-size: 28px;
       font-weight: 900;
+    }
+
+    .stat.used-stat {
+      border-color: #7a0000;
+      background: #180000;
+    }
+
+    .stat.used-stat .stat-label {
+      color: #ff5555;
+    }
+
+    .stat.used-stat .stat-value {
+      color: #ff3333;
     }
 
     .table-card {
@@ -172,9 +190,66 @@
       vertical-align: top;
     }
 
-    tr:hover td {
+    tr.normal-row:hover td {
       background: #181818;
     }
+
+    /*
+     * =====================================================
+     * USED ROW
+     * =====================================================
+     */
+
+    tr.used-row {
+      background:
+        linear-gradient(
+          90deg,
+          rgba(120, 0, 0, 0.28),
+          rgba(50, 0, 0, 0.18)
+        );
+
+      border-left: 4px solid #e00000;
+    }
+
+    tr.used-row td {
+      color: #ffb0b0;
+      border-bottom: 1px solid #680000;
+    }
+
+    tr.used-row:hover td {
+      background: rgba(180, 0, 0, 0.20);
+    }
+
+    tr.used-row strong {
+      color: #ff5c5c;
+    }
+
+    /*
+     * =====================================================
+     * CANCELLED ROW
+     * =====================================================
+     */
+
+    tr.cancelled-row {
+      background:
+        linear-gradient(
+          90deg,
+          rgba(90, 90, 90, 0.15),
+          rgba(30, 30, 30, 0.15)
+        );
+
+      border-left: 4px solid #777;
+    }
+
+    tr.cancelled-row td {
+      color: #999;
+    }
+
+    /*
+     * =====================================================
+     * STATUS BADGES
+     * =====================================================
+     */
 
     .status {
       display: inline-block;
@@ -185,16 +260,24 @@
       white-space: nowrap;
     }
 
-    .status.checked {
-      background: #063819;
-      color: #36df7a;
-      border: 1px solid #16c75a;
+    .status.used {
+      background: #420000;
+      color: #ff4d4d;
+      border: 1px solid #e00000;
+      box-shadow:
+        0 0 8px rgba(224, 0, 0, 0.25);
     }
 
     .status.unused {
       background: #302800;
       color: #f0c62d;
       border: 1px solid #c6a300;
+    }
+
+    .status.cancelled {
+      background: #242424;
+      color: #999;
+      border: 1px solid #666;
     }
 
     .empty {
@@ -245,6 +328,12 @@
         font-size: 23px;
       }
     }
+
+    /*
+     * =====================================================
+     * PRINT
+     * =====================================================
+     */
 
     @media print {
       @page {
@@ -307,6 +396,16 @@
         font-size: 18px;
       }
 
+      .stat.used-stat {
+        border: 2px solid #e00000;
+        background: #fff;
+      }
+
+      .stat.used-stat .stat-label,
+      .stat.used-stat .stat-value {
+        color: #e00000;
+      }
+
       .table-card {
         border: 1px solid #999;
         background: #fff;
@@ -334,11 +433,45 @@
         font-size: 8px;
       }
 
+      /*
+       * USED tetap merah saat print
+       */
+
+      tr.used-row {
+        background: #fff0f0 !important;
+        border-left: 3px solid #e00000 !important;
+      }
+
+      tr.used-row td {
+        color: #b00000 !important;
+        border-bottom: 1px solid #e00000 !important;
+      }
+
+      tr.used-row strong {
+        color: #b00000 !important;
+      }
+
+      tr.cancelled-row {
+        background: #f3f3f3 !important;
+        border-left: 3px solid #777 !important;
+      }
+
       .status {
         border: none !important;
         background: none !important;
-        color: #000 !important;
         padding: 0;
+      }
+
+      .status.used {
+        color: #e00000 !important;
+      }
+
+      .status.unused {
+        color: #a08000 !important;
+      }
+
+      .status.cancelled {
+        color: #666 !important;
       }
 
       .print-only {
@@ -355,7 +488,12 @@
 
   <div class="container">
 
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
     <div class="header">
+
       <div class="brand">
         BOLD <span>AFTER DARK</span>
       </div>
@@ -363,7 +501,13 @@
       <div class="subtitle">
         AUDIENCE REPORT
       </div>
+
     </div>
+
+
+    <!-- =====================================================
+         TOOLBAR
+         ===================================================== -->
 
     <div class="toolbar">
 
@@ -375,16 +519,42 @@
       >
 
       <select id="accessFilter">
-        <option value="">ALL ACCESS</option>
-        <option value="FREE">FREE</option>
-        <option value="VIP">VIP</option>
+
+        <option value="">
+          ALL ACCESS
+        </option>
+
+        <option value="FREE">
+          FREE
+        </option>
+
+        <option value="VIP">
+          VIP
+        </option>
+
       </select>
 
+
       <select id="statusFilter">
-        <option value="">ALL STATUS</option>
-        <option value="UNUSED">UNUSED</option>
-        <option value="CHECKED_IN">CHECKED IN</option>
+
+        <option value="">
+          ALL STATUS
+        </option>
+
+        <option value="UNUSED">
+          UNUSED
+        </option>
+
+        <option value="USED">
+          USED
+        </option>
+
+        <option value="CANCELLED">
+          CANCELLED
+        </option>
+
       </select>
+
 
       <button
         type="button"
@@ -394,6 +564,7 @@
         REFRESH
       </button>
 
+
       <button
         type="button"
         class="btn-dark"
@@ -401,6 +572,7 @@
       >
         PRINT REPORT
       </button>
+
 
       <button
         type="button"
@@ -412,14 +584,25 @@
 
     </div>
 
+
+    <!-- =====================================================
+         ERROR
+         ===================================================== -->
+
     <div
       id="errorBox"
       class="error"
     ></div>
 
+
+    <!-- =====================================================
+         STATISTICS
+         ===================================================== -->
+
     <div class="stats">
 
       <div class="stat">
+
         <div class="stat-label">
           TOTAL
         </div>
@@ -430,9 +613,12 @@
         >
           0
         </div>
+
       </div>
 
+
       <div class="stat">
+
         <div class="stat-label">
           FREE
         </div>
@@ -443,9 +629,12 @@
         >
           0
         </div>
+
       </div>
 
+
       <div class="stat">
+
         <div class="stat-label">
           VIP
         </div>
@@ -456,22 +645,28 @@
         >
           0
         </div>
+
       </div>
 
-      <div class="stat">
+
+      <div class="stat used-stat">
+
         <div class="stat-label">
-          CHECKED IN
+          USED
         </div>
 
         <div
-          id="checkedInCount"
+          id="usedCount"
           class="stat-value"
         >
           0
         </div>
+
       </div>
 
+
       <div class="stat">
+
         <div class="stat-label">
           UNUSED
         </div>
@@ -482,16 +677,31 @@
         >
           0
         </div>
+
       </div>
 
     </div>
 
+
+    <!-- =====================================================
+         PRINT INFO
+         ===================================================== -->
+
     <div class="print-only">
+
       BOLD AFTER DARK — AUDIENCE REPORT
+
       <br>
+
       Dicetak:
       <span id="printDate"></span>
+
     </div>
+
+
+    <!-- =====================================================
+         TABLE
+         ===================================================== -->
 
     <div class="table-card">
 
@@ -502,37 +712,76 @@
         Memuat data audience...
       </div>
 
+
       <div
         id="empty"
         class="empty"
-        style="display:none;"
+        style="display: none;"
       >
         Tidak ada data audience.
       </div>
 
+
       <div
         id="tableWrapper"
         class="table-wrapper"
-        style="display:none;"
+        style="display: none;"
       >
 
         <table>
 
           <thead>
+
             <tr>
-              <th>#</th>
-              <th>NAMA</th>
-              <th>WHATSAPP</th>
-              <th>PASS ID</th>
-              <th>ACCESS</th>
-              <th>TABLE PACKAGE</th>
-              <th>COMMUNITY</th>
-              <th>STATUS</th>
-              <th>REGISTERED</th>
-              <th>CHECK-IN</th>
-              <th>CHECKED BY</th>
+
+              <th>
+                #
+              </th>
+
+              <th>
+                NAMA
+              </th>
+
+              <th>
+                WHATSAPP
+              </th>
+
+              <th>
+                PASS ID
+              </th>
+
+              <th>
+                ACCESS
+              </th>
+
+              <th>
+                TABLE PACKAGE
+              </th>
+
+              <th>
+                COMMUNITY
+              </th>
+
+              <th>
+                STATUS
+              </th>
+
+              <th>
+                REGISTERED
+              </th>
+
+              <th>
+                CHECK-IN
+              </th>
+
+              <th>
+                CHECKED BY
+              </th>
+
             </tr>
+
           </thead>
+
 
           <tbody id="tableBody"></tbody>
 
@@ -542,11 +791,17 @@
 
     </div>
 
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
     <div class="footer">
       BOLD AFTER DARK • AUDIENCE REPORT
     </div>
 
   </div>
+
 
   <script>
 
@@ -850,7 +1105,6 @@
 
         applyFilters();
 
-
       } catch (error) {
 
         console.error(
@@ -912,27 +1166,42 @@
         allRows.filter(
           function(row) {
 
-            if (
-              access &&
+            const rowAccess =
               String(
                 row.access_type || ""
-              ).toUpperCase() !==
-                access
+              )
+                .trim()
+                .toUpperCase();
+
+            const rowStatus =
+              String(
+                row.pass_status || ""
+              )
+                .trim()
+                .toUpperCase();
+
+
+            // ACCESS FILTER
+
+            if (
+              access &&
+              rowAccess !== access
             ) {
               return false;
             }
 
+
+            // STATUS FILTER
 
             if (
               status &&
-              String(
-                row.pass_status || ""
-              ).toUpperCase() !==
-                status
+              rowStatus !== status
             ) {
               return false;
             }
 
+
+            // SEARCH
 
             if (search) {
 
@@ -946,9 +1215,12 @@
                 ]
                   .map(
                     function(value) {
+
                       return String(
                         value || ""
-                      ).toLowerCase();
+                      )
+                        .toLowerCase();
+
                     }
                   )
                   .join(" ");
@@ -1000,7 +1272,8 @@
 
             return String(
               row.access_type || ""
-            ).toUpperCase() ===
+            )
+              .toUpperCase() ===
               "FREE";
 
           }
@@ -1013,21 +1286,23 @@
 
             return String(
               row.access_type || ""
-            ).toUpperCase() ===
+            )
+              .toUpperCase() ===
               "VIP";
 
           }
         ).length;
 
 
-      const checkedIn =
+      const used =
         rows.filter(
           function(row) {
 
             return String(
               row.pass_status || ""
-            ).toUpperCase() ===
-              "CHECKED_IN";
+            )
+              .toUpperCase() ===
+              "USED";
 
           }
         ).length;
@@ -1039,7 +1314,8 @@
 
             return String(
               row.pass_status || ""
-            ).toUpperCase() ===
+            )
+              .toUpperCase() ===
               "UNUSED";
 
           }
@@ -1065,9 +1341,9 @@
 
 
       document.getElementById(
-        "checkedInCount"
+        "usedCount"
       ).textContent =
-        checkedIn;
+        used;
 
 
       document.getElementById(
@@ -1129,22 +1405,80 @@
           const status =
             String(
               row.pass_status || ""
-            ).toUpperCase();
+            )
+              .trim()
+              .toUpperCase();
 
 
-          const statusClass =
-            status ===
-              "CHECKED_IN"
-              ? "checked"
-              : "unused";
+          // =================================================
+          // ROW CLASS
+          // =================================================
+
+          if (status === "USED") {
+
+            tr.className =
+              "used-row";
+
+          } else if (
+            status === "CANCELLED"
+          ) {
+
+            tr.className =
+              "cancelled-row";
+
+          } else {
+
+            tr.className =
+              "normal-row";
+
+          }
 
 
-          const statusLabel =
-            status ===
-              "CHECKED_IN"
-              ? "CHECKED IN"
-              : status || "-";
+          // =================================================
+          // STATUS CLASS
+          // =================================================
 
+          let statusClass =
+            "unused";
+
+          let statusLabel =
+            status || "-";
+
+
+          if (status === "USED") {
+
+            statusClass =
+              "used";
+
+            statusLabel =
+              "USED";
+
+          } else if (
+            status === "CANCELLED"
+          ) {
+
+            statusClass =
+              "cancelled";
+
+            statusLabel =
+              "CANCELLED";
+
+          } else if (
+            status === "UNUSED"
+          ) {
+
+            statusClass =
+              "unused";
+
+            statusLabel =
+              "UNUSED";
+
+          }
+
+
+          // =================================================
+          // TABLE ROW
+          // =================================================
 
           tr.innerHTML =
 
@@ -1239,7 +1573,7 @@
 
 
     // =====================================================
-    // CSV
+    // CSV ESCAPE
     // =====================================================
 
     function csvEscape(
@@ -1255,15 +1589,18 @@
 
 
       return '"' +
-        text
-          .replace(
-            /"/g,
-            '""'
-          ) +
+        text.replace(
+          /"/g,
+          '""'
+        ) +
         '"';
 
     }
 
+
+    // =====================================================
+    // DOWNLOAD CSV
+    // =====================================================
 
     function downloadCsv() {
 
@@ -1282,25 +1619,40 @@
 
 
       const headers = [
+
         "No",
+
         "Nama",
+
         "WhatsApp",
+
         "Pass ID",
+
         "Access",
+
         "Table Package",
+
         "Community",
+
         "Stay Connected",
+
         "Status",
+
         "Registered At",
+
         "Check In At",
+
         "Checked By"
+
       ];
 
 
       const lines = [
+
         headers
           .map(csvEscape)
           .join(",")
+
       ];
 
 
@@ -1308,22 +1660,37 @@
         function(row, index) {
 
           lines.push(
+
             [
+
               index + 1,
+
               row.name,
+
               row.whatsapp,
+
               row.pass_id,
+
               row.access_type,
+
               row.table_package,
+
               row.community,
+
               row.stay_connected,
+
               row.pass_status,
+
               row.created_at,
+
               row.checked_in_at,
+
               row.checked_in_by
+
             ]
               .map(csvEscape)
               .join(",")
+
           );
 
         }
@@ -1332,7 +1699,9 @@
 
       const csv =
         "\uFEFF" +
-        lines.join("\r\n");
+        lines.join(
+          "\r\n"
+        );
 
 
       const blob =
@@ -1359,6 +1728,7 @@
 
       link.href =
         url;
+
 
       link.download =
         "bold-after-dark-audience-report.csv";
