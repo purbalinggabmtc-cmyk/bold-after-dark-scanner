@@ -1,0 +1,1457 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>BOLD AFTER DARK — REPORT</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(
+          circle at top,
+          #2a0000 0%,
+          #080808 45%,
+          #000000 100%
+        );
+      color: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 24px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: 4px;
+    }
+
+    .brand span {
+      color: #e00000;
+    }
+
+    .subtitle {
+      margin-top: 6px;
+      color: #aaa;
+      font-size: 13px;
+      letter-spacing: 3px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .toolbar input,
+    .toolbar select {
+      flex: 1;
+      min-width: 180px;
+      padding: 13px;
+      background: #151515;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .toolbar input:focus,
+    .toolbar select:focus {
+      border-color: #e00000;
+    }
+
+    button {
+      padding: 13px 18px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn-red {
+      background: #e00000;
+      color: #fff;
+    }
+
+    .btn-dark {
+      background: #292929;
+      color: #fff;
+      border: 1px solid #444;
+    }
+
+    button:active {
+      transform: scale(.98);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .stat {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .stat-label {
+      color: #999;
+      font-size: 12px;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    .table-card {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1150px;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: #1c1c1c;
+      color: #ddd;
+      font-size: 12px;
+      text-align: left;
+      padding: 13px 10px;
+      border-bottom: 1px solid #444;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 12px 10px;
+      border-bottom: 1px solid #292929;
+      font-size: 13px;
+      color: #ddd;
+      vertical-align: top;
+    }
+
+    tr:hover td {
+      background: #181818;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .status.checked {
+      background: #063819;
+      color: #36df7a;
+      border: 1px solid #16c75a;
+    }
+
+    .status.unused {
+      background: #302800;
+      color: #f0c62d;
+      border: 1px solid #c6a300;
+    }
+
+    .empty {
+      padding: 40px;
+      text-align: center;
+      color: #777;
+    }
+
+    .loading {
+      padding: 30px;
+      text-align: center;
+      color: #aaa;
+    }
+
+    .error {
+      margin-bottom: 18px;
+      padding: 15px;
+      background: #300000;
+      border: 1px solid #e00000;
+      border-radius: 10px;
+      color: #ff7777;
+      display: none;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      color: #555;
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+
+    .print-only {
+      display: none;
+    }
+
+    @media (max-width: 800px) {
+      body {
+        padding: 12px;
+      }
+
+      .stats {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      .brand {
+        font-size: 23px;
+      }
+    }
+
+    @media print {
+      @page {
+        size: landscape;
+        margin: 10mm;
+      }
+
+      body {
+        background: #fff;
+        color: #000;
+        padding: 0;
+      }
+
+      .container {
+        max-width: none;
+      }
+
+      .header {
+        color: #000;
+        margin-bottom: 12px;
+      }
+
+      .brand {
+        color: #000;
+      }
+
+      .brand span {
+        color: #000;
+      }
+
+      .subtitle {
+        color: #555;
+      }
+
+      .toolbar,
+      .footer,
+      .error {
+        display: none !important;
+      }
+
+      .stats {
+        grid-template-columns:
+          repeat(5, 1fr);
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+
+      .stat {
+        border: 1px solid #aaa;
+        background: #fff;
+        padding: 8px;
+      }
+
+      .stat-label {
+        color: #555;
+      }
+
+      .stat-value {
+        color: #000;
+        font-size: 18px;
+      }
+
+      .table-card {
+        border: 1px solid #999;
+        background: #fff;
+      }
+
+      .table-wrapper {
+        overflow: visible;
+      }
+
+      table {
+        min-width: 0;
+        width: 100%;
+      }
+
+      th {
+        background: #eee;
+        color: #000;
+        border-bottom: 1px solid #999;
+        font-size: 9px;
+      }
+
+      td {
+        color: #000;
+        border-bottom: 1px solid #ddd;
+        font-size: 8px;
+      }
+
+      .status {
+        border: none !important;
+        background: none !important;
+        color: #000 !important;
+        padding: 0;
+      }
+
+      .print-only {
+        display: block;
+        margin-bottom: 10px;
+        color: #333;
+        font-size: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="header">
+      <div class="brand">
+        BOLD <span>AFTER DARK</span>
+      </div>
+
+      <div class="subtitle">
+        AUDIENCE REPORT
+      </div>
+    </div>
+
+    <div class="toolbar">
+
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Cari nama, WhatsApp, Pass ID, community..."
+        autocomplete="off"
+      >
+
+      <select id="accessFilter">
+        <option value="">ALL ACCESS</option>
+        <option value="FREE">FREE</option>
+        <option value="VIP">VIP</option>
+      </select>
+
+      <select id="statusFilter">
+        <option value="">ALL STATUS</option>
+        <option value="UNUSED">UNUSED</option>
+        <option value="CHECKED_IN">CHECKED IN</option>
+      </select>
+
+      <button
+        type="button"
+        class="btn-red"
+        id="refreshButton"
+      >
+        REFRESH
+      </button>
+
+      <button
+        type="button"
+        class="btn-dark"
+        id="printButton"
+      >
+        PRINT REPORT
+      </button>
+
+      <button
+        type="button"
+        class="btn-dark"
+        id="csvButton"
+      >
+        DOWNLOAD CSV
+      </button>
+
+    </div>
+
+    <div
+      id="errorBox"
+      class="error"
+    ></div>
+
+    <div class="stats">
+
+      <div class="stat">
+        <div class="stat-label">
+          TOTAL
+        </div>
+
+        <div
+          id="totalCount"
+          class="stat-value"
+        >
+          0
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">
+          FREE
+        </div>
+
+        <div
+          id="freeCount"
+          class="stat-value"
+        >
+          0
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">
+          VIP
+        </div>
+
+        <div
+          id="vipCount"
+          class="stat-value"
+        >
+          0
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">
+          CHECKED IN
+        </div>
+
+        <div
+          id="checkedInCount"
+          class="stat-value"
+        >
+          0
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">
+          UNUSED
+        </div>
+
+        <div
+          id="unusedCount"
+          class="stat-value"
+        >
+          0
+        </div>
+      </div>
+
+    </div>
+
+    <div class="print-only">
+      BOLD AFTER DARK — AUDIENCE REPORT
+      <br>
+      Dicetak:
+      <span id="printDate"></span>
+    </div>
+
+    <div class="table-card">
+
+      <div
+        id="loading"
+        class="loading"
+      >
+        Memuat data audience...
+      </div>
+
+      <div
+        id="empty"
+        class="empty"
+        style="display:none;"
+      >
+        Tidak ada data audience.
+      </div>
+
+      <div
+        id="tableWrapper"
+        class="table-wrapper"
+        style="display:none;"
+      >
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>NAMA</th>
+              <th>WHATSAPP</th>
+              <th>PASS ID</th>
+              <th>ACCESS</th>
+              <th>TABLE PACKAGE</th>
+              <th>COMMUNITY</th>
+              <th>STATUS</th>
+              <th>REGISTERED</th>
+              <th>CHECK-IN</th>
+              <th>CHECKED BY</th>
+            </tr>
+          </thead>
+
+          <tbody id="tableBody"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+    <div class="footer">
+      BOLD AFTER DARK • AUDIENCE REPORT
+    </div>
+
+  </div>
+
+  <script>
+
+    // =====================================================
+    // SUPABASE CONFIGURATION
+    // =====================================================
+
+    const API_URL =
+      "https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/dynamic-service";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_YGi3tPBuF9tW4KKnLJ5dDQ_AcBZ19WH";
+
+
+    // =====================================================
+    // STATE
+    // =====================================================
+
+    let allRows = [];
+
+    let filteredRows = [];
+
+
+    // =====================================================
+    // ELEMENTS
+    // =====================================================
+
+    const searchInput =
+      document.getElementById(
+        "searchInput"
+      );
+
+    const accessFilter =
+      document.getElementById(
+        "accessFilter"
+      );
+
+    const statusFilter =
+      document.getElementById(
+        "statusFilter"
+      );
+
+    const refreshButton =
+      document.getElementById(
+        "refreshButton"
+      );
+
+    const printButton =
+      document.getElementById(
+        "printButton"
+      );
+
+    const csvButton =
+      document.getElementById(
+        "csvButton"
+      );
+
+    const errorBox =
+      document.getElementById(
+        "errorBox"
+      );
+
+    const loading =
+      document.getElementById(
+        "loading"
+      );
+
+    const empty =
+      document.getElementById(
+        "empty"
+      );
+
+    const tableWrapper =
+      document.getElementById(
+        "tableWrapper"
+      );
+
+    const tableBody =
+      document.getElementById(
+        "tableBody"
+      );
+
+
+    // =====================================================
+    // ESCAPE HTML
+    // =====================================================
+
+    function escapeHtml(value) {
+
+      return String(
+        value == null
+          ? ""
+          : value
+      )
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+
+    // =====================================================
+    // FORMAT DATE
+    // =====================================================
+
+    function formatDate(value) {
+
+      if (!value) {
+        return "-";
+      }
+
+      const date =
+        new Date(value);
+
+      if (
+        Number.isNaN(
+          date.getTime()
+        )
+      ) {
+        return String(value);
+      }
+
+      return date.toLocaleString(
+        "id-ID",
+        {
+          dateStyle: "short",
+          timeStyle: "medium"
+        }
+      );
+
+    }
+
+
+    // =====================================================
+    // SHOW ERROR
+    // =====================================================
+
+    function showError(message) {
+
+      errorBox.textContent =
+        message ||
+        "Terjadi kesalahan.";
+
+      errorBox.style.display =
+        "block";
+
+    }
+
+
+    // =====================================================
+    // HIDE ERROR
+    // =====================================================
+
+    function hideError() {
+
+      errorBox.style.display =
+        "none";
+
+      errorBox.textContent =
+        "";
+
+    }
+
+
+    // =====================================================
+    // LOAD REPORT
+    // =====================================================
+
+    async function loadReport() {
+
+      hideError();
+
+      loading.style.display =
+        "block";
+
+      empty.style.display =
+        "none";
+
+      tableWrapper.style.display =
+        "none";
+
+      refreshButton.disabled =
+        true;
+
+      try {
+
+        const params =
+          new URLSearchParams();
+
+        params.set(
+          "action",
+          "report"
+        );
+
+
+        const response =
+          await fetch(
+            API_URL +
+            "?" +
+            params.toString(),
+            {
+              method: "GET",
+
+              headers: {
+                "Accept":
+                  "application/json",
+
+                "apikey":
+                  SUPABASE_PUBLISHABLE_KEY,
+
+                "Authorization":
+                  "Bearer " +
+                  SUPABASE_PUBLISHABLE_KEY
+              }
+            }
+          );
+
+
+        const raw =
+          await response.text();
+
+
+        console.log(
+          "REPORT HTTP STATUS:",
+          response.status
+        );
+
+        console.log(
+          "REPORT RAW RESPONSE:",
+          raw
+        );
+
+
+        let data;
+
+        try {
+
+          data =
+            JSON.parse(raw);
+
+        } catch (error) {
+
+          throw new Error(
+            "Server mengembalikan response JSON yang tidak valid."
+          );
+
+        }
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            data &&
+            data.message
+              ? data.message
+              : "Gagal mengambil laporan."
+          );
+
+        }
+
+
+        if (
+          !data ||
+          data.success !== true
+        ) {
+
+          throw new Error(
+            data &&
+            data.message
+              ? data.message
+              : "Data laporan tidak valid."
+          );
+
+        }
+
+
+        allRows =
+          Array.isArray(
+            data.registrations
+          )
+            ? data.registrations
+            : [];
+
+
+        applyFilters();
+
+
+      } catch (error) {
+
+        console.error(
+          "REPORT ERROR:",
+          error
+        );
+
+        allRows = [];
+
+        filteredRows = [];
+
+        updateStatistics([]);
+
+        tableBody.innerHTML =
+          "";
+
+        loading.style.display =
+          "none";
+
+        empty.style.display =
+          "block";
+
+        showError(
+          error &&
+          error.message
+            ? error.message
+            : "Tidak dapat mengambil laporan."
+        );
+
+      } finally {
+
+        refreshButton.disabled =
+          false;
+
+      }
+
+    }
+
+
+    // =====================================================
+    // APPLY FILTERS
+    // =====================================================
+
+    function applyFilters() {
+
+      const search =
+        searchInput.value
+          .trim()
+          .toLowerCase();
+
+      const access =
+        accessFilter.value;
+
+      const status =
+        statusFilter.value;
+
+
+      filteredRows =
+        allRows.filter(
+          function(row) {
+
+            if (
+              access &&
+              String(
+                row.access_type || ""
+              ).toUpperCase() !==
+                access
+            ) {
+              return false;
+            }
+
+
+            if (
+              status &&
+              String(
+                row.pass_status || ""
+              ).toUpperCase() !==
+                status
+            ) {
+              return false;
+            }
+
+
+            if (search) {
+
+              const haystack =
+                [
+                  row.name,
+                  row.whatsapp,
+                  row.pass_id,
+                  row.community,
+                  row.table_package
+                ]
+                  .map(
+                    function(value) {
+                      return String(
+                        value || ""
+                      ).toLowerCase();
+                    }
+                  )
+                  .join(" ");
+
+
+              if (
+                !haystack.includes(
+                  search
+                )
+              ) {
+                return false;
+              }
+
+            }
+
+
+            return true;
+
+          }
+        );
+
+
+      updateStatistics(
+        filteredRows
+      );
+
+      renderTable(
+        filteredRows
+      );
+
+    }
+
+
+    // =====================================================
+    // UPDATE STATISTICS
+    // =====================================================
+
+    function updateStatistics(
+      rows
+    ) {
+
+      const total =
+        rows.length;
+
+
+      const free =
+        rows.filter(
+          function(row) {
+
+            return String(
+              row.access_type || ""
+            ).toUpperCase() ===
+              "FREE";
+
+          }
+        ).length;
+
+
+      const vip =
+        rows.filter(
+          function(row) {
+
+            return String(
+              row.access_type || ""
+            ).toUpperCase() ===
+              "VIP";
+
+          }
+        ).length;
+
+
+      const checkedIn =
+        rows.filter(
+          function(row) {
+
+            return String(
+              row.pass_status || ""
+            ).toUpperCase() ===
+              "CHECKED_IN";
+
+          }
+        ).length;
+
+
+      const unused =
+        rows.filter(
+          function(row) {
+
+            return String(
+              row.pass_status || ""
+            ).toUpperCase() ===
+              "UNUSED";
+
+          }
+        ).length;
+
+
+      document.getElementById(
+        "totalCount"
+      ).textContent =
+        total;
+
+
+      document.getElementById(
+        "freeCount"
+      ).textContent =
+        free;
+
+
+      document.getElementById(
+        "vipCount"
+      ).textContent =
+        vip;
+
+
+      document.getElementById(
+        "checkedInCount"
+      ).textContent =
+        checkedIn;
+
+
+      document.getElementById(
+        "unusedCount"
+      ).textContent =
+        unused;
+
+    }
+
+
+    // =====================================================
+    // RENDER TABLE
+    // =====================================================
+
+    function renderTable(
+      rows
+    ) {
+
+      loading.style.display =
+        "none";
+
+
+      tableBody.innerHTML =
+        "";
+
+
+      if (
+        !rows ||
+        rows.length === 0
+      ) {
+
+        tableWrapper.style.display =
+          "none";
+
+        empty.style.display =
+          "block";
+
+        return;
+
+      }
+
+
+      empty.style.display =
+        "none";
+
+      tableWrapper.style.display =
+        "block";
+
+
+      rows.forEach(
+        function(row, index) {
+
+          const tr =
+            document.createElement(
+              "tr"
+            );
+
+
+          const status =
+            String(
+              row.pass_status || ""
+            ).toUpperCase();
+
+
+          const statusClass =
+            status ===
+              "CHECKED_IN"
+              ? "checked"
+              : "unused";
+
+
+          const statusLabel =
+            status ===
+              "CHECKED_IN"
+              ? "CHECKED IN"
+              : status || "-";
+
+
+          tr.innerHTML =
+
+            "<td>" +
+            escapeHtml(
+              index + 1
+            ) +
+            "</td>" +
+
+            "<td>" +
+            "<strong>" +
+            escapeHtml(
+              row.name
+            ) +
+            "</strong>" +
+            "</td>" +
+
+            "<td>" +
+            escapeHtml(
+              row.whatsapp
+            ) +
+            "</td>" +
+
+            "<td>" +
+            escapeHtml(
+              row.pass_id
+            ) +
+            "</td>" +
+
+            "<td>" +
+            escapeHtml(
+              row.access_type
+            ) +
+            "</td>" +
+
+            "<td>" +
+            escapeHtml(
+              row.table_package ||
+              "-"
+            ) +
+            "</td>" +
+
+            "<td>" +
+            escapeHtml(
+              row.community ||
+              "-"
+            ) +
+            "</td>" +
+
+            "<td>" +
+            '<span class="status ' +
+            statusClass +
+            '">' +
+            escapeHtml(
+              statusLabel
+            ) +
+            "</span>" +
+            "</td>" +
+
+            "<td>" +
+            escapeHtml(
+              formatDate(
+                row.created_at
+              )
+            ) +
+            "</td>" +
+
+            "<td>" +
+            escapeHtml(
+              formatDate(
+                row.checked_in_at
+              )
+            ) +
+            "</td>" +
+
+            "<td>" +
+            escapeHtml(
+              row.checked_in_by ||
+              "-"
+            ) +
+            "</td>";
+
+
+          tableBody.appendChild(
+            tr
+          );
+
+        }
+      );
+
+    }
+
+
+    // =====================================================
+    // CSV
+    // =====================================================
+
+    function csvEscape(
+      value
+    ) {
+
+      const text =
+        String(
+          value == null
+            ? ""
+            : value
+        );
+
+
+      return '"' +
+        text
+          .replace(
+            /"/g,
+            '""'
+          ) +
+        '"';
+
+    }
+
+
+    function downloadCsv() {
+
+      if (
+        !filteredRows ||
+        filteredRows.length === 0
+      ) {
+
+        alert(
+          "Tidak ada data untuk di-download."
+        );
+
+        return;
+
+      }
+
+
+      const headers = [
+        "No",
+        "Nama",
+        "WhatsApp",
+        "Pass ID",
+        "Access",
+        "Table Package",
+        "Community",
+        "Stay Connected",
+        "Status",
+        "Registered At",
+        "Check In At",
+        "Checked By"
+      ];
+
+
+      const lines = [
+        headers
+          .map(csvEscape)
+          .join(",")
+      ];
+
+
+      filteredRows.forEach(
+        function(row, index) {
+
+          lines.push(
+            [
+              index + 1,
+              row.name,
+              row.whatsapp,
+              row.pass_id,
+              row.access_type,
+              row.table_package,
+              row.community,
+              row.stay_connected,
+              row.pass_status,
+              row.created_at,
+              row.checked_in_at,
+              row.checked_in_by
+            ]
+              .map(csvEscape)
+              .join(",")
+          );
+
+        }
+      );
+
+
+      const csv =
+        "\uFEFF" +
+        lines.join("\r\n");
+
+
+      const blob =
+        new Blob(
+          [csv],
+          {
+            type:
+              "text/csv;charset=utf-8;"
+          }
+        );
+
+
+      const url =
+        URL.createObjectURL(
+          blob
+        );
+
+
+      const link =
+        document.createElement(
+          "a"
+        );
+
+
+      link.href =
+        url;
+
+      link.download =
+        "bold-after-dark-audience-report.csv";
+
+
+      document.body.appendChild(
+        link
+      );
+
+
+      link.click();
+
+
+      link.remove();
+
+
+      URL.revokeObjectURL(
+        url
+      );
+
+    }
+
+
+    // =====================================================
+    // PRINT
+    // =====================================================
+
+    function printReport() {
+
+      document.getElementById(
+        "printDate"
+      ).textContent =
+        new Date().toLocaleString(
+          "id-ID"
+        );
+
+
+      window.print();
+
+    }
+
+
+    // =====================================================
+    // EVENTS
+    // =====================================================
+
+    refreshButton.addEventListener(
+      "click",
+      loadReport
+    );
+
+
+    printButton.addEventListener(
+      "click",
+      printReport
+    );
+
+
+    csvButton.addEventListener(
+      "click",
+      downloadCsv
+    );
+
+
+    searchInput.addEventListener(
+      "input",
+      applyFilters
+    );
+
+
+    accessFilter.addEventListener(
+      "change",
+      applyFilters
+    );
+
+
+    statusFilter.addEventListener(
+      "change",
+      applyFilters
+    );
+
+
+    // =====================================================
+    // START
+    // =====================================================
+
+    window.addEventListener(
+      "load",
+      loadReport
+    );
+
+  </script>
+
+</body>
+</html>
+```
