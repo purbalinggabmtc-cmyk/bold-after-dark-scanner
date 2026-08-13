@@ -105,7 +105,7 @@
       padding: 16px;
 
       box-shadow:
-        0 0 30px rgba(255,0,0,.12);
+        0 0 30px rgba(255, 0, 0, .12);
 
     }
 
@@ -156,7 +156,7 @@
       border-color: #e00000;
 
       box-shadow:
-        0 0 0 2px rgba(224,0,0,.12);
+        0 0 0 2px rgba(224, 0, 0, .12);
 
     }
 
@@ -466,17 +466,12 @@
 
   <script>
 
-
     // =====================================================
-    // SUPABASE CONFIGURATION
+    // SUPABASE EDGE FUNCTION
     // =====================================================
 
     const API_URL =
       "https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/dynamic-service";
-
-
-    const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_YGi3tPBuF9tW4KKnLJ5dDQ_AcBZ19WH";
 
 
     // =====================================================
@@ -495,28 +490,51 @@
     // =====================================================
 
     const reader =
-      document.getElementById("reader");
+      document.getElementById(
+        "reader"
+      );
+
 
     const scannerStatus =
-      document.getElementById("scannerStatus");
+      document.getElementById(
+        "scannerStatus"
+      );
+
 
     const manualToken =
-      document.getElementById("manualToken");
+      document.getElementById(
+        "manualToken"
+      );
+
 
     const manualButton =
-      document.getElementById("manualButton");
+      document.getElementById(
+        "manualButton"
+      );
+
 
     const result =
-      document.getElementById("result");
+      document.getElementById(
+        "result"
+      );
+
 
     const resultTitle =
-      document.getElementById("resultTitle");
+      document.getElementById(
+        "resultTitle"
+      );
+
 
     const resultDetails =
-      document.getElementById("resultDetails");
+      document.getElementById(
+        "resultDetails"
+      );
+
 
     const resetButton =
-      document.getElementById("resetButton");
+      document.getElementById(
+        "resetButton"
+      );
 
 
     // =====================================================
@@ -527,98 +545,6 @@
 
       scannerStatus.textContent =
         text || "";
-
-    }
-
-
-    // =====================================================
-    // EXTRACT QR TOKEN
-    //
-    // Mendukung:
-    //
-    // 1. QR langsung berisi token
-    //
-    //    JebUnQtPMkWR2gVkxDQXyCFqWLjREhhq
-    //
-    // 2. QR berisi URL QuickChart:
-    //
-    //    https://quickchart.io/qr?text=TOKEN&size=300...
-    //
-    // =====================================================
-
-    function extractQrToken(decodedText) {
-
-      const raw =
-        String(
-          decodedText == null
-            ? ""
-            : decodedText
-        ).trim();
-
-
-      if (!raw) {
-
-        return "";
-
-      }
-
-
-      // ---------------------------------------------------
-      // CASE 1
-      // URL dengan parameter ?text=
-      // ---------------------------------------------------
-
-      try {
-
-        const parsed =
-          new URL(raw);
-
-
-        const textParameter =
-          parsed.searchParams.get("text");
-
-
-        if (textParameter) {
-
-          return decodeURIComponent(
-            textParameter
-          ).trim();
-
-        }
-
-      } catch (error) {
-
-        // Bukan URL.
-        // Lanjutkan ke pemeriksaan berikutnya.
-
-      }
-
-
-      // ---------------------------------------------------
-      // CASE 2
-      // Kalau hasil scanner berupa:
-      //
-      // text=TOKEN
-      // ---------------------------------------------------
-
-      if (
-        raw.toLowerCase()
-          .startsWith("text=")
-      ) {
-
-        return decodeURIComponent(
-          raw.substring(5)
-        ).trim();
-
-      }
-
-
-      // ---------------------------------------------------
-      // CASE 3
-      // QR langsung berisi token
-      // ---------------------------------------------------
-
-      return raw;
 
     }
 
@@ -734,33 +660,26 @@
       }
 
 
-      console.log(
-        "QR RAW TERBACA:",
-        decodedText
-      );
-
-
       const token =
-        extractQrToken(
-          decodedText
-        );
+        String(
+          decodedText || ""
+        ).trim();
 
 
       console.log(
-        "QR TOKEN HASIL EXTRACT:",
+        "QR SCANNED:",
         token
       );
 
 
       if (!token) {
 
-        console.warn(
-          "QR token kosong."
-        );
+        showServerError({
 
-        showTemporaryError(
-          "QR TOKEN KOSONG"
-        );
+          message:
+            "QR terbaca tetapi token kosong."
+
+        });
 
         return;
 
@@ -784,8 +703,7 @@
 
     function onScanError(errorMessage) {
 
-      // Error pembacaan QR biasa
-      // sengaja tidak ditampilkan.
+      // Error scan biasa sengaja tidak ditampilkan.
 
     }
 
@@ -825,41 +743,64 @@
     // =====================================================
     // PROCESS TOKEN
     // =====================================================
+    //
+    // PENTING:
+    // Check-in menggunakan GET.
+    //
+    // Tidak menggunakan:
+    // - POST
+    // - Content-Type JSON
+    // - Authorization
+    // - apikey
+    //
+    // Tujuannya menghindari CORS preflight.
+    // =====================================================
 
     async function processToken(token) {
-
-      const cleanToken =
-        String(
-          token == null
-            ? ""
-            : token
-        ).trim();
-
-
-      if (!cleanToken) {
-
-        processing = false;
-
-        showTemporaryError(
-          "QR TOKEN KOSONG"
-        );
-
-        return;
-
-      }
-
-
-      console.log(
-        "CHECK-IN TOKEN:",
-        cleanToken
-      );
-
 
       showLoading();
 
 
       setScannerStatus(
         "Menghubungi server Supabase..."
+      );
+
+
+      const cleanToken =
+        String(
+          token || ""
+        ).trim();
+
+
+      if (!cleanToken) {
+
+        showServerError({
+
+          message:
+            "QR token kosong."
+
+        });
+
+
+        processing = false;
+
+        return;
+
+      }
+
+
+      const requestUrl =
+        API_URL +
+        "?action=checkIn" +
+        "&token=" +
+        encodeURIComponent(
+          cleanToken
+        );
+
+
+      console.log(
+        "CHECK-IN URL:",
+        requestUrl
       );
 
 
@@ -891,6 +832,9 @@
             finished = true;
 
 
+            requestTimeout = null;
+
+
             showServerError({
 
               message:
@@ -907,41 +851,14 @@
 
         const response =
           await fetch(
-
-            API_URL +
-            "?action=checkIn",
-
+            requestUrl,
             {
 
-              method: "POST",
+              method: "GET",
 
-              headers: {
-
-                "Content-Type":
-                  "application/json",
-
-                apikey:
-                  SUPABASE_PUBLISHABLE_KEY,
-
-                Authorization:
-                  "Bearer " +
-                  SUPABASE_PUBLISHABLE_KEY
-
-              },
-
-              body:
-                JSON.stringify({
-
-                  token:
-                    cleanToken,
-
-                  checkedInBy:
-                    "SCANNER"
-
-                })
+              cache: "no-store"
 
             }
-
           );
 
 
@@ -995,9 +912,10 @@
         } catch (error) {
 
           console.error(
-            "Invalid JSON response:",
+            "JSON PARSE ERROR:",
             error
           );
+
 
           showServerError({
 
@@ -1005,6 +923,7 @@
               "Server mengembalikan response yang tidak valid."
 
           });
+
 
           return;
 
@@ -1015,25 +934,6 @@
           "CHECK-IN JSON:",
           data
         );
-
-
-        if (!response.ok) {
-
-          showServerError({
-
-            message:
-              data &&
-              data.message
-
-                ? data.message
-
-                : "Server check-in mengalami error."
-
-          });
-
-          return;
-
-        }
 
 
         showResult(data);
@@ -1107,7 +1007,9 @@
           "QR TOKEN KOSONG"
         );
 
+
         manualToken.focus();
+
 
         return;
 
@@ -1140,15 +1042,12 @@
 
 
       // ===================================================
-      // VALID / CHECKED IN
+      // VALID
       // ===================================================
 
       if (
         data &&
-        (
-          data.status === "VALID" ||
-          data.status === "CHECKED_IN"
-        )
+        data.status === "VALID"
       ) {
 
         result.classList.add(
@@ -1294,6 +1193,24 @@
           '</div>' +
 
 
+          (
+            data.tablePackage
+
+              ? '<div class="detail">' +
+
+                '<strong>TABLE</strong><br>' +
+
+                escapeHtml(
+                  data.tablePackage
+                ) +
+
+                '</div>'
+
+              : ""
+
+          ) +
+
+
           '<div class="detail">' +
 
           '<strong>CHECK-IN</strong><br>' +
@@ -1362,7 +1279,7 @@
 
 
       // ===================================================
-      // ERROR / UNKNOWN
+      // ERROR
       // ===================================================
 
       result.classList.add(
@@ -1499,6 +1416,11 @@
 
         '</div>';
 
+
+      setScannerStatus(
+        "Input tidak valid."
+      );
+
     }
 
 
@@ -1614,7 +1536,8 @@
       function(event) {
 
         if (
-          event.key === "Enter"
+          event.key ===
+          "Enter"
         ) {
 
           event.preventDefault();
@@ -1639,7 +1562,6 @@
 
       }
     );
-
 
   </script>
 
