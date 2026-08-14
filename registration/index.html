@@ -12,14 +12,15 @@
   <title>BOLD AFTER DARK — Registration</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
 
     body {
       margin: 0;
-      padding: 30px 15px;
       min-height: 100vh;
+      padding: 30px 15px;
 
       background:
         radial-gradient(
@@ -174,6 +175,116 @@
       display: none;
     }
 
+    .rider-status {
+      margin-top: 8px;
+
+      padding: 10px 12px;
+
+      border-radius: 8px;
+
+      font-size: 13px;
+
+      line-height: 1.4;
+
+      display: none;
+    }
+
+    .rider-status.checking {
+      display: block;
+
+      background: rgba(255, 193, 7, 0.08);
+
+      border: 1px solid rgba(255, 193, 7, 0.30);
+
+      color: #f0c62d;
+    }
+
+    .rider-status.valid {
+      display: block;
+
+      background: rgba(0, 180, 80, 0.12);
+
+      border: 1px solid rgba(0, 180, 80, 0.35);
+
+      color: #8cffb5;
+    }
+
+    .rider-status.invalid {
+      display: block;
+
+      background: rgba(255, 30, 30, 0.10);
+
+      border: 1px solid rgba(255, 30, 30, 0.35);
+
+      color: #ff8f8f;
+    }
+
+    .rider-owner {
+      margin-top: 6px;
+
+      font-size: 15px;
+
+      font-weight: 800;
+
+      color: #ffffff;
+    }
+
+    .help-box {
+      margin-top: 6px;
+
+      margin-bottom: 18px;
+
+      padding: 13px;
+
+      background: #171717;
+
+      border: 1px solid #303030;
+
+      border-radius: 10px;
+
+      text-align: center;
+    }
+
+    .help-text {
+      color: #999999;
+
+      font-size: 12px;
+
+      margin-bottom: 9px;
+    }
+
+    .whatsapp-button {
+      display: inline-block;
+
+      width: 100%;
+
+      padding: 12px;
+
+      border-radius: 9px;
+
+      background: #168c45;
+
+      color: #ffffff;
+
+      text-decoration: none;
+
+      font-size: 13px;
+
+      font-weight: 800;
+
+      letter-spacing: 0.4px;
+
+      transition:
+        transform 0.15s,
+        opacity 0.15s;
+    }
+
+    .whatsapp-button:hover {
+      transform: translateY(-1px);
+
+      opacity: 0.92;
+    }
+
     .submit-button {
       width: 100%;
 
@@ -304,45 +415,8 @@
       padding: 5px;
     }
 
-    .new-registration-button {
-      width: 100%;
-
-      margin-top: 18px;
-
-      padding: 12px;
-
-      border-radius: 9px;
-
-      border: 1px solid #444444;
-
-      background: #222222;
-
-      color: #ffffff;
-
-      font-size: 14px;
-
-      font-weight: 700;
-
-      cursor: pointer;
-    }
-
-    .new-registration-button:hover {
-      background: #2b2b2b;
-    }
-
-    .loading-text {
-      text-align: center;
-
-      margin-top: 12px;
-
-      color: #888888;
-
-      font-size: 12px;
-
-      display: none;
-    }
-
     @media (max-width: 480px) {
+
       .registration-container {
         padding: 25px 18px 30px;
       }
@@ -354,7 +428,9 @@
       .registration-label {
         font-size: 16px;
       }
+
     }
+
   </style>
 </head>
 
@@ -367,12 +443,24 @@
     </div>
 
     <div class="title">
-      <span class="title-bold">BOLD</span>
-      <span class="title-after">AFTER</span>
-      <span class="title-dark">DARK</span>
+
+      <span class="title-bold">
+        BOLD
+      </span>
+
+      <span class="title-after">
+        AFTER
+      </span>
+
+      <span class="title-dark">
+        DARK
+      </span>
+
     </div>
 
     <form id="registrationForm">
+
+      <!-- ACCESS -->
 
       <div class="form-group">
 
@@ -386,6 +474,7 @@
           name="accessType"
           required
         >
+
           <option value="">
             Select Access
           </option>
@@ -397,9 +486,56 @@
           <option value="VIP">
             VIP
           </option>
+
+          <option value="BOLD RIDERS">
+            BOLD RIDERS
+          </option>
+
         </select>
 
       </div>
+
+
+      <!-- BOLD RIDERS ID -->
+
+      <div
+        class="form-group hidden"
+        id="boldRiderGroup"
+      >
+
+        <label for="boldRiderId">
+
+          BOLD RIDERS ID
+
+          <span class="required">*</span>
+
+        </label>
+
+        <input
+          type="text"
+          id="boldRiderId"
+          name="boldRiderId"
+          placeholder="Contoh: BR408203"
+          maxlength="30"
+          autocomplete="off"
+          autocapitalize="characters"
+          spellcheck="false"
+        >
+
+        <div
+          id="boldRiderStatus"
+          class="rider-status"
+        ></div>
+
+        <div
+          id="boldRiderOwner"
+          class="rider-owner"
+        ></div>
+
+      </div>
+
+
+      <!-- TABLE PACKAGE -->
 
       <div
         class="form-group hidden"
@@ -410,9 +546,7 @@
 
           Table Package
 
-          <span class="required">
-            *
-          </span>
+          <span class="required">*</span>
 
         </label>
 
@@ -461,11 +595,17 @@
 
       </div>
 
+
+      <!-- NAME -->
+
       <div class="form-group">
 
         <label for="name">
+
           Your Name
+
           <span class="required">*</span>
+
         </label>
 
         <input
@@ -474,17 +614,22 @@
           name="name"
           placeholder="Enter your name"
           maxlength="100"
-          autocomplete="name"
           required
         >
 
       </div>
 
+
+      <!-- WHATSAPP -->
+
       <div class="form-group">
 
         <label for="whatsapp">
+
           WhatsApp
+
           <span class="required">*</span>
+
         </label>
 
         <input
@@ -493,19 +638,24 @@
           name="whatsapp"
           placeholder="08xxxxxxxxxx"
           maxlength="20"
-          autocomplete="tel"
           required
         >
 
       </div>
 
+
+      <!-- STAY CONNECTED -->
+
       <div class="form-group">
 
         <label for="stayConnected">
+
           Stay Connected
+
           <span class="optional">
             Optional
           </span>
+
         </label>
 
         <input
@@ -518,13 +668,19 @@
 
       </div>
 
+
+      <!-- COMMUNITY -->
+
       <div class="form-group">
 
         <label for="community">
+
           Your Community
+
           <span class="optional">
             Optional
           </span>
+
         </label>
 
         <input
@@ -537,6 +693,29 @@
 
       </div>
 
+
+      <!-- HELP -->
+
+      <div class="help-box">
+
+        <div class="help-text">
+          Need help with registration?
+        </div>
+
+        <a
+          class="whatsapp-button"
+          href="https://wa.me/6282324854187?text=Halo%20BOLD%20AFTER%20DARK%2C%20saya%20butuh%20bantuan%20untuk%20registrasi."
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          CHAT WHATSAPP
+        </a>
+
+      </div>
+
+
+      <!-- SUBMIT -->
+
       <button
         type="submit"
         id="submitButton"
@@ -545,19 +724,18 @@
         REGISTER
       </button>
 
-      <div
-        id="loadingText"
-        class="loading-text"
-      >
-        Connecting to registration server...
-      </div>
-
     </form>
+
+
+    <!-- MESSAGE -->
 
     <div
       id="message"
       class="message"
     ></div>
+
+
+    <!-- RESULT -->
 
     <div
       id="passResult"
@@ -584,35 +762,46 @@
         alt="QR Code"
       >
 
-      <button
-        type="button"
-        id="newRegistrationButton"
-        class="new-registration-button"
-      >
-        NEW REGISTRATION
-      </button>
-
     </div>
 
   </div>
 
+
   <script>
 
     // =====================================================
-    // SUPABASE EDGE FUNCTION
+    // GOOGLE APPS SCRIPT
+    // =====================================================
+
+    const API_URL =
+      'https://script.google.com/macros/s/AKfycbwDlByPLDkvNi000w-2A2_XkA8lfQ9BnhU1cVKV6VxuTY2z5YWU_ZqedEEGLn8bouzBNg/exec';
+
+
+    // =====================================================
+    // SUPABASE
     // =====================================================
 
     const SUPABASE_URL =
       'https://yrvnmmascklkuzpjkwxn.supabase.co';
 
-    const API_URL =
-      SUPABASE_URL +
-      '/functions/v1/dynamic-service';
-
-    // Publishable key.
-    // BUKAN secret/service-role key.
     const SUPABASE_PUBLISHABLE_KEY =
       'sb_publishable_YGi3tPBuF9tW4KKnLJ5dDQ_AcBZ19WH';
+
+
+    // =====================================================
+    // BOLD RIDERS TABLE
+    // =====================================================
+
+    const BOLD_RIDERS_TABLE =
+      'bold_riders';
+
+
+    // =====================================================
+    // WHATSAPP HELP
+    // =====================================================
+
+    const HELP_WHATSAPP =
+      '6282324854187';
 
 
     // =====================================================
@@ -629,6 +818,26 @@
         'accessType'
       );
 
+    const boldRiderGroup =
+      document.getElementById(
+        'boldRiderGroup'
+      );
+
+    const boldRiderId =
+      document.getElementById(
+        'boldRiderId'
+      );
+
+    const boldRiderStatus =
+      document.getElementById(
+        'boldRiderStatus'
+      );
+
+    const boldRiderOwner =
+      document.getElementById(
+        'boldRiderOwner'
+      );
+
     const tablePackageGroup =
       document.getElementById(
         'tablePackageGroup'
@@ -642,11 +851,6 @@
     const submitButton =
       document.getElementById(
         'submitButton'
-      );
-
-    const loadingText =
-      document.getElementById(
-        'loadingText'
       );
 
     const message =
@@ -674,47 +878,22 @@
         'qrImage'
       );
 
-    const newRegistrationButton =
-      document.getElementById(
-        'newRegistrationButton'
-      );
-
 
     // =====================================================
-    // ACCESS TYPE
+    // STATE
     // =====================================================
 
-    accessType.addEventListener(
-      'change',
-      function () {
+    let boldRiderValid =
+      false;
 
-        if (
-          this.value === 'VIP'
-        ) {
+    let boldRiderOwnerName =
+      '';
 
-          tablePackageGroup
-            .classList
-            .remove('hidden');
+    let boldRiderLookupTimer =
+      null;
 
-          tablePackage.required =
-            true;
-
-        } else {
-
-          tablePackageGroup
-            .classList
-            .add('hidden');
-
-          tablePackage.required =
-            false;
-
-          tablePackage.value =
-            '';
-
-        }
-
-      }
-    );
+    let boldRiderLookupRequest =
+      0;
 
 
     // =====================================================
@@ -747,154 +926,676 @@
 
 
     // =====================================================
-    // RESET RESULT
+    // BOLD RIDERS STATUS
     // =====================================================
 
-    function hideResult() {
+    function setRiderStatus(
+      type,
+      text
+    ) {
 
-      passResult.style.display =
-        'none';
+      boldRiderStatus.className =
+        'rider-status ' + type;
 
-      passId.textContent =
+      boldRiderStatus.textContent =
+        text;
+
+    }
+
+
+    function clearRiderStatus() {
+
+      boldRiderStatus.className =
+        'rider-status';
+
+      boldRiderStatus.textContent =
         '';
 
-      passInfo.innerHTML =
+      boldRiderOwner.textContent =
         '';
-
-      qrImage.removeAttribute(
-        'src'
-      );
 
     }
 
 
     // =====================================================
-    // REGISTER TO SUPABASE
+    // ACCESS CHANGE
     // =====================================================
 
-    async function registerWithSupabase(
-      params
+    accessType.addEventListener(
+      'change',
+      function () {
+
+        const selected =
+          this.value;
+
+
+        // -----------------------------------------------
+        // VIP
+        // -----------------------------------------------
+
+        if (
+          selected === 'VIP'
+        ) {
+
+          tablePackageGroup
+            .classList
+            .remove('hidden');
+
+          tablePackage.required =
+            true;
+
+        }
+
+        else {
+
+          tablePackageGroup
+            .classList
+            .add('hidden');
+
+          tablePackage.required =
+            false;
+
+          tablePackage.value =
+            '';
+
+        }
+
+
+        // -----------------------------------------------
+        // BOLD RIDERS
+        // -----------------------------------------------
+
+        if (
+          selected === 'BOLD RIDERS'
+        ) {
+
+          boldRiderGroup
+            .classList
+            .remove('hidden');
+
+          boldRiderId.required =
+            true;
+
+        }
+
+        else {
+
+          boldRiderGroup
+            .classList
+            .add('hidden');
+
+          boldRiderId.required =
+            false;
+
+          boldRiderId.value =
+            '';
+
+          boldRiderValid =
+            false;
+
+          boldRiderOwnerName =
+            '';
+
+          clearRiderStatus();
+
+        }
+
+      }
+    );
+
+
+    // =====================================================
+    // NORMALIZE BOLD RIDERS ID
+    // =====================================================
+
+    function normalizeBoldRiderId(
+      value
     ) {
 
-      /*
-       * PENTING:
-       *
-       * action=register dikirim secara eksplisit
-       * melalui query string.
-       *
-       * URL akhirnya:
-       *
-       * /functions/v1/dynamic-service?action=register
-       */
+      return String(
+        value || ''
+      )
+        .trim()
+        .toUpperCase()
+        .replace(
+          /\s+/g,
+          ''
+        );
 
-      const url =
-        API_URL +
-        '?action=register';
+    }
 
 
-      console.log(
-        'Registration API:',
-        url
-      );
+    // =====================================================
+    // LOOKUP BOLD RIDERS
+    // =====================================================
 
+    async function lookupBoldRider(
+      value
+    ) {
 
-      const response =
-        await fetch(
-          url,
-          {
-            method: 'POST',
-
-            headers: {
-
-              'Content-Type':
-                'application/json',
-
-              'apikey':
-                SUPABASE_PUBLISHABLE_KEY,
-
-              'Authorization':
-                'Bearer ' +
-                SUPABASE_PUBLISHABLE_KEY
-
-            },
-
-            body:
-              JSON.stringify(
-                params
-              )
-          }
+      const riderId =
+        normalizeBoldRiderId(
+          value
         );
 
 
-      let data = null;
+      boldRiderValid =
+        false;
 
-      const rawText =
-        await response.text();
+      boldRiderOwnerName =
+        '';
 
 
-      console.log(
-        'Registration HTTP:',
-        response.status
+      if (!riderId) {
+
+        clearRiderStatus();
+
+        return;
+
+      }
+
+
+      setRiderStatus(
+        'checking',
+        'Memeriksa BOLD RIDERS ID...'
       );
 
-      console.log(
-        'Registration RAW:',
-        rawText
-      );
+
+      const requestId =
+        ++boldRiderLookupRequest;
 
 
       try {
 
-        data =
-          JSON.parse(
-            rawText
+        const url =
+          SUPABASE_URL +
+          '/rest/v1/' +
+          BOLD_RIDERS_TABLE +
+          '?id=eq.' +
+          encodeURIComponent(
+            riderId
+          ) +
+          '&select=id,name&limit=1';
+
+
+        const response =
+          await fetch(
+            url,
+            {
+              method: 'GET',
+
+              headers: {
+                'apikey':
+                  SUPABASE_PUBLISHABLE_KEY,
+
+                'Accept':
+                  'application/json'
+              }
+            }
           );
 
-      } catch (error) {
 
-        throw new Error(
-          'Registration server returned an invalid response.'
+        if (
+          requestId !==
+          boldRiderLookupRequest
+        ) {
+          return;
+        }
+
+
+        const raw =
+          await response.text();
+
+
+        let data = [];
+
+        try {
+
+          data =
+            JSON.parse(raw);
+
+        }
+
+        catch (error) {
+
+          throw new Error(
+            'Response server tidak valid.'
+          );
+
+        }
+
+
+        if (!response.ok) {
+
+          console.error(
+            'BOLD RIDERS LOOKUP ERROR:',
+            response.status,
+            raw
+          );
+
+          throw new Error(
+            'Data BOLD RIDERS tidak dapat diperiksa.'
+          );
+
+        }
+
+
+        if (
+          !Array.isArray(data) ||
+          data.length === 0
+        ) {
+
+          boldRiderValid =
+            false;
+
+          boldRiderOwnerName =
+            '';
+
+          setRiderStatus(
+            'invalid',
+            'ID BOLD RIDERS tidak terdaftar.'
+          );
+
+          boldRiderOwner.textContent =
+            '';
+
+          return;
+
+        }
+
+
+        const rider =
+          data[0];
+
+
+        const returnedId =
+          normalizeBoldRiderId(
+            rider.id
+          );
+
+
+        const ownerName =
+          String(
+            rider.name || ''
+          ).trim();
+
+
+        if (
+          returnedId !==
+          riderId ||
+          !ownerName
+        ) {
+
+          boldRiderValid =
+            false;
+
+          boldRiderOwnerName =
+            '';
+
+          setRiderStatus(
+            'invalid',
+            'ID BOLD RIDERS tidak valid.'
+          );
+
+          boldRiderOwner.textContent =
+            '';
+
+          return;
+
+        }
+
+
+        boldRiderValid =
+          true;
+
+        boldRiderOwnerName =
+          ownerName;
+
+
+        setRiderStatus(
+          'valid',
+          'ID BOLD RIDERS valid.'
         );
+
+
+        boldRiderOwner.textContent =
+          'Nama: ' +
+          ownerName;
 
       }
 
+      catch (error) {
 
-      if (!response.ok) {
-
-        throw new Error(
-
-          data &&
-          data.message
-
-            ? data.message
-
-            : 'Registration server error.'
-
+        console.error(
+          'BOLD RIDERS LOOKUP FAILED:',
+          error
         );
+
+
+        boldRiderValid =
+          false;
+
+        boldRiderOwnerName =
+          '';
+
+
+        setRiderStatus(
+          'invalid',
+          error &&
+          error.message
+            ? error.message
+            : 'Gagal memeriksa BOLD RIDERS ID.'
+        );
+
+
+        boldRiderOwner.textContent =
+          '';
 
       }
 
+    }
 
-      if (
-        !data ||
-        data.success !== true
-      ) {
 
-        throw new Error(
+    // =====================================================
+    // BOLD RIDERS INPUT
+    // =====================================================
 
-          data &&
-          data.message
+    boldRiderId.addEventListener(
+      'input',
+      function () {
 
-            ? data.message
+        const normalized =
+          normalizeBoldRiderId(
+            this.value
+          );
 
-            : 'Registration failed.'
 
+        if (
+          this.value !==
+          normalized
+        ) {
+
+          this.value =
+            normalized;
+
+        }
+
+
+        boldRiderValid =
+          false;
+
+        boldRiderOwnerName =
+          '';
+
+
+        clearTimeout(
+          boldRiderLookupTimer
         );
 
+
+        if (!normalized) {
+
+          clearRiderStatus();
+
+          return;
+
+        }
+
+
+        setRiderStatus(
+          'checking',
+          'Menunggu pemeriksaan ID...'
+        );
+
+
+        boldRiderLookupTimer =
+          setTimeout(
+            function () {
+
+              lookupBoldRider(
+                normalized
+              );
+
+            },
+            350
+          );
+
       }
+    );
 
 
-      return data;
+    // =====================================================
+    // JSONP REGISTRATION
+    // =====================================================
+
+    function registerViaJsonp(
+      params
+    ) {
+
+      return new Promise(
+        function (
+          resolve,
+          reject
+        ) {
+
+          const callbackName =
+            'BAD_REGISTER_' +
+            Date.now() +
+            '_' +
+            Math.floor(
+              Math.random() * 1000000
+            );
+
+
+          const script =
+            document.createElement(
+              'script'
+            );
+
+
+          let finished =
+            false;
+
+
+          const timeout =
+            setTimeout(
+              function () {
+
+                if (finished) {
+                  return;
+                }
+
+
+                finished =
+                  true;
+
+
+                cleanup();
+
+
+                reject(
+                  new Error(
+                    'The registration server did not respond within the allowed time.'
+                  )
+                );
+
+              },
+              15000
+            );
+
+
+          function cleanup() {
+
+            clearTimeout(
+              timeout
+            );
+
+
+            if (
+              script.parentNode
+            ) {
+
+              script.parentNode
+                .removeChild(
+                  script
+                );
+
+            }
+
+
+            try {
+
+              delete window[
+                callbackName
+              ];
+
+            }
+
+            catch (error) {
+
+              window[
+                callbackName
+              ] = undefined;
+
+            }
+
+          }
+
+
+          window[
+            callbackName
+          ] =
+            function (
+              response
+            ) {
+
+              if (finished) {
+                return;
+              }
+
+
+              finished =
+                true;
+
+
+              cleanup();
+
+
+              resolve(
+                response
+              );
+
+            };
+
+
+          const query =
+            new URLSearchParams();
+
+
+          query.set(
+            'action',
+            'register'
+          );
+
+
+          query.set(
+            'accessType',
+            params.accessType
+          );
+
+
+          query.set(
+            'name',
+            params.name
+          );
+
+
+          query.set(
+            'whatsapp',
+            params.whatsapp
+          );
+
+
+          query.set(
+            'stayConnected',
+            params.stayConnected
+          );
+
+
+          query.set(
+            'community',
+            params.community
+          );
+
+
+          query.set(
+            'tablePackage',
+            params.tablePackage
+          );
+
+
+          // ---------------------------------------------
+          // BOLD RIDERS DATA
+          // ---------------------------------------------
+
+          query.set(
+            'boldRiderId',
+            params.boldRiderId
+          );
+
+
+          query.set(
+            'boldRiderName',
+            params.boldRiderName
+          );
+
+
+          query.set(
+            'callback',
+            callbackName
+          );
+
+
+          script.src =
+            API_URL +
+            '?' +
+            query.toString();
+
+
+          script.async =
+            true;
+
+
+          script.onerror =
+            function () {
+
+              if (finished) {
+                return;
+              }
+
+
+              finished =
+                true;
+
+
+              cleanup();
+
+
+              reject(
+                new Error(
+                  'Unable to connect to the registration server.'
+                )
+              );
+
+            };
+
+
+          document.body.appendChild(
+            script
+          );
+
+        }
+      );
 
     }
 
@@ -905,21 +1606,37 @@
 
     form.addEventListener(
       'submit',
-      async function (event) {
+      async function (
+        event
+      ) {
 
         event.preventDefault();
 
 
         clearMessage();
 
-        hideResult();
+
+        passResult.style.display =
+          'none';
 
 
         const access =
           accessType.value.trim();
 
+
         const selectedTable =
           tablePackage.value.trim();
+
+
+        const riderId =
+          normalizeBoldRiderId(
+            boldRiderId.value
+          );
+
+
+        const riderName =
+          boldRiderOwnerName;
+
 
         const name =
           document
@@ -929,6 +1646,7 @@
             .value
             .trim();
 
+
         const whatsapp =
           document
             .getElementById(
@@ -937,6 +1655,7 @@
             .value
             .trim();
 
+
         const stayConnected =
           document
             .getElementById(
@@ -944,6 +1663,7 @@
             )
             .value
             .trim();
+
 
         const community =
           document
@@ -954,9 +1674,9 @@
             .trim();
 
 
-        // =================================================
-        // VALIDATION
-        // =================================================
+        // -----------------------------------------------
+        // ACCESS VALIDATION
+        // -----------------------------------------------
 
         if (!access) {
 
@@ -965,12 +1685,56 @@
             'error'
           );
 
-          accessType.focus();
-
           return;
 
         }
 
+
+        // -----------------------------------------------
+        // BOLD RIDERS VALIDATION
+        // -----------------------------------------------
+
+        if (
+          access ===
+          'BOLD RIDERS'
+        ) {
+
+          if (!riderId) {
+
+            showMessage(
+              'Please enter your BOLD RIDERS ID.',
+              'error'
+            );
+
+            boldRiderId.focus();
+
+            return;
+
+          }
+
+
+          if (
+            !boldRiderValid ||
+            !riderName
+          ) {
+
+            showMessage(
+              'BOLD RIDERS ID tidak terdaftar. Registrasi ditolak.',
+              'error'
+            );
+
+            boldRiderId.focus();
+
+            return;
+
+          }
+
+        }
+
+
+        // -----------------------------------------------
+        // NAME VALIDATION
+        // -----------------------------------------------
 
         if (!name) {
 
@@ -979,16 +1743,14 @@
             'error'
           );
 
-          document
-            .getElementById(
-              'name'
-            )
-            .focus();
-
           return;
 
         }
 
+
+        // -----------------------------------------------
+        // WHATSAPP VALIDATION
+        // -----------------------------------------------
 
         if (!whatsapp) {
 
@@ -997,16 +1759,14 @@
             'error'
           );
 
-          document
-            .getElementById(
-              'whatsapp'
-            )
-            .focus();
-
           return;
 
         }
 
+
+        // -----------------------------------------------
+        // VIP VALIDATION
+        // -----------------------------------------------
 
         if (
           access === 'VIP' &&
@@ -1018,62 +1778,83 @@
             'error'
           );
 
-          tablePackage.focus();
-
           return;
 
         }
 
 
-        // =================================================
-        // DISABLE FORM
-        // =================================================
+        // -----------------------------------------------
+        // DISABLE BUTTON
+        // -----------------------------------------------
 
         submitButton.disabled =
           true;
 
+
         submitButton.textContent =
           'PROCESSING...';
-
-        loadingText.style.display =
-          'block';
 
 
         try {
 
-          // ===============================================
-          // SEND
-          // ===============================================
-
           const response =
-            await registerWithSupabase(
-              {
+            await registerViaJsonp({
 
-                accessType:
-                  access,
+              accessType:
+                access,
 
-                tablePackage:
-                  selectedTable,
+              tablePackage:
+                selectedTable,
 
-                name:
-                  name,
+              name:
+                name,
 
-                whatsapp:
-                  whatsapp,
+              whatsapp:
+                whatsapp,
 
-                stayConnected:
-                  stayConnected,
+              stayConnected:
+                stayConnected,
 
-                community:
-                  community
+              community:
+                community,
 
-              }
+              boldRiderId:
+                access ===
+                'BOLD RIDERS'
+                  ? riderId
+                  : '',
+
+              boldRiderName:
+                access ===
+                'BOLD RIDERS'
+                  ? riderName
+                  : ''
+
+            });
+
+
+          // ---------------------------------------------
+          // API FAILURE
+          // ---------------------------------------------
+
+          if (
+            !response ||
+            response.success !== true
+          ) {
+
+            throw new Error(
+              response &&
+              response.message
+                ? response.message
+                : 'Registration failed.'
             );
 
+          }
 
-          // ===============================================
+
+          // ---------------------------------------------
           // SUCCESS
-          // ===============================================
+          // ---------------------------------------------
 
           showMessage(
             'Registration berhasil.',
@@ -1081,23 +1862,61 @@
           );
 
 
-          // ===============================================
-          // PASS ID
-          // ===============================================
-
           passId.textContent =
-            response.passId || '';
+            response.passId ||
+            '';
 
-
-          // ===============================================
-          // PASS INFO
-          // ===============================================
 
           let infoText =
             'Access: ' +
-            escapeHtml(
-              response.accessType || ''
+            (
+              response.accessType ||
+              ''
             );
+
+
+          if (
+            response.boldRiderId
+          ) {
+
+            infoText +=
+              '<br>BOLD RIDERS ID: ' +
+              response.boldRiderId;
+
+          }
+
+          else if (
+            access ===
+            'BOLD RIDERS'
+          ) {
+
+            infoText +=
+              '<br>BOLD RIDERS ID: ' +
+              riderId;
+
+          }
+
+
+          if (
+            response.boldRiderName
+          ) {
+
+            infoText +=
+              '<br>BOLD RIDERS Name: ' +
+              response.boldRiderName;
+
+          }
+
+          else if (
+            access ===
+            'BOLD RIDERS'
+          ) {
+
+            infoText +=
+              '<br>BOLD RIDERS Name: ' +
+              riderName;
+
+          }
 
 
           if (
@@ -1106,60 +1925,34 @@
 
             infoText +=
               '<br>Table: ' +
-              escapeHtml(
-                response.tablePackage
-              );
+              response.tablePackage;
 
           }
 
 
           infoText +=
             '<br>Name: ' +
-            escapeHtml(
-              response.name || ''
+            (
+              response.name ||
+              ''
             );
 
 
           infoText +=
             '<br>WhatsApp: ' +
-            escapeHtml(
-              response.whatsapp || ''
+            (
+              response.whatsapp ||
+              ''
             );
-
-
-          if (
-            response.community
-          ) {
-
-            infoText +=
-              '<br>Community: ' +
-              escapeHtml(
-                response.community
-              );
-
-          }
-
-
-          if (
-            response.stayConnected
-          ) {
-
-            infoText +=
-              '<br>Stay Connected: ' +
-              escapeHtml(
-                response.stayConnected
-              );
-
-          }
 
 
           passInfo.innerHTML =
             infoText;
 
 
-          // ===============================================
-          // QR CODE
-          // ===============================================
+          // ---------------------------------------------
+          // QR
+          // ---------------------------------------------
 
           if (
             response.qrCodeUrl
@@ -1171,11 +1964,9 @@
             qrImage.style.display =
               'inline-block';
 
-          } else {
+          }
 
-            qrImage.removeAttribute(
-              'src'
-            );
+          else {
 
             qrImage.style.display =
               'none';
@@ -1183,51 +1974,48 @@
           }
 
 
-          // ===============================================
-          // SHOW RESULT
-          // ===============================================
-
           passResult.style.display =
             'block';
 
 
-          // ===============================================
-          // RESET FORM
-          // ===============================================
+          // ---------------------------------------------
+          // RESET
+          // ---------------------------------------------
 
           form.reset();
+
 
           tablePackageGroup
             .classList
             .add('hidden');
 
+
           tablePackage.required =
             false;
 
 
-          // ===============================================
-          // SCROLL
-          // ===============================================
-
-          setTimeout(
-            function () {
-
-              passResult.scrollIntoView(
-                {
-                  behavior:
-                    'smooth',
-
-                  block:
-                    'start'
-                }
-              );
-
-            },
-            100
-          );
+          boldRiderGroup
+            .classList
+            .add('hidden');
 
 
-        } catch (error) {
+          boldRiderId.required =
+            false;
+
+
+          boldRiderValid =
+            false;
+
+
+          boldRiderOwnerName =
+            '';
+
+
+          clearRiderStatus();
+
+        }
+
+        catch (error) {
 
           console.error(
             'Registration failed:',
@@ -1235,114 +2023,29 @@
           );
 
 
-          let errorMessage =
-            'Registration failed.';
-
-
-          if (
+          showMessage(
             error &&
             error.message
-          ) {
-
-            errorMessage =
-              error.message;
-
-          }
-
-
-          showMessage(
-            errorMessage,
+              ? error.message
+              : 'Registration failed.',
             'error'
           );
 
+        }
 
-        } finally {
+        finally {
 
           submitButton.disabled =
             false;
 
+
           submitButton.textContent =
             'REGISTER';
-
-          loadingText.style.display =
-            'none';
 
         }
 
       }
     );
-
-
-    // =====================================================
-    // NEW REGISTRATION
-    // =====================================================
-
-    newRegistrationButton.addEventListener(
-      'click',
-      function () {
-
-        hideResult();
-
-        clearMessage();
-
-        window.scrollTo(
-          {
-            top: 0,
-            behavior: 'smooth'
-          }
-        );
-
-      }
-    );
-
-
-    // =====================================================
-    // ESCAPE HTML
-    // =====================================================
-
-    function escapeHtml(
-      value
-    ) {
-
-      return String(
-        value
-      )
-        .replace(
-          /&/g,
-          '&amp;'
-        )
-        .replace(
-          /</g,
-          '&lt;'
-        )
-        .replace(
-          />/g,
-          '&gt;'
-        )
-        .replace(
-          /"/g,
-          '&quot;'
-        )
-        .replace(
-          /'/g,
-          '&#039;'
-        );
-
-    }
-
-
-    // =====================================================
-    // INITIAL STATE
-    // =====================================================
-
-    tablePackageGroup
-      .classList
-      .add('hidden');
-
-    tablePackage.required =
-      false;
-
-    hideResult();
 
   </script>
 
