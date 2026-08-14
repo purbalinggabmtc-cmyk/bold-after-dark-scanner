@@ -780,6 +780,9 @@
 
     const API_URL =
       "https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/dynamic-service";
+    
+    const BOLD_RIDER_VALIDATION_URL =
+  "https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/validate-bold-rider";
 
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_YGi3tPBuF9tW4KKnLJ5dDQ_AcBZ19WH";
@@ -1017,11 +1020,10 @@
 
       try {
         const url =
-          API_URL +
-          "?action=validateBoldRider" +
-          "&boldRidersId=" +
-          encodeURIComponent(riderId);
-
+  BOLD_RIDER_VALIDATION_URL +
+  "?action=validateBoldRider" +
+  "&boldRidersId=" +
+  encodeURIComponent(riderId);
         const response =
           await fetch(
             url,
