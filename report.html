@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -14,17 +13,11 @@
 
     :root {
       --black: #050505;
-      --black-soft: #0d0d0d;
       --black-card: #111111;
       --white: #ffffff;
-      --white-soft: #e8e8e8;
       --gray: #999999;
-      --gray-dark: #333333;
       --red: #e00000;
-      --red-dark: #8f0000;
       --red-soft: rgba(224, 0, 0, 0.12);
-      --green: #55e88b;
-      --yellow: #f0cf45;
     }
 
     body {
@@ -69,9 +62,7 @@
       margin: 0 auto;
     }
 
-    /* =========================================================
-       HEADER
-       ========================================================= */
+    /* HEADER */
 
     .header {
       text-align: center;
@@ -82,20 +73,11 @@
       font-size: 31px;
       font-weight: 900;
       letter-spacing: 4px;
-      color: var(--white);
-    }
-
-    /*
-      BOLD = putih
-      AFTER = merah
-      DARK = putih
-    */
-    .brand .bold {
       color: #ffffff;
     }
 
     .brand .after {
-      color: var(--red);
+      color: #e00000;
     }
 
     .brand .dark {
@@ -118,9 +100,7 @@
       border-radius: 5px;
     }
 
-    /* =========================================================
-       TOOLBAR
-       ========================================================= */
+    /* TOOLBAR */
 
     .toolbar {
       display: flex;
@@ -196,9 +176,7 @@
       background: var(--red-soft);
     }
 
-    /* =========================================================
-       ERROR
-       ========================================================= */
+    /* ERROR */
 
     .error {
       display: none;
@@ -214,9 +192,7 @@
       white-space: pre-wrap;
     }
 
-    /* =========================================================
-       STATISTICS
-       ========================================================= */
+    /* STATISTICS */
 
     .stats {
       display: grid;
@@ -259,9 +235,7 @@
       font-weight: 900;
     }
 
-    /* =========================================================
-       TABLE CARD
-       ========================================================= */
+    /* TABLE */
 
     .table-card {
       background: var(--black-card);
@@ -328,9 +302,7 @@
       background: #181818;
     }
 
-    /* =========================================================
-       USED ROW
-       ========================================================= */
+    /* USED */
 
     tr.used-row td {
       background: rgba(224, 0, 0, 0.08);
@@ -347,9 +319,7 @@
       border-left: 4px solid var(--red);
     }
 
-    /* =========================================================
-       UNUSED ROW
-       ========================================================= */
+    /* UNUSED */
 
     tr.unused-row td {
       background: #111;
@@ -360,9 +330,7 @@
       background: #181818;
     }
 
-    /* =========================================================
-       STATUS BADGES
-       ========================================================= */
+    /* STATUS */
 
     .status {
       display: inline-block;
@@ -398,9 +366,7 @@
       border: 1px solid #444;
     }
 
-    /* =========================================================
-       ACCESS BADGES
-       ========================================================= */
+    /* ACCESS */
 
     .access {
       display: inline-block;
@@ -429,9 +395,7 @@
       border: 1px solid #777;
     }
 
-    /* =========================================================
-       STATES
-       ========================================================= */
+    /* STATES */
 
     .loading,
     .empty {
@@ -476,9 +440,7 @@
       display: none;
     }
 
-    /* =========================================================
-       RESPONSIVE
-       ========================================================= */
+    /* RESPONSIVE */
 
     @media (max-width: 1100px) {
       .stats {
@@ -532,9 +494,7 @@
       }
     }
 
-    /* =========================================================
-       PRINT
-       ========================================================= */
+    /* PRINT */
 
     @media print {
       @page {
@@ -561,12 +521,8 @@
         color: #000;
       }
 
-      .brand .bold,
+      .brand .after,
       .brand .dark {
-        color: #000;
-      }
-
-      .brand .after {
         color: #000;
       }
 
@@ -699,16 +655,10 @@
 
   <div class="container">
 
-    <!-- =======================================================
-         HEADER
-         ======================================================= -->
-
     <div class="header">
 
       <div class="brand">
-        <span class="bold">BOLD</span>
-        <span class="after"> AFTER </span>
-        <span class="dark">DARK</span>
+        BOLD <span class="after">AFTER</span> <span class="dark">DARK</span>
       </div>
 
       <div class="subtitle">
@@ -718,11 +668,6 @@
       <div class="header-line"></div>
 
     </div>
-
-
-    <!-- =======================================================
-         TOOLBAR
-         ======================================================= -->
 
     <div class="toolbar">
 
@@ -758,14 +703,6 @@
       <button
         type="button"
         class="btn btn-dark"
-        id="homeButton"
-      >
-        HOME
-      </button>
-
-      <button
-        type="button"
-        class="btn btn-dark"
         id="printButton"
       >
         PRINT REPORT
@@ -782,6 +719,14 @@
       <button
         type="button"
         class="btn btn-outline-red"
+        id="homeButton"
+      >
+        HOME
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-outline-red"
         id="adminButton"
       >
         ADMIN
@@ -789,20 +734,10 @@
 
     </div>
 
-
-    <!-- =======================================================
-         ERROR
-         ======================================================= -->
-
     <div
       id="errorBox"
       class="error"
     ></div>
-
-
-    <!-- =======================================================
-         STATISTICS
-         ======================================================= -->
 
     <div class="stats">
 
@@ -819,7 +754,6 @@
         </div>
       </div>
 
-
       <div class="stat">
         <div class="stat-label">
           FREE
@@ -832,7 +766,6 @@
           0
         </div>
       </div>
-
 
       <div class="stat">
         <div class="stat-label">
@@ -847,7 +780,6 @@
         </div>
       </div>
 
-
       <div class="stat">
         <div class="stat-label">
           BOLD RIDERS
@@ -861,7 +793,6 @@
         </div>
       </div>
 
-
       <div class="stat">
         <div class="stat-label">
           USED
@@ -874,7 +805,6 @@
           0
         </div>
       </div>
-
 
       <div class="stat">
         <div class="stat-label">
@@ -891,11 +821,6 @@
 
     </div>
 
-
-    <!-- =======================================================
-         PRINT HEADER
-         ======================================================= -->
-
     <div class="print-only">
 
       <strong>
@@ -909,16 +834,12 @@
 
     </div>
 
-
-    <!-- =======================================================
-         TABLE
-         ======================================================= -->
-
     <div class="table-card">
 
       <div class="table-header">
 
         <div>
+
           <div class="table-title">
             REGISTRATIONS
           </div>
@@ -926,10 +847,10 @@
           <div class="table-subtitle">
             Data audience BOLD AFTER DARK
           </div>
+
         </div>
 
       </div>
-
 
       <div
         id="loading"
@@ -938,7 +859,6 @@
         Memuat data audience...
       </div>
 
-
       <div
         id="empty"
         class="empty"
@@ -946,7 +866,6 @@
       >
         Tidak ada data audience.
       </div>
-
 
       <div
         id="tableWrapper"
@@ -982,23 +901,13 @@
 
     </div>
 
-
-    <!-- =======================================================
-         FOOTER
-         ======================================================= -->
-
     <div class="footer">
       BOLD AFTER DARK • AUDIENCE REPORT
     </div>
 
   </div>
 
-
   <script>
-
-    /* =========================================================
-       SUPABASE CONFIGURATION
-       ========================================================= */
 
     const SUPABASE_URL =
       "https://yrvnmmascklkuzpjkwxn.supabase.co";
@@ -1010,19 +919,9 @@
       SUPABASE_URL +
       "/functions/v1/dynamic-service";
 
-
-    /* =========================================================
-       STATE
-       ========================================================= */
-
     let allRows = [];
 
     let filteredRows = [];
-
-
-    /* =========================================================
-       ELEMENTS
-       ========================================================= */
 
     const searchInput =
       document.getElementById("searchInput");
@@ -1036,14 +935,14 @@
     const refreshButton =
       document.getElementById("refreshButton");
 
-    const homeButton =
-      document.getElementById("homeButton");
-
     const printButton =
       document.getElementById("printButton");
 
     const csvButton =
       document.getElementById("csvButton");
+
+    const homeButton =
+      document.getElementById("homeButton");
 
     const adminButton =
       document.getElementById("adminButton");
@@ -1063,11 +962,6 @@
     const tableBody =
       document.getElementById("tableBody");
 
-
-    /* =========================================================
-       ESCAPE HTML
-       ========================================================= */
-
     function escapeHtml(value) {
 
       return String(
@@ -1075,23 +969,35 @@
           ? ""
           : value
       )
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
 
     }
-
-
-    /* =========================================================
-       NORMALIZE STATUS
-       ========================================================= */
 
     function normalizeStatus(value) {
 
       const status =
-        String(value || "")
+        String(
+          value || ""
+        )
           .trim()
           .toUpperCase();
 
@@ -1126,11 +1032,6 @@
 
     }
 
-
-    /* =========================================================
-       NORMALIZE ACCESS
-       ========================================================= */
-
     function normalizeAccess(value) {
 
       return String(
@@ -1141,17 +1042,10 @@
 
     }
 
-
-    /* =========================================================
-       FORMAT DATE
-       ========================================================= */
-
     function formatDate(value) {
 
       if (!value) {
-
         return "-";
-
       }
 
       const date =
@@ -1177,11 +1071,6 @@
 
     }
 
-
-    /* =========================================================
-       SHOW ERROR
-       ========================================================= */
-
     function showError(message) {
 
       errorBox.textContent =
@@ -1193,11 +1082,6 @@
 
     }
 
-
-    /* =========================================================
-       HIDE ERROR
-       ========================================================= */
-
     function hideError() {
 
       errorBox.textContent =
@@ -1207,11 +1091,6 @@
         "none";
 
     }
-
-
-    /* =========================================================
-       LOAD REPORT
-       ========================================================= */
 
     async function loadReport() {
 
@@ -1242,7 +1121,6 @@
           "report"
         );
 
-
         const response =
           await fetch(
             API_URL +
@@ -1265,10 +1143,8 @@
             }
           );
 
-
         const raw =
           await response.text();
-
 
         console.log(
           "REPORT HTTP STATUS:",
@@ -1279,7 +1155,6 @@
           "REPORT RAW RESPONSE:",
           raw
         );
-
 
         let data = null;
 
@@ -1298,7 +1173,6 @@
 
         }
 
-
         if (!response.ok) {
 
           throw new Error(
@@ -1313,7 +1187,6 @@
 
         }
 
-
         if (
           data &&
           data.success === false
@@ -1327,7 +1200,6 @@
 
         }
 
-
         allRows =
           data &&
           Array.isArray(
@@ -1335,7 +1207,6 @@
           )
             ? data.registrations
             : [];
-
 
         applyFilters();
 
@@ -1383,11 +1254,6 @@
 
     }
 
-
-    /* =========================================================
-       APPLY FILTERS
-       ========================================================= */
-
     function applyFilters() {
 
       const search =
@@ -1405,7 +1271,6 @@
           statusFilter.value
         );
 
-
       filteredRows =
         allRows.filter(
           function(row) {
@@ -1415,14 +1280,10 @@
                 row.access_type
               );
 
-
             const rowStatus =
               normalizeStatus(
                 row.pass_status
               );
-
-
-            /* ACCESS FILTER */
 
             if (
               access &&
@@ -1433,9 +1294,6 @@
 
             }
 
-
-            /* STATUS FILTER */
-
             if (
               selectedStatus &&
               rowStatus !== selectedStatus
@@ -1444,9 +1302,6 @@
               return false;
 
             }
-
-
-            /* SEARCH */
 
             if (search) {
 
@@ -1471,7 +1326,6 @@
                   )
                   .join(" ");
 
-
               if (
                 !haystack.includes(
                   search
@@ -1484,12 +1338,10 @@
 
             }
 
-
             return true;
 
           }
         );
-
 
       updateStatistics(
         filteredRows
@@ -1501,16 +1353,10 @@
 
     }
 
-
-    /* =========================================================
-       UPDATE STATISTICS
-       ========================================================= */
-
     function updateStatistics(rows) {
 
       const total =
         rows.length;
-
 
       const free =
         rows.filter(
@@ -1523,7 +1369,6 @@
           }
         ).length;
 
-
       const vip =
         rows.filter(
           function(row) {
@@ -1535,26 +1380,16 @@
           }
         ).length;
 
-
       const boldRiders =
         rows.filter(
           function(row) {
 
-            const access =
-              normalizeAccess(
-                row.access_type
-              );
-
-            return (
-              access === "BOLD RIDERS" ||
-              access === "BOLDRIDERS" ||
-              access === "BOLD_RIDERS" ||
-              access === "BOLD-RIDERS"
-            );
+            return normalizeAccess(
+              row.access_type
+            ) === "BOLD RIDERS";
 
           }
         ).length;
-
 
       const used =
         rows.filter(
@@ -1567,7 +1402,6 @@
           }
         ).length;
 
-
       const unused =
         rows.filter(
           function(row) {
@@ -1579,36 +1413,30 @@
           }
         ).length;
 
-
       document.getElementById(
         "totalCount"
       ).textContent =
         total;
-
 
       document.getElementById(
         "freeCount"
       ).textContent =
         free;
 
-
       document.getElementById(
         "vipCount"
       ).textContent =
         vip;
-
 
       document.getElementById(
         "boldRidersCount"
       ).textContent =
         boldRiders;
 
-
       document.getElementById(
         "usedCount"
       ).textContent =
         used;
-
 
       document.getElementById(
         "unusedCount"
@@ -1616,11 +1444,6 @@
         unused;
 
     }
-
-
-    /* =========================================================
-       ACCESS BADGE
-       ========================================================= */
 
     function accessBadge(access) {
 
@@ -1638,17 +1461,13 @@
           "vip";
 
       } else if (
-        value === "BOLD RIDERS" ||
-        value === "BOLDRIDERS" ||
-        value === "BOLD_RIDERS" ||
-        value === "BOLD-RIDERS"
+        value === "BOLD RIDERS"
       ) {
 
         className =
           "bold";
 
       }
-
 
       return (
         '<span class="access ' +
@@ -1662,11 +1481,6 @@
 
     }
 
-
-    /* =========================================================
-       STATUS BADGE
-       ========================================================= */
-
     function statusBadge(status) {
 
       const value =
@@ -1677,7 +1491,6 @@
 
       let label =
         value || "-";
-
 
       if (
         value === "USED"
@@ -1711,7 +1524,6 @@
 
       }
 
-
       return (
         '<span class="status ' +
         className +
@@ -1722,11 +1534,6 @@
 
     }
 
-
-    /* =========================================================
-       RENDER TABLE
-       ========================================================= */
-
     function renderTable(rows) {
 
       loading.style.display =
@@ -1734,7 +1541,6 @@
 
       tableBody.innerHTML =
         "";
-
 
       if (
         !rows ||
@@ -1751,13 +1557,11 @@
 
       }
 
-
       empty.style.display =
         "none";
 
       tableWrapper.style.display =
         "block";
-
 
       rows.forEach(
         function(row, index) {
@@ -1767,12 +1571,10 @@
               "tr"
             );
 
-
           const status =
             normalizeStatus(
               row.pass_status
             );
-
 
           if (
             status === "USED"
@@ -1792,70 +1594,67 @@
 
           }
 
+          tr.innerHTML = `
+            <td>
+              ${escapeHtml(index + 1)}
+            </td>
 
-          tr.innerHTML =
-            `
-              <td>
-                ${escapeHtml(index + 1)}
-              </td>
+            <td>
+              <strong>
+                ${escapeHtml(row.name)}
+              </strong>
+            </td>
 
-              <td>
-                <strong>
-                  ${escapeHtml(row.name)}
-                </strong>
-              </td>
+            <td>
+              ${escapeHtml(row.whatsapp)}
+            </td>
 
-              <td>
-                ${escapeHtml(row.whatsapp)}
-              </td>
+            <td>
+              <strong>
+                ${escapeHtml(row.pass_id)}
+              </strong>
+            </td>
 
-              <td>
-                <strong>
-                  ${escapeHtml(row.pass_id)}
-                </strong>
-              </td>
+            <td>
+              ${accessBadge(row.access_type)}
+            </td>
 
-              <td>
-                ${accessBadge(row.access_type)}
-              </td>
+            <td>
+              ${escapeHtml(
+                row.table_package || "-"
+              )}
+            </td>
 
-              <td>
-                ${escapeHtml(
-                  row.table_package || "-"
-                )}
-              </td>
+            <td>
+              ${escapeHtml(
+                row.community || "-"
+              )}
+            </td>
 
-              <td>
-                ${escapeHtml(
-                  row.community || "-"
-                )}
-              </td>
+            <td>
+              ${statusBadge(
+                row.pass_status
+              )}
+            </td>
 
-              <td>
-                ${statusBadge(
-                  row.pass_status
-                )}
-              </td>
+            <td>
+              ${escapeHtml(
+                formatDate(row.created_at)
+              )}
+            </td>
 
-              <td>
-                ${escapeHtml(
-                  formatDate(row.created_at)
-                )}
-              </td>
+            <td>
+              ${escapeHtml(
+                formatDate(row.checked_in_at)
+              )}
+            </td>
 
-              <td>
-                ${escapeHtml(
-                  formatDate(row.checked_in_at)
-                )}
-              </td>
-
-              <td>
-                ${escapeHtml(
-                  row.checked_in_by || "-"
-                )}
-              </td>
-            `;
-
+            <td>
+              ${escapeHtml(
+                row.checked_in_by || "-"
+              )}
+            </td>
+          `;
 
           tableBody.appendChild(
             tr
@@ -1866,11 +1665,6 @@
 
     }
 
-
-    /* =========================================================
-       CSV ESCAPE
-       ========================================================= */
-
     function csvEscape(value) {
 
       const text =
@@ -1879,7 +1673,6 @@
             ? ""
             : value
         );
-
 
       return (
         '"' +
@@ -1891,11 +1684,6 @@
       );
 
     }
-
-
-    /* =========================================================
-       DOWNLOAD CSV
-       ========================================================= */
 
     function downloadCsv() {
 
@@ -1912,7 +1700,6 @@
 
       }
 
-
       const headers = [
         "No",
         "Nama",
@@ -1928,13 +1715,11 @@
         "Checked By"
       ];
 
-
       const lines = [
         headers
           .map(csvEscape)
           .join(",")
       ];
-
 
       filteredRows.forEach(
         function(row, index) {
@@ -1963,11 +1748,9 @@
         }
       );
 
-
       const csv =
         "\uFEFF" +
         lines.join("\r\n");
-
 
       const blob =
         new Blob(
@@ -1978,25 +1761,21 @@
           }
         );
 
-
       const url =
         URL.createObjectURL(
           blob
         );
-
 
       const link =
         document.createElement(
           "a"
         );
 
-
       link.href =
         url;
 
       link.download =
         "bold-after-dark-audience-report.csv";
-
 
       document.body.appendChild(
         link
@@ -2012,11 +1791,6 @@
 
     }
 
-
-    /* =========================================================
-       PRINT REPORT
-       ========================================================= */
-
     function printReport() {
 
       document.getElementById(
@@ -2026,90 +1800,59 @@
           "id-ID"
         );
 
-
       window.print();
 
     }
-
-
-    /* =========================================================
-       HOME BUTTON
-       ========================================================= */
 
     homeButton.addEventListener(
       "click",
       function() {
 
-        /*
-          HOME HARUS MENUJU home.html
-          BUKAN index.html
-          BUKAN scanner
-        */
         window.location.href =
-          "./home.html";
+          "home.html";
 
       }
     );
-
-
-    /* =========================================================
-       ADMIN BUTTON
-       ========================================================= */
 
     adminButton.addEventListener(
       "click",
       function() {
 
         window.location.href =
-          "./admin.html";
+          "admin.html";
 
       }
     );
-
-
-    /* =========================================================
-       EVENTS
-       ========================================================= */
 
     refreshButton.addEventListener(
       "click",
       loadReport
     );
 
-
     printButton.addEventListener(
       "click",
       printReport
     );
-
 
     csvButton.addEventListener(
       "click",
       downloadCsv
     );
 
-
     searchInput.addEventListener(
       "input",
       applyFilters
     );
-
 
     accessFilter.addEventListener(
       "change",
       applyFilters
     );
 
-
     statusFilter.addEventListener(
       "change",
       applyFilters
     );
-
-
-    /* =========================================================
-       START
-       ========================================================= */
 
     window.addEventListener(
       "load",
@@ -2120,4 +1863,3 @@
 
 </body>
 </html>
-```
