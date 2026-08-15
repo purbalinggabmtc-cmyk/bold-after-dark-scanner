@@ -13,15 +13,19 @@
 
     :root {
       --red: #e00000;
-      --red-dark: #9d0000;
+      --red-dark: #a80000;
       --bg: #050505;
       --card: #111111;
       --card-2: #171717;
-      --border: #333333;
+      --border: #303030;
       --text: #ffffff;
       --muted: #999999;
       --green: #20d96b;
       --yellow: #e6c229;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -30,8 +34,8 @@
       background:
         radial-gradient(
           circle at top,
-          #2a0000 0%,
-          #080808 42%,
+          #1b1b1b 0%,
+          #090909 42%,
           #000000 100%
         );
       color: var(--text);
@@ -45,6 +49,10 @@
       margin: 0 auto;
     }
 
+    /* =========================
+       HEADER
+    ========================= */
+
     .header {
       text-align: center;
       margin-bottom: 24px;
@@ -54,42 +62,122 @@
       font-size: 30px;
       font-weight: 900;
       letter-spacing: 4px;
+      line-height: 1.15;
+      color: #ffffff;
     }
 
-    .brand span {
+    /*
+      BOLD = WHITE
+      AFTER = RED
+      DARK = WHITE
+    */
+
+    .brand .after {
       color: var(--red);
     }
 
+    .brand .dark {
+      color: #ffffff;
+    }
+
     .subtitle {
-      margin-top: 7px;
-      color: #aaa;
+      margin-top: 8px;
+      color: #999999;
       font-size: 12px;
+      font-weight: 700;
       letter-spacing: 3px;
     }
 
+    .header-line {
+      width: 72px;
+      height: 3px;
+      margin: 14px auto 0;
+      background: var(--red);
+      border-radius: 10px;
+    }
+
+    /* =========================
+       CARD
+    ========================= */
+
     .card {
-      background: rgba(17, 17, 17, 0.96);
+      background: rgba(17, 17, 17, 0.97);
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 22px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.02);
     }
 
     .section-title {
+      position: relative;
       font-size: 16px;
       font-weight: 900;
       letter-spacing: 1px;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
+      padding-left: 12px;
     }
 
+    .section-title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 2px;
+      bottom: 2px;
+      width: 3px;
+      background: var(--red);
+      border-radius: 10px;
+    }
+
+    /* =========================
+       MESSAGE
+    ========================= */
+
+    .message {
+      display: none;
+      margin-bottom: 18px;
+      padding: 14px;
+      border-radius: 9px;
+      font-size: 13px;
+      line-height: 1.5;
+      font-weight: 700;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      background: #1c0909;
+      border: 1px solid var(--red);
+      color: #ff8888;
+    }
+
+    .message.success {
+      background: #062d16;
+      border: 1px solid #15934a;
+      color: #62eb98;
+    }
+
+    .message.info {
+      background: #1d1900;
+      border: 1px solid #a38c00;
+      color: #f0d44d;
+    }
+
+    /* =========================
+       FORM
+    ========================= */
+
     .field {
-      margin-bottom: 16px;
+      margin-bottom: 17px;
     }
 
     .field label {
       display: block;
       margin-bottom: 7px;
-      color: #ddd;
+      color: #dddddd;
       font-size: 13px;
       font-weight: 700;
     }
@@ -104,17 +192,26 @@
       min-height: 48px;
       padding: 13px 14px;
       border-radius: 9px;
-      border: 1px solid #444;
+      border: 1px solid #444444;
       background: #0d0d0d;
-      color: #fff;
+      color: #ffffff;
       outline: none;
       font-size: 14px;
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+    }
+
+    input::placeholder {
+      color: #666666;
     }
 
     input:focus,
     select:focus {
       border-color: var(--red);
       box-shadow: 0 0 0 2px rgba(224, 0, 0, 0.12);
+      background: #101010;
     }
 
     input:disabled,
@@ -125,7 +222,7 @@
 
     .field-help {
       margin-top: 6px;
-      color: #777;
+      color: #777777;
       font-size: 11px;
       line-height: 1.5;
     }
@@ -133,6 +230,25 @@
     .hidden {
       display: none !important;
     }
+
+    /* =========================
+       ACCESS INFO
+    ========================= */
+
+    .access-info {
+      margin-top: 10px;
+      padding: 11px 13px;
+      border-radius: 8px;
+      border: 1px solid #333333;
+      background: #181818;
+      color: #999999;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    /* =========================
+       BOLD RIDERS
+    ========================= */
 
     .rider-status {
       margin-top: 8px;
@@ -142,7 +258,7 @@
     }
 
     .rider-status.loading {
-      color: #aaa;
+      color: #aaaaaa;
     }
 
     .rider-status.valid {
@@ -169,19 +285,12 @@
     }
 
     .rider-owner strong {
-      color: #fff;
+      color: #ffffff;
     }
 
-    .access-info {
-      margin-top: 10px;
-      padding: 11px 13px;
-      border-radius: 8px;
-      border: 1px solid #444;
-      background: #181818;
-      color: #aaa;
-      font-size: 12px;
-      line-height: 1.5;
-    }
+    /* =========================
+       BUTTONS
+    ========================= */
 
     .button-row {
       display: flex;
@@ -198,6 +307,10 @@
       font-size: 14px;
       font-weight: 900;
       cursor: pointer;
+      transition:
+        background 0.2s ease,
+        transform 0.15s ease,
+        opacity 0.2s ease;
     }
 
     button:active {
@@ -213,7 +326,8 @@
     .btn-primary {
       flex: 1;
       background: var(--red);
-      color: #fff;
+      color: #ffffff;
+      box-shadow: 0 8px 24px rgba(224, 0, 0, 0.18);
     }
 
     .btn-primary:hover {
@@ -223,44 +337,50 @@
     .btn-whatsapp {
       width: 100%;
       background: #128c4a;
-      color: #fff;
+      color: #ffffff;
     }
 
     .btn-whatsapp:hover {
       background: #16a557;
     }
 
-    .message {
+    /* =========================
+       LOADING
+    ========================= */
+
+    .loading {
       display: none;
-      margin-bottom: 18px;
-      padding: 14px;
-      border-radius: 9px;
+      text-align: center;
+      color: #aaaaaa;
+      padding: 10px 0;
       font-size: 13px;
-      line-height: 1.5;
-      font-weight: 700;
     }
 
-    .message.show {
+    .loading.show {
       display: block;
     }
 
-    .message.error {
-      background: #300000;
-      border: 1px solid var(--red);
-      color: #ff8888;
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid #555555;
+      border-top-color: var(--red);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      vertical-align: -2px;
+      margin-right: 6px;
     }
 
-    .message.success {
-      background: #062d16;
-      border: 1px solid #15934a;
-      color: #62eb98;
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
     }
 
-    .message.info {
-      background: #1d1900;
-      border: 1px solid #a38c00;
-      color: #f0d44d;
-    }
+    /* =========================
+       RESULT
+    ========================= */
 
     .result {
       display: none;
@@ -292,17 +412,18 @@
     }
 
     .ticket-label {
-      color: #888;
+      color: #888888;
       font-size: 11px;
       letter-spacing: 2px;
       margin-bottom: 5px;
     }
 
     .ticket-id {
-      color: #fff;
+      color: #ffffff;
       font-size: 27px;
       font-weight: 900;
       letter-spacing: 2px;
+      word-break: break-word;
     }
 
     .result-grid {
@@ -319,23 +440,27 @@
     }
 
     .result-label {
-      color: #777;
+      color: #777777;
       font-size: 10px;
       text-transform: uppercase;
       margin-bottom: 5px;
     }
 
     .result-value {
-      color: #fff;
+      color: #ffffff;
       font-size: 13px;
       font-weight: 700;
       word-break: break-word;
     }
 
+    /* =========================
+       QR
+    ========================= */
+
     .qr-box {
       margin-top: 18px;
       padding: 15px;
-      background: #fff;
+      background: #ffffff;
       border-radius: 12px;
       text-align: center;
     }
@@ -350,48 +475,27 @@
 
     .qr-caption {
       margin-top: 8px;
-      color: #111;
+      color: #111111;
       font-size: 11px;
       font-weight: 700;
     }
 
+    /* =========================
+       FOOTER
+    ========================= */
+
     .footer {
       text-align: center;
-      color: #555;
+      color: #555555;
       font-size: 10px;
       letter-spacing: 2px;
       margin-top: 20px;
+      padding-bottom: 10px;
     }
 
-    .loading {
-      display: none;
-      text-align: center;
-      color: #aaa;
-      padding: 10px 0;
-      font-size: 13px;
-    }
-
-    .loading.show {
-      display: block;
-    }
-
-    .spinner {
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      border: 2px solid #555;
-      border-top-color: var(--red);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      vertical-align: -2px;
-      margin-right: 6px;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
+    /* =========================
+       MOBILE
+    ========================= */
 
     @media (max-width: 600px) {
       body {
@@ -407,6 +511,11 @@
         letter-spacing: 3px;
       }
 
+      .subtitle {
+        font-size: 10px;
+        letter-spacing: 2.5px;
+      }
+
       .result-grid {
         grid-template-columns: 1fr;
       }
@@ -418,6 +527,10 @@
       .btn-primary {
         width: 100%;
       }
+
+      .ticket-id {
+        font-size: 23px;
+      }
     }
   </style>
 </head>
@@ -426,15 +539,29 @@
 
   <div class="container">
 
+    <!-- =========================
+         HEADER
+    ========================== -->
+
     <div class="header">
+
       <div class="brand">
-        BOLD <span>AFTER DARK</span>
+        <span>BOLD</span>
+        <span class="after"> AFTER </span>
+        <span class="dark">DARK</span>
       </div>
 
       <div class="subtitle">
         REGISTRATION
       </div>
+
+      <div class="header-line"></div>
+
     </div>
+
+    <!-- =========================
+         MAIN CARD
+    ========================== -->
 
     <div class="card">
 
@@ -446,7 +573,10 @@
 
       <form id="registrationForm" novalidate>
 
+        <!-- NAME -->
+
         <div class="field">
+
           <label for="name">
             Nama <span class="required">*</span>
           </label>
@@ -456,11 +586,16 @@
             name="name"
             type="text"
             autocomplete="name"
+            placeholder="Masukkan nama lengkap"
             required
           >
+
         </div>
 
+        <!-- WHATSAPP -->
+
         <div class="field">
+
           <label for="whatsapp">
             WhatsApp <span class="required">*</span>
           </label>
@@ -470,11 +605,16 @@
             name="whatsapp"
             type="tel"
             autocomplete="tel"
+            placeholder="Contoh: 082xxxxxxxxx"
             required
           >
+
         </div>
 
+        <!-- ACCESS -->
+
         <div class="field">
+
           <label for="accessType">
             Access <span class="required">*</span>
           </label>
@@ -499,17 +639,22 @@
             <option value="BOLD RIDERS">
               BOLD RIDERS
             </option>
+
           </select>
 
           <div class="access-info">
             Pilih BOLD RIDERS jika Anda memiliki ID BOLD RIDERS yang terdaftar.
           </div>
+
         </div>
+
+        <!-- BOLD RIDERS -->
 
         <div
           id="boldRidersField"
           class="field hidden"
         >
+
           <label for="boldRidersId">
             ID BOLD RIDERS <span class="required">*</span>
           </label>
@@ -524,6 +669,7 @@
             autocomplete="off"
             spellcheck="false"
             autocapitalize="characters"
+            placeholder="8 karakter"
           >
 
           <div class="field-help">
@@ -539,12 +685,16 @@
             id="boldRidersOwner"
             class="rider-owner hidden"
           ></div>
+
         </div>
+
+        <!-- TABLE PACKAGE -->
 
         <div
           id="tablePackageField"
           class="field hidden"
         >
+
           <label for="tablePackage">
             Table Package <span class="required">*</span>
           </label>
@@ -553,6 +703,7 @@
             id="tablePackage"
             name="tablePackage"
           >
+
             <option value="">
               Pilih Table Package
             </option>
@@ -572,10 +723,15 @@
             <option value="TABLE 4">
               TABLE 4
             </option>
+
           </select>
+
         </div>
 
+        <!-- COMMUNITY -->
+
         <div class="field">
+
           <label for="community">
             Community
           </label>
@@ -585,10 +741,15 @@
             name="community"
             type="text"
             autocomplete="organization"
+            placeholder="Opsional"
           >
+
         </div>
 
+        <!-- STAY CONNECTED -->
+
         <div class="field">
+
           <label for="stayConnected">
             Stay Connected
           </label>
@@ -597,8 +758,12 @@
             id="stayConnected"
             name="stayConnected"
             type="text"
+            placeholder="Opsional"
           >
+
         </div>
+
+        <!-- LOADING -->
 
         <div
           id="loadingBox"
@@ -607,6 +772,8 @@
           <span class="spinner"></span>
           Memproses registrasi...
         </div>
+
+        <!-- REGISTER -->
 
         <div class="button-row">
 
@@ -622,6 +789,8 @@
 
       </form>
 
+      <!-- WHATSAPP HELP -->
+
       <div class="button-row">
 
         <button
@@ -633,6 +802,10 @@
         </button>
 
       </div>
+
+      <!-- =========================
+           REGISTRATION RESULT
+      ========================== -->
 
       <div
         id="resultBox"
@@ -663,6 +836,7 @@
           <div class="result-grid">
 
             <div class="result-item">
+
               <div class="result-label">
                 Nama
               </div>
@@ -673,9 +847,11 @@
               >
                 -
               </div>
+
             </div>
 
             <div class="result-item">
+
               <div class="result-label">
                 WhatsApp
               </div>
@@ -686,9 +862,11 @@
               >
                 -
               </div>
+
             </div>
 
             <div class="result-item">
+
               <div class="result-label">
                 Access
               </div>
@@ -699,9 +877,11 @@
               >
                 -
               </div>
+
             </div>
 
             <div class="result-item">
+
               <div class="result-label">
                 Table Package
               </div>
@@ -712,12 +892,14 @@
               >
                 -
               </div>
+
             </div>
 
             <div
               id="resultRiderIdItem"
               class="result-item hidden"
             >
+
               <div class="result-label">
                 BOLD RIDERS ID
               </div>
@@ -728,12 +910,14 @@
               >
                 -
               </div>
+
             </div>
 
             <div
               id="resultRiderNameItem"
               class="result-item hidden"
             >
+
               <div class="result-label">
                 Nama BOLD RIDERS
               </div>
@@ -744,14 +928,18 @@
               >
                 -
               </div>
+
             </div>
 
           </div>
+
+          <!-- QR -->
 
           <div
             id="qrBox"
             class="qr-box hidden"
           >
+
             <img
               id="qrImage"
               src=""
@@ -761,6 +949,7 @@
             <div class="qr-caption">
               Tunjukkan QR Code ini saat check-in.
             </div>
+
           </div>
 
         </div>
@@ -778,17 +967,26 @@
   <script>
     "use strict";
 
+    /* =========================
+       CONFIGURATION
+    ========================== */
+
     const API_URL =
       "https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/dynamic-service";
-    
+
     const BOLD_RIDER_VALIDATION_URL =
-  "https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/validate-bold-rider";
+      "https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/validate-bold-rider";
 
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_YGi3tPBuF9tW4KKnLJ5dDQ_AcBZ19WH";
 
     const WHATSAPP_NUMBER =
       "6282324854187";
+
+
+    /* =========================
+       DOM ELEMENTS
+    ========================== */
 
     const registrationForm =
       document.getElementById("registrationForm");
@@ -874,9 +1072,19 @@
     const qrImage =
       document.getElementById("qrImage");
 
+
+    /* =========================
+       STATE
+    ========================== */
+
     let boldRiderIsValid = false;
     let boldRiderValidatedId = "";
     let validationRequestNumber = 0;
+
+
+    /* =========================
+       MESSAGE
+    ========================== */
 
     function showMessage(type, message) {
       messageBox.className =
@@ -893,6 +1101,11 @@
       messageBox.textContent =
         "";
     }
+
+
+    /* =========================
+       BOLD RIDERS VALIDATION
+    ========================== */
 
     function clearBoldRiderValidation() {
       boldRiderIsValid = false;
@@ -911,6 +1124,11 @@
         "";
     }
 
+
+    /* =========================
+       ACCESS FIELDS
+    ========================== */
+
     function updateAccessFields() {
       const access =
         String(
@@ -925,6 +1143,9 @@
       const isBoldRider =
         access === "BOLD RIDERS";
 
+
+      /* VIP */
+
       if (isVip) {
         tablePackageField.classList.remove(
           "hidden"
@@ -932,7 +1153,9 @@
 
         tablePackageInput.required =
           true;
+
       } else {
+
         tablePackageField.classList.add(
           "hidden"
         );
@@ -944,14 +1167,20 @@
           "";
       }
 
+
+      /* BOLD RIDERS */
+
       if (isBoldRider) {
+
         boldRidersField.classList.remove(
           "hidden"
         );
 
         boldRidersIdInput.required =
           true;
+
       } else {
+
         boldRidersField.classList.add(
           "hidden"
         );
@@ -966,7 +1195,13 @@
       }
     }
 
+
+    /* =========================
+       VALIDATE BOLD RIDER
+    ========================== */
+
     async function validateBoldRider() {
+
       const requestNumber =
         ++validationRequestNumber;
 
@@ -992,7 +1227,9 @@
       boldRidersOwner.textContent =
         "";
 
+
       if (!riderId) {
+
         boldRidersStatus.className =
           "rider-status";
 
@@ -1001,8 +1238,10 @@
 
         return false;
       }
+
 
       if (riderId.length !== 8) {
+
         boldRidersStatus.className =
           "rider-status";
 
@@ -1011,6 +1250,7 @@
 
         return false;
       }
+
 
       boldRidersStatus.className =
         "rider-status loading";
@@ -1018,12 +1258,16 @@
       boldRidersStatus.textContent =
         "Memeriksa ID BOLD RIDERS...";
 
+
       try {
+
         const url =
-  BOLD_RIDER_VALIDATION_URL +
-  "?action=validateBoldRider" +
-  "&boldRidersId=" +
-  encodeURIComponent(riderId);
+          BOLD_RIDER_VALIDATION_URL +
+          "?action=validateBoldRider" +
+          "&boldRidersId=" +
+          encodeURIComponent(riderId);
+
+
         const response =
           await fetch(
             url,
@@ -1034,6 +1278,7 @@
             }
           );
 
+
         if (
           requestNumber !==
           validationRequestNumber
@@ -1041,8 +1286,10 @@
           return false;
         }
 
+
         const raw =
           await response.text();
+
 
         console.log(
           "BOLD RIDERS VALIDATION HTTP STATUS:",
@@ -1054,22 +1301,29 @@
           raw
         );
 
+
         let data;
 
+
         try {
+
           data =
             JSON.parse(raw);
+
         } catch {
+
           throw new Error(
             "Server mengembalikan response JSON yang tidak valid."
           );
         }
+
 
         if (
           data &&
           data.success === true &&
           data.status === "VALID"
         ) {
+
           boldRiderIsValid =
             true;
 
@@ -1082,12 +1336,15 @@
           boldRidersStatus.textContent =
             "ID BOLD RIDERS valid.";
 
+
           const ownerName =
             String(
               data.boldRidersName || ""
             ).trim();
 
+
           if (ownerName) {
+
             boldRidersOwner.className =
               "rider-owner";
 
@@ -1097,8 +1354,10 @@
               "</strong>";
           }
 
+
           return true;
         }
+
 
         boldRiderIsValid =
           false;
@@ -1115,9 +1374,11 @@
             ? data.message
             : "ID BOLD RIDERS tidak terdaftar.";
 
+
         return false;
 
       } catch (error) {
+
         if (
           requestNumber !==
           validationRequestNumber
@@ -1125,10 +1386,12 @@
           return false;
         }
 
+
         console.error(
           "BOLD RIDERS VALIDATION ERROR:",
           error
         );
+
 
         boldRiderIsValid =
           false;
@@ -1142,11 +1405,18 @@
         boldRidersStatus.textContent =
           "Tidak dapat terhubung ke server.";
 
+
         return false;
       }
     }
 
+
+    /* =========================
+       ESCAPE HTML
+    ========================== */
+
     function escapeHtml(value) {
+
       return String(
         value == null
           ? ""
@@ -1174,8 +1444,15 @@
         );
     }
 
+
+    /* =========================
+       SUBMIT REGISTRATION
+    ========================== */
+
     async function submitRegistration() {
+
       hideMessage();
+
 
       const name =
         nameInput.value.trim();
@@ -1206,80 +1483,111 @@
           .trim()
           .toUpperCase();
 
+
+      /* NAME */
+
       if (!name) {
+
         showMessage(
           "error",
           "Nama wajib diisi."
         );
 
         nameInput.focus();
+
         return;
       }
 
+
+      /* WHATSAPP */
+
       if (!whatsapp) {
+
         showMessage(
           "error",
           "WhatsApp wajib diisi."
         );
 
         whatsappInput.focus();
+
         return;
       }
 
+
+      /* ACCESS */
+
       if (!accessType) {
+
         showMessage(
           "error",
           "Silakan pilih Access."
         );
 
         accessTypeInput.focus();
+
         return;
       }
+
+
+      /* VIP TABLE */
 
       if (
         accessType === "VIP" &&
         !tablePackage
       ) {
+
         showMessage(
           "error",
           "Table Package wajib dipilih untuk VIP."
         );
 
         tablePackageInput.focus();
+
         return;
       }
+
+
+      /* BOLD RIDERS */
 
       if (
         accessType === "BOLD RIDERS"
       ) {
+
         if (
           boldRidersId.length !== 8
         ) {
+
           showMessage(
             "error",
             "ID BOLD RIDERS harus 8 karakter."
           );
 
           boldRidersIdInput.focus();
+
           return;
         }
+
 
         if (
           !boldRiderIsValid ||
           boldRiderValidatedId !==
             boldRidersId
         ) {
+
           showMessage(
             "error",
             "ID BOLD RIDERS belum tervalidasi atau tidak terdaftar."
           );
 
+
           const valid =
             await validateBoldRider();
+
 
           if (!valid) {
             return;
           }
+
 
           if (
             !boldRiderIsValid ||
@@ -1291,21 +1599,34 @@
         }
       }
 
+
+      /* REQUEST BODY */
+
       const body = {
+
         name,
+
         whatsapp,
+
         accessType,
+
         tablePackage:
           accessType === "VIP"
             ? tablePackage
             : "",
+
         community,
+
         stayConnected,
+
         boldRidersId:
           accessType === "BOLD RIDERS"
             ? boldRidersId
             : ""
       };
+
+
+      /* LOCK UI */
 
       submitButton.disabled =
         true;
@@ -1317,7 +1638,9 @@
         "show"
       );
 
+
       try {
+
         const response =
           await fetch(
             API_URL +
@@ -1326,6 +1649,7 @@
               method: "POST",
 
               headers: {
+
                 "Content-Type":
                   "application/json",
 
@@ -1345,8 +1669,10 @@
             }
           );
 
+
         const raw =
           await response.text();
+
 
         console.log(
           "REGISTRATION HTTP STATUS:",
@@ -1358,18 +1684,25 @@
           raw
         );
 
+
         let data;
 
+
         try {
+
           data =
             JSON.parse(raw);
+
         } catch {
+
           throw new Error(
             "Server mengembalikan response JSON yang tidak valid."
           );
         }
 
+
         if (!response.ok) {
+
           throw new Error(
             data &&
             data.message
@@ -1377,11 +1710,13 @@
               : "Registration gagal."
           );
         }
+
 
         if (
           !data ||
           data.success !== true
         ) {
+
           throw new Error(
             data &&
             data.message
@@ -1390,20 +1725,25 @@
           );
         }
 
+
         showRegistrationResult(
           data
         );
+
 
         showMessage(
           "success",
           "Registration berhasil."
         );
 
+
       } catch (error) {
+
         console.error(
           "REGISTRATION ERROR:",
           error
         );
+
 
         showMessage(
           "error",
@@ -1413,7 +1753,9 @@
             : "Tidak dapat terhubung ke server."
         );
 
+
       } finally {
+
         submitButton.disabled =
           false;
 
@@ -1426,37 +1768,49 @@
       }
     }
 
-    function showRegistrationResult(
-      data
-    ) {
+
+    /* =========================
+       SHOW REGISTRATION RESULT
+    ========================== */
+
+    function showRegistrationResult(data) {
+
       resultBox.classList.add(
         "show"
       );
 
+
       resultPassId.textContent =
         data.passId || "-";
+
 
       resultName.textContent =
         data.name || "-";
 
+
       resultWhatsapp.textContent =
         data.whatsapp || "-";
+
 
       resultAccess.textContent =
         data.accessType || "-";
 
+
       resultTable.textContent =
         data.tablePackage || "-";
+
 
       const riderId =
         String(
           data.boldRidersId || ""
         ).trim();
 
+
       const riderName =
         String(
           data.boldRidersName || ""
         ).trim();
+
 
       if (
         riderId &&
@@ -1465,6 +1819,7 @@
         ).toUpperCase() ===
           "BOLD RIDERS"
       ) {
+
         resultRiderIdItem.classList.remove(
           "hidden"
         );
@@ -1473,12 +1828,16 @@
           "hidden"
         );
 
+
         resultRiderId.textContent =
           riderId;
 
+
         resultRiderName.textContent =
           riderName || "-";
+
       } else {
+
         resultRiderIdItem.classList.add(
           "hidden"
         );
@@ -1488,19 +1847,26 @@
         );
       }
 
+
+      /* QR */
+
       const qrUrl =
         String(
           data.qrCodeUrl || ""
         ).trim();
 
+
       if (qrUrl) {
+
         qrImage.src =
           qrUrl;
 
         qrBox.classList.remove(
           "hidden"
         );
+
       } else {
+
         qrImage.removeAttribute(
           "src"
         );
@@ -1510,23 +1876,32 @@
         );
       }
 
+
       resultBox.scrollIntoView({
         behavior: "smooth",
         block: "start"
       });
     }
 
+
+    /* =========================
+       WHATSAPP
+    ========================== */
+
     function openWhatsAppHelp() {
+
       const message =
         encodeURIComponent(
           "Halo, saya membutuhkan bantuan terkait registrasi BOLD AFTER DARK."
         );
+
 
       const url =
         "https://wa.me/" +
         WHATSAPP_NUMBER +
         "?text=" +
         message;
+
 
       window.open(
         url,
@@ -1535,17 +1910,30 @@
       );
     }
 
+
+    /* =========================
+       ACCESS CHANGE
+    ========================== */
+
     accessTypeInput.addEventListener(
       "change",
       function() {
+
         updateAccessFields();
+
         hideMessage();
       }
     );
 
+
+    /* =========================
+       BOLD RIDERS INPUT
+    ========================== */
+
     boldRidersIdInput.addEventListener(
       "input",
       function() {
+
         const value =
           String(
             boldRidersIdInput.value || ""
@@ -1560,10 +1948,13 @@
               8
             );
 
+
         boldRidersIdInput.value =
           value;
 
+
         validationRequestNumber++;
+
 
         boldRiderIsValid =
           false;
@@ -1571,15 +1962,18 @@
         boldRiderValidatedId =
           "";
 
+
         boldRidersOwner.className =
           "rider-owner hidden";
 
         boldRidersOwner.textContent =
           "";
 
+
         if (
           value.length < 8
         ) {
+
           boldRidersStatus.className =
             "rider-status";
 
@@ -1589,29 +1983,48 @@
           return;
         }
 
+
         if (
           value.length === 8
         ) {
+
           validateBoldRider();
         }
       }
     );
 
+
+    /* =========================
+       FORM SUBMIT
+    ========================== */
+
     registrationForm.addEventListener(
       "submit",
       async function(event) {
+
         event.preventDefault();
 
         await submitRegistration();
       }
     );
 
+
+    /* =========================
+       WHATSAPP BUTTON
+    ========================== */
+
     whatsappButton.addEventListener(
       "click",
       openWhatsAppHelp
     );
 
+
+    /* =========================
+       INITIAL STATE
+    ========================== */
+
     updateAccessFields();
+
   </script>
 
 </body>
