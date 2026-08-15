@@ -1,5 +1,5 @@
-```html
 <!DOCTYPE html>
+
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -14,12 +14,10 @@
 
     :root {
       --red: #e00000;
-      --red-dark: #9d0000;
       --bg: #050505;
       --card: #111111;
       --border: #292929;
       --text: #ffffff;
-      --muted: #888888;
     }
 
     body {
@@ -94,7 +92,7 @@
       padding: 15px 18px;
       border: 1px solid transparent;
       border-radius: 10px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 900;
       letter-spacing: 1px;
       cursor: pointer;
@@ -167,82 +165,76 @@
       .card {
         padding: 18px;
       }
+
+      button {
+        font-size: 12px;
+      }
     }
   </style>
+
 </head>
 
 <body>
 
   <div class="container">
 
-    <div class="brand">
-      <span class="bold">BOLD</span>
-      <span class="after"> AFTER </span>
-      <span class="dark">DARK</span>
-    </div>
+```
+<div class="brand">
+  <span class="bold">BOLD</span>
+  <span class="after"> AFTER </span>
+  <span class="dark">DARK</span>
+</div>
 
-    <div class="subtitle">
-      OFFICIAL EVENT ACCESS
-    </div>
+<div class="subtitle">
+  OFFICIAL EVENT ACCESS
+</div>
 
-    <div class="card">
+<div class="card">
 
-      <div class="button-list">
+  <div class="button-list">
 
-        <button
-          id="copyLinkButton"
-          class="btn-primary"
-          type="button"
-        >
-          COPY LINK
-        </button>
+    <button
+      id="copyLinkButton"
+      class="btn-primary"
+      type="button"
+    >
+      COPY LINK FORM REGISTRATION
+    </button>
 
-        <button
-          id="scannerButton"
-          class="btn-secondary"
-          type="button"
-        >
-          QR SCANNER
-        </button>
+    <button
+      id="scannerButton"
+      class="btn-secondary"
+      type="button"
+    >
+      QR SCANNER
+    </button>
 
-        <button
-          id="adminButton"
-          class="btn-admin"
-          type="button"
-        >
-          ADMIN
-        </button>
+    <button
+      id="adminButton"
+      class="btn-admin"
+      type="button"
+    >
+      ADMIN
+    </button>
 
-      </div>
+  </div>
 
-      <div
-        id="copyStatus"
-        class="copy-status"
-      ></div>
+  <div
+    id="copyStatus"
+    class="copy-status"
+  ></div>
 
-    </div>
+</div>
 
-    <div class="footer">
-      BOLD AFTER DARK
-    </div>
+<div class="footer">
+  BOLD AFTER DARK
+</div>
+```
 
   </div>
 
   <script>
     "use strict";
-
-    /*
-     * ============================================
-     * BOLD AFTER DARK — HOME
-     * ============================================
-     *
-     * Kalau nanti sudah punya short link,
-     * cukup ganti REGISTRATION_URL di bawah.
-     *
-     * Contoh:
-     * const REGISTRATION_URL = "https://bit.ly/boldafterdark";
-     *
-     */
 
     const REGISTRATION_URL =
       "https://purbalinggabmtc-cmyk.github.io/bold-after-dark-scanner/registration/";
@@ -318,7 +310,7 @@
         }
 
         copyStatus.textContent =
-          "Link registrasi berhasil disalin.";
+          "Link Form Registration berhasil disalin.";
 
         setTimeout(
           function() {
@@ -342,18 +334,14 @@
 
 
     function openScanner() {
-
       window.location.href =
         SCANNER_URL;
-
     }
 
 
     function openAdmin() {
-
       window.location.href =
         ADMIN_URL;
-
     }
 
 
@@ -376,4 +364,3 @@
 
 </body>
 </html>
-```
