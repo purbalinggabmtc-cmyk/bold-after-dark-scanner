@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -123,13 +124,6 @@
       cursor: not-allowed;
     }
 
-    .name-auto {
-      background: #181818;
-      border-color: #145b32;
-      color: #55e68b;
-      font-weight: 700;
-    }
-
     .field-help {
       margin-top: 6px;
       color: #777;
@@ -188,6 +182,13 @@
       color: #aaa;
       font-size: 12px;
       line-height: 1.5;
+    }
+
+    .name-locked {
+      border-color: #145b32 !important;
+      background: #071d10 !important;
+      color: #55e68b !important;
+      font-weight: 700;
     }
 
     .button-row {
@@ -453,7 +454,7 @@
 
       <form id="registrationForm" novalidate>
 
-        <!-- ACCESS DULU -->
+        <!-- 1. ACCESS -->
         <div class="field">
           <label for="accessType">
             Access <span class="required">*</span>
@@ -486,44 +487,7 @@
           </div>
         </div>
 
-        <!-- NAMA -->
-        <div class="field">
-          <label for="name">
-            Nama <span class="required">*</span>
-          </label>
-
-          <input
-            id="name"
-            name="name"
-            type="text"
-            autocomplete="name"
-            required
-          >
-
-          <div
-            id="nameHelp"
-            class="field-help hidden"
-          >
-            Nama akan otomatis mengikuti nama pemilik ID BOLD RIDERS.
-          </div>
-        </div>
-
-        <!-- WHATSAPP -->
-        <div class="field">
-          <label for="whatsapp">
-            WhatsApp <span class="required">*</span>
-          </label>
-
-          <input
-            id="whatsapp"
-            name="whatsapp"
-            type="tel"
-            autocomplete="tel"
-            required
-          >
-        </div>
-
-        <!-- BOLD RIDERS -->
+        <!-- 2. BOLD RIDERS ID -->
         <div
           id="boldRidersField"
           class="field hidden"
@@ -559,7 +523,44 @@
           ></div>
         </div>
 
-        <!-- TABLE PACKAGE -->
+        <!-- 3. NAMA -->
+        <div class="field">
+          <label for="name">
+            Nama <span class="required">*</span>
+          </label>
+
+          <input
+            id="name"
+            name="name"
+            type="text"
+            autocomplete="name"
+            required
+          >
+
+          <div
+            id="nameHelp"
+            class="field-help hidden"
+          >
+            Nama otomatis mengikuti nama pemilik ID BOLD RIDERS yang tervalidasi.
+          </div>
+        </div>
+
+        <!-- 4. WHATSAPP -->
+        <div class="field">
+          <label for="whatsapp">
+            WhatsApp <span class="required">*</span>
+          </label>
+
+          <input
+            id="whatsapp"
+            name="whatsapp"
+            type="tel"
+            autocomplete="tel"
+            required
+          >
+        </div>
+
+        <!-- 5. TABLE PACKAGE -->
         <div
           id="tablePackageField"
           class="field hidden"
@@ -594,7 +595,7 @@
           </select>
         </div>
 
-        <!-- COMMUNITY -->
+        <!-- 6. COMMUNITY -->
         <div class="field">
           <label for="community">
             Community
@@ -608,7 +609,7 @@
           >
         </div>
 
-        <!-- STAY CONNECTED -->
+        <!-- 7. STAY CONNECTED -->
         <div class="field">
           <label for="stayConnected">
             Stay Connected
@@ -817,6 +818,18 @@
     const accessTypeInput =
       document.getElementById("accessType");
 
+    const boldRidersField =
+      document.getElementById("boldRidersField");
+
+    const boldRidersIdInput =
+      document.getElementById("boldRidersId");
+
+    const boldRidersStatus =
+      document.getElementById("boldRidersStatus");
+
+    const boldRidersOwner =
+      document.getElementById("boldRidersOwner");
+
     const nameInput =
       document.getElementById("name");
 
@@ -831,18 +844,6 @@
 
     const tablePackageField =
       document.getElementById("tablePackageField");
-
-    const boldRidersField =
-      document.getElementById("boldRidersField");
-
-    const boldRidersIdInput =
-      document.getElementById("boldRidersId");
-
-    const boldRidersStatus =
-      document.getElementById("boldRidersStatus");
-
-    const boldRidersOwner =
-      document.getElementById("boldRidersOwner");
 
     const communityInput =
       document.getElementById("community");
@@ -937,43 +938,31 @@
         "";
     }
 
-    function resetNameToManual() {
+    function setManualNameMode() {
       nameInput.disabled = false;
       nameInput.readOnly = false;
+      nameInput.classList.remove("name-locked");
 
-      nameInput.classList.remove(
-        "name-auto"
-      );
+      nameHelp.classList.add("hidden");
 
-      nameHelp.classList.add(
-        "hidden"
-      );
-
-      nameInput.value = "";
+      if (
+        String(accessTypeInput.value || "")
+          .trim()
+          .toUpperCase() !== "BOLD RIDERS"
+      ) {
+        nameInput.value = "";
+      }
     }
 
-    function setNameToBoldRider(ownerName) {
-      const safeName =
-        String(
-          ownerName || ""
-        ).trim();
-
+    function setBoldRiderNameMode(name) {
       nameInput.value =
-        safeName;
+        String(name || "").trim();
 
-      nameInput.disabled =
-        true;
+      nameInput.disabled = true;
+      nameInput.readOnly = true;
+      nameInput.classList.add("name-locked");
 
-      nameInput.readOnly =
-        true;
-
-      nameInput.classList.add(
-        "name-auto"
-      );
-
-      nameHelp.classList.remove(
-        "hidden"
-      );
+      nameHelp.classList.remove("hidden");
     }
 
     function updateAccessFields() {
@@ -990,6 +979,10 @@
       const isBoldRider =
         access === "BOLD RIDERS";
 
+      /*
+       * VIP
+       * Table Package muncul.
+       */
       if (isVip) {
         tablePackageField.classList.remove(
           "hidden"
@@ -1009,8 +1002,11 @@
           "";
       }
 
+      /*
+       * BOLD RIDERS
+       * ID BR muncul tepat di bawah Access.
+       */
       if (isBoldRider) {
-
         boldRidersField.classList.remove(
           "hidden"
         );
@@ -1019,26 +1015,17 @@
           true;
 
         /*
-         * BOLD RIDERS:
-         * Nama tidak boleh diisi manual.
-         * Jika sudah ada nama manual sebelumnya,
-         * langsung kosongkan sampai ID BR tervalidasi.
+         * Nama tidak boleh diketik manual.
+         * Nama akan diisi setelah ID BR valid.
          */
         nameInput.value = "";
-
         nameInput.disabled = true;
         nameInput.readOnly = true;
+        nameInput.classList.add("name-locked");
 
-        nameInput.classList.add(
-          "name-auto"
-        );
-
-        nameHelp.classList.remove(
-          "hidden"
-        );
+        nameHelp.classList.remove("hidden");
 
       } else {
-
         boldRidersField.classList.add(
           "hidden"
         );
@@ -1053,14 +1040,13 @@
 
         /*
          * FREE / VIP:
-         * Nama kembali manual.
+         * Nama kembali menjadi input manual.
          */
-        resetNameToManual();
+        setManualNameMode();
       }
     }
 
     async function validateBoldRider() {
-
       const requestNumber =
         ++validationRequestNumber;
 
@@ -1083,11 +1069,8 @@
       boldRiderValidatedName =
         "";
 
-      /*
-       * Jangan mempertahankan nama BR
-       * dari ID sebelumnya.
-       */
-      nameInput.value = "";
+      nameInput.value =
+        "";
 
       boldRidersOwner.className =
         "rider-owner hidden";
@@ -1096,7 +1079,6 @@
         "";
 
       if (!riderId) {
-
         boldRidersStatus.className =
           "rider-status";
 
@@ -1107,7 +1089,6 @@
       }
 
       if (riderId.length !== 8) {
-
         boldRidersStatus.className =
           "rider-status";
 
@@ -1124,7 +1105,6 @@
         "Memeriksa ID BOLD RIDERS...";
 
       try {
-
         const url =
           BOLD_RIDER_VALIDATION_URL +
           "?action=validateBoldRider" +
@@ -1164,12 +1144,9 @@
         let data;
 
         try {
-
           data =
             JSON.parse(raw);
-
         } catch {
-
           throw new Error(
             "Server mengembalikan response JSON yang tidak valid."
           );
@@ -1180,28 +1157,26 @@
           data.success === true &&
           data.status === "VALID"
         ) {
-
           const ownerName =
             String(
               data.boldRidersName || ""
             ).trim();
 
+          /*
+           * ID valid tetapi nama pemilik kosong:
+           * jangan izinkan registrasi karena
+           * nama BOLD RIDERS harus berasal dari database.
+           */
           if (!ownerName) {
-
-            boldRiderIsValid =
-              false;
-
-            boldRiderValidatedId =
-              "";
-
-            boldRiderValidatedName =
-              "";
+            boldRiderIsValid = false;
+            boldRiderValidatedId = "";
+            boldRiderValidatedName = "";
 
             boldRidersStatus.className =
               "rider-status invalid";
 
             boldRidersStatus.textContent =
-              "ID BOLD RIDERS valid, tetapi nama pemilik tidak ditemukan.";
+              "ID valid, tetapi nama BOLD RIDERS tidak ditemukan.";
 
             nameInput.value = "";
 
@@ -1233,9 +1208,9 @@
 
           /*
            * INI BAGIAN PENTING:
-           * Nama otomatis mengikuti data BR.
+           * Nama otomatis mengikuti database.
            */
-          setNameToBoldRider(
+          setBoldRiderNameMode(
             ownerName
           );
 
@@ -1251,7 +1226,8 @@
         boldRiderValidatedName =
           "";
 
-        nameInput.value = "";
+        nameInput.value =
+          "";
 
         boldRidersStatus.className =
           "rider-status invalid";
@@ -1265,7 +1241,6 @@
         return false;
 
       } catch (error) {
-
         if (
           requestNumber !==
           validationRequestNumber
@@ -1329,7 +1304,6 @@
     }
 
     async function submitRegistration() {
-
       hideMessage();
 
       const accessType =
@@ -1339,17 +1313,8 @@
           .trim()
           .toUpperCase();
 
-      /*
-       * Untuk BOLD RIDERS,
-       * nama HARUS berasal dari hasil validasi.
-       *
-       * Untuk FREE/VIP,
-       * nama berasal dari input manual.
-       */
       let name =
-        String(
-          nameInput.value || ""
-        ).trim();
+        nameInput.value.trim();
 
       const whatsapp =
         whatsappInput.value.trim();
@@ -1371,45 +1336,41 @@
           .toUpperCase();
 
       if (!accessType) {
-
         showMessage(
           "error",
-          "Silakan pilih Access terlebih dahulu."
+          "Silakan pilih Access."
         );
 
         accessTypeInput.focus();
-
         return;
       }
 
+      /*
+       * BOLD RIDERS:
+       * ID harus valid dan nama harus berasal
+       * dari hasil validasi database.
+       */
       if (
         accessType === "BOLD RIDERS"
       ) {
-
         if (
           boldRidersId.length !== 8
         ) {
-
           showMessage(
             "error",
             "ID BOLD RIDERS harus 8 karakter."
           );
 
           boldRidersIdInput.focus();
-
           return;
         }
 
-        /*
-         * Pastikan ID yang tervalidasi
-         * benar-benar sama dengan ID saat submit.
-         */
         if (
           !boldRiderIsValid ||
           boldRiderValidatedId !==
-            boldRidersId
+            boldRidersId ||
+          !boldRiderValidatedName
         ) {
-
           showMessage(
             "error",
             "ID BOLD RIDERS belum tervalidasi atau tidak terdaftar."
@@ -1425,61 +1386,50 @@
           if (
             !boldRiderIsValid ||
             boldRiderValidatedId !==
-              boldRidersId
+              boldRidersId ||
+            !boldRiderValidatedName
           ) {
+            showMessage(
+              "error",
+              "Data BOLD RIDERS tidak valid."
+            );
+
             return;
           }
         }
 
         /*
-         * Jangan pernah menggunakan nama
-         * yang diketik sebelumnya.
+         * Jangan pernah mengambil nama dari
+         * input manual untuk BOLD RIDERS.
          */
         name =
           boldRiderValidatedName;
 
-        if (!name) {
+        nameInput.value =
+          name;
+      }
 
-          showMessage(
-            "error",
-            "Nama pemilik BOLD RIDERS tidak ditemukan."
-          );
+      /*
+       * FREE / VIP:
+       * Nama tetap manual.
+       */
+      if (!name) {
+        showMessage(
+          "error",
+          "Nama wajib diisi."
+        );
 
-          return;
-        }
-
-      } else {
-
-        /*
-         * FREE / VIP tetap manual.
-         */
-        name =
-          String(
-            nameInput.value || ""
-          ).trim();
-
-        if (!name) {
-
-          showMessage(
-            "error",
-            "Nama wajib diisi."
-          );
-
-          nameInput.focus();
-
-          return;
-        }
+        nameInput.focus();
+        return;
       }
 
       if (!whatsapp) {
-
         showMessage(
           "error",
           "WhatsApp wajib diisi."
         );
 
         whatsappInput.focus();
-
         return;
       }
 
@@ -1487,14 +1437,12 @@
         accessType === "VIP" &&
         !tablePackage
       ) {
-
         showMessage(
           "error",
           "Table Package wajib dipilih untuk VIP."
         );
 
         tablePackageInput.focus();
-
         return;
       }
 
@@ -1517,11 +1465,6 @@
             : ""
       };
 
-      console.log(
-        "REGISTRATION BODY:",
-        body
-      );
-
       submitButton.disabled =
         true;
 
@@ -1533,7 +1476,6 @@
       );
 
       try {
-
         const response =
           await fetch(
             API_URL +
@@ -1577,19 +1519,15 @@
         let data;
 
         try {
-
           data =
             JSON.parse(raw);
-
         } catch {
-
           throw new Error(
             "Server mengembalikan response JSON yang tidak valid."
           );
         }
 
         if (!response.ok) {
-
           throw new Error(
             data &&
             data.message
@@ -1602,7 +1540,6 @@
           !data ||
           data.success !== true
         ) {
-
           throw new Error(
             data &&
             data.message
@@ -1621,7 +1558,6 @@
         );
 
       } catch (error) {
-
         console.error(
           "REGISTRATION ERROR:",
           error
@@ -1636,7 +1572,6 @@
         );
 
       } finally {
-
         submitButton.disabled =
           false;
 
@@ -1649,10 +1584,7 @@
       }
     }
 
-    function showRegistrationResult(
-      data
-    ) {
-
+    function showRegistrationResult(data) {
       resultBox.classList.add(
         "show"
       );
@@ -1689,7 +1621,6 @@
         ).toUpperCase() ===
           "BOLD RIDERS"
       ) {
-
         resultRiderIdItem.classList.remove(
           "hidden"
         );
@@ -1703,9 +1634,7 @@
 
         resultRiderName.textContent =
           riderName || "-";
-
       } else {
-
         resultRiderIdItem.classList.add(
           "hidden"
         );
@@ -1721,16 +1650,13 @@
         ).trim();
 
       if (qrUrl) {
-
         qrImage.src =
           qrUrl;
 
         qrBox.classList.remove(
           "hidden"
         );
-
       } else {
-
         qrImage.removeAttribute(
           "src"
         );
@@ -1747,7 +1673,6 @@
     }
 
     function openWhatsAppHelp() {
-
       const message =
         encodeURIComponent(
           "Halo, saya membutuhkan bantuan terkait registrasi BOLD AFTER DARK."
@@ -1767,25 +1692,26 @@
     }
 
     /*
-     * ACCESS berubah
+     * Saat Access berubah:
+     * - BOLD RIDERS -> ID muncul
+     * - VIP -> Table Package muncul
+     * - FREE -> keduanya disembunyikan
      */
     accessTypeInput.addEventListener(
       "change",
       function() {
-
         updateAccessFields();
-
         hideMessage();
       }
     );
 
     /*
-     * ID BOLD RIDERS berubah.
+     * Validasi ID BOLD RIDERS otomatis
+     * ketika sudah 8 karakter.
      */
     boldRidersIdInput.addEventListener(
       "input",
       function() {
-
         const value =
           String(
             boldRidersIdInput.value || ""
@@ -1814,11 +1740,8 @@
         boldRiderValidatedName =
           "";
 
-        /*
-         * Setiap ID berubah,
-         * nama harus dikosongkan terlebih dahulu.
-         */
-        nameInput.value = "";
+        nameInput.value =
+          "";
 
         boldRidersOwner.className =
           "rider-owner hidden";
@@ -1829,7 +1752,6 @@
         if (
           value.length < 8
         ) {
-
           boldRidersStatus.className =
             "rider-status";
 
@@ -1842,8 +1764,31 @@
         if (
           value.length === 8
         ) {
-
           validateBoldRider();
+        }
+      }
+    );
+
+    /*
+     * Proteksi tambahan:
+     * selama BOLD RIDERS aktif, user tidak dapat
+     * mengubah nama secara manual.
+     */
+    nameInput.addEventListener(
+      "input",
+      function() {
+        const access =
+          String(
+            accessTypeInput.value || ""
+          )
+            .trim()
+            .toUpperCase();
+
+        if (
+          access === "BOLD RIDERS"
+        ) {
+          nameInput.value =
+            boldRiderValidatedName || "";
         }
       }
     );
@@ -1851,7 +1796,6 @@
     registrationForm.addEventListener(
       "submit",
       async function(event) {
-
         event.preventDefault();
 
         await submitRegistration();
@@ -1863,13 +1807,9 @@
       openWhatsAppHelp
     );
 
-    /*
-     * Kondisi awal:
-     * Access belum dipilih.
-     */
     updateAccessFields();
-
   </script>
 
 </body>
 </html>
+```
