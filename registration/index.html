@@ -123,6 +123,10 @@
       cursor: not-allowed;
     }
 
+    input::placeholder {
+      color: #777;
+    }
+
     .field-help {
       margin-top: 6px;
       color: #777;
@@ -155,13 +159,6 @@
 
     .rider-status.error {
       color: #ff8c8c;
-    }
-
-    .bold-rider-name {
-      border-color: #145b32 !important;
-      background: #071d10 !important;
-      color: #55e68b !important;
-      font-weight: 700;
     }
 
     .access-info {
@@ -471,7 +468,7 @@
           </div>
         </div>
 
-        <!-- ID BOLD RIDERS -->
+        <!-- BOLD RIDERS ID -->
         <div
           id="boldRidersField"
           class="field hidden"
@@ -598,7 +595,14 @@
             id="stayConnected"
             name="stayConnected"
             type="text"
+            placeholder="instagram"
+            autocomplete="off"
+            spellcheck="false"
           >
+
+          <div class="field-help">
+            Instagram / social media
+          </div>
         </div>
 
         <div
@@ -878,7 +882,7 @@
 
     let boldRiderIsValid = false;
     let boldRiderValidatedId = "";
-    let boldRiderValidatedName = "";
+    let boldRiderOwnerName = "";
     let validationRequestNumber = 0;
 
     function showMessage(type, message) {
@@ -900,7 +904,7 @@
     function clearBoldRiderValidation() {
       boldRiderIsValid = false;
       boldRiderValidatedId = "";
-      boldRiderValidatedName = "";
+      boldRiderOwnerName = "";
 
       boldRidersStatus.className =
         "rider-status";
@@ -909,14 +913,11 @@
         "";
 
       nameInput.value = "";
-      nameInput.disabled = false;
-      nameInput.classList.remove(
-        "bold-rider-name"
-      );
 
-      nameHelp.classList.add(
-        "hidden"
-      );
+      nameInput.readOnly = false;
+      nameInput.style.borderColor = "";
+
+      nameHelp.classList.add("hidden");
     }
 
     function updateAccessFields() {
@@ -934,7 +935,7 @@
         access === "BOLD RIDERS";
 
       /*
-       * VIP
+       * TABLE PACKAGE
        */
       if (isVip) {
         tablePackageField.classList.remove(
@@ -966,19 +967,14 @@
         boldRidersIdInput.required =
           true;
 
-        nameHelp.classList.remove(
-          "hidden"
-        );
-
-        /*
-         * Nama tidak boleh diubah
-         * secara manual untuk BOLD RIDERS.
-         */
-        nameInput.disabled =
+        nameInput.readOnly =
           true;
 
-        nameInput.classList.add(
-          "bold-rider-name"
+        nameInput.style.borderColor =
+          "#145b32";
+
+        nameHelp.classList.remove(
+          "hidden"
         );
 
       } else {
@@ -992,18 +988,17 @@
         boldRidersIdInput.value =
           "";
 
-        clearBoldRiderValidation();
-
-        nameInput.disabled =
+        nameInput.readOnly =
           false;
 
-        nameInput.classList.remove(
-          "bold-rider-name"
-        );
+        nameInput.style.borderColor =
+          "";
 
         nameHelp.classList.add(
           "hidden"
         );
+
+        clearBoldRiderValidation();
       }
     }
 
@@ -1027,20 +1022,17 @@
       boldRiderValidatedId =
         "";
 
-      boldRiderValidatedName =
+      boldRiderOwnerName =
         "";
-
-      /*
-       * Reset nama ketika ID sedang
-       * divalidasi ulang.
-       */
-      nameInput.value = "";
 
       if (!riderId) {
         boldRidersStatus.className =
           "rider-status";
 
         boldRidersStatus.textContent =
+          "";
+
+        nameInput.value =
           "";
 
         return false;
@@ -1051,6 +1043,9 @@
           "rider-status";
 
         boldRidersStatus.textContent =
+          "";
+
+        nameInput.value =
           "";
 
         return false;
@@ -1120,67 +1115,48 @@
               data.boldRidersName || ""
             ).trim();
 
-          /*
-           * ID valid tetapi nama pemilik
-           * tidak tersedia dari server.
-           */
-          if (!ownerName) {
-            boldRiderIsValid =
-              false;
-
-            boldRiderValidatedId =
-              "";
-
-            boldRiderValidatedName =
-              "";
-
-            boldRidersStatus.className =
-              "rider-status invalid";
-
-            boldRidersStatus.textContent =
-              "ID BOLD RIDERS valid, tetapi nama tidak ditemukan.";
-
-            nameInput.value =
-              "";
-
-            return false;
-          }
-
           boldRiderIsValid =
             true;
 
           boldRiderValidatedId =
             riderId;
 
-          boldRiderValidatedName =
+          boldRiderOwnerName =
             ownerName;
 
-          /*
-           * Nama otomatis dari server.
-           */
-          nameInput.value =
-            ownerName;
-
-          nameInput.disabled =
-            true;
-
-          nameInput.classList.add(
-            "bold-rider-name"
-          );
-
-          nameHelp.classList.remove(
-            "hidden"
-          );
-
-          /*
-           * SESUAI PERMINTAAN:
-           * hanya tampil status valid.
-           */
           boldRidersStatus.className =
             "rider-status valid";
 
+          /*
+           * HANYA tampilkan:
+           * ID BOLD RIDERS valid.
+           *
+           * Tidak ada lagi:
+           * Nama pemilik: ...
+           */
           boldRidersStatus.textContent =
             "ID BOLD RIDERS valid.";
+
+          /*
+           * Nama otomatis mengikuti data
+           * BOLD RIDERS.
+           */
+          if (ownerName) {
+            nameInput.value =
+              ownerName;
+
+            nameInput.readOnly =
+              true;
+
+            nameInput.style.borderColor =
+              "#145b32";
+          } else {
+            nameInput.value =
+              "";
+
+            nameInput.readOnly =
+              true;
+          }
 
           return true;
         }
@@ -1191,7 +1167,7 @@
         boldRiderValidatedId =
           "";
 
-        boldRiderValidatedName =
+        boldRiderOwnerName =
           "";
 
         nameInput.value =
@@ -1227,7 +1203,7 @@
         boldRiderValidatedId =
           "";
 
-        boldRiderValidatedName =
+        boldRiderOwnerName =
           "";
 
         nameInput.value =
@@ -1246,18 +1222,18 @@
     async function submitRegistration() {
       hideMessage();
 
-      const name =
-        nameInput.value.trim();
-
-      const whatsapp =
-        whatsappInput.value.trim();
-
       const accessType =
         String(
           accessTypeInput.value || ""
         )
           .trim()
           .toUpperCase();
+
+      const name =
+        nameInput.value.trim();
+
+      const whatsapp =
+        whatsappInput.value.trim();
 
       const tablePackage =
         tablePackageInput.value.trim();
@@ -1334,9 +1310,12 @@
       }
 
       /*
-       * NAME
+       * NAMA
        */
-      if (!name) {
+      const finalName =
+        nameInput.value.trim();
+
+      if (!finalName) {
         showMessage(
           "error",
           "Nama wajib diisi."
@@ -1375,9 +1354,14 @@
         return;
       }
 
+      /*
+       * BODY
+       */
       const body = {
-        name,
+        name: finalName,
+
         whatsapp,
+
         accessType,
 
         tablePackage:
@@ -1514,9 +1498,7 @@
       }
     }
 
-    function showRegistrationResult(
-      data
-    ) {
+    function showRegistrationResult(data) {
       resultBox.classList.add(
         "show"
       );
@@ -1565,8 +1547,7 @@
           riderId;
 
         resultRiderName.textContent =
-          riderName || "-";
-
+          riderName || data.name || "-";
       } else {
         resultRiderIdItem.classList.add(
           "hidden"
@@ -1630,22 +1611,8 @@
     accessTypeInput.addEventListener(
       "change",
       function() {
-        validationRequestNumber++;
-
         updateAccessFields();
-
         hideMessage();
-
-        if (
-          String(
-            accessTypeInput.value || ""
-          ).toUpperCase() ===
-          "BOLD RIDERS"
-        ) {
-          boldRidersIdInput.focus();
-        } else {
-          nameInput.focus();
-        }
       }
     );
 
@@ -1680,18 +1647,11 @@
         boldRiderValidatedId =
           "";
 
-        boldRiderValidatedName =
+        boldRiderOwnerName =
           "";
 
         nameInput.value =
           "";
-
-        nameInput.disabled =
-          true;
-
-        nameInput.classList.add(
-          "bold-rider-name"
-        );
 
         if (
           value.length < 8
@@ -1714,7 +1674,67 @@
     );
 
     /*
-     * FORM SUBMIT
+     * STAY CONNECTED
+     *
+     * Placeholder:
+     * instagram
+     *
+     * Saat fokus:
+     * otomatis menjadi @
+     *
+     * Saat mengetik:
+     * @username
+     */
+    stayConnectedInput.addEventListener(
+      "focus",
+      function() {
+        if (
+          !stayConnectedInput.value.trim()
+        ) {
+          stayConnectedInput.value =
+            "@";
+        }
+
+        setTimeout(
+          function() {
+            stayConnectedInput.setSelectionRange(
+              stayConnectedInput.value.length,
+              stayConnectedInput.value.length
+            );
+          },
+          0
+        );
+      }
+    );
+
+    stayConnectedInput.addEventListener(
+      "input",
+      function() {
+        let value =
+          String(
+            stayConnectedInput.value || ""
+          );
+
+        /*
+         * Hanya satu @ di awal.
+         */
+        value =
+          value.replace(
+            /^@+/,
+            ""
+          );
+
+        value =
+          "@" +
+          value;
+
+        stayConnectedInput.value =
+          value;
+      }
+    );
+
+    /*
+     * SUBMIT
      */
     registrationForm.addEventListener(
       "submit",
@@ -1737,6 +1757,7 @@
      * INITIAL STATE
      */
     updateAccessFields();
+
   </script>
 
 </body>
