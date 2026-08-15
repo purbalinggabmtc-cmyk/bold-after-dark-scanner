@@ -1,14 +1,13 @@
+# admin.html — BOLD AFTER DARK Admin Dashboard
+
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>BOLD AFTER DARK — Admin Dashboard</title>
+  <title>BOLD AFTER DARK — Admin</title>
 
   <style>
     * {
@@ -18,7 +17,6 @@
     body {
       margin: 0;
       min-height: 100vh;
-
       background:
         radial-gradient(
           circle at top,
@@ -26,13 +24,8 @@
           #0b0b0b 42%,
           #000000 100%
         );
-
       color: #ffffff;
-
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     button,
@@ -41,236 +34,120 @@
       font: inherit;
     }
 
+    button {
+      cursor: pointer;
+    }
+
     .hidden {
       display: none !important;
     }
 
-    /* =====================================================
-       LOGIN
-       ===================================================== */
-
-    #loginScreen {
+    .page {
+      width: 100%;
       min-height: 100vh;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
       padding: 20px;
     }
 
-    .login-card {
+    .dashboard {
       width: 100%;
-      max-width: 420px;
+      max-width: 1450px;
+      margin: 0 auto;
+    }
 
-      background: #111111;
+    /* =====================================================
+       HEADER
+       ===================================================== */
 
-      border: 1px solid #333333;
-
-      border-radius: 18px;
-
-      padding: 30px;
-
-      box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.55);
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 22px;
     }
 
     .brand {
-      text-align: center;
-
-      font-size: 28px;
-
+      font-size: 26px;
       font-weight: 900;
-
-      letter-spacing: 3px;
-
-      margin-bottom: 5px;
+      letter-spacing: 2px;
     }
 
     .brand span {
       color: #e00000;
     }
 
-    .login-subtitle {
-      text-align: center;
-
-      color: #888888;
-
-      font-size: 12px;
-
-      letter-spacing: 3px;
-
-      margin-bottom: 28px;
+    .topbar-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
-    .form-group {
-      margin-bottom: 18px;
-    }
-
-    label {
-      display: block;
-
-      margin-bottom: 8px;
-
-      color: #dddddd;
-
-      font-size: 13px;
-
-      font-weight: 700;
-    }
-
-    input {
-      width: 100%;
-
-      padding: 13px 14px;
-
-      border-radius: 9px;
-
-      border: 1px solid #3b3b3b;
-
-      background: #1b1b1b;
-
-      color: white;
-
-      outline: none;
-    }
-
-    input:focus {
-      border-color: #e00000;
-
-      box-shadow:
-        0 0 0 2px rgba(224, 0, 0, 0.12);
-    }
-
-    .primary-button {
-      width: 100%;
-
-      padding: 14px;
-
+    .button {
       border: none;
-
-      border-radius: 9px;
-
-      background: #e00000;
-
-      color: white;
-
+      border-radius: 8px;
+      padding: 11px 15px;
       font-weight: 800;
-
-      cursor: pointer;
+      color: #ffffff;
     }
 
-    .primary-button:disabled {
-      opacity: 0.5;
-
-      cursor: not-allowed;
+    .button-red {
+      background: #e00000;
     }
 
-    .login-message {
-      margin-top: 15px;
-
-      padding: 12px;
-
-      border-radius: 8px;
-
-      font-size: 13px;
-
-      line-height: 1.5;
-
-      display: none;
+    .button-red:hover {
+      background: #ff1717;
     }
 
-    .login-message.error {
-      display: block;
-
-      background: rgba(224, 0, 0, 0.12);
-
-      border: 1px solid rgba(224, 0, 0, 0.4);
-
-      color: #ff8f8f;
-    }
-
-    /* =====================================================
-       DASHBOARD
-       ===================================================== */
-
-    #dashboardScreen {
-      min-height: 100vh;
-
-      padding: 25px;
-    }
-
-    .dashboard {
-      width: 100%;
-
-      max-width: 1400px;
-
-      margin: 0 auto;
-    }
-
-    .topbar {
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-      gap: 20px;
-
-      margin-bottom: 25px;
-    }
-
-    .topbar-brand {
-      font-size: 25px;
-
-      font-weight: 900;
-
-      letter-spacing: 2px;
-    }
-
-    .topbar-brand span {
-      color: #e00000;
-    }
-
-    .topbar-right {
-      display: flex;
-
-      align-items: center;
-
-      gap: 10px;
-    }
-
-    .admin-email {
-      color: #888888;
-
-      font-size: 12px;
-    }
-
-    .logout-button,
-    .refresh-button {
-      padding: 10px 14px;
-
-      border-radius: 8px;
-
-      cursor: pointer;
-
-      font-weight: 700;
-    }
-
-    .logout-button {
+    .button-dark {
       background: #222222;
-
-      color: white;
-
       border: 1px solid #444444;
     }
 
-    .refresh-button {
-      background: #e00000;
+    .button-dark:hover {
+      background: #303030;
+    }
 
-      color: white;
+    .button-danger {
+      background: #8b0000;
+      border: 1px solid #c00000;
+    }
 
-      border: none;
+    .button-danger:hover {
+      background: #b00000;
+    }
+
+    .button-small {
+      padding: 7px 10px;
+      font-size: 11px;
+    }
+
+    .button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* =====================================================
+       ERROR / SUCCESS
+       ===================================================== */
+
+    .message {
+      padding: 13px 15px;
+      border-radius: 9px;
+      margin-bottom: 18px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .message-error {
+      background: rgba(224, 0, 0, 0.10);
+      border: 1px solid rgba(224, 0, 0, 0.35);
+      color: #ff8f8f;
+    }
+
+    .message-success {
+      background: rgba(22, 199, 90, 0.10);
+      border: 1px solid rgba(22, 199, 90, 0.30);
+      color: #67ee9a;
     }
 
     /* =====================================================
@@ -279,40 +156,28 @@
 
     .stats-grid {
       display: grid;
-
-      grid-template-columns:
-        repeat(5, minmax(0, 1fr));
-
-      gap: 14px;
-
-      margin-bottom: 22px;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
     }
 
     .stat-card {
       background: #111111;
-
       border: 1px solid #2d2d2d;
-
       border-radius: 13px;
-
-      padding: 18px;
+      padding: 16px;
     }
 
     .stat-label {
       color: #888888;
-
-      font-size: 11px;
-
+      font-size: 10px;
       letter-spacing: 1px;
-
       text-transform: uppercase;
-
       margin-bottom: 8px;
     }
 
     .stat-value {
-      font-size: 30px;
-
+      font-size: 28px;
       font-weight: 900;
     }
 
@@ -322,48 +187,58 @@
 
     .controls {
       background: #111111;
-
       border: 1px solid #2d2d2d;
-
       border-radius: 14px;
-
       padding: 15px;
-
       margin-bottom: 18px;
     }
 
     .controls-row {
       display: flex;
-
       gap: 10px;
-
       flex-wrap: wrap;
     }
 
     .search-box {
       flex: 1;
+      min-width: 240px;
+    }
 
-      min-width: 220px;
+    input,
+    select {
+      width: 100%;
+      padding: 12px 13px;
+      border-radius: 8px;
+      border: 1px solid #3b3b3b;
+      background: #1b1b1b;
+      color: #ffffff;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #e00000;
+      box-shadow: 0 0 0 2px rgba(224, 0, 0, 0.12);
     }
 
     .filter-select {
       width: auto;
-
-      min-width: 140px;
+      min-width: 145px;
     }
 
-    select {
-      padding: 12px;
+    .danger-zone {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #292929;
+    }
 
-      border-radius: 8px;
-
-      border: 1px solid #3b3b3b;
-
-      background: #1b1b1b;
-
-      color: white;
-
-      outline: none;
+    .danger-text {
+      color: #777777;
+      font-size: 11px;
+      flex: 1;
     }
 
     /* =====================================================
@@ -372,37 +247,27 @@
 
     .table-card {
       background: #111111;
-
       border: 1px solid #2d2d2d;
-
       border-radius: 14px;
-
       overflow: hidden;
     }
 
     .table-header {
-      padding: 17px 18px;
-
+      padding: 16px 18px;
       border-bottom: 1px solid #2d2d2d;
-
       display: flex;
-
-      justify-content: space-between;
-
       align-items: center;
-
+      justify-content: space-between;
       gap: 10px;
     }
 
     .table-title {
       font-size: 16px;
-
       font-weight: 800;
     }
 
     .table-count {
       color: #888888;
-
       font-size: 12px;
     }
 
@@ -412,39 +277,26 @@
 
     table {
       width: 100%;
-
+      min-width: 1150px;
       border-collapse: collapse;
-
-      min-width: 950px;
     }
 
     th {
       text-align: left;
-
-      padding: 13px 15px;
-
+      padding: 12px 14px;
       background: #181818;
-
       color: #999999;
-
-      font-size: 11px;
-
+      font-size: 10px;
       letter-spacing: 1px;
-
       text-transform: uppercase;
-
       white-space: nowrap;
     }
 
     td {
-      padding: 14px 15px;
-
+      padding: 13px 14px;
       border-top: 1px solid #242424;
-
       color: #dddddd;
-
-      font-size: 13px;
-
+      font-size: 12px;
       vertical-align: middle;
     }
 
@@ -452,16 +304,15 @@
       background: #151515;
     }
 
-    .pass-id-cell {
+    .name-cell {
       font-weight: 800;
-
-      color: white;
-
-      letter-spacing: 0.5px;
+      color: #ffffff;
     }
 
-    .name-cell {
-      font-weight: 700;
+    .pass-id-cell {
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      color: #ffffff;
     }
 
     .muted {
@@ -469,53 +320,47 @@
     }
 
     /* =====================================================
-       STATUS BADGES
+       BADGES
        ===================================================== */
 
     .badge {
       display: inline-block;
-
       padding: 5px 9px;
-
       border-radius: 20px;
-
-      font-size: 10px;
-
+      font-size: 9px;
       font-weight: 800;
-
-      letter-spacing: 0.7px;
+      letter-spacing: 0.6px;
+      white-space: nowrap;
     }
 
     .badge-unused {
       background: rgba(22, 199, 90, 0.12);
-
       color: #55e88b;
-
       border: 1px solid rgba(22, 199, 90, 0.3);
     }
 
     .badge-used {
       background: rgba(224, 180, 0, 0.12);
-
       color: #f0cf45;
-
       border: 1px solid rgba(224, 180, 0, 0.3);
     }
 
     .badge-free {
       background: rgba(100, 100, 100, 0.18);
-
       color: #cccccc;
-
       border: 1px solid #444444;
     }
 
     .badge-vip {
       background: rgba(224, 0, 0, 0.12);
-
       color: #ff7777;
-
       border: 1px solid rgba(224, 0, 0, 0.35);
+    }
+
+    .badge-bold {
+      background: rgba(255, 91, 0, 0.12);
+      color: #ff9b6a;
+      border: 1px solid rgba(255, 91, 0, 0.35);
     }
 
     /* =====================================================
@@ -523,67 +368,85 @@
        ===================================================== */
 
     .table-message {
-      padding: 40px 20px;
-
+      padding: 45px 20px;
       text-align: center;
-
       color: #777777;
     }
 
-    .error-banner {
-      margin-bottom: 18px;
+    /* =====================================================
+       DELETE MODAL
+       ===================================================== */
 
-      padding: 13px 15px;
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0, 0, 0, 0.78);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-      border-radius: 9px;
+    .modal-card {
+      width: 100%;
+      max-width: 430px;
+      background: #111111;
+      border: 1px solid #3a3a3a;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.7);
+    }
 
-      background: rgba(224, 0, 0, 0.10);
+    .modal-title {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
 
-      border: 1px solid rgba(224, 0, 0, 0.35);
-
-      color: #ff8f8f;
-
+    .modal-text {
+      color: #aaaaaa;
       font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
     }
 
     /* =====================================================
        MOBILE
        ===================================================== */
 
-    @media (max-width: 900px) {
-
+    @media (max-width: 1100px) {
       .stats-grid {
-        grid-template-columns:
-          repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
       }
-
     }
 
-    @media (max-width: 600px) {
-
-      #dashboardScreen {
-        padding: 15px;
+    @media (max-width: 700px) {
+      .page {
+        padding: 14px;
       }
 
       .topbar {
         align-items: flex-start;
-
         flex-direction: column;
       }
 
-      .topbar-right {
+      .topbar-actions {
         width: 100%;
+      }
 
-        justify-content: space-between;
+      .topbar-actions .button {
+        flex: 1;
       }
 
       .stats-grid {
-        grid-template-columns:
-          repeat(2, minmax(0, 1fr));
-      }
-
-      .stat-value {
-        font-size: 25px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .controls-row {
@@ -595,129 +458,46 @@
         width: 100%;
       }
 
-    }
-
-    @media (max-width: 380px) {
-
-      .stats-grid {
-        grid-template-columns: 1fr;
+      .danger-zone {
+        align-items: flex-start;
+        flex-direction: column;
       }
 
-    }
+      .danger-zone .button {
+        width: 100%;
+      }
 
+      .brand {
+        font-size: 21px;
+      }
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- =====================================================
-       LOGIN SCREEN
-       ===================================================== -->
-
-  <section id="loginScreen">
-
-    <div class="login-card">
-
-      <div class="brand">
-        BOLD <span>AFTER DARK</span>
-      </div>
-
-      <div class="login-subtitle">
-        ADMIN DASHBOARD
-      </div>
-
-      <form id="loginForm">
-
-        <div class="form-group">
-
-          <label for="loginEmail">
-            EMAIL
-          </label>
-
-          <input
-            id="loginEmail"
-            type="email"
-            placeholder="admin@example.com"
-            autocomplete="username"
-            required
-          >
-
-        </div>
-
-        <div class="form-group">
-
-          <label for="loginPassword">
-            PASSWORD
-          </label>
-
-          <input
-            id="loginPassword"
-            type="password"
-            placeholder="Password"
-            autocomplete="current-password"
-            required
-          >
-
-        </div>
-
-        <button
-          id="loginButton"
-          class="primary-button"
-          type="submit"
-        >
-          LOGIN
-        </button>
-
-      </form>
-
-      <div
-        id="loginMessage"
-        class="login-message"
-      ></div>
-
-    </div>
-
-  </section>
-
-
-  <!-- =====================================================
-       DASHBOARD SCREEN
-       ===================================================== -->
-
-  <section
-    id="dashboardScreen"
-    class="hidden"
-  >
+  <main class="page">
 
     <div class="dashboard">
 
+      <!-- =================================================
+           HEADER
+           ================================================= -->
+
       <div class="topbar">
 
-        <div class="topbar-brand">
+        <div class="brand">
           BOLD <span>AFTER DARK</span>
         </div>
 
-        <div class="topbar-right">
-
-          <div
-            id="adminEmail"
-            class="admin-email"
-          ></div>
+        <div class="topbar-actions">
 
           <button
             id="refreshButton"
-            class="refresh-button"
+            class="button button-red"
             type="button"
           >
-            REFRESH
-          </button>
-
-          <button
-            id="logoutButton"
-            class="logout-button"
-            type="button"
-          >
-            LOGOUT
+            🔄 REFRESH
           </button>
 
         </div>
@@ -725,9 +505,13 @@
       </div>
 
 
+      <!-- =================================================
+           MESSAGE
+           ================================================= -->
+
       <div
-        id="dashboardError"
-        class="error-banner hidden"
+        id="messageBox"
+        class="message hidden"
       ></div>
 
 
@@ -738,7 +522,6 @@
       <div class="stats-grid">
 
         <div class="stat-card">
-
           <div class="stat-label">
             Total
           </div>
@@ -749,12 +532,10 @@
           >
             0
           </div>
-
         </div>
 
 
         <div class="stat-card">
-
           <div class="stat-label">
             Check-In
           </div>
@@ -765,12 +546,10 @@
           >
             0
           </div>
-
         </div>
 
 
         <div class="stat-card">
-
           <div class="stat-label">
             Remaining
           </div>
@@ -781,12 +560,10 @@
           >
             0
           </div>
-
         </div>
 
 
         <div class="stat-card">
-
           <div class="stat-label">
             FREE
           </div>
@@ -797,12 +574,10 @@
           >
             0
           </div>
-
         </div>
 
 
         <div class="stat-card">
-
           <div class="stat-label">
             VIP
           </div>
@@ -813,7 +588,34 @@
           >
             0
           </div>
+        </div>
 
+
+        <div class="stat-card">
+          <div class="stat-label">
+            BOLD RIDERS
+          </div>
+
+          <div
+            id="boldRidersCount"
+            class="stat-value"
+          >
+            0
+          </div>
+        </div>
+
+
+        <div class="stat-card">
+          <div class="stat-label">
+            UNUSED
+          </div>
+
+          <div
+            id="unusedCount"
+            class="stat-value"
+          >
+            0
+          </div>
         </div>
 
       </div>
@@ -831,15 +633,15 @@
             id="searchInput"
             class="search-box"
             type="search"
-            placeholder="Search name / WhatsApp / Pass ID..."
+            placeholder="🔎 Cari nama / WhatsApp / Pass ID / BOLD RIDERS..."
             autocomplete="off"
           >
+
 
           <select
             id="statusFilter"
             class="filter-select"
           >
-
             <option value="ALL">
               ALL STATUS
             </option>
@@ -851,7 +653,6 @@
             <option value="USED">
               USED
             </option>
-
           </select>
 
 
@@ -859,7 +660,6 @@
             id="accessFilter"
             class="filter-select"
           >
-
             <option value="ALL">
               ALL ACCESS
             </option>
@@ -872,7 +672,27 @@
               VIP
             </option>
 
+            <option value="BOLD RIDERS">
+              BOLD RIDERS
+            </option>
           </select>
+
+        </div>
+
+
+        <div class="danger-zone">
+
+          <div class="danger-text">
+            Area testing. Penghapusan data bersifat permanen.
+          </div>
+
+          <button
+            id="deleteAllButton"
+            class="button button-danger"
+            type="button"
+          >
+            🗑️ HAPUS SEMUA DATA
+          </button>
 
         </div>
 
@@ -880,7 +700,7 @@
 
 
       <!-- =================================================
-           REGISTRATION TABLE
+           TABLE
            ================================================= -->
 
       <div class="table-card">
@@ -908,56 +728,28 @@
             <thead>
 
               <tr>
-
-                <th>
-                  Name
-                </th>
-
-                <th>
-                  WhatsApp
-                </th>
-
-                <th>
-                  Pass ID
-                </th>
-
-                <th>
-                  Access
-                </th>
-
-                <th>
-                  Table
-                </th>
-
-                <th>
-                  Status
-                </th>
-
-                <th>
-                  Registered
-                </th>
-
-                <th>
-                  Check-In
-                </th>
-
+                <th>Name</th>
+                <th>WhatsApp</th>
+                <th>Pass ID</th>
+                <th>Access</th>
+                <th>Table</th>
+                <th>Status</th>
+                <th>Registered</th>
+                <th>Check-In</th>
+                <th>Action</th>
               </tr>
 
             </thead>
 
-            <tbody
-              id="registrationTableBody"
-            >
+            <tbody id="registrationTableBody">
 
               <tr>
-
                 <td
-                  colspan="8"
+                  colspan="9"
                   class="table-message"
                 >
                   Loading registrations...
                 </td>
-
               </tr>
 
             </tbody>
@@ -970,103 +762,103 @@
 
     </div>
 
-  </section>
+  </main>
 
 
   <!-- =====================================================
-       SUPABASE
+       CONFIRM MODAL
        ===================================================== -->
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <div
+    id="confirmModal"
+    class="modal hidden"
+  >
+
+    <div class="modal-card">
+
+      <div
+        id="modalTitle"
+        class="modal-title"
+      >
+        Konfirmasi
+      </div>
+
+      <div
+        id="modalText"
+        class="modal-text"
+      >
+        Apakah Anda yakin?
+      </div>
+
+      <div class="modal-actions">
+
+        <button
+          id="modalCancelButton"
+          class="button button-dark"
+          type="button"
+        >
+          BATAL
+        </button>
+
+        <button
+          id="modalConfirmButton"
+          class="button button-danger"
+          type="button"
+        >
+          HAPUS
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
 
 
   <script>
 
-    // =====================================================
-    // SUPABASE CONFIG
-    // =====================================================
-    //
-    // IMPORTANT:
-    // Gunakan PUBLISHABLE KEY / ANON KEY.
-    //
-    // JANGAN masukkan:
-    // sb_secret_...
-    // SUPABASE_SECRET_KEYS
-    //
-    // =====================================================
-
-    const SUPABASE_URL =
-      'https://yrvnmmascklkuzpjkwxn.supabase.co';
-
-
-    const SUPABASE_PUBLISHABLE_KEY =
-      'sb_publishable_YGi3tPBuF9tW4KKnLJ5dDQ_AcBZ19WH';
+    /*
+     * =====================================================
+     * BOLD AFTER DARK ADMIN
+     * =====================================================
+     *
+     * Tidak menggunakan Supabase Auth.
+     *
+     * Semua operasi data menggunakan:
+     *
+     * dynamic-service
+     *
+     * Endpoint:
+     *
+     * https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/dynamic-service
+     *
+     * =====================================================
+     */
 
 
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-      );
+    const DYNAMIC_SERVICE_URL =
+      'https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/dynamic-service';
 
 
-    // =====================================================
-    // ELEMENTS
-    // =====================================================
-
-    const loginScreen =
-      document.getElementById(
-        'loginScreen'
-      );
-
-    const dashboardScreen =
-      document.getElementById(
-        'dashboardScreen'
-      );
-
-    const loginForm =
-      document.getElementById(
-        'loginForm'
-      );
-
-    const loginEmail =
-      document.getElementById(
-        'loginEmail'
-      );
-
-    const loginPassword =
-      document.getElementById(
-        'loginPassword'
-      );
-
-    const loginButton =
-      document.getElementById(
-        'loginButton'
-      );
-
-    const loginMessage =
-      document.getElementById(
-        'loginMessage'
-      );
-
-    const adminEmail =
-      document.getElementById(
-        'adminEmail'
-      );
-
-    const logoutButton =
-      document.getElementById(
-        'logoutButton'
-      );
+    /*
+     * =====================================================
+     * ELEMENTS
+     * =====================================================
+     */
 
     const refreshButton =
       document.getElementById(
         'refreshButton'
       );
 
-    const dashboardError =
+    const deleteAllButton =
       document.getElementById(
-        'dashboardError'
+        'deleteAllButton'
+      );
+
+    const messageBox =
+      document.getElementById(
+        'messageBox'
       );
 
     const searchInput =
@@ -1094,220 +886,200 @@
         'tableCount'
       );
 
+    const confirmModal =
+      document.getElementById(
+        'confirmModal'
+      );
 
-    // =====================================================
-    // DATA
-    // =====================================================
+    const modalTitle =
+      document.getElementById(
+        'modalTitle'
+      );
+
+    const modalText =
+      document.getElementById(
+        'modalText'
+      );
+
+    const modalCancelButton =
+      document.getElementById(
+        'modalCancelButton'
+      );
+
+    const modalConfirmButton =
+      document.getElementById(
+        'modalConfirmButton'
+      );
+
+
+    /*
+     * =====================================================
+     * DATA
+     * =====================================================
+     */
 
     let registrations = [];
 
+    let pendingDelete = null;
 
-    // =====================================================
-    // LOGIN MESSAGE
-    // =====================================================
 
-    function showLoginError(message) {
+    /*
+     * =====================================================
+     * MESSAGE
+     * =====================================================
+     */
 
-      loginMessage.textContent =
+    function showMessage(
+      message,
+      type = 'success'
+    ) {
+
+      messageBox.textContent =
         message;
 
-      loginMessage.className =
-        'login-message error';
-
-    }
-
-
-    function clearLoginError() {
-
-      loginMessage.textContent =
-        '';
-
-      loginMessage.className =
-        'login-message';
-
-    }
-
-
-    // =====================================================
-    // DASHBOARD ERROR
-    // =====================================================
-
-    function showDashboardError(text) {
-
-      dashboardError.textContent =
-        text;
-
-      dashboardError.classList.remove(
-        'hidden'
-      );
-
-    }
-
-
-    function clearDashboardError() {
-
-      dashboardError.textContent =
-        '';
-
-      dashboardError.classList.add(
-        'hidden'
-      );
-
-    }
-
-
-    // =====================================================
-    // LOGIN
-    // =====================================================
-
-    loginForm.addEventListener(
-      'submit',
-      async function(event) {
-
-        event.preventDefault();
-
-        clearLoginError();
-
-        loginButton.disabled =
-          true;
-
-        loginButton.textContent =
-          'LOGGING IN...';
-
-        try {
-
-          const email =
-            loginEmail.value.trim();
-
-          const password =
-            loginPassword.value;
-
-
-          const {
-            data,
-            error
-          } =
-            await supabaseClient.auth.signInWithPassword(
-              {
-                email,
-                password
-              }
-            );
-
-
-          if (error) {
-
-            throw error;
-
-          }
-
-
-          if (!data.session) {
-
-            throw new Error(
-              'Login berhasil tetapi session tidak tersedia.'
-            );
-
-          }
-
-
-          showDashboard(
-            data.user
-          );
-
-
-          await loadRegistrations();
-
-        }
-
-        catch (error) {
-
-          console.error(
-            'LOGIN ERROR:',
-            error
-          );
-
-          showLoginError(
-            error.message ||
-            'Login gagal.'
-          );
-
-        }
-
-        finally {
-
-          loginButton.disabled =
-            false;
-
-          loginButton.textContent =
-            'LOGIN';
-
-        }
-
-      }
-    );
-
-
-    // =====================================================
-    // SHOW DASHBOARD
-    // =====================================================
-
-    function showDashboard(user) {
-
-      loginScreen.classList.add(
-        'hidden'
-      );
-
-      dashboardScreen.classList.remove(
-        'hidden'
-      );
-
-
-      adminEmail.textContent =
-        user &&
-        user.email
-          ? user.email
-          : '';
-
-    }
-
-
-    // =====================================================
-    // LOGOUT
-    // =====================================================
-
-    logoutButton.addEventListener(
-      'click',
-      async function() {
-
-        await supabaseClient.auth.signOut();
-
-        registrations = [];
-
-        dashboardScreen.classList.add(
-          'hidden'
+      messageBox.className =
+        'message ' +
+        (
+          type === 'error'
+            ? 'message-error'
+            : 'message-success'
         );
 
-        loginScreen.classList.remove(
-          'hidden'
+    }
+
+
+    function clearMessage() {
+
+      messageBox.textContent =
+        '';
+
+      messageBox.className =
+        'message hidden';
+
+    }
+
+
+    /*
+     * =====================================================
+     * API REQUEST
+     * =====================================================
+     */
+
+    async function callDynamicService(
+      action,
+      options = {}
+    ) {
+
+      const method =
+        options.method || 'GET';
+
+      const body =
+        options.body || null;
+
+
+      let url =
+        DYNAMIC_SERVICE_URL +
+        '?action=' +
+        encodeURIComponent(
+          action
         );
 
-        loginPassword.value =
-          '';
 
-        clearDashboardError();
+      const requestOptions = {
+        method,
+        headers: {
+          'Accept': 'application/json'
+        }
+      };
+
+
+      if (body) {
+
+        requestOptions.headers[
+          'Content-Type'
+        ] =
+          'application/json';
+
+        requestOptions.body =
+          JSON.stringify(body);
 
       }
-    );
 
 
-    // =====================================================
-    // LOAD REGISTRATIONS
-    // =====================================================
+      const response =
+        await fetch(
+          url,
+          requestOptions
+        );
+
+
+      const rawText =
+        await response.text();
+
+
+      let result;
+
+
+      try {
+
+        result =
+          rawText
+            ? JSON.parse(rawText)
+            : {};
+
+      }
+
+      catch (error) {
+
+        throw new Error(
+          'Response dynamic-service bukan JSON: ' +
+          rawText
+        );
+
+      }
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          result.message ||
+          result.detail ||
+          (
+            'HTTP ' +
+            response.status
+          )
+        );
+
+      }
+
+
+      if (
+        result.success === false
+      ) {
+
+        throw new Error(
+          result.message ||
+          result.detail ||
+          'Operasi gagal.'
+        );
+
+      }
+
+
+      return result;
+
+    }
+
+
+    /*
+     * =====================================================
+     * LOAD
+     * =====================================================
+     */
 
     async function loadRegistrations() {
 
-      clearDashboardError();
+      clearMessage();
 
       refreshButton.disabled =
         true;
@@ -1320,7 +1092,7 @@
         `
           <tr>
             <td
-              colspan="8"
+              colspan="9"
               class="table-message"
             >
               Loading registrations...
@@ -1331,47 +1103,27 @@
 
       try {
 
-        const {
-          data,
-          error
-        } =
-          await supabaseClient
-            .from('registrations')
-            .select(
-              `
-                id,
-                pass_id,
-                qr_token,
-                name,
-                whatsapp,
-                access_type,
-                table_package,
-                stay_connected,
-                community,
-                pass_status,
-                created_at,
-                checked_in_at,
-                checked_in_by
-              `
-            )
-            .order(
-              'created_at',
-              {
-                ascending: false
-              }
-            );
+        const result =
+          await callDynamicService(
+            'report'
+          );
 
 
-        if (error) {
-
-          throw error;
-
-        }
-
+        /*
+         * dynamic-service yang kita buat
+         * mengembalikan:
+         *
+         * {
+         *   success: true,
+         *   registrations: [...]
+         * }
+         */
 
         registrations =
-          Array.isArray(data)
-            ? data
+          Array.isArray(
+            result.registrations
+          )
+            ? result.registrations
             : [];
 
 
@@ -1393,11 +1145,12 @@
 
         updateStatistics();
 
+
         tableBody.innerHTML =
           `
             <tr>
               <td
-                colspan="8"
+                colspan="9"
                 class="table-message"
               >
                 Tidak dapat membaca data registrations.
@@ -1406,9 +1159,10 @@
           `;
 
 
-        showDashboardError(
+        showMessage(
           error.message ||
-          'Gagal memuat data registrasi.'
+          'Gagal memuat data registrasi.',
+          'error'
         );
 
       }
@@ -1419,16 +1173,18 @@
           false;
 
         refreshButton.textContent =
-          'REFRESH';
+          '🔄 REFRESH';
 
       }
 
     }
 
 
-    // =====================================================
-    // STATISTICS
-    // =====================================================
+    /*
+     * =====================================================
+     * STATISTICS
+     * =====================================================
+     */
 
     function updateStatistics() {
 
@@ -1443,8 +1199,9 @@
             return (
               String(
                 row.pass_status || ''
-              ).toUpperCase()
-              === 'USED'
+              )
+                .toUpperCase() ===
+              'USED'
             );
 
           }
@@ -1452,7 +1209,8 @@
 
 
       const remaining =
-        total - checkedIn;
+        total -
+        checkedIn;
 
 
       const free =
@@ -1462,8 +1220,9 @@
             return (
               String(
                 row.access_type || ''
-              ).toUpperCase()
-              === 'FREE'
+              )
+                .toUpperCase() ===
+              'FREE'
             );
 
           }
@@ -1477,8 +1236,41 @@
             return (
               String(
                 row.access_type || ''
-              ).toUpperCase()
-              === 'VIP'
+              )
+                .toUpperCase() ===
+              'VIP'
+            );
+
+          }
+        ).length;
+
+
+      const boldRiders =
+        registrations.filter(
+          function(row) {
+
+            return (
+              String(
+                row.access_type || ''
+              )
+                .toUpperCase() ===
+              'BOLD RIDERS'
+            );
+
+          }
+        ).length;
+
+
+      const unused =
+        registrations.filter(
+          function(row) {
+
+            return (
+              String(
+                row.pass_status || ''
+              )
+                .toUpperCase() ===
+              'UNUSED'
             );
 
           }
@@ -1514,12 +1306,26 @@
       ).textContent =
         vip;
 
+
+      document.getElementById(
+        'boldRidersCount'
+      ).textContent =
+        boldRiders;
+
+
+      document.getElementById(
+        'unusedCount'
+      ).textContent =
+        unused;
+
     }
 
 
-    // =====================================================
-    // FILTER
-    // =====================================================
+    /*
+     * =====================================================
+     * FILTER
+     * =====================================================
+     */
 
     function getFilteredRegistrations() {
 
@@ -1545,20 +1351,42 @@
               row.name || ''
             ).toLowerCase();
 
+
           const whatsapp =
             String(
               row.whatsapp || ''
             ).toLowerCase();
+
 
           const passId =
             String(
               row.pass_id || ''
             ).toLowerCase();
 
+
+          const community =
+            String(
+              row.community || ''
+            ).toLowerCase();
+
+
+          const boldRidersId =
+            String(
+              row.bold_riders_id || ''
+            ).toLowerCase();
+
+
+          const boldRidersName =
+            String(
+              row.bold_riders_name || ''
+            ).toLowerCase();
+
+
           const rowStatus =
             String(
               row.pass_status || ''
             ).toUpperCase();
+
 
           const rowAccess =
             String(
@@ -1570,7 +1398,10 @@
             !search ||
             name.includes(search) ||
             whatsapp.includes(search) ||
-            passId.includes(search);
+            passId.includes(search) ||
+            community.includes(search) ||
+            boldRidersId.includes(search) ||
+            boldRidersName.includes(search);
 
 
           const matchesStatus =
@@ -1595,9 +1426,11 @@
     }
 
 
-    // =====================================================
-    // RENDER TABLE
-    // =====================================================
+    /*
+     * =====================================================
+     * RENDER
+     * =====================================================
+     */
 
     function renderTable() {
 
@@ -1614,13 +1447,15 @@
         );
 
 
-      if (rows.length === 0) {
+      if (
+        rows.length === 0
+      ) {
 
         tableBody.innerHTML =
           `
             <tr>
               <td
-                colspan="8"
+                colspan="9"
                 class="table-message"
               >
                 Tidak ada data yang cocok.
@@ -1697,6 +1532,16 @@
                     }
                   </td>
 
+                  <td>
+                    <button
+                      class="button button-danger button-small"
+                      type="button"
+                      onclick="requestDeleteRegistration('${escapeJs(row.id)}', '${escapeJs(row.name)}')"
+                    >
+                      🗑️ HAPUS
+                    </button>
+                  </td>
+
                 </tr>
               `;
 
@@ -1707,43 +1552,15 @@
     }
 
 
-    // =====================================================
-    // STATUS BADGE
-    // =====================================================
+    /*
+     * =====================================================
+     * ACCESS BADGE
+     * =====================================================
+     */
 
-    function statusBadge(status) {
-
-      const value =
-        String(
-          status || ''
-        ).toUpperCase();
-
-
-      if (value === 'USED') {
-
-        return `
-          <span class="badge badge-used">
-            USED
-          </span>
-        `;
-
-      }
-
-
-      return `
-        <span class="badge badge-unused">
-          UNUSED
-        </span>
-      `;
-
-    }
-
-
-    // =====================================================
-    // ACCESS BADGE
-    // =====================================================
-
-    function accessBadge(access) {
+    function accessBadge(
+      access
+    ) {
 
       const value =
         String(
@@ -1751,7 +1568,23 @@
         ).toUpperCase();
 
 
-      if (value === 'VIP') {
+      if (
+        value ===
+        'BOLD RIDERS'
+      ) {
+
+        return `
+          <span class="badge badge-bold">
+            BOLD RIDERS
+          </span>
+        `;
+
+      }
+
+
+      if (
+        value === 'VIP'
+      ) {
 
         return `
           <span class="badge badge-vip">
@@ -1771,16 +1604,56 @@
     }
 
 
-    // =====================================================
-    // DATE FORMAT
-    // =====================================================
+    /*
+     * =====================================================
+     * STATUS BADGE
+     * =====================================================
+     */
 
-    function formatDate(value) {
+    function statusBadge(
+      status
+    ) {
+
+      const value =
+        String(
+          status || ''
+        ).toUpperCase();
+
+
+      if (
+        value === 'USED'
+      ) {
+
+        return `
+          <span class="badge badge-used">
+            USED
+          </span>
+        `;
+
+      }
+
+
+      return `
+        <span class="badge badge-unused">
+          UNUSED
+        </span>
+      `;
+
+    }
+
+
+    /*
+     * =====================================================
+     * DATE
+     * =====================================================
+     */
+
+    function formatDate(
+      value
+    ) {
 
       if (!value) {
-
         return '—';
-
       }
 
 
@@ -1812,38 +1685,37 @@
     }
 
 
-    // =====================================================
-    // HTML ESCAPE
-    // =====================================================
+    /*
+     * =====================================================
+     * HTML ESCAPE
+     * =====================================================
+     */
 
-    function escapeHtml(value) {
+    function escapeHtml(
+      value
+    ) {
 
       return String(
         value == null
           ? ''
           : value
       )
-
         .replace(
           /&/g,
           '&amp;'
         )
-
         .replace(
           /</g,
           '&lt;'
         )
-
         .replace(
           />/g,
           '&gt;'
         )
-
         .replace(
           /"/g,
           '&quot;'
         )
-
         .replace(
           /'/g,
           '&#039;'
@@ -1852,9 +1724,299 @@
     }
 
 
-    // =====================================================
-    // REFRESH
-    // =====================================================
+    /*
+     * =====================================================
+     * JAVASCRIPT ESCAPE
+     * =====================================================
+     */
+
+    function escapeJs(
+      value
+    ) {
+
+      return String(
+        value == null
+          ? ''
+          : value
+      )
+        .replace(
+          /\\/g,
+          '\\\\'
+        )
+        .replace(
+          /'/g,
+          "\\'"
+        )
+        .replace(
+          /\r/g,
+          '\\r'
+        )
+        .replace(
+          /\n/g,
+          '\\n'
+        );
+
+    }
+
+
+    /*
+     * =====================================================
+     * DELETE ONE
+     * =====================================================
+     */
+
+    function requestDeleteRegistration(
+      id,
+      name
+    ) {
+
+      pendingDelete = {
+        type: 'one',
+        id
+      };
+
+
+      modalTitle.textContent =
+        'Hapus Registrasi?';
+
+
+      modalText.textContent =
+        'Registrasi "' +
+        (
+          name ||
+          'tanpa nama'
+        ) +
+        '" akan dihapus permanen.';
+
+
+      modalConfirmButton.textContent =
+        '🗑️ HAPUS';
+
+
+      confirmModal.classList.remove(
+        'hidden'
+      );
+
+    }
+
+
+    /*
+     * =====================================================
+     * DELETE ALL
+     * =====================================================
+     */
+
+    function requestDeleteAll() {
+
+      if (
+        registrations.length === 0
+      ) {
+
+        showMessage(
+          'Tidak ada data untuk dihapus.',
+          'error'
+        );
+
+        return;
+
+      }
+
+
+      pendingDelete = {
+        type: 'all'
+      };
+
+
+      modalTitle.textContent =
+        'HAPUS SEMUA DATA?';
+
+
+      modalText.textContent =
+        'PERINGATAN: seluruh data registrasi (' +
+        registrations.length +
+        ' record) akan dihapus permanen. Tindakan ini tidak dapat dibatalkan.';
+
+
+      modalConfirmButton.textContent =
+        '🗑️ HAPUS SEMUA';
+
+
+      confirmModal.classList.remove(
+        'hidden'
+      );
+
+    }
+
+
+    /*
+     * =====================================================
+     * CLOSE MODAL
+     * =====================================================
+     */
+
+    function closeModal() {
+
+      pendingDelete =
+        null;
+
+      confirmModal.classList.add(
+        'hidden'
+      );
+
+    }
+
+
+    /*
+     * =====================================================
+     * CONFIRM DELETE
+     * =====================================================
+     */
+
+    modalConfirmButton.addEventListener(
+      'click',
+      async function() {
+
+        if (
+          !pendingDelete
+        ) {
+
+          closeModal();
+
+          return;
+
+        }
+
+
+        const operation =
+          pendingDelete;
+
+
+        modalConfirmButton.disabled =
+          true;
+
+        modalCancelButton.disabled =
+          true;
+
+
+        try {
+
+          if (
+            operation.type === 'one'
+          ) {
+
+            await callDynamicService(
+              'delete',
+              {
+                method: 'POST',
+                body: {
+                  id: operation.id
+                }
+              }
+            );
+
+
+            showMessage(
+              'Registrasi berhasil dihapus.'
+            );
+
+          }
+
+          else if (
+            operation.type === 'all'
+          ) {
+
+            await callDynamicService(
+              'deleteAll',
+              {
+                method: 'POST',
+                body: {
+                  confirm: true
+                }
+              }
+            );
+
+
+            showMessage(
+              'Semua data registrasi berhasil dihapus.'
+            );
+
+          }
+
+
+          closeModal();
+
+          await loadRegistrations();
+
+        }
+
+        catch (error) {
+
+          console.error(
+            'DELETE ERROR:',
+            error
+          );
+
+
+          showMessage(
+            error.message ||
+            'Gagal menghapus data.',
+            'error'
+          );
+
+        }
+
+        finally {
+
+          modalConfirmButton.disabled =
+            false;
+
+          modalCancelButton.disabled =
+            false;
+
+        }
+
+      }
+    );
+
+
+    /*
+     * =====================================================
+     * CANCEL MODAL
+     * =====================================================
+     */
+
+    modalCancelButton.addEventListener(
+      'click',
+      function() {
+
+        closeModal();
+
+      }
+    );
+
+
+    confirmModal.addEventListener(
+      'click',
+      function(event) {
+
+        if (
+          event.target ===
+          confirmModal
+        ) {
+
+          closeModal();
+
+        }
+
+      }
+    );
+
+
+    /*
+     * =====================================================
+     * REFRESH
+     * =====================================================
+     */
 
     refreshButton.addEventListener(
       'click',
@@ -1866,9 +2028,11 @@
     );
 
 
-    // =====================================================
-    // LIVE SEARCH
-    // =====================================================
+    /*
+     * =====================================================
+     * SEARCH
+     * =====================================================
+     */
 
     searchInput.addEventListener(
       'input',
@@ -1880,6 +2044,12 @@
     );
 
 
+    /*
+     * =====================================================
+     * FILTER STATUS
+     * =====================================================
+     */
+
     statusFilter.addEventListener(
       'change',
       function() {
@@ -1889,6 +2059,12 @@
       }
     );
 
+
+    /*
+     * =====================================================
+     * FILTER ACCESS
+     * =====================================================
+     */
 
     accessFilter.addEventListener(
       'change',
@@ -1900,94 +2076,32 @@
     );
 
 
-    // =====================================================
-    // CHECK EXISTING SESSION
-    // =====================================================
+    /*
+     * =====================================================
+     * DELETE ALL BUTTON
+     * =====================================================
+     */
 
-    async function checkExistingSession() {
+    deleteAllButton.addEventListener(
+      'click',
+      function() {
 
-      try {
-
-        const {
-          data,
-          error
-        } =
-          await supabaseClient.auth.getSession();
-
-
-        if (error) {
-
-          throw error;
-
-        }
-
-
-        const session =
-          data.session;
-
-
-        if (
-          session &&
-          session.user
-        ) {
-
-          showDashboard(
-            session.user
-          );
-
-          await loadRegistrations();
-
-        }
-
-      }
-
-      catch (error) {
-
-        console.error(
-          'SESSION ERROR:',
-          error
-        );
-
-      }
-
-    }
-
-
-    // =====================================================
-    // AUTH STATE
-    // =====================================================
-
-    supabaseClient.auth.onAuthStateChange(
-      function(
-        event,
-        session
-      ) {
-
-        if (
-          event === 'SIGNED_OUT'
-        ) {
-
-          dashboardScreen.classList.add(
-            'hidden'
-          );
-
-          loginScreen.classList.remove(
-            'hidden'
-          );
-
-        }
+        requestDeleteAll();
 
       }
     );
 
 
-    // =====================================================
-    // START
-    // =====================================================
+    /*
+     * =====================================================
+     * START
+     * =====================================================
+     */
 
-    checkExistingSession();
+    loadRegistrations();
 
   </script>
 
 </body>
 </html>
+```
