@@ -1,5 +1,5 @@
+```html
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -120,6 +120,10 @@
       cursor: pointer;
     }
 
+    .primary-button:hover {
+      background: #c80000;
+    }
+
     .primary-button:disabled {
       opacity: 0.5;
       cursor: not-allowed;
@@ -178,6 +182,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
     .admin-email {
@@ -187,11 +192,13 @@
 
     .logout-button,
     .refresh-button,
-    .delete-button {
+    .delete-button,
+    .select-all-button {
       padding: 10px 14px;
       border-radius: 8px;
       cursor: pointer;
       font-weight: 700;
+      border: none;
     }
 
     .logout-button {
@@ -200,16 +207,17 @@
       border: 1px solid #444444;
     }
 
+    .logout-button:hover {
+      background: #2d2d2d;
+    }
+
     .refresh-button {
       background: #e00000;
       color: white;
-      border: none;
     }
 
-    .refresh-button:disabled,
-    .delete-button:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
+    .refresh-button:hover {
+      background: #c80000;
     }
 
     /* =====================================================
@@ -259,7 +267,6 @@
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      align-items: center;
     }
 
     .search-box {
@@ -269,7 +276,7 @@
 
     .filter-select {
       width: auto;
-      min-width: 145px;
+      min-width: 150px;
     }
 
     select {
@@ -281,22 +288,55 @@
       outline: none;
     }
 
-    .delete-button {
-      background: #8b0000;
-      color: white;
-      border: 1px solid #b00000;
-      min-width: 170px;
+    .selection-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 13px;
+      padding-top: 13px;
+      border-top: 1px solid #292929;
+      flex-wrap: wrap;
     }
 
-    .delete-button:not(:disabled):hover {
+    .selection-info {
+      color: #999999;
+      font-size: 13px;
+    }
+
+    .selection-info strong {
+      color: #ffffff;
+    }
+
+    .selection-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .select-all-button {
+      background: #222222;
+      color: #ffffff;
+      border: 1px solid #444444;
+    }
+
+    .select-all-button:hover {
+      background: #2d2d2d;
+    }
+
+    .delete-button {
+      background: #8d0000;
+      color: white;
+    }
+
+    .delete-button:hover {
       background: #b00000;
     }
 
-    .selected-info {
-      color: #888888;
-      font-size: 12px;
-      margin-left: auto;
-      white-space: nowrap;
+    .delete-button:disabled,
+    .select-all-button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
     }
 
     /* =====================================================
@@ -350,6 +390,12 @@
       white-space: nowrap;
     }
 
+    th.checkbox-column,
+    td.checkbox-column {
+      width: 48px;
+      text-align: center;
+    }
+
     td {
       padding: 14px 15px;
       border-top: 1px solid #242424;
@@ -362,17 +408,16 @@
       background: #151515;
     }
 
-    .checkbox-cell {
-      width: 48px;
-      text-align: center;
+    tr.selected-row td {
+      background: rgba(224, 0, 0, 0.07);
     }
 
     .row-checkbox,
     #selectAllCheckbox {
       width: 17px;
       height: 17px;
-      accent-color: #e00000;
       cursor: pointer;
+      accent-color: #e00000;
     }
 
     .pass-id-cell {
@@ -389,13 +434,8 @@
       color: #777777;
     }
 
-    .bold-riders-text {
-      color: #ff8b8b;
-      font-weight: 800;
-    }
-
     /* =====================================================
-       STATUS BADGES
+       BADGES
        ===================================================== */
 
     .badge {
@@ -405,6 +445,7 @@
       font-size: 10px;
       font-weight: 800;
       letter-spacing: 0.7px;
+      white-space: nowrap;
     }
 
     .badge-unused {
@@ -417,12 +458,6 @@
       background: rgba(224, 180, 0, 0.12);
       color: #f0cf45;
       border: 1px solid rgba(224, 180, 0, 0.3);
-    }
-
-    .badge-cancelled {
-      background: rgba(224, 0, 0, 0.12);
-      color: #ff7777;
-      border: 1px solid rgba(224, 0, 0, 0.35);
     }
 
     .badge-free {
@@ -438,13 +473,13 @@
     }
 
     .badge-bold {
-      background: rgba(255, 94, 0, 0.12);
-      color: #ff9b65;
-      border: 1px solid rgba(255, 94, 0, 0.35);
+      background: rgba(255, 100, 0, 0.12);
+      color: #ff9b5f;
+      border: 1px solid rgba(255, 100, 0, 0.35);
     }
 
     /* =====================================================
-       EMPTY / LOADING
+       EMPTY / LOADING / ERROR
        ===================================================== */
 
     .table-message {
@@ -461,6 +496,7 @@
       border: 1px solid rgba(224, 0, 0, 0.35);
       color: #ff8f8f;
       font-size: 13px;
+      line-height: 1.5;
     }
 
     .success-banner {
@@ -469,8 +505,9 @@
       border-radius: 9px;
       background: rgba(22, 199, 90, 0.10);
       border: 1px solid rgba(22, 199, 90, 0.30);
-      color: #65e99a;
+      color: #72eea0;
       font-size: 13px;
+      line-height: 1.5;
     }
 
     /* =====================================================
@@ -496,7 +533,6 @@
       .topbar-right {
         width: 100%;
         justify-content: space-between;
-        flex-wrap: wrap;
       }
 
       .stats-grid {
@@ -509,17 +545,24 @@
 
       .controls-row {
         flex-direction: column;
-        align-items: stretch;
       }
 
       .search-box,
-      .filter-select,
-      .delete-button {
+      .filter-select {
         width: 100%;
       }
 
-      .selected-info {
-        margin-left: 0;
+      .selection-bar {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .selection-actions {
+        width: 100%;
+      }
+
+      .selection-actions button {
+        flex: 1;
       }
     }
 
@@ -529,84 +572,78 @@
       }
     }
   </style>
-
 </head>
 
 <body>
 
   <!-- =====================================================
-       LOGIN SCREEN
+       LOGIN
        ===================================================== -->
 
   <section id="loginScreen">
 
-```
-<div class="login-card">
+    <div class="login-card">
 
-  <div class="brand">
-    BOLD <span>AFTER DARK</span>
-  </div>
+      <div class="brand">
+        BOLD <span>AFTER DARK</span>
+      </div>
 
-  <div class="login-subtitle">
-    ADMIN DASHBOARD
-  </div>
+      <div class="login-subtitle">
+        ADMIN DASHBOARD
+      </div>
 
-  <form id="loginForm">
+      <form id="loginForm">
 
-    <div class="form-group">
+        <div class="form-group">
+          <label for="loginEmail">
+            EMAIL
+          </label>
 
-      <label for="loginEmail">
-        EMAIL
-      </label>
+          <input
+            id="loginEmail"
+            type="email"
+            placeholder="admin@admin.com"
+            autocomplete="username"
+            required
+          >
+        </div>
 
-      <input
-        id="loginEmail"
-        type="email"
-        placeholder="admin@admin.com"
-        autocomplete="username"
-        required
-      >
+        <div class="form-group">
+          <label for="loginPassword">
+            PASSWORD
+          </label>
+
+          <input
+            id="loginPassword"
+            type="password"
+            placeholder="Password"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        <button
+          id="loginButton"
+          class="primary-button"
+          type="submit"
+        >
+          LOGIN
+        </button>
+
+      </form>
+
+      <div
+        id="loginMessage"
+        class="login-message"
+      ></div>
 
     </div>
-
-    <div class="form-group">
-
-      <label for="loginPassword">
-        PASSWORD
-      </label>
-
-      <input
-        id="loginPassword"
-        type="password"
-        placeholder="Password"
-        autocomplete="current-password"
-        required
-      >
-
-    </div>
-
-    <button
-      id="loginButton"
-      class="primary-button"
-      type="submit"
-    >
-      LOGIN
-    </button>
-
-  </form>
-
-  <div
-    id="loginMessage"
-    class="login-message"
-  ></div>
-
-</div>
-```
 
   </section>
 
+
   <!-- =====================================================
-       DASHBOARD SCREEN
+       DASHBOARD
        ===================================================== -->
 
   <section
@@ -614,389 +651,401 @@
     class="hidden"
   >
 
-```
-<div class="dashboard">
+    <div class="dashboard">
 
-  <div class="topbar">
+      <div class="topbar">
 
-    <div class="topbar-brand">
-      BOLD <span>AFTER DARK</span>
-    </div>
+        <div class="topbar-brand">
+          BOLD <span>AFTER DARK</span>
+        </div>
 
-    <div class="topbar-right">
+        <div class="topbar-right">
+
+          <div
+            id="adminEmail"
+            class="admin-email"
+          ></div>
+
+          <button
+            id="refreshButton"
+            class="refresh-button"
+            type="button"
+          >
+            REFRESH
+          </button>
+
+          <button
+            id="logoutButton"
+            class="logout-button"
+            type="button"
+          >
+            LOGOUT
+          </button>
+
+        </div>
+
+      </div>
+
 
       <div
-        id="adminEmail"
-        class="admin-email"
+        id="dashboardError"
+        class="error-banner hidden"
       ></div>
 
-      <button
-        id="refreshButton"
-        class="refresh-button"
-        type="button"
-      >
-        REFRESH
-      </button>
-
-      <button
-        id="logoutButton"
-        class="logout-button"
-        type="button"
-      >
-        LOGOUT
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div
-    id="dashboardError"
-    class="error-banner hidden"
-  ></div>
-
-  <div
-    id="dashboardSuccess"
-    class="success-banner hidden"
-  ></div>
-
-
-  <!-- =================================================
-       STATISTICS
-       ================================================= -->
-
-  <div class="stats-grid">
-
-    <div class="stat-card">
-      <div class="stat-label">
-        Total
-      </div>
-
       <div
-        id="totalCount"
-        class="stat-value"
-      >
-        0
-      </div>
-    </div>
+        id="dashboardSuccess"
+        class="success-banner hidden"
+      ></div>
 
 
-    <div class="stat-card">
-      <div class="stat-label">
-        Check-In
-      </div>
+      <!-- =================================================
+           STATISTICS
+           ================================================= -->
 
-      <div
-        id="checkedInCount"
-        class="stat-value"
-      >
-        0
-      </div>
-    </div>
+      <div class="stats-grid">
 
+        <div class="stat-card">
+          <div class="stat-label">
+            Total
+          </div>
 
-    <div class="stat-card">
-      <div class="stat-label">
-        Remaining
-      </div>
-
-      <div
-        id="remainingCount"
-        class="stat-value"
-      >
-        0
-      </div>
-    </div>
+          <div
+            id="totalCount"
+            class="stat-value"
+          >
+            0
+          </div>
+        </div>
 
 
-    <div class="stat-card">
-      <div class="stat-label">
-        FREE
-      </div>
+        <div class="stat-card">
+          <div class="stat-label">
+            Check-In
+          </div>
 
-      <div
-        id="freeCount"
-        class="stat-value"
-      >
-        0
-      </div>
-    </div>
-
-
-    <div class="stat-card">
-      <div class="stat-label">
-        VIP
-      </div>
-
-      <div
-        id="vipCount"
-        class="stat-value"
-      >
-        0
-      </div>
-    </div>
+          <div
+            id="checkedInCount"
+            class="stat-value"
+          >
+            0
+          </div>
+        </div>
 
 
-    <div class="stat-card">
-      <div class="stat-label">
-        BOLD RIDERS
-      </div>
+        <div class="stat-card">
+          <div class="stat-label">
+            Remaining
+          </div>
 
-      <div
-        id="boldRidersCount"
-        class="stat-value"
-      >
-        0
-      </div>
-    </div>
-
-  </div>
+          <div
+            id="remainingCount"
+            class="stat-value"
+          >
+            0
+          </div>
+        </div>
 
 
-  <!-- =================================================
-       SEARCH / FILTER / DELETE
-       ================================================= -->
+        <div class="stat-card">
+          <div class="stat-label">
+            FREE
+          </div>
 
-  <div class="controls">
-
-    <div class="controls-row">
-
-      <input
-        id="searchInput"
-        class="search-box"
-        type="search"
-        placeholder="Search name / WhatsApp / Pass ID / BOLD RIDERS ID..."
-        autocomplete="off"
-      >
+          <div
+            id="freeCount"
+            class="stat-value"
+          >
+            0
+          </div>
+        </div>
 
 
-      <select
-        id="statusFilter"
-        class="filter-select"
-      >
+        <div class="stat-card">
+          <div class="stat-label">
+            VIP
+          </div>
 
-        <option value="ALL">
-          ALL STATUS
-        </option>
-
-        <option value="UNUSED">
-          UNUSED
-        </option>
-
-        <option value="USED">
-          USED
-        </option>
-
-        <option value="CANCELLED">
-          CANCELLED
-        </option>
-
-      </select>
+          <div
+            id="vipCount"
+            class="stat-value"
+          >
+            0
+          </div>
+        </div>
 
 
-      <select
-        id="accessFilter"
-        class="filter-select"
-      >
+        <div class="stat-card">
+          <div class="stat-label">
+            BOLD RIDERS
+          </div>
 
-        <option value="ALL">
-          ALL ACCESS
-        </option>
+          <div
+            id="boldRidersCount"
+            class="stat-value"
+          >
+            0
+          </div>
+        </div>
 
-        <option value="FREE">
-          FREE
-        </option>
-
-        <option value="VIP">
-          VIP
-        </option>
-
-        <option value="BOLD RIDERS">
-          BOLD RIDERS
-        </option>
-
-      </select>
-
-
-      <button
-        id="deleteSelectedButton"
-        class="delete-button"
-        type="button"
-        disabled
-      >
-        HAPUS TERPILIH
-      </button>
-
-
-      <div
-        id="selectedInfo"
-        class="selected-info"
-      >
-        0 dipilih
       </div>
 
-    </div>
 
-  </div>
+      <!-- =================================================
+           SEARCH / FILTER
+           ================================================= -->
 
+      <div class="controls">
 
-  <!-- =================================================
-       REGISTRATION TABLE
-       ================================================= -->
+        <div class="controls-row">
 
-  <div class="table-card">
-
-    <div class="table-header">
-
-      <div class="table-title">
-        REGISTRATIONS
-      </div>
-
-      <div
-        id="tableCount"
-        class="table-count"
-      >
-        0 records
-      </div>
-
-    </div>
+          <input
+            id="searchInput"
+            class="search-box"
+            type="search"
+            placeholder="Search name / WhatsApp / Pass ID..."
+            autocomplete="off"
+          >
 
 
-    <div class="table-wrapper">
+          <select
+            id="statusFilter"
+            class="filter-select"
+          >
+            <option value="ALL">
+              ALL STATUS
+            </option>
 
-      <table>
+            <option value="UNUSED">
+              UNUSED
+            </option>
 
-        <thead>
+            <option value="USED">
+              USED
+            </option>
+          </select>
 
-          <tr>
 
-            <th class="checkbox-cell">
+          <select
+            id="accessFilter"
+            class="filter-select"
+          >
+            <option value="ALL">
+              ALL ACCESS
+            </option>
 
-              <input
-                id="selectAllCheckbox"
-                type="checkbox"
-                title="Pilih semua"
-              >
+            <option value="FREE">
+              FREE
+            </option>
 
-            </th>
+            <option value="VIP">
+              VIP
+            </option>
 
-            <th>
-              Name
-            </th>
-
-            <th>
-              WhatsApp
-            </th>
-
-            <th>
-              Pass ID
-            </th>
-
-            <th>
-              Access
-            </th>
-
-            <th>
+            <option value="BOLD RIDERS">
               BOLD RIDERS
-            </th>
+            </option>
+          </select>
 
-            <th>
-              Table
-            </th>
+        </div>
 
-            <th>
-              Status
-            </th>
 
-            <th>
-              Registered
-            </th>
+        <div class="selection-bar">
 
-            <th>
-              Check-In
-            </th>
+          <div
+            id="selectionInfo"
+            class="selection-info"
+          >
+            <strong>0</strong> selected
+          </div>
 
-          </tr>
 
-        </thead>
+          <div class="selection-actions">
 
-        <tbody
-          id="registrationTableBody"
-        >
-
-          <tr>
-
-            <td
-              colspan="10"
-              class="table-message"
+            <button
+              id="selectAllButton"
+              class="select-all-button"
+              type="button"
             >
-              Loading registrations...
-            </td>
+              SELECT ALL
+            </button>
 
-          </tr>
+            <button
+              id="clearSelectionButton"
+              class="select-all-button"
+              type="button"
+            >
+              CLEAR
+            </button>
 
-        </tbody>
+            <button
+              id="deleteSelectedButton"
+              class="delete-button"
+              type="button"
+              disabled
+            >
+              DELETE SELECTED
+            </button>
 
-      </table>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           TABLE
+           ================================================= -->
+
+      <div class="table-card">
+
+        <div class="table-header">
+
+          <div class="table-title">
+            REGISTRATIONS
+          </div>
+
+          <div
+            id="tableCount"
+            class="table-count"
+          >
+            0 records
+          </div>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th class="checkbox-column">
+                  <input
+                    id="selectAllCheckbox"
+                    type="checkbox"
+                    title="Select all visible"
+                  >
+                </th>
+
+                <th>
+                  Name
+                </th>
+
+                <th>
+                  WhatsApp
+                </th>
+
+                <th>
+                  Pass ID
+                </th>
+
+                <th>
+                  Access
+                </th>
+
+                <th>
+                  Table
+                </th>
+
+                <th>
+                  Status
+                </th>
+
+                <th>
+                  Registered
+                </th>
+
+                <th>
+                  Check-In
+                </th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody id="registrationTableBody">
+
+              <tr>
+                <td
+                  colspan="9"
+                  class="table-message"
+                >
+                  Login untuk melihat registrations.
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
 
     </div>
-
-  </div>
-
-</div>
-```
 
   </section>
 
-  <!-- =====================================================
-       SUPABASE
-       ===================================================== -->
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- =====================================================
+       SCRIPT
+       ===================================================== -->
 
   <script>
 
+    /*
+     * =====================================================
+     * BOLD AFTER DARK ADMIN
+     * =====================================================
+     *
+     * LOGIN SEMENTARA:
+     *
+     * EMAIL    : admin@admin.com
+     * PASSWORD : 22Jun!2002
+     *
+     * Login sengaja dibuat lokal.
+     *
+     * DATA:
+     * Semua komunikasi data menggunakan:
+     *
+     * /functions/v1/dynamic-service
+     *
+     * Report:
+     *   GET ?action=report
+     *
+     * Delete:
+     *   POST ?action=delete
+     *   body: { ids: ["uuid-1", "uuid-2"] }
+     *
+     * =====================================================
+     */
+
+
     // =====================================================
-    // SUPABASE CONFIG
+    // CONFIG
     // =====================================================
 
     const SUPABASE_URL =
       'https://yrvnmmascklkuzpjkwxn.supabase.co';
 
+
     const SUPABASE_PUBLISHABLE_KEY =
       'sb_publishable_YGi3tPBuF9tW4KKnLJ5dDQ_AcBZ19WH';
+
 
     const DYNAMIC_SERVICE_URL =
       SUPABASE_URL +
       '/functions/v1/dynamic-service';
 
 
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-      );
-
-
-    // =====================================================
-    // ADMIN LOGIN
-    // =====================================================
-    //
-    // Login Supabase Auth tetap digunakan.
-    //
-    // Kredensial yang digunakan:
-    //
-    // EMAIL:
-    // admin@admin.com
-    //
-    // PASSWORD:
-    // 22Jun!2002
-    //
-    // =====================================================
-
     const ADMIN_EMAIL =
       'admin@admin.com';
+
 
     const ADMIN_PASSWORD =
       '22Jun!2002';
@@ -1011,99 +1060,130 @@
         'loginScreen'
       );
 
+
     const dashboardScreen =
       document.getElementById(
         'dashboardScreen'
       );
+
 
     const loginForm =
       document.getElementById(
         'loginForm'
       );
 
+
     const loginEmail =
       document.getElementById(
         'loginEmail'
       );
+
 
     const loginPassword =
       document.getElementById(
         'loginPassword'
       );
 
+
     const loginButton =
       document.getElementById(
         'loginButton'
       );
+
 
     const loginMessage =
       document.getElementById(
         'loginMessage'
       );
 
+
     const adminEmail =
       document.getElementById(
         'adminEmail'
       );
+
 
     const logoutButton =
       document.getElementById(
         'logoutButton'
       );
 
+
     const refreshButton =
       document.getElementById(
         'refreshButton'
       );
 
-    const deleteSelectedButton =
-      document.getElementById(
-        'deleteSelectedButton'
-      );
-
-    const selectedInfo =
-      document.getElementById(
-        'selectedInfo'
-      );
-
-    const selectAllCheckbox =
-      document.getElementById(
-        'selectAllCheckbox'
-      );
 
     const dashboardError =
       document.getElementById(
         'dashboardError'
       );
 
+
     const dashboardSuccess =
       document.getElementById(
         'dashboardSuccess'
       );
+
 
     const searchInput =
       document.getElementById(
         'searchInput'
       );
 
+
     const statusFilter =
       document.getElementById(
         'statusFilter'
       );
+
 
     const accessFilter =
       document.getElementById(
         'accessFilter'
       );
 
+
     const tableBody =
       document.getElementById(
         'registrationTableBody'
       );
 
+
     const tableCount =
       document.getElementById(
         'tableCount'
+      );
+
+
+    const selectAllCheckbox =
+      document.getElementById(
+        'selectAllCheckbox'
+      );
+
+
+    const selectAllButton =
+      document.getElementById(
+        'selectAllButton'
+      );
+
+
+    const clearSelectionButton =
+      document.getElementById(
+        'clearSelectionButton'
+      );
+
+
+    const deleteSelectedButton =
+      document.getElementById(
+        'deleteSelectedButton'
+      );
+
+
+    const selectionInfo =
+      document.getElementById(
+        'selectionInfo'
       );
 
 
@@ -1113,7 +1193,17 @@
 
     let registrations = [];
 
-    let selectedIds = new Set();
+
+    let selectedIds =
+      new Set();
+
+
+    // =====================================================
+    // LOCAL SESSION
+    // =====================================================
+
+    const ADMIN_SESSION_KEY =
+      'bold_after_dark_admin_logged_in';
 
 
     // =====================================================
@@ -1143,22 +1233,19 @@
 
 
     // =====================================================
-    // DASHBOARD MESSAGES
+    // DASHBOARD MESSAGE
     // =====================================================
 
-    function showDashboardError(text) {
+    function showDashboardError(message) {
 
-      dashboardSuccess.classList.add(
+      dashboardError.textContent =
+        message;
+
+      dashboardError.classList.remove(
         'hidden'
       );
 
-      dashboardSuccess.textContent =
-        '';
-
-      dashboardError.textContent =
-        text;
-
-      dashboardError.classList.remove(
+      dashboardSuccess.classList.add(
         'hidden'
       );
 
@@ -1177,39 +1264,39 @@
     }
 
 
-    function showDashboardSuccess(text) {
-
-      dashboardError.textContent =
-        '';
-
-      dashboardError.classList.add(
-        'hidden'
-      );
+    function showDashboardSuccess(message) {
 
       dashboardSuccess.textContent =
-        text;
+        message;
 
       dashboardSuccess.classList.remove(
         'hidden'
       );
 
-      window.setTimeout(
-        function() {
-
-          dashboardSuccess.classList.add(
-            'hidden'
-          );
-
-        },
-        4000
+      dashboardError.classList.add(
+        'hidden'
       );
+
+      window.clearTimeout(
+        window.__successTimer
+      );
+
+      window.__successTimer =
+        window.setTimeout(
+          function() {
+
+            dashboardSuccess.classList.add(
+              'hidden'
+            );
+
+          },
+          4000
+        );
 
     }
 
 
-    function clearDashboardMessages() {
-
-      clearDashboardError();
+    function clearDashboardSuccess() {
 
       dashboardSuccess.textContent =
         '';
@@ -1217,6 +1304,142 @@
       dashboardSuccess.classList.add(
         'hidden'
       );
+
+    }
+
+
+    // =====================================================
+    // API REQUEST
+    // =====================================================
+
+    async function dynamicServiceRequest(
+      action,
+      options = {}
+    ) {
+
+      const method =
+        options.method ||
+        'GET';
+
+
+      const url =
+        DYNAMIC_SERVICE_URL +
+        '?action=' +
+        encodeURIComponent(
+          action
+        );
+
+
+      const headers = {
+        'apikey':
+          SUPABASE_PUBLISHABLE_KEY,
+
+        'Authorization':
+          'Bearer ' +
+          SUPABASE_PUBLISHABLE_KEY,
+
+        'Accept':
+          'application/json'
+      };
+
+
+      const fetchOptions = {
+        method,
+        headers
+      };
+
+
+      if (
+        options.body !== undefined
+      ) {
+
+        headers[
+          'Content-Type'
+        ] =
+          'application/json';
+
+
+        fetchOptions.body =
+          JSON.stringify(
+            options.body
+          );
+
+      }
+
+
+      const response =
+        await fetch(
+          url,
+          fetchOptions
+        );
+
+
+      const rawText =
+        await response.text();
+
+
+      let data = null;
+
+
+      try {
+
+        data =
+          rawText
+            ? JSON.parse(rawText)
+            : null;
+
+      }
+
+      catch (parseError) {
+
+        console.error(
+          'DYNAMIC SERVICE JSON PARSE ERROR:',
+          parseError,
+          rawText
+        );
+
+        throw new Error(
+          'Server mengembalikan response yang bukan JSON.'
+        );
+
+      }
+
+
+      if (!response.ok) {
+
+        const serverMessage =
+          data &&
+          (
+            data.message ||
+            data.error ||
+            data.detail
+          );
+
+
+        throw new Error(
+          serverMessage ||
+          'Dynamic service gagal. HTTP ' +
+          response.status
+        );
+
+      }
+
+
+      if (
+        data &&
+        data.success === false
+      ) {
+
+        throw new Error(
+          data.message ||
+          data.detail ||
+          'Dynamic service mengembalikan error.'
+        );
+
+      }
+
+
+      return data;
 
     }
 
@@ -1243,69 +1466,32 @@
         try {
 
           const email =
-            loginEmail.value
-              .trim()
-              .toLowerCase();
+            loginEmail.value.trim();
+
 
           const password =
             loginPassword.value;
 
 
           if (
-            email !==
-            ADMIN_EMAIL
+            email !== ADMIN_EMAIL ||
+            password !== ADMIN_PASSWORD
           ) {
 
             throw new Error(
-              'Email admin tidak sesuai.'
+              'Email atau password admin salah.'
             );
 
           }
 
 
-          if (
-            password !==
-            ADMIN_PASSWORD
-          ) {
-
-            throw new Error(
-              'Password admin salah.'
-            );
-
-          }
-
-
-          const {
-            data,
-            error
-          } =
-            await supabaseClient.auth.signInWithPassword(
-              {
-                email,
-                password
-              }
-            );
-
-
-          if (error) {
-
-            throw error;
-
-          }
-
-
-          if (!data.session) {
-
-            throw new Error(
-              'Login berhasil tetapi session tidak tersedia.'
-            );
-
-          }
-
-
-          showDashboard(
-            data.user
+          localStorage.setItem(
+            ADMIN_SESSION_KEY,
+            'true'
           );
+
+
+          showDashboard();
 
 
           await loadRegistrations();
@@ -1346,7 +1532,7 @@
     // SHOW DASHBOARD
     // =====================================================
 
-    function showDashboard(user) {
+    function showDashboard() {
 
       loginScreen.classList.add(
         'hidden'
@@ -1358,10 +1544,7 @@
 
 
       adminEmail.textContent =
-        user &&
-        user.email
-          ? user.email
-          : ADMIN_EMAIL;
+        ADMIN_EMAIL;
 
     }
 
@@ -1372,15 +1555,17 @@
 
     logoutButton.addEventListener(
       'click',
-      async function() {
+      function() {
 
-        await supabaseClient.auth.signOut();
+        localStorage.removeItem(
+          ADMIN_SESSION_KEY
+        );
+
 
         registrations = [];
 
         selectedIds.clear();
 
-        updateSelectionUI();
 
         dashboardScreen.classList.add(
           'hidden'
@@ -1390,149 +1575,19 @@
           'hidden'
         );
 
+
         loginPassword.value =
           '';
 
-        clearDashboardMessages();
+
+        clearDashboardError();
+
+        clearDashboardSuccess();
+
+        updateSelectionUI();
 
       }
     );
-
-
-    // =====================================================
-    // DYNAMIC SERVICE REQUEST
-    // =====================================================
-
-    async function callDynamicService(
-      action,
-      options
-    ) {
-
-      const {
-        data: sessionData,
-        error: sessionError
-      } =
-        await supabaseClient.auth.getSession();
-
-
-      if (sessionError) {
-
-        throw sessionError;
-
-      }
-
-
-      const session =
-        sessionData &&
-        sessionData.session
-          ? sessionData.session
-          : null;
-
-
-      if (!session) {
-
-        throw new Error(
-          'Session admin tidak tersedia. Silakan login kembali.'
-        );
-
-      }
-
-
-      const requestOptions =
-        options || {};
-
-
-      const response =
-        await fetch(
-          DYNAMIC_SERVICE_URL +
-          '?action=' +
-          encodeURIComponent(
-            action
-          ),
-          {
-            method:
-              requestOptions.method ||
-              'POST',
-
-            headers: {
-              'Content-Type':
-                'application/json',
-
-              'apikey':
-                SUPABASE_PUBLISHABLE_KEY,
-
-              'Authorization':
-                'Bearer ' +
-                session.access_token
-            },
-
-            body:
-              requestOptions.body
-                ? JSON.stringify(
-                    requestOptions.body
-                  )
-                : undefined
-          }
-        );
-
-
-      const rawText =
-        await response.text();
-
-
-      let result;
-
-      try {
-
-        result =
-          rawText
-            ? JSON.parse(rawText)
-            : {};
-
-      }
-
-      catch (parseError) {
-
-        console.error(
-          'DYNAMIC SERVICE RAW RESPONSE:',
-          rawText
-        );
-
-        throw new Error(
-          'Response dynamic-service bukan JSON yang valid.'
-        );
-
-      }
-
-
-      if (!response.ok) {
-
-        throw new Error(
-          result &&
-          result.message
-            ? result.message
-            : 'Dynamic service gagal.'
-        );
-
-      }
-
-
-      if (
-        result &&
-        result.success === false
-      ) {
-
-        throw new Error(
-          result.message ||
-          'Dynamic service gagal.'
-        );
-
-      }
-
-
-      return result;
-
-    }
 
 
     // =====================================================
@@ -1541,7 +1596,10 @@
 
     async function loadRegistrations() {
 
-      clearDashboardMessages();
+      clearDashboardError();
+
+      clearDashboardSuccess();
+
 
       refreshButton.disabled =
         true;
@@ -1554,7 +1612,7 @@
         `
           <tr>
             <td
-              colspan="10"
+              colspan="9"
               class="table-message"
             >
               Loading registrations...
@@ -1565,29 +1623,109 @@
 
       try {
 
-        const result =
-          await callDynamicService(
-            'report',
-            {
-              method: 'GET'
-            }
+        const data =
+          await dynamicServiceRequest(
+            'report'
           );
 
 
-        const rows =
-          result &&
+        /*
+         * Support beberapa bentuk response:
+         *
+         * {
+         *   registrations: [...]
+         * }
+         *
+         * atau
+         *
+         * {
+         *   data: [...]
+         * }
+         */
+
+
+        let rows = [];
+
+
+        if (
+          data &&
           Array.isArray(
-            result.registrations
+            data.registrations
           )
-            ? result.registrations
-            : [];
+        ) {
+
+          rows =
+            data.registrations;
+
+        }
+
+        else if (
+          data &&
+          data.data &&
+          Array.isArray(
+            data.data.registrations
+          )
+        ) {
+
+          rows =
+            data.data.registrations;
+
+        }
+
+        else if (
+          data &&
+          Array.isArray(
+            data.data
+          )
+        ) {
+
+          rows =
+            data.data;
+
+        }
 
 
         registrations =
-          rows;
+          Array.isArray(rows)
+            ? rows
+            : [];
 
 
-        selectedIds.clear();
+        /*
+         * Bersihkan selected ID yang
+         * sudah tidak ada.
+         */
+
+
+        const validIds =
+          new Set(
+            registrations.map(
+              function(row) {
+
+                return String(
+                  row.id
+                );
+
+              }
+            )
+          );
+
+
+        selectedIds =
+          new Set(
+            Array.from(
+              selectedIds
+            ).filter(
+              function(id) {
+
+                return validIds.has(
+                  id
+                );
+
+              }
+            )
+          );
+
 
         updateStatistics();
 
@@ -1609,6 +1747,7 @@
 
         selectedIds.clear();
 
+
         updateStatistics();
 
         updateSelectionUI();
@@ -1618,7 +1757,7 @@
           `
             <tr>
               <td
-                colspan="10"
+                colspan="9"
                 class="table-message"
               >
                 Tidak dapat membaca data registrations.
@@ -1666,8 +1805,7 @@
             return (
               String(
                 row.pass_status || ''
-              )
-                .toUpperCase() ===
+              ).toUpperCase() ===
               'USED'
             );
 
@@ -1676,19 +1814,8 @@
 
 
       const remaining =
-        registrations.filter(
-          function(row) {
-
-            return (
-              String(
-                row.pass_status || ''
-              )
-                .toUpperCase() !==
-              'USED'
-            );
-
-          }
-        ).length;
+        total -
+        checkedIn;
 
 
       const free =
@@ -1698,8 +1825,7 @@
             return (
               String(
                 row.access_type || ''
-              )
-                .toUpperCase() ===
+              ).toUpperCase() ===
               'FREE'
             );
 
@@ -1714,8 +1840,7 @@
             return (
               String(
                 row.access_type || ''
-              )
-                .toUpperCase() ===
+              ).toUpperCase() ===
               'VIP'
             );
 
@@ -1730,8 +1855,7 @@
             return (
               String(
                 row.access_type || ''
-              )
-                .toUpperCase() ===
+              ).toUpperCase() ===
               'BOLD RIDERS'
             );
 
@@ -1803,57 +1927,49 @@
           const name =
             String(
               row.name || ''
-            )
-              .toLowerCase();
+            ).toLowerCase();
 
 
           const whatsapp =
             String(
               row.whatsapp || ''
-            )
-              .toLowerCase();
+            ).toLowerCase();
 
 
           const passId =
             String(
               row.pass_id || ''
-            )
-              .toLowerCase();
-
-
-          const boldRidersId =
-            String(
-              row.bold_riders_id || ''
-            )
-              .toLowerCase();
-
-
-          const boldRidersName =
-            String(
-              row.bold_riders_name || ''
-            )
-              .toLowerCase();
+            ).toLowerCase();
 
 
           const community =
             String(
               row.community || ''
-            )
-              .toLowerCase();
+            ).toLowerCase();
+
+
+          const boldRidersId =
+            String(
+              row.bold_riders_id || ''
+            ).toLowerCase();
+
+
+          const boldRidersName =
+            String(
+              row.bold_riders_name || ''
+            ).toLowerCase();
 
 
           const rowStatus =
             String(
               row.pass_status || ''
-            )
-              .toUpperCase();
+            ).toUpperCase();
 
 
           const rowAccess =
             String(
               row.access_type || ''
-            )
-              .toUpperCase();
+            ).toUpperCase();
 
 
           const matchesSearch =
@@ -1861,9 +1977,9 @@
             name.includes(search) ||
             whatsapp.includes(search) ||
             passId.includes(search) ||
+            community.includes(search) ||
             boldRidersId.includes(search) ||
-            boldRidersName.includes(search) ||
-            community.includes(search);
+            boldRidersName.includes(search);
 
 
           const matchesStatus =
@@ -1913,7 +2029,7 @@
           `
             <tr>
               <td
-                colspan="10"
+                colspan="9"
                 class="table-message"
               >
                 Tidak ada data yang cocok.
@@ -1922,7 +2038,14 @@
           `;
 
 
-        updateSelectAllState();
+        selectAllCheckbox.checked =
+          false;
+
+        selectAllCheckbox.indeterminate =
+          false;
+
+
+        updateSelectionUI();
 
         return;
 
@@ -1934,65 +2057,41 @@
           .map(
             function(row) {
 
-              const rowId =
+              const id =
                 String(
                   row.id || ''
                 );
 
 
-              const isSelected =
+              const checked =
                 selectedIds.has(
-                  rowId
+                  id
                 );
 
 
-              const boldRidersDisplay =
-                row.bold_riders_name ||
-                row.bold_riders_id
-                  ? `
-                    <div class="bold-riders-text">
-                      ${escapeHtml(
-                        row.bold_riders_name ||
-                        row.bold_riders_id
-                      )}
-                    </div>
-
-                    ${
-                      row.bold_riders_id
-                        ? `
-                          <div class="muted">
-                            ${escapeHtml(
-                              row.bold_riders_id
-                            )}
-                          </div>
-                        `
-                        : ''
-                    }
-                  `
-                  : `
-                    <span class="muted">
-                      —
-                    </span>
-                  `;
-
-
               return `
-                <tr>
+                <tr
+                  class="${
+                    checked
+                      ? 'selected-row'
+                      : ''
+                  }"
+                >
 
-                  <td class="checkbox-cell">
+                  <td class="checkbox-column">
 
                     <input
-                      type="checkbox"
                       class="row-checkbox"
-                      data-id="${escapeHtml(
-                        rowId
-                      )}"
+                      type="checkbox"
+                      data-id="${escapeHtml(id)}"
                       ${
-                        isSelected
+                        checked
                           ? 'checked'
                           : ''
                       }
-                      aria-label="Pilih registrasi"
+                      aria-label="Select ${escapeHtml(
+                        row.name || 'registration'
+                      )}"
                     >
 
                   </td>
@@ -2023,11 +2122,6 @@
                     ${accessBadge(
                       row.access_type
                     )}
-                  </td>
-
-
-                  <td>
-                    ${boldRidersDisplay}
                   </td>
 
 
@@ -2076,19 +2170,21 @@
 
       bindRowCheckboxes();
 
-      updateSelectAllState();
+      updateSelectAllCheckbox();
+
+      updateSelectionUI();
 
     }
 
 
     // =====================================================
-    // ROW CHECKBOXES
+    // ROW CHECKBOX
     // =====================================================
 
     function bindRowCheckboxes() {
 
       const checkboxes =
-        tableBody.querySelectorAll(
+        document.querySelectorAll(
           '.row-checkbox'
         );
 
@@ -2106,27 +2202,26 @@
                 );
 
 
-              if (!id) {
+              if (
+                checkbox.checked
+              ) {
 
-                return;
-
-              }
-
-
-              if (checkbox.checked) {
-
-                selectedIds.add(id);
+                selectedIds.add(
+                  id
+                );
 
               }
 
               else {
 
-                selectedIds.delete(id);
+                selectedIds.delete(
+                  id
+                );
 
               }
 
 
-              updateSelectionUI();
+              renderTable();
 
             }
           );
@@ -2138,65 +2233,118 @@
 
 
     // =====================================================
-    // SELECT ALL
+    // SELECT ALL VISIBLE
+    // =====================================================
+
+    function selectAllVisible() {
+
+      const rows =
+        getFilteredRegistrations();
+
+
+      rows.forEach(
+        function(row) {
+
+          if (row.id) {
+
+            selectedIds.add(
+              String(row.id)
+            );
+
+          }
+
+        }
+      );
+
+
+      renderTable();
+
+    }
+
+
+    function clearSelection() {
+
+      selectedIds.clear();
+
+      renderTable();
+
+    }
+
+
+    // =====================================================
+    // SELECT ALL CHECKBOX
     // =====================================================
 
     selectAllCheckbox.addEventListener(
       'change',
       function() {
 
-        const rows =
-          getFilteredRegistrations();
-
-
         if (
           selectAllCheckbox.checked
         ) {
 
-          rows.forEach(
-            function(row) {
-
-              if (row.id != null) {
-
-                selectedIds.add(
-                  String(row.id)
-                );
-
-              }
-
-            }
-          );
+          selectAllVisible();
 
         }
 
         else {
 
+          const rows =
+            getFilteredRegistrations();
+
+
           rows.forEach(
             function(row) {
 
-              if (row.id != null) {
-
-                selectedIds.delete(
-                  String(row.id)
-                );
-
-              }
+              selectedIds.delete(
+                String(row.id)
+              );
 
             }
           );
 
+
+          renderTable();
+
         }
-
-
-        renderTable();
-
-        updateSelectionUI();
 
       }
     );
 
 
-    function updateSelectAllState() {
+    // =====================================================
+    // SELECT ALL BUTTON
+    // =====================================================
+
+    selectAllButton.addEventListener(
+      'click',
+      function() {
+
+        selectAllVisible();
+
+      }
+    );
+
+
+    // =====================================================
+    // CLEAR SELECTION BUTTON
+    // =====================================================
+
+    clearSelectionButton.addEventListener(
+      'click',
+      function() {
+
+        clearSelection();
+
+      }
+    );
+
+
+    // =====================================================
+    // UPDATE SELECT ALL CHECKBOX
+    // =====================================================
+
+    function updateSelectAllCheckbox() {
 
       const rows =
         getFilteredRegistrations();
@@ -2215,44 +2363,42 @@
       }
 
 
-      const rowIds =
-        rows
-          .map(
-            function(row) {
-
-              return String(
-                row.id || ''
-              );
-
-            }
-          )
-          .filter(Boolean);
+      let selectedVisible =
+        0;
 
 
-      const selectedVisibleCount =
-        rowIds.filter(
-          function(id) {
+      rows.forEach(
+        function(row) {
 
-            return selectedIds.has(
-              id
-            );
+          if (
+            selectedIds.has(
+              String(row.id)
+            )
+          ) {
+
+            selectedVisible++;
 
           }
-        ).length;
+
+        }
+      );
 
 
       selectAllCheckbox.checked =
-        selectedVisibleCount ===
-        rowIds.length;
+        selectedVisible ===
+        rows.length;
 
 
       selectAllCheckbox.indeterminate =
-        selectedVisibleCount > 0 &&
-        selectedVisibleCount <
-          rowIds.length;
+        selectedVisible > 0 &&
+        selectedVisible < rows.length;
 
     }
 
+
+    // =====================================================
+    // SELECTION UI
+    // =====================================================
 
     function updateSelectionUI() {
 
@@ -2260,26 +2406,25 @@
         selectedIds.size;
 
 
-      selectedInfo.textContent =
+      selectionInfo.innerHTML =
+        '<strong>' +
         count +
-        (
-          count === 1
-            ? ' dipilih'
-            : ' dipilih'
-        );
+        '</strong> selected';
 
 
       deleteSelectedButton.disabled =
         count === 0;
 
 
-      deleteSelectedButton.textContent =
-        count > 0
-          ? 'HAPUS ' + count + ' TERPILIH'
-          : 'HAPUS TERPILIH';
+      clearSelectionButton.disabled =
+        count === 0;
 
 
-      updateSelectAllState();
+      selectAllButton.disabled =
+        getFilteredRegistrations().length === 0;
+
+
+      updateSelectAllCheckbox();
 
     }
 
@@ -2305,36 +2450,106 @@
         }
 
 
-        const confirmation =
-          confirm(
-            'Hapus ' +
-            ids.length +
-            ' registrasi yang dipilih?\n\n' +
-            'Data yang dihapus tidak dapat dikembalikan.'
+        const selectedRows =
+          registrations.filter(
+            function(row) {
+
+              return selectedIds.has(
+                String(row.id)
+              );
+
+            }
           );
 
 
-        if (!confirmation) {
+        const names =
+          selectedRows
+            .slice(0, 5)
+            .map(
+              function(row) {
+
+                return row.name ||
+                  row.pass_id ||
+                  row.id;
+
+              }
+            );
+
+
+        let confirmationMessage =
+          'Anda akan menghapus ' +
+          ids.length +
+          ' registrasi.';
+
+
+        if (names.length > 0) {
+
+          confirmationMessage +=
+            '\n\n' +
+            names.join('\n');
+
+        }
+
+
+        if (
+          ids.length > 5
+        ) {
+
+          confirmationMessage +=
+            '\n... dan ' +
+            (
+              ids.length - 5
+            ) +
+            ' lainnya.';
+
+        }
+
+
+        confirmationMessage +=
+          '\n\nData yang dihapus tidak dapat dikembalikan.\n\nLanjutkan?';
+
+
+        const confirmed =
+          window.confirm(
+            confirmationMessage
+          );
+
+
+        if (!confirmed) {
 
           return;
 
         }
 
 
-        clearDashboardMessages();
-
-
         deleteSelectedButton.disabled =
           true;
 
         deleteSelectedButton.textContent =
-          'MENGHAPUS...';
+          'DELETING...';
+
+
+        clearDashboardError();
+
+        clearDashboardSuccess();
 
 
         try {
 
-          const result =
-            await callDynamicService(
+          /*
+           * Dynamic service contract:
+           *
+           * POST
+           * ?action=delete
+           *
+           * {
+           *   ids: [...]
+           * }
+           */
+
+
+          const response =
+            await dynamicServiceRequest(
               'delete',
               {
                 method: 'POST',
@@ -2347,24 +2562,21 @@
 
 
           const deletedCount =
-            result &&
-            Number.isFinite(
-              Number(
-                result.deletedCount
-              )
-            )
-              ? Number(
-                  result.deletedCount
-                )
-              : ids.length;
+            response &&
+            (
+              response.deletedCount ??
+              response.count ??
+              ids.length
+            );
 
 
           selectedIds.clear();
 
 
           showDashboardSuccess(
+            'Berhasil menghapus ' +
             deletedCount +
-            ' registrasi berhasil dihapus.'
+            ' registrasi.'
           );
 
 
@@ -2391,6 +2603,12 @@
 
         finally {
 
+          deleteSelectedButton.disabled =
+            selectedIds.size === 0;
+
+          deleteSelectedButton.textContent =
+            'DELETE SELECTED';
+
           updateSelectionUI();
 
         }
@@ -2408,11 +2626,12 @@
       const value =
         String(
           status || ''
-        )
-          .toUpperCase();
+        ).toUpperCase();
 
 
-      if (value === 'USED') {
+      if (
+        value === 'USED'
+      ) {
 
         return `
           <span class="badge badge-used">
@@ -2423,23 +2642,11 @@
       }
 
 
-      if (
-        value ===
-        'CANCELLED'
-      ) {
-
-        return `
-          <span class="badge badge-cancelled">
-            CANCELLED
-          </span>
-        `;
-
-      }
-
-
       return `
         <span class="badge badge-unused">
-          UNUSED
+          ${escapeHtml(
+            value || 'UNUSED'
+          )}
         </span>
       `;
 
@@ -2455,27 +2662,11 @@
       const value =
         String(
           access || ''
-        )
-          .toUpperCase();
+        ).toUpperCase();
 
 
       if (
-        value ===
-        'BOLD RIDERS'
-      ) {
-
-        return `
-          <span class="badge badge-bold">
-            BOLD RIDERS
-          </span>
-        `;
-
-      }
-
-
-      if (
-        value ===
-        'VIP'
+        value === 'VIP'
       ) {
 
         return `
@@ -2487,9 +2678,24 @@
       }
 
 
+      if (
+        value === 'BOLD RIDERS'
+      ) {
+
+        return `
+          <span class="badge badge-bold">
+            BOLD RIDERS
+          </span>
+        `;
+
+      }
+
+
       return `
         <span class="badge badge-free">
-          FREE
+          ${escapeHtml(
+            value || 'FREE'
+          )}
         </span>
       `;
 
@@ -2596,11 +2802,13 @@
 
         renderTable();
 
-        updateSelectionUI();
-
       }
     );
 
+
+    // =====================================================
+    // STATUS FILTER
+    // =====================================================
 
     statusFilter.addEventListener(
       'change',
@@ -2608,11 +2816,13 @@
 
         renderTable();
 
-        updateSelectionUI();
-
       }
     );
 
+
+    // =====================================================
+    // ACCESS FILTER
+    // =====================================================
 
     accessFilter.addEventListener(
       'change',
@@ -2620,79 +2830,29 @@
 
         renderTable();
 
-        updateSelectionUI();
-
       }
     );
 
 
     // =====================================================
-    // CHECK EXISTING SESSION
+    // RESTORE LOCAL LOGIN
     // =====================================================
 
-    async function checkExistingSession() {
+    function checkLocalSession() {
 
-      try {
-
-        const {
-          data,
-          error
-        } =
-          await supabaseClient.auth.getSession();
-
-
-        if (error) {
-
-          throw error;
-
-        }
-
-
-        const session =
-          data &&
-          data.session
-            ? data.session
-            : null;
-
-
-        if (
-          session &&
-          session.user
-        ) {
-
-          if (
-            String(
-              session.user.email ||
-              ''
-            )
-              .toLowerCase() !==
-            ADMIN_EMAIL
-          ) {
-
-            await supabaseClient.auth.signOut();
-
-            return;
-
-          }
-
-
-          showDashboard(
-            session.user
-          );
-
-
-          await loadRegistrations();
-
-        }
-
-      }
-
-      catch (error) {
-
-        console.error(
-          'SESSION ERROR:',
-          error
+      const loggedIn =
+        localStorage.getItem(
+          ADMIN_SESSION_KEY
         );
+
+
+      if (
+        loggedIn === 'true'
+      ) {
+
+        showDashboard();
+
+        loadRegistrations();
 
       }
 
@@ -2700,72 +2860,13 @@
 
 
     // =====================================================
-    // AUTH STATE
-    // =====================================================
-
-    supabaseClient.auth.onAuthStateChange(
-      function(
-        event,
-        session
-      ) {
-
-        if (
-          event ===
-          'SIGNED_OUT'
-        ) {
-
-          registrations = [];
-
-          selectedIds.clear();
-
-          updateSelectionUI();
-
-          dashboardScreen.classList.add(
-            'hidden'
-          );
-
-          loginScreen.classList.remove(
-            'hidden'
-          );
-
-        }
-
-
-        if (
-          event ===
-          'SIGNED_IN' &&
-          session &&
-          session.user
-        ) {
-
-          if (
-            String(
-              session.user.email ||
-              ''
-            )
-              .toLowerCase() ===
-            ADMIN_EMAIL
-          ) {
-
-            showDashboard(
-              session.user
-            );
-
-          }
-
-        }
-
-      }
-    );
-
-
-    // =====================================================
     // START
     // =====================================================
 
-    checkExistingSession();
+    checkLocalSession();
 
   </script>
 
 </body>
 </html>
+```
