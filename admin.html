@@ -202,6 +202,7 @@
     }
 
     /* HOME */
+
     .home-button {
       background: #ffffff;
       color: #000000;
@@ -954,6 +955,30 @@
 
 
     /* ============================================================
+       PAGE ROUTES
+       ============================================================ */
+
+    /*
+      HOME:
+      Jangan gunakan "home.html" karena itu menyebabkan 404
+      jika file tersebut tidak berada di folder admin.
+
+      Route ini menuju halaman utama aplikasi.
+    */
+    const HOME_URL =
+      "/bold-after-dark-scanner/index.html";
+
+    /*
+      REPORT:
+      Untuk sementara mengikuti struktur yang sama.
+      Jika report.html berada di root aplikasi scanner,
+      gunakan path absolut ini.
+    */
+    const REPORT_URL =
+      "/bold-after-dark-scanner/report.html";
+
+
+    /* ============================================================
        ADMIN LOGIN
        ============================================================ */
 
@@ -1150,7 +1175,7 @@
       function() {
 
         window.location.href =
-          "home.html";
+          HOME_URL;
 
       }
     );
@@ -1165,7 +1190,7 @@
       function() {
 
         window.location.href =
-          "report.html";
+          REPORT_URL;
 
       }
     );
