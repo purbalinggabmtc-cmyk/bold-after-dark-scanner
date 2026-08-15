@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -12,97 +11,198 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --black: #050505;
+      --black-soft: #0d0d0d;
+      --black-card: #111111;
+      --white: #ffffff;
+      --white-soft: #e8e8e8;
+      --gray: #999999;
+      --gray-dark: #333333;
+      --red: #e00000;
+      --red-dark: #8f0000;
+      --red-soft: rgba(224, 0, 0, 0.12);
+      --green: #55e88b;
+      --yellow: #f0cf45;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
       background:
         radial-gradient(
           circle at top,
-          #2a0000 0%,
-          #080808 45%,
+          #260000 0%,
+          #0b0b0b 38%,
+          #050505 72%,
           #000000 100%
         );
-      color: #ffffff;
+      color: var(--white);
       font-family: Arial, Helvetica, sans-serif;
       padding: 24px;
     }
 
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     .container {
       width: 100%;
-      max-width: 1400px;
+      max-width: 1450px;
       margin: 0 auto;
     }
 
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
     .header {
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 25px;
     }
 
     .brand {
-      font-size: 30px;
+      font-size: 31px;
       font-weight: 900;
       letter-spacing: 4px;
+      color: var(--white);
     }
 
     .brand span {
-      color: #e00000;
+      color: var(--red);
     }
 
     .subtitle {
-      margin-top: 6px;
+      margin-top: 7px;
       color: #aaa;
-      font-size: 13px;
-      letter-spacing: 3px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 4px;
     }
+
+    .header-line {
+      width: 80px;
+      height: 3px;
+      margin: 13px auto 0;
+      background: var(--red);
+      border-radius: 5px;
+    }
+
+    /* =========================================================
+       TOOLBAR
+       ========================================================= */
 
     .toolbar {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       margin-bottom: 18px;
+      padding: 15px;
+      background: rgba(17, 17, 17, 0.95);
+      border: 1px solid #2d2d2d;
+      border-radius: 13px;
     }
 
     .toolbar input,
     .toolbar select {
       flex: 1;
-      min-width: 180px;
-      padding: 13px;
-      background: #151515;
-      color: #fff;
-      border: 1px solid #444;
+      min-width: 190px;
+      padding: 13px 14px;
+      background: #171717;
+      color: var(--white);
+      border: 1px solid #3a3a3a;
       border-radius: 8px;
       outline: none;
-      font-size: 14px;
+    }
+
+    .toolbar input::placeholder {
+      color: #777;
     }
 
     .toolbar input:focus,
     .toolbar select:focus {
-      border-color: #e00000;
+      border-color: var(--red);
+      box-shadow: 0 0 0 2px rgba(224, 0, 0, 0.12);
     }
 
-    button {
+    .toolbar select {
+      flex: 0 1 170px;
+    }
+
+    .btn {
       padding: 13px 18px;
-      border: none;
       border-radius: 8px;
       font-weight: 800;
-      cursor: pointer;
-      font-size: 14px;
+      border: none;
+      white-space: nowrap;
     }
 
     .btn-red {
-      background: #e00000;
-      color: #fff;
+      background: var(--red);
+      color: var(--white);
+    }
+
+    .btn-red:hover {
+      background: #ff0000;
     }
 
     .btn-dark {
-      background: #292929;
-      color: #fff;
+      background: #222;
+      color: var(--white);
       border: 1px solid #444;
     }
 
-    button:active {
-      transform: scale(.98);
+    .btn-dark:hover {
+      background: #2d2d2d;
     }
+
+    .btn-outline-red {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid var(--red);
+    }
+
+    .btn-outline-red:hover {
+      background: var(--red-soft);
+    }
+
+    /* =========================================================
+       ERROR
+       ========================================================= */
+
+    .error {
+      display: none;
+      margin-bottom: 18px;
+      padding: 14px 16px;
+      background: rgba(224, 0, 0, 0.1);
+      border: 1px solid rgba(224, 0, 0, 0.45);
+      border-left: 4px solid var(--red);
+      border-radius: 9px;
+      color: #ff9a9a;
+      font-size: 13px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    /* =========================================================
+       STATISTICS
+       ========================================================= */
 
     .stats {
       display: grid;
@@ -112,30 +212,68 @@
     }
 
     .stat {
-      background: #111;
-      border: 1px solid #333;
-      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      background: var(--black-card);
+      border: 1px solid #303030;
+      border-radius: 13px;
       padding: 18px;
       text-align: center;
     }
 
+    .stat::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      background: var(--red);
+    }
+
     .stat-label {
       color: #999;
-      font-size: 12px;
-      letter-spacing: 1px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
       margin-bottom: 8px;
     }
 
     .stat-value {
-      font-size: 28px;
+      color: var(--white);
+      font-size: 30px;
       font-weight: 900;
     }
 
+    /* =========================================================
+       TABLE CARD
+       ========================================================= */
+
     .table-card {
-      background: #111;
-      border: 1px solid #333;
+      background: var(--black-card);
+      border: 1px solid #303030;
       border-radius: 14px;
       overflow: hidden;
+    }
+
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      padding: 16px 18px;
+      border-bottom: 1px solid #2d2d2d;
+    }
+
+    .table-title {
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .table-subtitle {
+      color: #777;
+      font-size: 11px;
     }
 
     .table-wrapper {
@@ -145,126 +283,178 @@
 
     table {
       width: 100%;
-      min-width: 1150px;
+      min-width: 1200px;
       border-collapse: collapse;
     }
 
     th {
-      background: #1c1c1c;
-      color: #ddd;
-      font-size: 12px;
+      background: #191919;
+      color: #aaa;
+      font-size: 10px;
       text-align: left;
       padding: 13px 10px;
-      border-bottom: 1px solid #444;
+      border-bottom: 1px solid #3b3b3b;
       white-space: nowrap;
+      letter-spacing: 1px;
     }
 
     td {
-      padding: 12px 10px;
-      border-bottom: 1px solid #292929;
+      padding: 13px 10px;
+      border-bottom: 1px solid #242424;
       font-size: 13px;
       color: #ddd;
-      vertical-align: top;
+      vertical-align: middle;
     }
 
-    tr:hover td {
+    tbody tr {
+      transition: background 0.15s ease;
+    }
+
+    tbody tr:hover td {
       background: #181818;
     }
 
-    /* =====================================================
-       USED ROW — MERAH
-       ===================================================== */
+    /* =========================================================
+       USED ROW
+       ========================================================= */
 
     tr.used-row td {
-      background: #210000;
-      color: #ffb3b3;
-      border-top: 1px solid #8f0000;
-      border-bottom: 1px solid #8f0000;
+      background: rgba(224, 0, 0, 0.08);
+      color: #f5caca;
+      border-top: 1px solid rgba(224, 0, 0, 0.35);
+      border-bottom: 1px solid rgba(224, 0, 0, 0.35);
     }
 
     tr.used-row:hover td {
-      background: #350000;
+      background: rgba(224, 0, 0, 0.15);
     }
 
     tr.used-row td:first-child {
-      border-left: 4px solid #e00000;
+      border-left: 4px solid var(--red);
     }
 
-    tr.used-row td:last-child {
-      border-right: 1px solid #8f0000;
-    }
-
-    /* =====================================================
-       UNUSED ROW — KUNING
-       ===================================================== */
+    /* =========================================================
+       UNUSED ROW
+       ========================================================= */
 
     tr.unused-row td {
-      background: #181500;
+      background: #111;
       color: #ddd;
     }
 
     tr.unused-row:hover td {
-      background: #282300;
+      background: #181818;
     }
+
+    /* =========================================================
+       STATUS BADGES
+       ========================================================= */
 
     .status {
       display: inline-block;
       padding: 5px 9px;
       border-radius: 999px;
-      font-size: 11px;
-      font-weight: 800;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.6px;
       white-space: nowrap;
     }
 
-    /* USED / CHECKED_IN */
     .status.used {
-      background: #420000;
-      color: #ff4d4d;
-      border: 1px solid #e00000;
-      box-shadow: 0 0 8px rgba(224, 0, 0, 0.25);
+      background: rgba(224, 0, 0, 0.14);
+      color: #ff7777;
+      border: 1px solid rgba(224, 0, 0, 0.5);
     }
 
-    /* UNUSED */
     .status.unused {
-      background: #302800;
-      color: #f0c62d;
-      border: 1px solid #c6a300;
-    }
-
-    /* UNKNOWN */
-    .status.unknown {
-      background: #292929;
-      color: #aaa;
+      background: rgba(255, 255, 255, 0.07);
+      color: #fff;
       border: 1px solid #555;
     }
 
+    .status.cancelled {
+      background: rgba(255, 255, 255, 0.06);
+      color: #aaa;
+      border: 1px solid #444;
+    }
+
+    .status.unknown {
+      background: #202020;
+      color: #888;
+      border: 1px solid #444;
+    }
+
+    /* =========================================================
+       ACCESS BADGES
+       ========================================================= */
+
+    .access {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+    }
+
+    .access.free {
+      background: rgba(255, 255, 255, 0.07);
+      color: #fff;
+      border: 1px solid #555;
+    }
+
+    .access.vip {
+      background: rgba(224, 0, 0, 0.13);
+      color: #ff7777;
+      border: 1px solid rgba(224, 0, 0, 0.45);
+    }
+
+    .access.bold {
+      background: #171717;
+      color: #fff;
+      border: 1px solid #777;
+    }
+
+    /* =========================================================
+       STATES
+       ========================================================= */
+
+    .loading,
     .empty {
-      padding: 40px;
+      padding: 45px 20px;
       text-align: center;
       color: #777;
     }
 
     .loading {
-      padding: 30px;
-      text-align: center;
       color: #aaa;
     }
 
-    .error {
-      margin-bottom: 18px;
-      padding: 15px;
-      background: #300000;
-      border: 1px solid #e00000;
-      border-radius: 10px;
-      color: #ff7777;
-      display: none;
+    .loading::before {
+      content: "";
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      margin-right: 8px;
+      vertical-align: -2px;
+      border: 2px solid #555;
+      border-top-color: var(--red);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     .footer {
       text-align: center;
       margin-top: 20px;
       color: #555;
-      font-size: 11px;
+      font-size: 10px;
+      font-weight: 700;
       letter-spacing: 2px;
     }
 
@@ -272,23 +462,65 @@
       display: none;
     }
 
-    @media (max-width: 800px) {
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media (max-width: 950px) {
+      .stats {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 650px) {
       body {
         padding: 12px;
+      }
+
+      .brand {
+        font-size: 23px;
+        letter-spacing: 2.5px;
+      }
+
+      .subtitle {
+        font-size: 10px;
+        letter-spacing: 2.5px;
       }
 
       .stats {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .brand {
-        font-size: 23px;
+      .stat-value {
+        font-size: 25px;
+      }
+
+      .toolbar {
+        flex-direction: column;
+      }
+
+      .toolbar input,
+      .toolbar select,
+      .toolbar .btn {
+        width: 100%;
+        flex: none;
+      }
+
+      .table-header {
+        align-items: flex-start;
+        flex-direction: column;
       }
     }
 
-    /* =====================================================
+    @media (max-width: 380px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* =========================================================
        PRINT
-       ===================================================== */
+       ========================================================= */
 
     @media print {
       @page {
@@ -297,8 +529,8 @@
       }
 
       body {
-        background: #fff;
-        color: #000;
+        background: #fff !important;
+        color: #000 !important;
         padding: 0;
       }
 
@@ -323,6 +555,10 @@
         color: #555;
       }
 
+      .header-line {
+        background: #000;
+      }
+
       .toolbar,
       .footer,
       .error {
@@ -341,6 +577,10 @@
         padding: 8px;
       }
 
+      .stat::after {
+        display: none;
+      }
+
       .stat-label {
         color: #555;
       }
@@ -355,6 +595,10 @@
         background: #fff;
       }
 
+      .table-header {
+        display: none;
+      }
+
       .table-wrapper {
         overflow: visible;
       }
@@ -365,19 +609,18 @@
       }
 
       th {
-        background: #eee;
-        color: #000;
+        background: #eee !important;
+        color: #000 !important;
         border-bottom: 1px solid #999;
-        font-size: 9px;
-      }
-
-      td {
-        color: #000;
-        border-bottom: 1px solid #ddd;
         font-size: 8px;
       }
 
-      /* USED tetap merah ketika print */
+      td {
+        color: #000 !important;
+        border-bottom: 1px solid #ddd;
+        font-size: 7.5px;
+      }
+
       tr.used-row td {
         background: #ffe0e0 !important;
         color: #8b0000 !important;
@@ -390,7 +633,7 @@
       }
 
       tr.unused-row td {
-        background: #fffbea !important;
+        background: #fff !important;
         color: #000 !important;
       }
 
@@ -402,26 +645,32 @@
         background: #ffe0e0 !important;
         color: #b00000 !important;
         border: 1px solid #d00000 !important;
-        box-shadow: none !important;
       }
 
       .status.unused {
-        background: #fff4b8 !important;
-        color: #795f00 !important;
-        border: 1px solid #c6a300 !important;
+        background: #eee !important;
+        color: #333 !important;
+        border: 1px solid #777 !important;
       }
 
+      .status.cancelled,
       .status.unknown {
         background: #eee !important;
         color: #555 !important;
         border: 1px solid #999 !important;
       }
 
+      .access {
+        background: #fff !important;
+        color: #000 !important;
+        border: 1px solid #888 !important;
+      }
+
       .print-only {
         display: block;
         margin-bottom: 10px;
         color: #333;
-        font-size: 10px;
+        font-size: 9px;
       }
     }
   </style>
@@ -431,7 +680,12 @@
 
   <div class="container">
 
+    <!-- =======================================================
+         HEADER
+         ======================================================== -->
+
     <div class="header">
+
       <div class="brand">
         BOLD <span>AFTER DARK</span>
       </div>
@@ -439,13 +693,21 @@
       <div class="subtitle">
         AUDIENCE REPORT
       </div>
+
+      <div class="header-line"></div>
+
     </div>
+
+
+    <!-- =======================================================
+         TOOLBAR
+         ======================================================== -->
 
     <div class="toolbar">
 
       <input
         id="searchInput"
-        type="text"
+        type="search"
         placeholder="Cari nama, WhatsApp, Pass ID, community..."
         autocomplete="off"
       >
@@ -454,17 +716,19 @@
         <option value="">ALL ACCESS</option>
         <option value="FREE">FREE</option>
         <option value="VIP">VIP</option>
+        <option value="BOLD RIDERS">BOLD RIDERS</option>
       </select>
 
       <select id="statusFilter">
         <option value="">ALL STATUS</option>
         <option value="UNUSED">UNUSED</option>
         <option value="USED">USED</option>
+        <option value="CANCELLED">CANCELLED</option>
       </select>
 
       <button
         type="button"
-        class="btn-red"
+        class="btn btn-red"
         id="refreshButton"
       >
         REFRESH
@@ -472,7 +736,7 @@
 
       <button
         type="button"
-        class="btn-dark"
+        class="btn btn-dark"
         id="printButton"
       >
         PRINT REPORT
@@ -480,75 +744,177 @@
 
       <button
         type="button"
-        class="btn-dark"
+        class="btn btn-dark"
         id="csvButton"
       >
         DOWNLOAD CSV
       </button>
 
+      <button
+        type="button"
+        class="btn btn-outline-red"
+        id="adminButton"
+      >
+        ADMIN
+      </button>
+
     </div>
 
-    <div id="errorBox" class="error"></div>
+
+    <!-- =======================================================
+         ERROR
+         ======================================================== -->
+
+    <div
+      id="errorBox"
+      class="error"
+    ></div>
+
+
+    <!-- =======================================================
+         STATISTICS
+         ======================================================== -->
 
     <div class="stats">
 
       <div class="stat">
-        <div class="stat-label">TOTAL</div>
-        <div id="totalCount" class="stat-value">0</div>
+        <div class="stat-label">
+          TOTAL
+        </div>
+
+        <div
+          id="totalCount"
+          class="stat-value"
+        >
+          0
+        </div>
       </div>
 
-      <div class="stat">
-        <div class="stat-label">FREE</div>
-        <div id="freeCount" class="stat-value">0</div>
-      </div>
 
       <div class="stat">
-        <div class="stat-label">VIP</div>
-        <div id="vipCount" class="stat-value">0</div>
+        <div class="stat-label">
+          FREE
+        </div>
+
+        <div
+          id="freeCount"
+          class="stat-value"
+        >
+          0
+        </div>
       </div>
 
-      <div class="stat">
-        <div class="stat-label">USED</div>
-        <div id="usedCount" class="stat-value">0</div>
-      </div>
 
       <div class="stat">
-        <div class="stat-label">UNUSED</div>
-        <div id="unusedCount" class="stat-value">0</div>
+        <div class="stat-label">
+          VIP
+        </div>
+
+        <div
+          id="vipCount"
+          class="stat-value"
+        >
+          0
+        </div>
+      </div>
+
+
+      <div class="stat">
+        <div class="stat-label">
+          USED
+        </div>
+
+        <div
+          id="usedCount"
+          class="stat-value"
+        >
+          0
+        </div>
+      </div>
+
+
+      <div class="stat">
+        <div class="stat-label">
+          UNUSED
+        </div>
+
+        <div
+          id="unusedCount"
+          class="stat-value"
+        >
+          0
+        </div>
       </div>
 
     </div>
+
+
+    <!-- =======================================================
+         PRINT HEADER
+         ======================================================== -->
 
     <div class="print-only">
-      BOLD AFTER DARK — AUDIENCE REPORT
+
+      <strong>
+        BOLD AFTER DARK — AUDIENCE REPORT
+      </strong>
+
       <br>
+
       Dicetak:
       <span id="printDate"></span>
+
     </div>
+
+
+    <!-- =======================================================
+         TABLE
+         ======================================================== -->
 
     <div class="table-card">
 
-      <div id="loading" class="loading">
+      <div class="table-header">
+
+        <div>
+          <div class="table-title">
+            REGISTRATIONS
+          </div>
+
+          <div class="table-subtitle">
+            Data audience BOLD AFTER DARK
+          </div>
+        </div>
+
+      </div>
+
+
+      <div
+        id="loading"
+        class="loading"
+      >
         Memuat data audience...
       </div>
+
 
       <div
         id="empty"
         class="empty"
-        style="display:none;"
+        style="display: none;"
       >
         Tidak ada data audience.
       </div>
 
+
       <div
         id="tableWrapper"
         class="table-wrapper"
-        style="display:none;"
+        style="display: none;"
       >
 
         <table>
 
           <thead>
+
             <tr>
               <th>#</th>
               <th>NAMA</th>
@@ -562,6 +928,7 @@
               <th>CHECK-IN</th>
               <th>CHECKED BY</th>
             </tr>
+
           </thead>
 
           <tbody id="tableBody"></tbody>
@@ -572,37 +939,47 @@
 
     </div>
 
+
+    <!-- =======================================================
+         FOOTER
+         ======================================================== -->
+
     <div class="footer">
       BOLD AFTER DARK • AUDIENCE REPORT
     </div>
 
   </div>
 
+
   <script>
 
-    // =====================================================
-    // SUPABASE CONFIGURATION
-    // =====================================================
+    /* =========================================================
+       SUPABASE CONFIGURATION
+       ========================================================= */
 
-    const API_URL =
-      "https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/dynamic-service";
+    const SUPABASE_URL =
+      "https://yrvnmmascklkuzpjkwxn.supabase.co";
 
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_YGi3tPBuF9tW4KKnLJ5dDQ_AcBZ19WH";
 
+    const API_URL =
+      SUPABASE_URL +
+      "/functions/v1/dynamic-service";
 
-    // =====================================================
-    // STATE
-    // =====================================================
+
+    /* =========================================================
+       STATE
+       ========================================================= */
 
     let allRows = [];
 
     let filteredRows = [];
 
 
-    // =====================================================
-    // ELEMENTS
-    // =====================================================
+    /* =========================================================
+       ELEMENTS
+       ========================================================= */
 
     const searchInput =
       document.getElementById("searchInput");
@@ -622,6 +999,9 @@
     const csvButton =
       document.getElementById("csvButton");
 
+    const adminButton =
+      document.getElementById("adminButton");
+
     const errorBox =
       document.getElementById("errorBox");
 
@@ -638,59 +1018,79 @@
       document.getElementById("tableBody");
 
 
-    // =====================================================
-    // ESCAPE HTML
-    // =====================================================
+    /* =========================================================
+       ESCAPE HTML
+       ========================================================= */
 
     function escapeHtml(value) {
 
       return String(
-        value == null ? "" : value
+        value == null
+          ? ""
+          : value
       )
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
 
     }
 
 
-    // =====================================================
-    // NORMALIZE STATUS
-    // =====================================================
+    /* =========================================================
+       NORMALIZE STATUS
+       ========================================================= */
 
     function normalizeStatus(value) {
 
       const status =
-        String(value || "")
+        String(
+          value || ""
+        )
           .trim()
           .toUpperCase();
 
-      /*
-       * DATABASE SEKARANG:
-       *
-       * UNUSED
-       * USED
-       * CANCELLED
-       *
-       * CHECKED_IN tetap didukung
-       * supaya data lama tidak rusak.
-       */
-
       if (
         status === "USED" ||
-        status === "CHECKED_IN"
+        status === "CHECKED_IN" ||
+        status === "CHECKED-IN"
       ) {
+
         return "USED";
+
       }
 
-      if (status === "UNUSED") {
+      if (
+        status === "UNUSED"
+      ) {
+
         return "UNUSED";
+
       }
 
-      if (status === "CANCELLED") {
+      if (
+        status === "CANCELLED" ||
+        status === "CANCELED"
+      ) {
+
         return "CANCELLED";
+
       }
 
       return status;
@@ -698,14 +1098,31 @@
     }
 
 
-    // =====================================================
-    // FORMAT DATE
-    // =====================================================
+    /* =========================================================
+       NORMALIZE ACCESS
+       ========================================================= */
+
+    function normalizeAccess(value) {
+
+      return String(
+        value || ""
+      )
+        .trim()
+        .toUpperCase();
+
+    }
+
+
+    /* =========================================================
+       FORMAT DATE
+       ========================================================= */
 
     function formatDate(value) {
 
       if (!value) {
+
         return "-";
+
       }
 
       const date =
@@ -716,7 +1133,9 @@
           date.getTime()
         )
       ) {
+
         return String(value);
+
       }
 
       return date.toLocaleString(
@@ -730,14 +1149,15 @@
     }
 
 
-    // =====================================================
-    // SHOW ERROR
-    // =====================================================
+    /* =========================================================
+       SHOW ERROR
+       ========================================================= */
 
     function showError(message) {
 
       errorBox.textContent =
-        message || "Terjadi kesalahan.";
+        message ||
+        "Terjadi kesalahan.";
 
       errorBox.style.display =
         "block";
@@ -745,24 +1165,24 @@
     }
 
 
-    // =====================================================
-    // HIDE ERROR
-    // =====================================================
+    /* =========================================================
+       HIDE ERROR
+       ========================================================= */
 
     function hideError() {
-
-      errorBox.style.display =
-        "none";
 
       errorBox.textContent =
         "";
 
+      errorBox.style.display =
+        "none";
+
     }
 
 
-    // =====================================================
-    // LOAD REPORT
-    // =====================================================
+    /* =========================================================
+       LOAD REPORT
+       ========================================================= */
 
     async function loadReport() {
 
@@ -779,6 +1199,9 @@
 
       refreshButton.disabled =
         true;
+
+      refreshButton.textContent =
+        "LOADING...";
 
       try {
 
@@ -829,14 +1252,16 @@
         );
 
 
-        let data;
+        let data = null;
 
         try {
 
           data =
-            JSON.parse(raw);
+            raw
+              ? JSON.parse(raw)
+              : null;
 
-        } catch {
+        } catch (parseError) {
 
           throw new Error(
             "Server mengembalikan response JSON yang tidak valid."
@@ -848,29 +1273,34 @@
         if (!response.ok) {
 
           throw new Error(
-            data && data.message
+            data &&
+            data.message
               ? data.message
-              : "Gagal mengambil laporan."
+              : (
+                  "Gagal mengambil laporan. HTTP " +
+                  response.status
+                )
           );
 
         }
 
 
         if (
-          !data ||
-          data.success !== true
+          data &&
+          data.success === false
         ) {
 
           throw new Error(
-            data && data.message
-              ? data.message
-              : "Data laporan tidak valid."
+            data.message ||
+            data.detail ||
+            "Data laporan ditolak server."
           );
 
         }
 
 
         allRows =
+          data &&
           Array.isArray(
             data.registrations
           )
@@ -899,11 +1329,15 @@
         loading.style.display =
           "none";
 
+        tableWrapper.style.display =
+          "none";
+
         empty.style.display =
           "block";
 
         showError(
-          error && error.message
+          error &&
+          error.message
             ? error.message
             : "Tidak dapat mengambil laporan."
         );
@@ -913,14 +1347,17 @@
         refreshButton.disabled =
           false;
 
+        refreshButton.textContent =
+          "REFRESH";
+
       }
 
     }
 
 
-    // =====================================================
-    // APPLY FILTERS
-    // =====================================================
+    /* =========================================================
+       APPLY FILTERS
+       ========================================================= */
 
     function applyFilters() {
 
@@ -930,10 +1367,14 @@
           .toLowerCase();
 
       const access =
-        accessFilter.value;
+        normalizeAccess(
+          accessFilter.value
+        );
 
       const selectedStatus =
-        statusFilter.value;
+        normalizeStatus(
+          statusFilter.value
+        );
 
 
       filteredRows =
@@ -941,11 +1382,9 @@
           function(row) {
 
             const rowAccess =
-              String(
-                row.access_type || ""
-              )
-                .trim()
-                .toUpperCase();
+              normalizeAccess(
+                row.access_type
+              );
 
 
             const rowStatus =
@@ -954,27 +1393,31 @@
               );
 
 
-            // ACCESS FILTER
+            /* ACCESS FILTER */
 
             if (
               access &&
               rowAccess !== access
             ) {
+
               return false;
+
             }
 
 
-            // STATUS FILTER
+            /* STATUS FILTER */
 
             if (
               selectedStatus &&
               rowStatus !== selectedStatus
             ) {
+
               return false;
+
             }
 
 
-            // SEARCH
+            /* SEARCH */
 
             if (search) {
 
@@ -984,22 +1427,30 @@
                   row.whatsapp,
                   row.pass_id,
                   row.community,
-                  row.table_package
+                  row.table_package,
+                  row.access_type,
+                  row.pass_status
                 ]
                   .map(
                     function(value) {
+
                       return String(
                         value || ""
                       ).toLowerCase();
+
                     }
                   )
                   .join(" ");
 
 
               if (
-                !haystack.includes(search)
+                !haystack.includes(
+                  search
+                )
               ) {
+
                 return false;
+
               }
 
             }
@@ -1022,9 +1473,9 @@
     }
 
 
-    // =====================================================
-    // UPDATE STATISTICS
-    // =====================================================
+    /* =========================================================
+       UPDATE STATISTICS
+       ========================================================= */
 
     function updateStatistics(rows) {
 
@@ -1036,12 +1487,9 @@
         rows.filter(
           function(row) {
 
-            return String(
-              row.access_type || ""
-            )
-              .trim()
-              .toUpperCase() ===
-              "FREE";
+            return normalizeAccess(
+              row.access_type
+            ) === "FREE";
 
           }
         ).length;
@@ -1051,12 +1499,9 @@
         rows.filter(
           function(row) {
 
-            return String(
-              row.access_type || ""
-            )
-              .trim()
-              .toUpperCase() ===
-              "VIP";
+            return normalizeAccess(
+              row.access_type
+            ) === "VIP";
 
           }
         ).length;
@@ -1118,15 +1563,116 @@
     }
 
 
-    // =====================================================
-    // RENDER TABLE
-    // =====================================================
+    /* =========================================================
+       ACCESS BADGE
+       ========================================================= */
+
+    function accessBadge(access) {
+
+      const value =
+        normalizeAccess(access);
+
+      let className =
+        "free";
+
+      if (
+        value === "VIP"
+      ) {
+
+        className =
+          "vip";
+
+      } else if (
+        value === "BOLD RIDERS"
+      ) {
+
+        className =
+          "bold";
+
+      }
+
+
+      return (
+        '<span class="access ' +
+        className +
+        '">' +
+        escapeHtml(
+          value || "FREE"
+        ) +
+        "</span>"
+      );
+
+    }
+
+
+    /* =========================================================
+       STATUS BADGE
+       ========================================================= */
+
+    function statusBadge(status) {
+
+      const value =
+        normalizeStatus(status);
+
+      let className =
+        "unknown";
+
+      let label =
+        value || "-";
+
+
+      if (
+        value === "USED"
+      ) {
+
+        className =
+          "used";
+
+        label =
+          "USED";
+
+      } else if (
+        value === "UNUSED"
+      ) {
+
+        className =
+          "unused";
+
+        label =
+          "UNUSED";
+
+      } else if (
+        value === "CANCELLED"
+      ) {
+
+        className =
+          "cancelled";
+
+        label =
+          "CANCELLED";
+
+      }
+
+
+      return (
+        '<span class="status ' +
+        className +
+        '">' +
+        escapeHtml(label) +
+        "</span>"
+      );
+
+    }
+
+
+    /* =========================================================
+       RENDER TABLE
+       ========================================================= */
 
     function renderTable(rows) {
 
       loading.style.display =
         "none";
-
 
       tableBody.innerHTML =
         "";
@@ -1159,7 +1705,9 @@
         function(row, index) {
 
           const tr =
-            document.createElement("tr");
+            document.createElement(
+              "tr"
+            );
 
 
           const status =
@@ -1168,24 +1716,9 @@
             );
 
 
-          // =================================================
-          // STATUS STYLE
-          // =================================================
-
-          let statusClass =
-            "unknown";
-
-          let statusLabel =
-            status || "-";
-
-
-          if (status === "USED") {
-
-            statusClass =
-              "used";
-
-            statusLabel =
-              "USED";
+          if (
+            status === "USED"
+          ) {
 
             tr.classList.add(
               "used-row"
@@ -1195,12 +1728,6 @@
             status === "UNUSED"
           ) {
 
-            statusClass =
-              "unused";
-
-            statusLabel =
-              "UNUSED";
-
             tr.classList.add(
               "unused-row"
             );
@@ -1208,74 +1735,73 @@
           }
 
 
-          // =================================================
-          // ROW HTML
-          // =================================================
-
           tr.innerHTML =
+            `
+              <td>
+                ${escapeHtml(index + 1)}
+              </td>
 
-            "<td>" +
-            escapeHtml(index + 1) +
-            "</td>" +
+              <td>
+                <strong>
+                  ${escapeHtml(row.name)}
+                </strong>
+              </td>
 
-            "<td>" +
-            "<strong>" +
-            escapeHtml(row.name) +
-            "</strong>" +
-            "</td>" +
+              <td>
+                ${escapeHtml(row.whatsapp)}
+              </td>
 
-            "<td>" +
-            escapeHtml(row.whatsapp) +
-            "</td>" +
+              <td>
+                <strong>
+                  ${escapeHtml(row.pass_id)}
+                </strong>
+              </td>
 
-            "<td>" +
-            escapeHtml(row.pass_id) +
-            "</td>" +
+              <td>
+                ${accessBadge(row.access_type)}
+              </td>
 
-            "<td>" +
-            escapeHtml(row.access_type) +
-            "</td>" +
+              <td>
+                ${escapeHtml(
+                  row.table_package || "-"
+                )}
+              </td>
 
-            "<td>" +
-            escapeHtml(
-              row.table_package || "-"
-            ) +
-            "</td>" +
+              <td>
+                ${escapeHtml(
+                  row.community || "-"
+                )}
+              </td>
 
-            "<td>" +
-            escapeHtml(
-              row.community || "-"
-            ) +
-            "</td>" +
+              <td>
+                ${statusBadge(
+                  row.pass_status
+                )}
+              </td>
 
-            "<td>" +
-            '<span class="status ' +
-            statusClass +
-            '">' +
-            escapeHtml(statusLabel) +
-            "</span>" +
-            "</td>" +
+              <td>
+                ${escapeHtml(
+                  formatDate(row.created_at)
+                )}
+              </td>
 
-            "<td>" +
-            escapeHtml(
-              formatDate(row.created_at)
-            ) +
-            "</td>" +
+              <td>
+                ${escapeHtml(
+                  formatDate(row.checked_in_at)
+                )}
+              </td>
 
-            "<td>" +
-            escapeHtml(
-              formatDate(row.checked_in_at)
-            ) +
-            "</td>" +
-
-            "<td>" +
-            escapeHtml(
-              row.checked_in_by || "-"
-            ) +
-            "</td>";
+              <td>
+                ${escapeHtml(
+                  row.checked_in_by || "-"
+                )}
+              </td>
+            `;
 
 
-          tableBody.appendChild(tr);
+          tableBody.appendChild(
+            tr
+          );
 
         }
       );
@@ -1283,31 +1809,35 @@
     }
 
 
-    // =====================================================
-    // CSV ESCAPE
-    // =====================================================
+    /* =========================================================
+       CSV ESCAPE
+       ========================================================= */
 
     function csvEscape(value) {
 
       const text =
         String(
-          value == null ? "" : value
+          value == null
+            ? ""
+            : value
         );
 
 
-      return '"' +
+      return (
+        '"' +
         text.replace(
           /"/g,
           '""'
         ) +
-        '"';
+        '"'
+      );
 
     }
 
 
-    // =====================================================
-    // DOWNLOAD CSV
-    // =====================================================
+    /* =========================================================
+       DOWNLOAD CSV
+       ========================================================= */
 
     function downloadCsv() {
 
@@ -1392,11 +1922,15 @@
 
 
       const url =
-        URL.createObjectURL(blob);
+        URL.createObjectURL(
+          blob
+        );
 
 
       const link =
-        document.createElement("a");
+        document.createElement(
+          "a"
+        );
 
 
       link.href =
@@ -1406,20 +1940,24 @@
         "bold-after-dark-audience-report.csv";
 
 
-      document.body.appendChild(link);
+      document.body.appendChild(
+        link
+      );
 
       link.click();
 
       link.remove();
 
-      URL.revokeObjectURL(url);
+      URL.revokeObjectURL(
+        url
+      );
 
     }
 
 
-    // =====================================================
-    // PRINT
-    // =====================================================
+    /* =========================================================
+       PRINT REPORT
+       ========================================================= */
 
     function printReport() {
 
@@ -1436,9 +1974,24 @@
     }
 
 
-    // =====================================================
-    // EVENTS
-    // =====================================================
+    /* =========================================================
+       ADMIN BUTTON
+       ========================================================= */
+
+    adminButton.addEventListener(
+      "click",
+      function() {
+
+        window.location.href =
+          "./admin.html";
+
+      }
+    );
+
+
+    /* =========================================================
+       EVENTS
+       ========================================================= */
 
     refreshButton.addEventListener(
       "click",
@@ -1476,9 +2029,9 @@
     );
 
 
-    // =====================================================
-    // START
-    // =====================================================
+    /* =========================================================
+       START
+       ========================================================= */
 
     window.addEventListener(
       "load",
@@ -1489,4 +2042,3 @@
 
 </body>
 </html>
-```
