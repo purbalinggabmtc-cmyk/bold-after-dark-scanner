@@ -908,7 +908,6 @@
   </div>
 
   <script>
-
     const SUPABASE_URL =
       "https://yrvnmmascklkuzpjkwxn.supabase.co";
 
@@ -919,8 +918,22 @@
       SUPABASE_URL +
       "/functions/v1/dynamic-service";
 
-    let allRows = [];
+    /*
+     * ROOT NAVIGATION
+     *
+     * HOME  -> https://boldafterdark.my.id/index.html
+     * ADMIN -> https://boldafterdark.my.id/admin.html
+     *
+     * Sengaja menggunakan absolute URL supaya tidak lagi
+     * masuk ke folder /bold-after-dark-scanner/.
+     */
+    const HOME_URL =
+      "https://boldafterdark.my.id/index.html";
 
+    const ADMIN_URL =
+      "https://boldafterdark.my.id/admin.html";
+
+    let allRows = [];
     let filteredRows = [];
 
     const searchInput =
@@ -963,41 +976,21 @@
       document.getElementById("tableBody");
 
     function escapeHtml(value) {
-
       return String(
         value == null
           ? ""
           : value
       )
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-        .replace(
-          /</g,
-          "&lt;"
-        )
-        .replace(
-          />/g,
-          "&gt;"
-        )
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-        .replace(
-          /'/g,
-          "&#039;"
-        );
-
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
 
     function normalizeStatus(value) {
-
       const status =
-        String(
-          value || ""
-        )
+        String(value || "")
           .trim()
           .toUpperCase();
 
@@ -1006,44 +999,30 @@
         status === "CHECKED_IN" ||
         status === "CHECKED-IN"
       ) {
-
         return "USED";
-
       }
 
-      if (
-        status === "UNUSED"
-      ) {
-
+      if (status === "UNUSED") {
         return "UNUSED";
-
       }
 
       if (
         status === "CANCELLED" ||
         status === "CANCELED"
       ) {
-
         return "CANCELLED";
-
       }
 
       return status;
-
     }
 
     function normalizeAccess(value) {
-
-      return String(
-        value || ""
-      )
+      return String(value || "")
         .trim()
         .toUpperCase();
-
     }
 
     function formatDate(value) {
-
       if (!value) {
         return "-";
       }
@@ -1056,9 +1035,7 @@
           date.getTime()
         )
       ) {
-
         return String(value);
-
       }
 
       return date.toLocaleString(
@@ -1068,51 +1045,33 @@
           timeStyle: "medium"
         }
       );
-
     }
 
     function showError(message) {
-
       errorBox.textContent =
         message ||
         "Terjadi kesalahan.";
 
       errorBox.style.display =
         "block";
-
     }
 
     function hideError() {
-
-      errorBox.textContent =
-        "";
-
-      errorBox.style.display =
-        "none";
-
+      errorBox.textContent = "";
+      errorBox.style.display = "none";
     }
 
     async function loadReport() {
-
       hideError();
 
-      loading.style.display =
-        "block";
+      loading.style.display = "block";
+      empty.style.display = "none";
+      tableWrapper.style.display = "none";
 
-      empty.style.display =
-        "none";
-
-      tableWrapper.style.display =
-        "none";
-
-      refreshButton.disabled =
-        true;
-
-      refreshButton.textContent =
-        "LOADING...";
+      refreshButton.disabled = true;
+      refreshButton.textContent = "LOADING...";
 
       try {
-
         const params =
           new URLSearchParams();
 
@@ -1159,22 +1118,17 @@
         let data = null;
 
         try {
-
           data =
             raw
               ? JSON.parse(raw)
               : null;
-
         } catch (parseError) {
-
           throw new Error(
             "Server mengembalikan response JSON yang tidak valid."
           );
-
         }
 
         if (!response.ok) {
-
           throw new Error(
             data &&
             data.message
@@ -1184,20 +1138,17 @@
                   response.status
                 )
           );
-
         }
 
         if (
           data &&
           data.success === false
         ) {
-
           throw new Error(
             data.message ||
             data.detail ||
             "Data laporan ditolak server."
           );
-
         }
 
         allRows =
@@ -1211,29 +1162,21 @@
         applyFilters();
 
       } catch (error) {
-
         console.error(
           "REPORT ERROR:",
           error
         );
 
         allRows = [];
-
         filteredRows = [];
 
         updateStatistics([]);
 
-        tableBody.innerHTML =
-          "";
+        tableBody.innerHTML = "";
 
-        loading.style.display =
-          "none";
-
-        tableWrapper.style.display =
-          "none";
-
-        empty.style.display =
-          "block";
+        loading.style.display = "none";
+        tableWrapper.style.display = "none";
+        empty.style.display = "block";
 
         showError(
           error &&
@@ -1243,19 +1186,12 @@
         );
 
       } finally {
-
-        refreshButton.disabled =
-          false;
-
-        refreshButton.textContent =
-          "REFRESH";
-
+        refreshButton.disabled = false;
+        refreshButton.textContent = "REFRESH";
       }
-
     }
 
     function applyFilters() {
-
       const search =
         searchInput.value
           .trim()
@@ -1274,7 +1210,6 @@
       filteredRows =
         allRows.filter(
           function(row) {
-
             const rowAccess =
               normalizeAccess(
                 row.access_type
@@ -1289,22 +1224,17 @@
               access &&
               rowAccess !== access
             ) {
-
               return false;
-
             }
 
             if (
               selectedStatus &&
               rowStatus !== selectedStatus
             ) {
-
               return false;
-
             }
 
             if (search) {
-
               const haystack =
                 [
                   row.name,
@@ -1317,11 +1247,9 @@
                 ]
                   .map(
                     function(value) {
-
                       return String(
                         value || ""
                       ).toLowerCase();
-
                     }
                   )
                   .join(" ");
@@ -1331,15 +1259,11 @@
                   search
                 )
               ) {
-
                 return false;
-
               }
-
             }
 
             return true;
-
           }
         );
 
@@ -1350,123 +1274,94 @@
       renderTable(
         filteredRows
       );
-
     }
 
     function updateStatistics(rows) {
-
       const total =
         rows.length;
 
       const free =
         rows.filter(
           function(row) {
-
             return normalizeAccess(
               row.access_type
             ) === "FREE";
-
           }
         ).length;
 
       const vip =
         rows.filter(
           function(row) {
-
             return normalizeAccess(
               row.access_type
             ) === "VIP";
-
           }
         ).length;
 
       const boldRiders =
         rows.filter(
           function(row) {
-
             return normalizeAccess(
               row.access_type
             ) === "BOLD RIDERS";
-
           }
         ).length;
 
       const used =
         rows.filter(
           function(row) {
-
             return normalizeStatus(
               row.pass_status
             ) === "USED";
-
           }
         ).length;
 
       const unused =
         rows.filter(
           function(row) {
-
             return normalizeStatus(
               row.pass_status
             ) === "UNUSED";
-
           }
         ).length;
 
       document.getElementById(
         "totalCount"
-      ).textContent =
-        total;
+      ).textContent = total;
 
       document.getElementById(
         "freeCount"
-      ).textContent =
-        free;
+      ).textContent = free;
 
       document.getElementById(
         "vipCount"
-      ).textContent =
-        vip;
+      ).textContent = vip;
 
       document.getElementById(
         "boldRidersCount"
-      ).textContent =
-        boldRiders;
+      ).textContent = boldRiders;
 
       document.getElementById(
         "usedCount"
-      ).textContent =
-        used;
+      ).textContent = used;
 
       document.getElementById(
         "unusedCount"
-      ).textContent =
-        unused;
-
+      ).textContent = unused;
     }
 
     function accessBadge(access) {
-
       const value =
         normalizeAccess(access);
 
-      let className =
-        "free";
+      let className = "free";
 
-      if (
-        value === "VIP"
-      ) {
-
-        className =
-          "vip";
-
+      if (value === "VIP") {
+        className = "vip";
       } else if (
         value === "BOLD RIDERS"
       ) {
-
-        className =
-          "bold";
-
+        className = "bold";
       }
 
       return (
@@ -1478,50 +1373,30 @@
         ) +
         "</span>"
       );
-
     }
 
     function statusBadge(status) {
-
       const value =
         normalizeStatus(status);
 
-      let className =
-        "unknown";
+      let className = "unknown";
+      let label = value || "-";
 
-      let label =
-        value || "-";
-
-      if (
-        value === "USED"
-      ) {
-
-        className =
-          "used";
-
-        label =
-          "USED";
+      if (value === "USED") {
+        className = "used";
+        label = "USED";
 
       } else if (
         value === "UNUSED"
       ) {
-
-        className =
-          "unused";
-
-        label =
-          "UNUSED";
+        className = "unused";
+        label = "UNUSED";
 
       } else if (
         value === "CANCELLED"
       ) {
-
-        className =
-          "cancelled";
-
-        label =
-          "CANCELLED";
-
+        className = "cancelled";
+        label = "CANCELLED";
       }
 
       return (
@@ -1531,67 +1406,44 @@
         escapeHtml(label) +
         "</span>"
       );
-
     }
 
     function renderTable(rows) {
-
-      loading.style.display =
-        "none";
-
-      tableBody.innerHTML =
-        "";
+      loading.style.display = "none";
+      tableBody.innerHTML = "";
 
       if (
         !rows ||
         rows.length === 0
       ) {
-
-        tableWrapper.style.display =
-          "none";
-
-        empty.style.display =
-          "block";
-
+        tableWrapper.style.display = "none";
+        empty.style.display = "block";
         return;
-
       }
 
-      empty.style.display =
-        "none";
-
-      tableWrapper.style.display =
-        "block";
+      empty.style.display = "none";
+      tableWrapper.style.display = "block";
 
       rows.forEach(
         function(row, index) {
-
           const tr =
-            document.createElement(
-              "tr"
-            );
+            document.createElement("tr");
 
           const status =
             normalizeStatus(
               row.pass_status
             );
 
-          if (
-            status === "USED"
-          ) {
-
+          if (status === "USED") {
             tr.classList.add(
               "used-row"
             );
-
           } else if (
             status === "UNUSED"
           ) {
-
             tr.classList.add(
               "unused-row"
             );
-
           }
 
           tr.innerHTML = `
@@ -1656,17 +1508,12 @@
             </td>
           `;
 
-          tableBody.appendChild(
-            tr
-          );
-
+          tableBody.appendChild(tr);
         }
       );
-
     }
 
     function csvEscape(value) {
-
       const text =
         String(
           value == null
@@ -1682,22 +1529,18 @@
         ) +
         '"'
       );
-
     }
 
     function downloadCsv() {
-
       if (
         !filteredRows ||
         filteredRows.length === 0
       ) {
-
         alert(
           "Tidak ada data untuk di-download."
         );
 
         return;
-
       }
 
       const headers = [
@@ -1723,7 +1566,6 @@
 
       filteredRows.forEach(
         function(row, index) {
-
           lines.push(
             [
               index + 1,
@@ -1744,7 +1586,6 @@
               .map(csvEscape)
               .join(",")
           );
-
         }
       );
 
@@ -1762,37 +1603,26 @@
         );
 
       const url =
-        URL.createObjectURL(
-          blob
-        );
+        URL.createObjectURL(blob);
 
       const link =
-        document.createElement(
-          "a"
-        );
+        document.createElement("a");
 
-      link.href =
-        url;
+      link.href = url;
 
       link.download =
         "bold-after-dark-audience-report.csv";
 
-      document.body.appendChild(
-        link
-      );
+      document.body.appendChild(link);
 
       link.click();
 
       link.remove();
 
-      URL.revokeObjectURL(
-        url
-      );
-
+      URL.revokeObjectURL(url);
     }
 
     function printReport() {
-
       document.getElementById(
         "printDate"
       ).textContent =
@@ -1801,26 +1631,31 @@
         );
 
       window.print();
-
     }
 
+    /*
+     * HOME
+     * FIXED:
+     * https://boldafterdark.my.id/index.html
+     */
     homeButton.addEventListener(
       "click",
       function() {
-
         window.location.href =
-          "home.html";
-
+          HOME_URL;
       }
     );
 
+    /*
+     * ADMIN
+     * FIXED:
+     * https://boldafterdark.my.id/admin.html
+     */
     adminButton.addEventListener(
       "click",
       function() {
-
         window.location.href =
-          "admin.html";
-
+          ADMIN_URL;
       }
     );
 
@@ -1858,7 +1693,6 @@
       "load",
       loadReport
     );
-
   </script>
 
 </body>
