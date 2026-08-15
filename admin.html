@@ -1,4 +1,4 @@
-# admin.html — BOLD AFTER DARK Admin Dashboard
+# admin.html
 
 ```html
 <!DOCTYPE html>
@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>BOLD AFTER DARK — Admin</title>
+  <title>BOLD AFTER DARK — Admin Dashboard</title>
 
   <style>
     * {
@@ -35,119 +35,203 @@
     }
 
     button {
-      cursor: pointer;
+      transition: 0.15s ease;
+    }
+
+    button:active {
+      transform: scale(0.98);
     }
 
     .hidden {
       display: none !important;
     }
 
-    .page {
-      width: 100%;
+    /* =====================================================
+       LOGIN
+       ===================================================== */
+
+    #loginScreen {
       min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 20px;
     }
 
-    .dashboard {
+    .login-card {
       width: 100%;
-      max-width: 1450px;
-      margin: 0 auto;
-    }
-
-    /* =====================================================
-       HEADER
-       ===================================================== */
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 22px;
+      max-width: 420px;
+      background: #111111;
+      border: 1px solid #333333;
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
     }
 
     .brand {
-      font-size: 26px;
+      text-align: center;
+      font-size: 28px;
       font-weight: 900;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
+      margin-bottom: 5px;
     }
 
     .brand span {
       color: #e00000;
     }
 
-    .topbar-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+    .login-subtitle {
+      text-align: center;
+      color: #888888;
+      font-size: 12px;
+      letter-spacing: 3px;
+      margin-bottom: 28px;
     }
 
-    .button {
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #dddddd;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 9px;
+      border: 1px solid #3b3b3b;
+      background: #1b1b1b;
+      color: white;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #e00000;
+      box-shadow: 0 0 0 2px rgba(224, 0, 0, 0.12);
+    }
+
+    .primary-button {
+      width: 100%;
+      padding: 14px;
       border: none;
-      border-radius: 8px;
-      padding: 11px 15px;
-      font-weight: 800;
-      color: #ffffff;
-    }
-
-    .button-red {
+      border-radius: 9px;
       background: #e00000;
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
     }
 
-    .button-red:hover {
-      background: #ff1717;
+    .primary-button:hover {
+      background: #ff1111;
     }
 
-    .button-dark {
-      background: #222222;
-      border: 1px solid #444444;
-    }
-
-    .button-dark:hover {
-      background: #303030;
-    }
-
-    .button-danger {
-      background: #8b0000;
-      border: 1px solid #c00000;
-    }
-
-    .button-danger:hover {
-      background: #b00000;
-    }
-
-    .button-small {
-      padding: 7px 10px;
-      font-size: 11px;
-    }
-
-    .button:disabled {
+    .primary-button:disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
 
-    /* =====================================================
-       ERROR / SUCCESS
-       ===================================================== */
-
-    .message {
-      padding: 13px 15px;
-      border-radius: 9px;
-      margin-bottom: 18px;
+    .login-message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
       font-size: 13px;
       line-height: 1.5;
+      display: none;
     }
 
-    .message-error {
-      background: rgba(224, 0, 0, 0.10);
-      border: 1px solid rgba(224, 0, 0, 0.35);
+    .login-message.error {
+      display: block;
+      background: rgba(224, 0, 0, 0.12);
+      border: 1px solid rgba(224, 0, 0, 0.4);
       color: #ff8f8f;
     }
 
-    .message-success {
-      background: rgba(22, 199, 90, 0.10);
-      border: 1px solid rgba(22, 199, 90, 0.30);
-      color: #67ee9a;
+    /* =====================================================
+       DASHBOARD
+       ===================================================== */
+
+    #dashboardScreen {
+      min-height: 100vh;
+      padding: 25px;
+    }
+
+    .dashboard {
+      width: 100%;
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .topbar-brand {
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .topbar-brand span {
+      color: #e00000;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .admin-email {
+      color: #888888;
+      font-size: 12px;
+    }
+
+    .logout-button,
+    .refresh-button,
+    .danger-button {
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      border: none;
+    }
+
+    .logout-button {
+      background: #222222;
+      color: white;
+      border: 1px solid #444444;
+    }
+
+    .logout-button:hover {
+      background: #303030;
+    }
+
+    .refresh-button {
+      background: #e00000;
+      color: white;
+    }
+
+    .refresh-button:hover {
+      background: #ff1111;
+    }
+
+    .danger-button {
+      background: #7a0000;
+      color: white;
+    }
+
+    .danger-button:hover {
+      background: #a00000;
     }
 
     /* =====================================================
@@ -156,28 +240,29 @@
 
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 20px;
+      grid-template-columns:
+        repeat(6, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 22px;
     }
 
     .stat-card {
       background: #111111;
       border: 1px solid #2d2d2d;
       border-radius: 13px;
-      padding: 16px;
+      padding: 18px;
     }
 
     .stat-label {
       color: #888888;
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 1px;
       text-transform: uppercase;
       margin-bottom: 8px;
     }
 
     .stat-value {
-      font-size: 28px;
+      font-size: 30px;
       font-weight: 900;
     }
 
@@ -201,44 +286,29 @@
 
     .search-box {
       flex: 1;
-      min-width: 240px;
-    }
-
-    input,
-    select {
-      width: 100%;
-      padding: 12px 13px;
-      border-radius: 8px;
-      border: 1px solid #3b3b3b;
-      background: #1b1b1b;
-      color: #ffffff;
-      outline: none;
-    }
-
-    input:focus,
-    select:focus {
-      border-color: #e00000;
-      box-shadow: 0 0 0 2px rgba(224, 0, 0, 0.12);
+      min-width: 220px;
     }
 
     .filter-select {
       width: auto;
-      min-width: 145px;
+      min-width: 150px;
     }
 
-    .danger-zone {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    select {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #3b3b3b;
+      background: #1b1b1b;
+      color: white;
+      outline: none;
+    }
+
+    .danger-row {
       margin-top: 12px;
       padding-top: 12px;
-      border-top: 1px solid #292929;
-    }
-
-    .danger-text {
-      color: #777777;
-      font-size: 11px;
-      flex: 1;
+      border-top: 1px solid #242424;
+      display: flex;
+      justify-content: flex-end;
     }
 
     /* =====================================================
@@ -253,11 +323,11 @@
     }
 
     .table-header {
-      padding: 16px 18px;
+      padding: 17px 18px;
       border-bottom: 1px solid #2d2d2d;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 10px;
     }
 
@@ -277,26 +347,26 @@
 
     table {
       width: 100%;
-      min-width: 1150px;
       border-collapse: collapse;
+      min-width: 1250px;
     }
 
     th {
       text-align: left;
-      padding: 12px 14px;
+      padding: 13px 15px;
       background: #181818;
       color: #999999;
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 1px;
       text-transform: uppercase;
       white-space: nowrap;
     }
 
     td {
-      padding: 13px 14px;
+      padding: 14px 15px;
       border-top: 1px solid #242424;
       color: #dddddd;
-      font-size: 12px;
+      font-size: 13px;
       vertical-align: middle;
     }
 
@@ -304,33 +374,46 @@
       background: #151515;
     }
 
-    .name-cell {
-      font-weight: 800;
-      color: #ffffff;
-    }
-
     .pass-id-cell {
       font-weight: 800;
-      letter-spacing: 0.4px;
-      color: #ffffff;
+      color: white;
+      letter-spacing: 0.5px;
+    }
+
+    .name-cell {
+      font-weight: 700;
     }
 
     .muted {
       color: #777777;
     }
 
+    .delete-button {
+      padding: 7px 10px;
+      border-radius: 7px;
+      border: 1px solid rgba(224, 0, 0, 0.4);
+      background: rgba(224, 0, 0, 0.12);
+      color: #ff7777;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .delete-button:hover {
+      background: rgba(224, 0, 0, 0.25);
+    }
+
     /* =====================================================
-       BADGES
+       STATUS BADGES
        ===================================================== */
 
     .badge {
       display: inline-block;
       padding: 5px 9px;
       border-radius: 20px;
-      font-size: 9px;
+      font-size: 10px;
       font-weight: 800;
-      letter-spacing: 0.6px;
-      white-space: nowrap;
+      letter-spacing: 0.7px;
     }
 
     .badge-unused {
@@ -358,9 +441,9 @@
     }
 
     .badge-bold {
-      background: rgba(255, 91, 0, 0.12);
-      color: #ff9b6a;
-      border: 1px solid rgba(255, 91, 0, 0.35);
+      background: rgba(255, 145, 0, 0.12);
+      color: #ffb45c;
+      border: 1px solid rgba(255, 145, 0, 0.35);
     }
 
     /* =====================================================
@@ -368,53 +451,29 @@
        ===================================================== */
 
     .table-message {
-      padding: 45px 20px;
+      padding: 40px 20px;
       text-align: center;
       color: #777777;
     }
 
-    /* =====================================================
-       DELETE MODAL
-       ===================================================== */
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: rgba(0, 0, 0, 0.78);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .modal-card {
-      width: 100%;
-      max-width: 430px;
-      background: #111111;
-      border: 1px solid #3a3a3a;
-      border-radius: 16px;
-      padding: 22px;
-      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.7);
-    }
-
-    .modal-title {
-      font-size: 20px;
-      font-weight: 900;
-      margin-bottom: 10px;
-    }
-
-    .modal-text {
-      color: #aaaaaa;
-      font-size: 13px;
-      line-height: 1.6;
+    .error-banner {
       margin-bottom: 18px;
+      padding: 13px 15px;
+      border-radius: 9px;
+      background: rgba(224, 0, 0, 0.10);
+      border: 1px solid rgba(224, 0, 0, 0.35);
+      color: #ff8f8f;
+      font-size: 13px;
     }
 
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
+    .success-banner {
+      margin-bottom: 18px;
+      padding: 13px 15px;
+      border-radius: 9px;
+      background: rgba(22, 199, 90, 0.10);
+      border: 1px solid rgba(22, 199, 90, 0.35);
+      color: #55e88b;
+      font-size: 13px;
     }
 
     /* =====================================================
@@ -423,13 +482,14 @@
 
     @media (max-width: 1100px) {
       .stats-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns:
+          repeat(3, minmax(0, 1fr));
       }
     }
 
-    @media (max-width: 700px) {
-      .page {
-        padding: 14px;
+    @media (max-width: 600px) {
+      #dashboardScreen {
+        padding: 15px;
       }
 
       .topbar {
@@ -437,16 +497,18 @@
         flex-direction: column;
       }
 
-      .topbar-actions {
+      .topbar-right {
         width: 100%;
-      }
-
-      .topbar-actions .button {
-        flex: 1;
+        justify-content: space-between;
       }
 
       .stats-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      .stat-value {
+        font-size: 25px;
       }
 
       .controls-row {
@@ -458,17 +520,18 @@
         width: 100%;
       }
 
-      .danger-zone {
-        align-items: flex-start;
-        flex-direction: column;
+      .danger-row {
+        justify-content: stretch;
       }
 
-      .danger-zone .button {
+      .danger-row button {
         width: 100%;
       }
+    }
 
-      .brand {
-        font-size: 21px;
+    @media (max-width: 380px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -476,28 +539,114 @@
 
 <body>
 
-  <main class="page">
+  <!-- =====================================================
+       LOGIN
+       ===================================================== -->
+
+  <section id="loginScreen">
+
+    <div class="login-card">
+
+      <div class="brand">
+        BOLD <span>AFTER DARK</span>
+      </div>
+
+      <div class="login-subtitle">
+        ADMIN DASHBOARD
+      </div>
+
+      <form id="loginForm">
+
+        <div class="form-group">
+
+          <label for="loginEmail">
+            EMAIL
+          </label>
+
+          <input
+            id="loginEmail"
+            type="email"
+            placeholder="admin@admin.com"
+            autocomplete="username"
+            required
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label for="loginPassword">
+            PASSWORD
+          </label>
+
+          <input
+            id="loginPassword"
+            type="password"
+            placeholder="Password"
+            autocomplete="current-password"
+            required
+          >
+
+        </div>
+
+        <button
+          id="loginButton"
+          class="primary-button"
+          type="submit"
+        >
+          LOGIN
+        </button>
+
+      </form>
+
+      <div
+        id="loginMessage"
+        class="login-message"
+      ></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       DASHBOARD
+       ===================================================== -->
+
+  <section
+    id="dashboardScreen"
+    class="hidden"
+  >
 
     <div class="dashboard">
 
-      <!-- =================================================
-           HEADER
-           ================================================= -->
-
       <div class="topbar">
 
-        <div class="brand">
+        <div class="topbar-brand">
           BOLD <span>AFTER DARK</span>
         </div>
 
-        <div class="topbar-actions">
+        <div class="topbar-right">
+
+          <div
+            id="adminEmail"
+            class="admin-email"
+          ></div>
 
           <button
             id="refreshButton"
-            class="button button-red"
+            class="refresh-button"
             type="button"
           >
-            🔄 REFRESH
+            REFRESH
+          </button>
+
+          <button
+            id="logoutButton"
+            class="logout-button"
+            type="button"
+          >
+            LOGOUT
           </button>
 
         </div>
@@ -505,13 +654,14 @@
       </div>
 
 
-      <!-- =================================================
-           MESSAGE
-           ================================================= -->
+      <div
+        id="dashboardError"
+        class="error-banner hidden"
+      ></div>
 
       <div
-        id="messageBox"
-        class="message hidden"
+        id="dashboardSuccess"
+        class="success-banner hidden"
       ></div>
 
 
@@ -604,20 +754,6 @@
           </div>
         </div>
 
-
-        <div class="stat-card">
-          <div class="stat-label">
-            UNUSED
-          </div>
-
-          <div
-            id="unusedCount"
-            class="stat-value"
-          >
-            0
-          </div>
-        </div>
-
       </div>
 
 
@@ -633,7 +769,7 @@
             id="searchInput"
             class="search-box"
             type="search"
-            placeholder="🔎 Cari nama / WhatsApp / Pass ID / BOLD RIDERS..."
+            placeholder="Search name / WhatsApp / Pass ID / BOLD RIDERS ID..."
             autocomplete="off"
           >
 
@@ -642,6 +778,7 @@
             id="statusFilter"
             class="filter-select"
           >
+
             <option value="ALL">
               ALL STATUS
             </option>
@@ -653,6 +790,7 @@
             <option value="USED">
               USED
             </option>
+
           </select>
 
 
@@ -660,6 +798,7 @@
             id="accessFilter"
             class="filter-select"
           >
+
             <option value="ALL">
               ALL ACCESS
             </option>
@@ -675,23 +814,20 @@
             <option value="BOLD RIDERS">
               BOLD RIDERS
             </option>
+
           </select>
 
         </div>
 
 
-        <div class="danger-zone">
-
-          <div class="danger-text">
-            Area testing. Penghapusan data bersifat permanen.
-          </div>
+        <div class="danger-row">
 
           <button
             id="deleteAllButton"
-            class="button button-danger"
+            class="danger-button"
             type="button"
           >
-            🗑️ HAPUS SEMUA DATA
+            🗑️ HAPUS SEMUA DATA TESTING
           </button>
 
         </div>
@@ -728,28 +864,69 @@
             <thead>
 
               <tr>
-                <th>Name</th>
-                <th>WhatsApp</th>
-                <th>Pass ID</th>
-                <th>Access</th>
-                <th>Table</th>
-                <th>Status</th>
-                <th>Registered</th>
-                <th>Check-In</th>
-                <th>Action</th>
+
+                <th>
+                  Name
+                </th>
+
+                <th>
+                  WhatsApp
+                </th>
+
+                <th>
+                  Pass ID
+                </th>
+
+                <th>
+                  Access
+                </th>
+
+                <th>
+                  BOLD RIDERS ID
+                </th>
+
+                <th>
+                  BOLD RIDERS Name
+                </th>
+
+                <th>
+                  Table
+                </th>
+
+                <th>
+                  Status
+                </th>
+
+                <th>
+                  Registered
+                </th>
+
+                <th>
+                  Check-In
+                </th>
+
+                <th>
+                  Action
+                </th>
+
               </tr>
 
             </thead>
 
-            <tbody id="registrationTableBody">
+
+            <tbody
+              id="registrationTableBody"
+            >
 
               <tr>
+
                 <td
-                  colspan="9"
+                  colspan="11"
                   class="table-message"
                 >
-                  Loading registrations...
+                  Silakan login.
                 </td>
+
               </tr>
 
             </tbody>
@@ -762,89 +939,107 @@
 
     </div>
 
-  </main>
+  </section>
 
 
   <!-- =====================================================
-       CONFIRM MODAL
+       SUPABASE
        ===================================================== -->
 
-  <div
-    id="confirmModal"
-    class="modal hidden"
-  >
-
-    <div class="modal-card">
-
-      <div
-        id="modalTitle"
-        class="modal-title"
-      >
-        Konfirmasi
-      </div>
-
-      <div
-        id="modalText"
-        class="modal-text"
-      >
-        Apakah Anda yakin?
-      </div>
-
-      <div class="modal-actions">
-
-        <button
-          id="modalCancelButton"
-          class="button button-dark"
-          type="button"
-        >
-          BATAL
-        </button>
-
-        <button
-          id="modalConfirmButton"
-          class="button button-danger"
-          type="button"
-        >
-          HAPUS
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
   <script>
 
-    /*
-     * =====================================================
-     * BOLD AFTER DARK ADMIN
-     * =====================================================
-     *
-     * Tidak menggunakan Supabase Auth.
-     *
-     * Semua operasi data menggunakan:
-     *
-     * dynamic-service
-     *
-     * Endpoint:
-     *
-     * https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/dynamic-service
-     *
-     * =====================================================
-     */
+    /* =====================================================
+       CONFIG
+       ===================================================== */
 
+    const SUPABASE_URL =
+      'https://yrvnmmascklkuzpjkwxn.supabase.co';
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      'sb_publishable_YGi3tPBuF9tW4KKnLJ5dDQ_AcBZ19WH';
 
     const DYNAMIC_SERVICE_URL =
-      'https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/dynamic-service';
+      SUPABASE_URL +
+      '/functions/v1/dynamic-service';
 
 
     /*
-     * =====================================================
-     * ELEMENTS
-     * =====================================================
-     */
+      LOGIN YANG DIMINTA USER.
+
+      CATATAN:
+      Ini adalah login halaman/admin lokal.
+      Kredensial akan terlihat jika seseorang membaca source HTML.
+    */
+
+    const ADMIN_EMAIL =
+      'admin@admin.com';
+
+    const ADMIN_PASSWORD =
+      '22Jun!2002';
+
+
+    /* =====================================================
+       SUPABASE CLIENT
+       ===================================================== */
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    /* =====================================================
+       ELEMENTS
+       ===================================================== */
+
+    const loginScreen =
+      document.getElementById(
+        'loginScreen'
+      );
+
+    const dashboardScreen =
+      document.getElementById(
+        'dashboardScreen'
+      );
+
+    const loginForm =
+      document.getElementById(
+        'loginForm'
+      );
+
+    const loginEmail =
+      document.getElementById(
+        'loginEmail'
+      );
+
+    const loginPassword =
+      document.getElementById(
+        'loginPassword'
+      );
+
+    const loginButton =
+      document.getElementById(
+        'loginButton'
+      );
+
+    const loginMessage =
+      document.getElementById(
+        'loginMessage'
+      );
+
+    const adminEmail =
+      document.getElementById(
+        'adminEmail'
+      );
+
+    const logoutButton =
+      document.getElementById(
+        'logoutButton'
+      );
 
     const refreshButton =
       document.getElementById(
@@ -856,9 +1051,14 @@
         'deleteAllButton'
       );
 
-    const messageBox =
+    const dashboardError =
       document.getElementById(
-        'messageBox'
+        'dashboardError'
+      );
+
+    const dashboardSuccess =
+      document.getElementById(
+        'dashboardSuccess'
       );
 
     const searchInput =
@@ -886,200 +1086,232 @@
         'tableCount'
       );
 
-    const confirmModal =
-      document.getElementById(
-        'confirmModal'
-      );
 
-    const modalTitle =
-      document.getElementById(
-        'modalTitle'
-      );
-
-    const modalText =
-      document.getElementById(
-        'modalText'
-      );
-
-    const modalCancelButton =
-      document.getElementById(
-        'modalCancelButton'
-      );
-
-    const modalConfirmButton =
-      document.getElementById(
-        'modalConfirmButton'
-      );
-
-
-    /*
-     * =====================================================
-     * DATA
-     * =====================================================
-     */
+    /* =====================================================
+       DATA
+       ===================================================== */
 
     let registrations = [];
 
-    let pendingDelete = null;
+    let adminLoggedIn = false;
 
 
-    /*
-     * =====================================================
-     * MESSAGE
-     * =====================================================
-     */
+    /* =====================================================
+       MESSAGE
+       ===================================================== */
 
-    function showMessage(
-      message,
-      type = 'success'
-    ) {
+    function showLoginError(message) {
 
-      messageBox.textContent =
+      loginMessage.textContent =
         message;
 
-      messageBox.className =
-        'message ' +
-        (
-          type === 'error'
-            ? 'message-error'
-            : 'message-success'
-        );
+      loginMessage.className =
+        'login-message error';
 
     }
 
 
-    function clearMessage() {
+    function clearLoginError() {
 
-      messageBox.textContent =
+      loginMessage.textContent =
         '';
 
-      messageBox.className =
-        'message hidden';
+      loginMessage.className =
+        'login-message';
 
     }
 
 
-    /*
-     * =====================================================
-     * API REQUEST
-     * =====================================================
-     */
+    function showDashboardError(text) {
 
-    async function callDynamicService(
-      action,
-      options = {}
-    ) {
+      dashboardSuccess.classList.add(
+        'hidden'
+      );
 
-      const method =
-        options.method || 'GET';
+      dashboardError.textContent =
+        text;
 
-      const body =
-        options.body || null;
+      dashboardError.classList.remove(
+        'hidden'
+      );
+
+    }
 
 
-      let url =
-        DYNAMIC_SERVICE_URL +
-        '?action=' +
-        encodeURIComponent(
-          action
-        );
+    function clearDashboardError() {
+
+      dashboardError.textContent =
+        '';
+
+      dashboardError.classList.add(
+        'hidden'
+      );
+
+    }
 
 
-      const requestOptions = {
-        method,
-        headers: {
-          'Accept': 'application/json'
+    function showDashboardSuccess(text) {
+
+      dashboardError.classList.add(
+        'hidden'
+      );
+
+      dashboardSuccess.textContent =
+        text;
+
+      dashboardSuccess.classList.remove(
+        'hidden'
+      );
+
+      setTimeout(
+        function() {
+
+          dashboardSuccess.classList.add(
+            'hidden'
+          );
+
+        },
+        3500
+      );
+
+    }
+
+
+    /* =====================================================
+       LOGIN
+       ===================================================== */
+
+    loginForm.addEventListener(
+      'submit',
+      function(event) {
+
+        event.preventDefault();
+
+        clearLoginError();
+
+        const email =
+          loginEmail.value.trim();
+
+        const password =
+          loginPassword.value;
+
+
+        if (
+          email !== ADMIN_EMAIL ||
+          password !== ADMIN_PASSWORD
+        ) {
+
+          showLoginError(
+            'Email atau password salah.'
+          );
+
+          return;
+
         }
-      };
 
 
-      if (body) {
+        adminLoggedIn = true;
 
-        requestOptions.headers[
-          'Content-Type'
-        ] =
-          'application/json';
-
-        requestOptions.body =
-          JSON.stringify(body);
-
-      }
-
-
-      const response =
-        await fetch(
-          url,
-          requestOptions
+        sessionStorage.setItem(
+          'bold_admin_logged_in',
+          'true'
         );
 
 
-      const rawText =
-        await response.text();
+        showDashboard();
 
-
-      let result;
-
-
-      try {
-
-        result =
-          rawText
-            ? JSON.parse(rawText)
-            : {};
+        loadRegistrations();
 
       }
-
-      catch (error) {
-
-        throw new Error(
-          'Response dynamic-service bukan JSON: ' +
-          rawText
-        );
-
-      }
+    );
 
 
-      if (!response.ok) {
+    /* =====================================================
+       SHOW DASHBOARD
+       ===================================================== */
 
-        throw new Error(
-          result.message ||
-          result.detail ||
-          (
-            'HTTP ' +
-            response.status
-          )
-        );
+    function showDashboard() {
 
-      }
+      loginScreen.classList.add(
+        'hidden'
+      );
 
+      dashboardScreen.classList.remove(
+        'hidden'
+      );
 
-      if (
-        result.success === false
-      ) {
-
-        throw new Error(
-          result.message ||
-          result.detail ||
-          'Operasi gagal.'
-        );
-
-      }
-
-
-      return result;
+      adminEmail.textContent =
+        ADMIN_EMAIL;
 
     }
 
 
-    /*
-     * =====================================================
-     * LOAD
-     * =====================================================
-     */
+    /* =====================================================
+       LOGOUT
+       ===================================================== */
+
+    logoutButton.addEventListener(
+      'click',
+      function() {
+
+        adminLoggedIn = false;
+
+        sessionStorage.removeItem(
+          'bold_admin_logged_in'
+        );
+
+        registrations = [];
+
+        dashboardScreen.classList.add(
+          'hidden'
+        );
+
+        loginScreen.classList.remove(
+          'hidden'
+        );
+
+        loginEmail.value =
+          '';
+
+        loginPassword.value =
+          '';
+
+        clearDashboardError();
+
+        dashboardSuccess.classList.add(
+          'hidden'
+        );
+
+        updateStatistics();
+
+        tableBody.innerHTML =
+          `
+            <tr>
+              <td
+                colspan="11"
+                class="table-message"
+              >
+                Silakan login.
+              </td>
+            </tr>
+          `;
+
+      }
+    );
+
+
+    /* =====================================================
+       LOAD REGISTRATIONS
+       MENGGUNAKAN dynamic-service
+       ===================================================== */
 
     async function loadRegistrations() {
 
-      clearMessage();
+      if (!adminLoggedIn) {
+        return;
+      }
+
+      clearDashboardError();
 
       refreshButton.disabled =
         true;
@@ -1092,7 +1324,7 @@
         `
           <tr>
             <td
-              colspan="9"
+              colspan="11"
               class="table-message"
             >
               Loading registrations...
@@ -1103,21 +1335,76 @@
 
       try {
 
-        const result =
-          await callDynamicService(
-            'report'
+        const response =
+          await fetch(
+            DYNAMIC_SERVICE_URL +
+            '?action=report'
           );
 
 
-        /*
-         * dynamic-service yang kita buat
-         * mengembalikan:
-         *
-         * {
-         *   success: true,
-         *   registrations: [...]
-         * }
-         */
+        const rawText =
+          await response.text();
+
+
+        let result;
+
+        try {
+
+          result =
+            JSON.parse(
+              rawText
+            );
+
+        }
+
+        catch (parseError) {
+
+          console.error(
+            'REPORT PARSE ERROR:',
+            parseError
+          );
+
+          throw new Error(
+            'Response dynamic-service bukan JSON yang valid.'
+          );
+
+        }
+
+
+        console.log(
+          'REPORT HTTP STATUS:',
+          response.status
+        );
+
+        console.log(
+          'REPORT RESPONSE:',
+          result
+        );
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            result.message ||
+            result.detail ||
+            'Gagal mengambil data registrasi.'
+          );
+
+        }
+
+
+        if (
+          result.success === false
+        ) {
+
+          throw new Error(
+            result.message ||
+            result.detail ||
+            'Gagal mengambil data registrasi.'
+          );
+
+        }
+
 
         registrations =
           Array.isArray(
@@ -1150,7 +1437,7 @@
           `
             <tr>
               <td
-                colspan="9"
+                colspan="11"
                 class="table-message"
               >
                 Tidak dapat membaca data registrations.
@@ -1159,10 +1446,9 @@
           `;
 
 
-        showMessage(
+        showDashboardError(
           error.message ||
-          'Gagal memuat data registrasi.',
-          'error'
+          'Gagal memuat data registrasi.'
         );
 
       }
@@ -1173,18 +1459,16 @@
           false;
 
         refreshButton.textContent =
-          '🔄 REFRESH';
+          'REFRESH';
 
       }
 
     }
 
 
-    /*
-     * =====================================================
-     * STATISTICS
-     * =====================================================
-     */
+    /* =====================================================
+       STATISTICS
+       ===================================================== */
 
     function updateStatistics() {
 
@@ -1261,22 +1545,6 @@
         ).length;
 
 
-      const unused =
-        registrations.filter(
-          function(row) {
-
-            return (
-              String(
-                row.pass_status || ''
-              )
-                .toUpperCase() ===
-              'UNUSED'
-            );
-
-          }
-        ).length;
-
-
       document.getElementById(
         'totalCount'
       ).textContent =
@@ -1312,20 +1580,12 @@
       ).textContent =
         boldRiders;
 
-
-      document.getElementById(
-        'unusedCount'
-      ).textContent =
-        unused;
-
     }
 
 
-    /*
-     * =====================================================
-     * FILTER
-     * =====================================================
-     */
+    /* =====================================================
+       FILTER
+       ===================================================== */
 
     function getFilteredRegistrations() {
 
@@ -1349,49 +1609,50 @@
           const name =
             String(
               row.name || ''
-            ).toLowerCase();
+            )
+              .toLowerCase();
 
 
           const whatsapp =
             String(
               row.whatsapp || ''
-            ).toLowerCase();
+            )
+              .toLowerCase();
 
 
           const passId =
             String(
               row.pass_id || ''
-            ).toLowerCase();
-
-
-          const community =
-            String(
-              row.community || ''
-            ).toLowerCase();
+            )
+              .toLowerCase();
 
 
           const boldRidersId =
             String(
               row.bold_riders_id || ''
-            ).toLowerCase();
+            )
+              .toLowerCase();
 
 
           const boldRidersName =
             String(
               row.bold_riders_name || ''
-            ).toLowerCase();
+            )
+              .toLowerCase();
 
 
           const rowStatus =
             String(
               row.pass_status || ''
-            ).toUpperCase();
+            )
+              .toUpperCase();
 
 
           const rowAccess =
             String(
               row.access_type || ''
-            ).toUpperCase();
+            )
+              .toUpperCase();
 
 
           const matchesSearch =
@@ -1399,7 +1660,6 @@
             name.includes(search) ||
             whatsapp.includes(search) ||
             passId.includes(search) ||
-            community.includes(search) ||
             boldRidersId.includes(search) ||
             boldRidersName.includes(search);
 
@@ -1426,11 +1686,9 @@
     }
 
 
-    /*
-     * =====================================================
-     * RENDER
-     * =====================================================
-     */
+    /* =====================================================
+       RENDER TABLE
+       ===================================================== */
 
     function renderTable() {
 
@@ -1455,7 +1713,7 @@
           `
             <tr>
               <td
-                colspan="9"
+                colspan="11"
                 class="table-message"
               >
                 Tidak ada data yang cocok.
@@ -1502,6 +1760,26 @@
 
                   <td>
                     ${
+                      row.bold_riders_id
+                        ? escapeHtml(
+                            row.bold_riders_id
+                          )
+                        : '<span class="muted">—</span>'
+                    }
+                  </td>
+
+                  <td>
+                    ${
+                      row.bold_riders_name
+                        ? escapeHtml(
+                            row.bold_riders_name
+                          )
+                        : '<span class="muted">—</span>'
+                    }
+                  </td>
+
+                  <td>
+                    ${
                       row.table_package
                         ? escapeHtml(
                             row.table_package
@@ -1534,11 +1812,16 @@
 
                   <td>
                     <button
-                      class="button button-danger button-small"
+                      class="delete-button"
                       type="button"
-                      onclick="requestDeleteRegistration('${escapeJs(row.id)}', '${escapeJs(row.name)}')"
+                      data-id="${escapeHtml(
+                        row.id
+                      )}"
+                      data-pass-id="${escapeHtml(
+                        row.pass_id
+                      )}"
                     >
-                      🗑️ HAPUS
+                      HAPUS
                     </button>
                   </td>
 
@@ -1549,75 +1832,53 @@
           )
           .join('');
 
-    }
 
+      document
+        .querySelectorAll(
+          '.delete-button'
+        )
+        .forEach(
+          function(button) {
 
-    /*
-     * =====================================================
-     * ACCESS BADGE
-     * =====================================================
-     */
+            button.addEventListener(
+              'click',
+              function() {
 
-    function accessBadge(
-      access
-    ) {
+                const id =
+                  button.getAttribute(
+                    'data-id'
+                  );
 
-      const value =
-        String(
-          access || ''
-        ).toUpperCase();
+                const passId =
+                  button.getAttribute(
+                    'data-pass-id'
+                  );
 
+                deleteRegistration(
+                  id,
+                  passId
+                );
 
-      if (
-        value ===
-        'BOLD RIDERS'
-      ) {
+              }
+            );
 
-        return `
-          <span class="badge badge-bold">
-            BOLD RIDERS
-          </span>
-        `;
-
-      }
-
-
-      if (
-        value === 'VIP'
-      ) {
-
-        return `
-          <span class="badge badge-vip">
-            VIP
-          </span>
-        `;
-
-      }
-
-
-      return `
-        <span class="badge badge-free">
-          FREE
-        </span>
-      `;
+          }
+        );
 
     }
 
 
-    /*
-     * =====================================================
-     * STATUS BADGE
-     * =====================================================
-     */
+    /* =====================================================
+       STATUS BADGE
+       ===================================================== */
 
-    function statusBadge(
-      status
-    ) {
+    function statusBadge(status) {
 
       const value =
         String(
           status || ''
-        ).toUpperCase();
+        )
+          .toUpperCase();
 
 
       if (
@@ -1642,15 +1903,355 @@
     }
 
 
-    /*
-     * =====================================================
-     * DATE
-     * =====================================================
-     */
+    /* =====================================================
+       ACCESS BADGE
+       ===================================================== */
 
-    function formatDate(
-      value
+    function accessBadge(access) {
+
+      const value =
+        String(
+          access || ''
+        )
+          .toUpperCase();
+
+
+      if (
+        value === 'VIP'
+      ) {
+
+        return `
+          <span class="badge badge-vip">
+            VIP
+          </span>
+        `;
+
+      }
+
+
+      if (
+        value === 'BOLD RIDERS'
+      ) {
+
+        return `
+          <span class="badge badge-bold">
+            BOLD RIDERS
+          </span>
+        `;
+
+      }
+
+
+      return `
+        <span class="badge badge-free">
+          FREE
+        </span>
+      `;
+
+    }
+
+
+    /* =====================================================
+       DELETE ONE
+       ===================================================== */
+
+    async function deleteRegistration(
+      id,
+      passId
     ) {
+
+      if (!adminLoggedIn) {
+        return;
+      }
+
+
+      const confirmed =
+        window.confirm(
+          'Hapus registrasi dengan Pass ID "' +
+          passId +
+          '"?\n\nData yang dihapus tidak dapat dikembalikan.'
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      try {
+
+        /*
+          Action delete akan ditangani
+          oleh dynamic-service.
+        */
+
+        const response =
+          await fetch(
+            DYNAMIC_SERVICE_URL +
+            '?action=delete',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type':
+                  'application/json'
+              },
+              body: JSON.stringify({
+                id: id
+              })
+            }
+          );
+
+
+        const rawText =
+          await response.text();
+
+
+        let result;
+
+        try {
+
+          result =
+            JSON.parse(
+              rawText
+            );
+
+        }
+
+        catch (parseError) {
+
+          throw new Error(
+            'Response delete bukan JSON yang valid.'
+          );
+
+        }
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            result.message ||
+            result.detail ||
+            'Gagal menghapus registrasi.'
+          );
+
+        }
+
+
+        if (
+          result.success === false
+        ) {
+
+          throw new Error(
+            result.message ||
+            result.detail ||
+            'Gagal menghapus registrasi.'
+          );
+
+        }
+
+
+        showDashboardSuccess(
+          'Registrasi ' +
+          passId +
+          ' berhasil dihapus.'
+        );
+
+
+        await loadRegistrations();
+
+      }
+
+      catch (error) {
+
+        console.error(
+          'DELETE REGISTRATION ERROR:',
+          error
+        );
+
+
+        showDashboardError(
+          error.message ||
+          'Gagal menghapus registrasi.'
+        );
+
+      }
+
+    }
+
+
+    /* =====================================================
+       DELETE ALL
+       ===================================================== */
+
+    deleteAllButton.addEventListener(
+      'click',
+      async function() {
+
+        if (!adminLoggedIn) {
+          return;
+        }
+
+
+        if (
+          registrations.length === 0
+        ) {
+
+          window.alert(
+            'Tidak ada data registrasi yang perlu dihapus.'
+          );
+
+          return;
+
+        }
+
+
+        const firstConfirm =
+          window.confirm(
+            'PERINGATAN!\n\n' +
+            'Anda akan menghapus SEMUA data registrasi.\n\n' +
+            'Jumlah data saat ini: ' +
+            registrations.length +
+            '\n\n' +
+            'Lanjutkan?'
+          );
+
+
+        if (!firstConfirm) {
+          return;
+        }
+
+
+        const secondConfirm =
+          window.confirm(
+            'KONFIRMASI TERAKHIR\n\n' +
+            'Semua data testing registrations akan dihapus permanen.\n\n' +
+            'Klik OK untuk benar-benar menghapus.'
+          );
+
+
+        if (!secondConfirm) {
+          return;
+        }
+
+
+        deleteAllButton.disabled =
+          true;
+
+        deleteAllButton.textContent =
+          'MENGHAPUS...';
+
+
+        try {
+
+          const response =
+            await fetch(
+              DYNAMIC_SERVICE_URL +
+              '?action=deleteAll',
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type':
+                    'application/json'
+                },
+                body: JSON.stringify({
+                  confirm:
+                    'DELETE_ALL_TESTING_DATA'
+                })
+              }
+            );
+
+
+          const rawText =
+            await response.text();
+
+
+          let result;
+
+          try {
+
+            result =
+              JSON.parse(
+                rawText
+              );
+
+          }
+
+          catch (parseError) {
+
+            throw new Error(
+              'Response deleteAll bukan JSON yang valid.'
+            );
+
+          }
+
+
+          if (!response.ok) {
+
+            throw new Error(
+              result.message ||
+              result.detail ||
+              'Gagal menghapus semua data.'
+            );
+
+          }
+
+
+          if (
+            result.success === false
+          ) {
+
+            throw new Error(
+              result.message ||
+              result.detail ||
+              'Gagal menghapus semua data.'
+            );
+
+          }
+
+
+          showDashboardSuccess(
+            'Semua data testing berhasil dihapus.'
+          );
+
+
+          await loadRegistrations();
+
+        }
+
+        catch (error) {
+
+          console.error(
+            'DELETE ALL ERROR:',
+            error
+          );
+
+
+          showDashboardError(
+            error.message ||
+            'Gagal menghapus semua data.'
+          );
+
+        }
+
+        finally {
+
+          deleteAllButton.disabled =
+            false;
+
+          deleteAllButton.textContent =
+            '🗑️ HAPUS SEMUA DATA TESTING';
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       DATE FORMAT
+       ===================================================== */
+
+    function formatDate(value) {
 
       if (!value) {
         return '—';
@@ -1685,15 +2286,11 @@
     }
 
 
-    /*
-     * =====================================================
-     * HTML ESCAPE
-     * =====================================================
-     */
+    /* =====================================================
+       HTML ESCAPE
+       ===================================================== */
 
-    function escapeHtml(
-      value
-    ) {
+    function escapeHtml(value) {
 
       return String(
         value == null
@@ -1724,299 +2321,9 @@
     }
 
 
-    /*
-     * =====================================================
-     * JAVASCRIPT ESCAPE
-     * =====================================================
-     */
-
-    function escapeJs(
-      value
-    ) {
-
-      return String(
-        value == null
-          ? ''
-          : value
-      )
-        .replace(
-          /\\/g,
-          '\\\\'
-        )
-        .replace(
-          /'/g,
-          "\\'"
-        )
-        .replace(
-          /\r/g,
-          '\\r'
-        )
-        .replace(
-          /\n/g,
-          '\\n'
-        );
-
-    }
-
-
-    /*
-     * =====================================================
-     * DELETE ONE
-     * =====================================================
-     */
-
-    function requestDeleteRegistration(
-      id,
-      name
-    ) {
-
-      pendingDelete = {
-        type: 'one',
-        id
-      };
-
-
-      modalTitle.textContent =
-        'Hapus Registrasi?';
-
-
-      modalText.textContent =
-        'Registrasi "' +
-        (
-          name ||
-          'tanpa nama'
-        ) +
-        '" akan dihapus permanen.';
-
-
-      modalConfirmButton.textContent =
-        '🗑️ HAPUS';
-
-
-      confirmModal.classList.remove(
-        'hidden'
-      );
-
-    }
-
-
-    /*
-     * =====================================================
-     * DELETE ALL
-     * =====================================================
-     */
-
-    function requestDeleteAll() {
-
-      if (
-        registrations.length === 0
-      ) {
-
-        showMessage(
-          'Tidak ada data untuk dihapus.',
-          'error'
-        );
-
-        return;
-
-      }
-
-
-      pendingDelete = {
-        type: 'all'
-      };
-
-
-      modalTitle.textContent =
-        'HAPUS SEMUA DATA?';
-
-
-      modalText.textContent =
-        'PERINGATAN: seluruh data registrasi (' +
-        registrations.length +
-        ' record) akan dihapus permanen. Tindakan ini tidak dapat dibatalkan.';
-
-
-      modalConfirmButton.textContent =
-        '🗑️ HAPUS SEMUA';
-
-
-      confirmModal.classList.remove(
-        'hidden'
-      );
-
-    }
-
-
-    /*
-     * =====================================================
-     * CLOSE MODAL
-     * =====================================================
-     */
-
-    function closeModal() {
-
-      pendingDelete =
-        null;
-
-      confirmModal.classList.add(
-        'hidden'
-      );
-
-    }
-
-
-    /*
-     * =====================================================
-     * CONFIRM DELETE
-     * =====================================================
-     */
-
-    modalConfirmButton.addEventListener(
-      'click',
-      async function() {
-
-        if (
-          !pendingDelete
-        ) {
-
-          closeModal();
-
-          return;
-
-        }
-
-
-        const operation =
-          pendingDelete;
-
-
-        modalConfirmButton.disabled =
-          true;
-
-        modalCancelButton.disabled =
-          true;
-
-
-        try {
-
-          if (
-            operation.type === 'one'
-          ) {
-
-            await callDynamicService(
-              'delete',
-              {
-                method: 'POST',
-                body: {
-                  id: operation.id
-                }
-              }
-            );
-
-
-            showMessage(
-              'Registrasi berhasil dihapus.'
-            );
-
-          }
-
-          else if (
-            operation.type === 'all'
-          ) {
-
-            await callDynamicService(
-              'deleteAll',
-              {
-                method: 'POST',
-                body: {
-                  confirm: true
-                }
-              }
-            );
-
-
-            showMessage(
-              'Semua data registrasi berhasil dihapus.'
-            );
-
-          }
-
-
-          closeModal();
-
-          await loadRegistrations();
-
-        }
-
-        catch (error) {
-
-          console.error(
-            'DELETE ERROR:',
-            error
-          );
-
-
-          showMessage(
-            error.message ||
-            'Gagal menghapus data.',
-            'error'
-          );
-
-        }
-
-        finally {
-
-          modalConfirmButton.disabled =
-            false;
-
-          modalCancelButton.disabled =
-            false;
-
-        }
-
-      }
-    );
-
-
-    /*
-     * =====================================================
-     * CANCEL MODAL
-     * =====================================================
-     */
-
-    modalCancelButton.addEventListener(
-      'click',
-      function() {
-
-        closeModal();
-
-      }
-    );
-
-
-    confirmModal.addEventListener(
-      'click',
-      function(event) {
-
-        if (
-          event.target ===
-          confirmModal
-        ) {
-
-          closeModal();
-
-        }
-
-      }
-    );
-
-
-    /*
-     * =====================================================
-     * REFRESH
-     * =====================================================
-     */
+    /* =====================================================
+       REFRESH
+       ===================================================== */
 
     refreshButton.addEventListener(
       'click',
@@ -2028,11 +2335,9 @@
     );
 
 
-    /*
-     * =====================================================
-     * SEARCH
-     * =====================================================
-     */
+    /* =====================================================
+       LIVE SEARCH
+       ===================================================== */
 
     searchInput.addEventListener(
       'input',
@@ -2044,12 +2349,6 @@
     );
 
 
-    /*
-     * =====================================================
-     * FILTER STATUS
-     * =====================================================
-     */
-
     statusFilter.addEventListener(
       'change',
       function() {
@@ -2059,12 +2358,6 @@
       }
     );
 
-
-    /*
-     * =====================================================
-     * FILTER ACCESS
-     * =====================================================
-     */
 
     accessFilter.addEventListener(
       'change',
@@ -2076,29 +2369,38 @@
     );
 
 
-    /*
-     * =====================================================
-     * DELETE ALL BUTTON
-     * =====================================================
-     */
+    /* =====================================================
+       SESSION HALAMAN ADMIN
+       ===================================================== */
 
-    deleteAllButton.addEventListener(
-      'click',
-      function() {
+    function checkAdminSession() {
 
-        requestDeleteAll();
+      const loggedIn =
+        sessionStorage.getItem(
+          'bold_admin_logged_in'
+        );
+
+
+      if (
+        loggedIn === 'true'
+      ) {
+
+        adminLoggedIn = true;
+
+        showDashboard();
+
+        loadRegistrations();
 
       }
-    );
+
+    }
 
 
-    /*
-     * =====================================================
-     * START
-     * =====================================================
-     */
+    /* =====================================================
+       START
+       ===================================================== */
 
-    loadRegistrations();
+    checkAdminSession();
 
   </script>
 
