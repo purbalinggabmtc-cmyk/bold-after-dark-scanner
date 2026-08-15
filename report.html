@@ -85,17 +85,19 @@
       color: var(--white);
     }
 
-    /* BOLD = PUTIH */
+    /*
+      BOLD = putih
+      AFTER = merah
+      DARK = putih
+    */
     .brand .bold {
       color: #ffffff;
     }
 
-    /* AFTER = MERAH */
     .brand .after {
       color: var(--red);
     }
 
-    /* DARK = PUTIH */
     .brand .dark {
       color: #ffffff;
     }
@@ -478,7 +480,7 @@
        RESPONSIVE
        ========================================================= */
 
-    @media (max-width: 1150px) {
+    @media (max-width: 1100px) {
       .stats {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
@@ -561,11 +563,11 @@
 
       .brand .bold,
       .brand .dark {
-        color: #000 !important;
+        color: #000;
       }
 
       .brand .after {
-        color: #000 !important;
+        color: #000;
       }
 
       .subtitle {
@@ -747,18 +749,18 @@
 
       <button
         type="button"
-        class="btn btn-dark"
-        id="homeButton"
-      >
-        HOME
-      </button>
-
-      <button
-        type="button"
         class="btn btn-red"
         id="refreshButton"
       >
         REFRESH
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-dark"
+        id="homeButton"
+      >
+        HOME
       </button>
 
       <button
@@ -800,7 +802,6 @@
 
     <!-- =======================================================
          STATISTICS
-         TOTAL | FREE | VIP | BOLD RIDERS | USED | UNUSED
          ======================================================= -->
 
     <div class="stats">
@@ -1032,11 +1033,11 @@
     const statusFilter =
       document.getElementById("statusFilter");
 
-    const homeButton =
-      document.getElementById("homeButton");
-
     const refreshButton =
       document.getElementById("refreshButton");
+
+    const homeButton =
+      document.getElementById("homeButton");
 
     const printButton =
       document.getElementById("printButton");
@@ -1074,26 +1075,11 @@
           ? ""
           : value
       )
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-        .replace(
-          /</g,
-          "&lt;"
-        )
-        .replace(
-          />/g,
-          "&gt;"
-        )
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-        .replace(
-          /'/g,
-          "&#039;"
-        );
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
     }
 
@@ -1105,9 +1091,7 @@
     function normalizeStatus(value) {
 
       const status =
-        String(
-          value || ""
-        )
+        String(value || "")
           .trim()
           .toUpperCase();
 
@@ -1556,9 +1540,17 @@
         rows.filter(
           function(row) {
 
-            return normalizeAccess(
-              row.access_type
-            ) === "BOLD RIDERS";
+            const access =
+              normalizeAccess(
+                row.access_type
+              );
+
+            return (
+              access === "BOLD RIDERS" ||
+              access === "BOLDRIDERS" ||
+              access === "BOLD_RIDERS" ||
+              access === "BOLD-RIDERS"
+            );
 
           }
         ).length;
@@ -1646,7 +1638,10 @@
           "vip";
 
       } else if (
-        value === "BOLD RIDERS"
+        value === "BOLD RIDERS" ||
+        value === "BOLDRIDERS" ||
+        value === "BOLD_RIDERS" ||
+        value === "BOLD-RIDERS"
       ) {
 
         className =
@@ -2039,17 +2034,19 @@
 
     /* =========================================================
        HOME BUTTON
-       =========================================================
-       HOME -> index.html
-       BUKAN scanner.html
        ========================================================= */
 
     homeButton.addEventListener(
       "click",
       function() {
 
+        /*
+          HOME HARUS MENUJU home.html
+          BUKAN index.html
+          BUKAN scanner
+        */
         window.location.href =
-          "./index.html";
+          "./home.html";
 
       }
     );
