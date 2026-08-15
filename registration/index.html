@@ -13,19 +13,15 @@
 
     :root {
       --red: #e00000;
-      --red-dark: #a80000;
+      --red-dark: #9d0000;
       --bg: #050505;
       --card: #111111;
       --card-2: #171717;
-      --border: #303030;
+      --border: #333333;
       --text: #ffffff;
       --muted: #999999;
       --green: #20d96b;
       --yellow: #e6c229;
-    }
-
-    html {
-      scroll-behavior: smooth;
     }
 
     body {
@@ -34,8 +30,8 @@
       background:
         radial-gradient(
           circle at top,
-          #1b1b1b 0%,
-          #090909 42%,
+          #2a0000 0%,
+          #080808 42%,
           #000000 100%
         );
       color: var(--text);
@@ -49,10 +45,6 @@
       margin: 0 auto;
     }
 
-    /* =========================
-       HEADER
-    ========================= */
-
     .header {
       text-align: center;
       margin-bottom: 24px;
@@ -62,122 +54,42 @@
       font-size: 30px;
       font-weight: 900;
       letter-spacing: 4px;
-      line-height: 1.15;
-      color: #ffffff;
     }
 
-    /*
-      BOLD = WHITE
-      AFTER = RED
-      DARK = WHITE
-    */
-
-    .brand .after {
+    .brand span {
       color: var(--red);
     }
 
-    .brand .dark {
-      color: #ffffff;
-    }
-
     .subtitle {
-      margin-top: 8px;
-      color: #999999;
+      margin-top: 7px;
+      color: #aaa;
       font-size: 12px;
-      font-weight: 700;
       letter-spacing: 3px;
     }
 
-    .header-line {
-      width: 72px;
-      height: 3px;
-      margin: 14px auto 0;
-      background: var(--red);
-      border-radius: 10px;
-    }
-
-    /* =========================
-       CARD
-    ========================= */
-
     .card {
-      background: rgba(17, 17, 17, 0.97);
+      background: rgba(17, 17, 17, 0.96);
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 22px;
-      box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.55),
-        0 0 0 1px rgba(255, 255, 255, 0.02);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     }
 
     .section-title {
-      position: relative;
       font-size: 16px;
       font-weight: 900;
       letter-spacing: 1px;
-      margin-bottom: 20px;
-      padding-left: 12px;
-    }
-
-    .section-title::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 2px;
-      bottom: 2px;
-      width: 3px;
-      background: var(--red);
-      border-radius: 10px;
-    }
-
-    /* =========================
-       MESSAGE
-    ========================= */
-
-    .message {
-      display: none;
       margin-bottom: 18px;
-      padding: 14px;
-      border-radius: 9px;
-      font-size: 13px;
-      line-height: 1.5;
-      font-weight: 700;
     }
-
-    .message.show {
-      display: block;
-    }
-
-    .message.error {
-      background: #1c0909;
-      border: 1px solid var(--red);
-      color: #ff8888;
-    }
-
-    .message.success {
-      background: #062d16;
-      border: 1px solid #15934a;
-      color: #62eb98;
-    }
-
-    .message.info {
-      background: #1d1900;
-      border: 1px solid #a38c00;
-      color: #f0d44d;
-    }
-
-    /* =========================
-       FORM
-    ========================= */
 
     .field {
-      margin-bottom: 17px;
+      margin-bottom: 16px;
     }
 
     .field label {
       display: block;
       margin-bottom: 7px;
-      color: #dddddd;
+      color: #ddd;
       font-size: 13px;
       font-weight: 700;
     }
@@ -192,26 +104,17 @@
       min-height: 48px;
       padding: 13px 14px;
       border-radius: 9px;
-      border: 1px solid #444444;
+      border: 1px solid #444;
       background: #0d0d0d;
-      color: #ffffff;
+      color: #fff;
       outline: none;
       font-size: 14px;
-      transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease;
-    }
-
-    input::placeholder {
-      color: #666666;
     }
 
     input:focus,
     select:focus {
       border-color: var(--red);
       box-shadow: 0 0 0 2px rgba(224, 0, 0, 0.12);
-      background: #101010;
     }
 
     input:disabled,
@@ -220,9 +123,16 @@
       cursor: not-allowed;
     }
 
+    .name-auto {
+      background: #181818;
+      border-color: #145b32;
+      color: #55e68b;
+      font-weight: 700;
+    }
+
     .field-help {
       margin-top: 6px;
-      color: #777777;
+      color: #777;
       font-size: 11px;
       line-height: 1.5;
     }
@@ -230,25 +140,6 @@
     .hidden {
       display: none !important;
     }
-
-    /* =========================
-       ACCESS INFO
-    ========================= */
-
-    .access-info {
-      margin-top: 10px;
-      padding: 11px 13px;
-      border-radius: 8px;
-      border: 1px solid #333333;
-      background: #181818;
-      color: #999999;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    /* =========================
-       BOLD RIDERS
-    ========================= */
 
     .rider-status {
       margin-top: 8px;
@@ -258,7 +149,7 @@
     }
 
     .rider-status.loading {
-      color: #aaaaaa;
+      color: #aaa;
     }
 
     .rider-status.valid {
@@ -285,12 +176,19 @@
     }
 
     .rider-owner strong {
-      color: #ffffff;
+      color: #fff;
     }
 
-    /* =========================
-       BUTTONS
-    ========================= */
+    .access-info {
+      margin-top: 10px;
+      padding: 11px 13px;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background: #181818;
+      color: #aaa;
+      font-size: 12px;
+      line-height: 1.5;
+    }
 
     .button-row {
       display: flex;
@@ -307,10 +205,6 @@
       font-size: 14px;
       font-weight: 900;
       cursor: pointer;
-      transition:
-        background 0.2s ease,
-        transform 0.15s ease,
-        opacity 0.2s ease;
     }
 
     button:active {
@@ -326,8 +220,7 @@
     .btn-primary {
       flex: 1;
       background: var(--red);
-      color: #ffffff;
-      box-shadow: 0 8px 24px rgba(224, 0, 0, 0.18);
+      color: #fff;
     }
 
     .btn-primary:hover {
@@ -337,50 +230,44 @@
     .btn-whatsapp {
       width: 100%;
       background: #128c4a;
-      color: #ffffff;
+      color: #fff;
     }
 
     .btn-whatsapp:hover {
       background: #16a557;
     }
 
-    /* =========================
-       LOADING
-    ========================= */
-
-    .loading {
+    .message {
       display: none;
-      text-align: center;
-      color: #aaaaaa;
-      padding: 10px 0;
+      margin-bottom: 18px;
+      padding: 14px;
+      border-radius: 9px;
       font-size: 13px;
+      line-height: 1.5;
+      font-weight: 700;
     }
 
-    .loading.show {
+    .message.show {
       display: block;
     }
 
-    .spinner {
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      border: 2px solid #555555;
-      border-top-color: var(--red);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      vertical-align: -2px;
-      margin-right: 6px;
+    .message.error {
+      background: #300000;
+      border: 1px solid var(--red);
+      color: #ff8888;
     }
 
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
+    .message.success {
+      background: #062d16;
+      border: 1px solid #15934a;
+      color: #62eb98;
     }
 
-    /* =========================
-       RESULT
-    ========================= */
+    .message.info {
+      background: #1d1900;
+      border: 1px solid #a38c00;
+      color: #f0d44d;
+    }
 
     .result {
       display: none;
@@ -412,18 +299,17 @@
     }
 
     .ticket-label {
-      color: #888888;
+      color: #888;
       font-size: 11px;
       letter-spacing: 2px;
       margin-bottom: 5px;
     }
 
     .ticket-id {
-      color: #ffffff;
+      color: #fff;
       font-size: 27px;
       font-weight: 900;
       letter-spacing: 2px;
-      word-break: break-word;
     }
 
     .result-grid {
@@ -440,27 +326,23 @@
     }
 
     .result-label {
-      color: #777777;
+      color: #777;
       font-size: 10px;
       text-transform: uppercase;
       margin-bottom: 5px;
     }
 
     .result-value {
-      color: #ffffff;
+      color: #fff;
       font-size: 13px;
       font-weight: 700;
       word-break: break-word;
     }
 
-    /* =========================
-       QR
-    ========================= */
-
     .qr-box {
       margin-top: 18px;
       padding: 15px;
-      background: #ffffff;
+      background: #fff;
       border-radius: 12px;
       text-align: center;
     }
@@ -475,27 +357,48 @@
 
     .qr-caption {
       margin-top: 8px;
-      color: #111111;
+      color: #111;
       font-size: 11px;
       font-weight: 700;
     }
 
-    /* =========================
-       FOOTER
-    ========================= */
-
     .footer {
       text-align: center;
-      color: #555555;
+      color: #555;
       font-size: 10px;
       letter-spacing: 2px;
       margin-top: 20px;
-      padding-bottom: 10px;
     }
 
-    /* =========================
-       MOBILE
-    ========================= */
+    .loading {
+      display: none;
+      text-align: center;
+      color: #aaa;
+      padding: 10px 0;
+      font-size: 13px;
+    }
+
+    .loading.show {
+      display: block;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid #555;
+      border-top-color: var(--red);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      vertical-align: -2px;
+      margin-right: 6px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
     @media (max-width: 600px) {
       body {
@@ -511,11 +414,6 @@
         letter-spacing: 3px;
       }
 
-      .subtitle {
-        font-size: 10px;
-        letter-spacing: 2.5px;
-      }
-
       .result-grid {
         grid-template-columns: 1fr;
       }
@@ -527,10 +425,6 @@
       .btn-primary {
         width: 100%;
       }
-
-      .ticket-id {
-        font-size: 23px;
-      }
     }
   </style>
 </head>
@@ -539,29 +433,15 @@
 
   <div class="container">
 
-    <!-- =========================
-         HEADER
-    ========================== -->
-
     <div class="header">
-
       <div class="brand">
-        <span>BOLD</span>
-        <span class="after"> AFTER </span>
-        <span class="dark">DARK</span>
+        BOLD <span>AFTER DARK</span>
       </div>
 
       <div class="subtitle">
         REGISTRATION
       </div>
-
-      <div class="header-line"></div>
-
     </div>
-
-    <!-- =========================
-         MAIN CARD
-    ========================== -->
 
     <div class="card">
 
@@ -573,48 +453,8 @@
 
       <form id="registrationForm" novalidate>
 
-        <!-- NAME -->
-
+        <!-- ACCESS DULU -->
         <div class="field">
-
-          <label for="name">
-            Nama <span class="required">*</span>
-          </label>
-
-          <input
-            id="name"
-            name="name"
-            type="text"
-            autocomplete="name"
-            placeholder="Masukkan nama lengkap"
-            required
-          >
-
-        </div>
-
-        <!-- WHATSAPP -->
-
-        <div class="field">
-
-          <label for="whatsapp">
-            WhatsApp <span class="required">*</span>
-          </label>
-
-          <input
-            id="whatsapp"
-            name="whatsapp"
-            type="tel"
-            autocomplete="tel"
-            placeholder="Contoh: 082xxxxxxxxx"
-            required
-          >
-
-        </div>
-
-        <!-- ACCESS -->
-
-        <div class="field">
-
           <label for="accessType">
             Access <span class="required">*</span>
           </label>
@@ -639,22 +479,55 @@
             <option value="BOLD RIDERS">
               BOLD RIDERS
             </option>
-
           </select>
 
           <div class="access-info">
             Pilih BOLD RIDERS jika Anda memiliki ID BOLD RIDERS yang terdaftar.
           </div>
+        </div>
 
+        <!-- NAMA -->
+        <div class="field">
+          <label for="name">
+            Nama <span class="required">*</span>
+          </label>
+
+          <input
+            id="name"
+            name="name"
+            type="text"
+            autocomplete="name"
+            required
+          >
+
+          <div
+            id="nameHelp"
+            class="field-help hidden"
+          >
+            Nama akan otomatis mengikuti nama pemilik ID BOLD RIDERS.
+          </div>
+        </div>
+
+        <!-- WHATSAPP -->
+        <div class="field">
+          <label for="whatsapp">
+            WhatsApp <span class="required">*</span>
+          </label>
+
+          <input
+            id="whatsapp"
+            name="whatsapp"
+            type="tel"
+            autocomplete="tel"
+            required
+          >
         </div>
 
         <!-- BOLD RIDERS -->
-
         <div
           id="boldRidersField"
           class="field hidden"
         >
-
           <label for="boldRidersId">
             ID BOLD RIDERS <span class="required">*</span>
           </label>
@@ -669,7 +542,6 @@
             autocomplete="off"
             spellcheck="false"
             autocapitalize="characters"
-            placeholder="8 karakter"
           >
 
           <div class="field-help">
@@ -685,16 +557,13 @@
             id="boldRidersOwner"
             class="rider-owner hidden"
           ></div>
-
         </div>
 
         <!-- TABLE PACKAGE -->
-
         <div
           id="tablePackageField"
           class="field hidden"
         >
-
           <label for="tablePackage">
             Table Package <span class="required">*</span>
           </label>
@@ -703,7 +572,6 @@
             id="tablePackage"
             name="tablePackage"
           >
-
             <option value="">
               Pilih Table Package
             </option>
@@ -723,15 +591,11 @@
             <option value="TABLE 4">
               TABLE 4
             </option>
-
           </select>
-
         </div>
 
         <!-- COMMUNITY -->
-
         <div class="field">
-
           <label for="community">
             Community
           </label>
@@ -741,15 +605,11 @@
             name="community"
             type="text"
             autocomplete="organization"
-            placeholder="Opsional"
           >
-
         </div>
 
         <!-- STAY CONNECTED -->
-
         <div class="field">
-
           <label for="stayConnected">
             Stay Connected
           </label>
@@ -758,12 +618,8 @@
             id="stayConnected"
             name="stayConnected"
             type="text"
-            placeholder="Opsional"
           >
-
         </div>
-
-        <!-- LOADING -->
 
         <div
           id="loadingBox"
@@ -772,8 +628,6 @@
           <span class="spinner"></span>
           Memproses registrasi...
         </div>
-
-        <!-- REGISTER -->
 
         <div class="button-row">
 
@@ -789,8 +643,6 @@
 
       </form>
 
-      <!-- WHATSAPP HELP -->
-
       <div class="button-row">
 
         <button
@@ -802,10 +654,6 @@
         </button>
 
       </div>
-
-      <!-- =========================
-           REGISTRATION RESULT
-      ========================== -->
 
       <div
         id="resultBox"
@@ -836,7 +684,6 @@
           <div class="result-grid">
 
             <div class="result-item">
-
               <div class="result-label">
                 Nama
               </div>
@@ -847,11 +694,9 @@
               >
                 -
               </div>
-
             </div>
 
             <div class="result-item">
-
               <div class="result-label">
                 WhatsApp
               </div>
@@ -862,11 +707,9 @@
               >
                 -
               </div>
-
             </div>
 
             <div class="result-item">
-
               <div class="result-label">
                 Access
               </div>
@@ -877,11 +720,9 @@
               >
                 -
               </div>
-
             </div>
 
             <div class="result-item">
-
               <div class="result-label">
                 Table Package
               </div>
@@ -892,14 +733,12 @@
               >
                 -
               </div>
-
             </div>
 
             <div
               id="resultRiderIdItem"
               class="result-item hidden"
             >
-
               <div class="result-label">
                 BOLD RIDERS ID
               </div>
@@ -910,14 +749,12 @@
               >
                 -
               </div>
-
             </div>
 
             <div
               id="resultRiderNameItem"
               class="result-item hidden"
             >
-
               <div class="result-label">
                 Nama BOLD RIDERS
               </div>
@@ -928,18 +765,14 @@
               >
                 -
               </div>
-
             </div>
 
           </div>
-
-          <!-- QR -->
 
           <div
             id="qrBox"
             class="qr-box hidden"
           >
-
             <img
               id="qrImage"
               src=""
@@ -949,7 +782,6 @@
             <div class="qr-caption">
               Tunjukkan QR Code ini saat check-in.
             </div>
-
           </div>
 
         </div>
@@ -967,10 +799,6 @@
   <script>
     "use strict";
 
-    /* =========================
-       CONFIGURATION
-    ========================== */
-
     const API_URL =
       "https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/dynamic-service";
 
@@ -983,22 +811,20 @@
     const WHATSAPP_NUMBER =
       "6282324854187";
 
-
-    /* =========================
-       DOM ELEMENTS
-    ========================== */
-
     const registrationForm =
       document.getElementById("registrationForm");
+
+    const accessTypeInput =
+      document.getElementById("accessType");
 
     const nameInput =
       document.getElementById("name");
 
+    const nameHelp =
+      document.getElementById("nameHelp");
+
     const whatsappInput =
       document.getElementById("whatsapp");
-
-    const accessTypeInput =
-      document.getElementById("accessType");
 
     const tablePackageInput =
       document.getElementById("tablePackage");
@@ -1072,19 +898,10 @@
     const qrImage =
       document.getElementById("qrImage");
 
-
-    /* =========================
-       STATE
-    ========================== */
-
     let boldRiderIsValid = false;
     let boldRiderValidatedId = "";
+    let boldRiderValidatedName = "";
     let validationRequestNumber = 0;
-
-
-    /* =========================
-       MESSAGE
-    ========================== */
 
     function showMessage(type, message) {
       messageBox.className =
@@ -1102,14 +919,10 @@
         "";
     }
 
-
-    /* =========================
-       BOLD RIDERS VALIDATION
-    ========================== */
-
     function clearBoldRiderValidation() {
       boldRiderIsValid = false;
       boldRiderValidatedId = "";
+      boldRiderValidatedName = "";
 
       boldRidersStatus.className =
         "rider-status";
@@ -1124,10 +937,44 @@
         "";
     }
 
+    function resetNameToManual() {
+      nameInput.disabled = false;
+      nameInput.readOnly = false;
 
-    /* =========================
-       ACCESS FIELDS
-    ========================== */
+      nameInput.classList.remove(
+        "name-auto"
+      );
+
+      nameHelp.classList.add(
+        "hidden"
+      );
+
+      nameInput.value = "";
+    }
+
+    function setNameToBoldRider(ownerName) {
+      const safeName =
+        String(
+          ownerName || ""
+        ).trim();
+
+      nameInput.value =
+        safeName;
+
+      nameInput.disabled =
+        true;
+
+      nameInput.readOnly =
+        true;
+
+      nameInput.classList.add(
+        "name-auto"
+      );
+
+      nameHelp.classList.remove(
+        "hidden"
+      );
+    }
 
     function updateAccessFields() {
       const access =
@@ -1143,9 +990,6 @@
       const isBoldRider =
         access === "BOLD RIDERS";
 
-
-      /* VIP */
-
       if (isVip) {
         tablePackageField.classList.remove(
           "hidden"
@@ -1153,9 +997,7 @@
 
         tablePackageInput.required =
           true;
-
       } else {
-
         tablePackageField.classList.add(
           "hidden"
         );
@@ -1167,9 +1009,6 @@
           "";
       }
 
-
-      /* BOLD RIDERS */
-
       if (isBoldRider) {
 
         boldRidersField.classList.remove(
@@ -1178,6 +1017,25 @@
 
         boldRidersIdInput.required =
           true;
+
+        /*
+         * BOLD RIDERS:
+         * Nama tidak boleh diisi manual.
+         * Jika sudah ada nama manual sebelumnya,
+         * langsung kosongkan sampai ID BR tervalidasi.
+         */
+        nameInput.value = "";
+
+        nameInput.disabled = true;
+        nameInput.readOnly = true;
+
+        nameInput.classList.add(
+          "name-auto"
+        );
+
+        nameHelp.classList.remove(
+          "hidden"
+        );
 
       } else {
 
@@ -1192,13 +1050,14 @@
           "";
 
         clearBoldRiderValidation();
+
+        /*
+         * FREE / VIP:
+         * Nama kembali manual.
+         */
+        resetNameToManual();
       }
     }
-
-
-    /* =========================
-       VALIDATE BOLD RIDER
-    ========================== */
 
     async function validateBoldRider() {
 
@@ -1221,12 +1080,20 @@
       boldRiderValidatedId =
         "";
 
+      boldRiderValidatedName =
+        "";
+
+      /*
+       * Jangan mempertahankan nama BR
+       * dari ID sebelumnya.
+       */
+      nameInput.value = "";
+
       boldRidersOwner.className =
         "rider-owner hidden";
 
       boldRidersOwner.textContent =
         "";
-
 
       if (!riderId) {
 
@@ -1239,7 +1106,6 @@
         return false;
       }
 
-
       if (riderId.length !== 8) {
 
         boldRidersStatus.className =
@@ -1251,13 +1117,11 @@
         return false;
       }
 
-
       boldRidersStatus.className =
         "rider-status loading";
 
       boldRidersStatus.textContent =
         "Memeriksa ID BOLD RIDERS...";
-
 
       try {
 
@@ -1266,7 +1130,6 @@
           "?action=validateBoldRider" +
           "&boldRidersId=" +
           encodeURIComponent(riderId);
-
 
         const response =
           await fetch(
@@ -1278,7 +1141,6 @@
             }
           );
 
-
         if (
           requestNumber !==
           validationRequestNumber
@@ -1286,10 +1148,8 @@
           return false;
         }
 
-
         const raw =
           await response.text();
-
 
         console.log(
           "BOLD RIDERS VALIDATION HTTP STATUS:",
@@ -1301,9 +1161,7 @@
           raw
         );
 
-
         let data;
-
 
         try {
 
@@ -1317,12 +1175,38 @@
           );
         }
 
-
         if (
           data &&
           data.success === true &&
           data.status === "VALID"
         ) {
+
+          const ownerName =
+            String(
+              data.boldRidersName || ""
+            ).trim();
+
+          if (!ownerName) {
+
+            boldRiderIsValid =
+              false;
+
+            boldRiderValidatedId =
+              "";
+
+            boldRiderValidatedName =
+              "";
+
+            boldRidersStatus.className =
+              "rider-status invalid";
+
+            boldRidersStatus.textContent =
+              "ID BOLD RIDERS valid, tetapi nama pemilik tidak ditemukan.";
+
+            nameInput.value = "";
+
+            return false;
+          }
 
           boldRiderIsValid =
             true;
@@ -1330,40 +1214,44 @@
           boldRiderValidatedId =
             riderId;
 
+          boldRiderValidatedName =
+            ownerName;
+
           boldRidersStatus.className =
             "rider-status valid";
 
           boldRidersStatus.textContent =
             "ID BOLD RIDERS valid.";
 
+          boldRidersOwner.className =
+            "rider-owner";
 
-          const ownerName =
-            String(
-              data.boldRidersName || ""
-            ).trim();
+          boldRidersOwner.innerHTML =
+            "Nama pemilik: <strong>" +
+            escapeHtml(ownerName) +
+            "</strong>";
 
-
-          if (ownerName) {
-
-            boldRidersOwner.className =
-              "rider-owner";
-
-            boldRidersOwner.innerHTML =
-              "Nama pemilik: <strong>" +
-              escapeHtml(ownerName) +
-              "</strong>";
-          }
-
+          /*
+           * INI BAGIAN PENTING:
+           * Nama otomatis mengikuti data BR.
+           */
+          setNameToBoldRider(
+            ownerName
+          );
 
           return true;
         }
-
 
         boldRiderIsValid =
           false;
 
         boldRiderValidatedId =
           "";
+
+        boldRiderValidatedName =
+          "";
+
+        nameInput.value = "";
 
         boldRidersStatus.className =
           "rider-status invalid";
@@ -1373,7 +1261,6 @@
           data.message
             ? data.message
             : "ID BOLD RIDERS tidak terdaftar.";
-
 
         return false;
 
@@ -1386,17 +1273,21 @@
           return false;
         }
 
-
         console.error(
           "BOLD RIDERS VALIDATION ERROR:",
           error
         );
 
-
         boldRiderIsValid =
           false;
 
         boldRiderValidatedId =
+          "";
+
+        boldRiderValidatedName =
+          "";
+
+        nameInput.value =
           "";
 
         boldRidersStatus.className =
@@ -1405,18 +1296,11 @@
         boldRidersStatus.textContent =
           "Tidak dapat terhubung ke server.";
 
-
         return false;
       }
     }
 
-
-    /* =========================
-       ESCAPE HTML
-    ========================== */
-
     function escapeHtml(value) {
-
       return String(
         value == null
           ? ""
@@ -1444,21 +1328,9 @@
         );
     }
 
-
-    /* =========================
-       SUBMIT REGISTRATION
-    ========================== */
-
     async function submitRegistration() {
 
       hideMessage();
-
-
-      const name =
-        nameInput.value.trim();
-
-      const whatsapp =
-        whatsappInput.value.trim();
 
       const accessType =
         String(
@@ -1466,6 +1338,21 @@
         )
           .trim()
           .toUpperCase();
+
+      /*
+       * Untuk BOLD RIDERS,
+       * nama HARUS berasal dari hasil validasi.
+       *
+       * Untuk FREE/VIP,
+       * nama berasal dari input manual.
+       */
+      let name =
+        String(
+          nameInput.value || ""
+        ).trim();
+
+      const whatsapp =
+        whatsappInput.value.trim();
 
       const tablePackage =
         tablePackageInput.value.trim();
@@ -1483,71 +1370,17 @@
           .trim()
           .toUpperCase();
 
-
-      /* NAME */
-
-      if (!name) {
-
-        showMessage(
-          "error",
-          "Nama wajib diisi."
-        );
-
-        nameInput.focus();
-
-        return;
-      }
-
-
-      /* WHATSAPP */
-
-      if (!whatsapp) {
-
-        showMessage(
-          "error",
-          "WhatsApp wajib diisi."
-        );
-
-        whatsappInput.focus();
-
-        return;
-      }
-
-
-      /* ACCESS */
-
       if (!accessType) {
 
         showMessage(
           "error",
-          "Silakan pilih Access."
+          "Silakan pilih Access terlebih dahulu."
         );
 
         accessTypeInput.focus();
 
         return;
       }
-
-
-      /* VIP TABLE */
-
-      if (
-        accessType === "VIP" &&
-        !tablePackage
-      ) {
-
-        showMessage(
-          "error",
-          "Table Package wajib dipilih untuk VIP."
-        );
-
-        tablePackageInput.focus();
-
-        return;
-      }
-
-
-      /* BOLD RIDERS */
 
       if (
         accessType === "BOLD RIDERS"
@@ -1567,7 +1400,10 @@
           return;
         }
 
-
+        /*
+         * Pastikan ID yang tervalidasi
+         * benar-benar sama dengan ID saat submit.
+         */
         if (
           !boldRiderIsValid ||
           boldRiderValidatedId !==
@@ -1579,15 +1415,12 @@
             "ID BOLD RIDERS belum tervalidasi atau tidak terdaftar."
           );
 
-
           const valid =
             await validateBoldRider();
-
 
           if (!valid) {
             return;
           }
-
 
           if (
             !boldRiderIsValid ||
@@ -1597,17 +1430,77 @@
             return;
           }
         }
+
+        /*
+         * Jangan pernah menggunakan nama
+         * yang diketik sebelumnya.
+         */
+        name =
+          boldRiderValidatedName;
+
+        if (!name) {
+
+          showMessage(
+            "error",
+            "Nama pemilik BOLD RIDERS tidak ditemukan."
+          );
+
+          return;
+        }
+
+      } else {
+
+        /*
+         * FREE / VIP tetap manual.
+         */
+        name =
+          String(
+            nameInput.value || ""
+          ).trim();
+
+        if (!name) {
+
+          showMessage(
+            "error",
+            "Nama wajib diisi."
+          );
+
+          nameInput.focus();
+
+          return;
+        }
       }
 
+      if (!whatsapp) {
 
-      /* REQUEST BODY */
+        showMessage(
+          "error",
+          "WhatsApp wajib diisi."
+        );
+
+        whatsappInput.focus();
+
+        return;
+      }
+
+      if (
+        accessType === "VIP" &&
+        !tablePackage
+      ) {
+
+        showMessage(
+          "error",
+          "Table Package wajib dipilih untuk VIP."
+        );
+
+        tablePackageInput.focus();
+
+        return;
+      }
 
       const body = {
-
         name,
-
         whatsapp,
-
         accessType,
 
         tablePackage:
@@ -1616,7 +1509,6 @@
             : "",
 
         community,
-
         stayConnected,
 
         boldRidersId:
@@ -1625,8 +1517,10 @@
             : ""
       };
 
-
-      /* LOCK UI */
+      console.log(
+        "REGISTRATION BODY:",
+        body
+      );
 
       submitButton.disabled =
         true;
@@ -1638,7 +1532,6 @@
         "show"
       );
 
-
       try {
 
         const response =
@@ -1649,7 +1542,6 @@
               method: "POST",
 
               headers: {
-
                 "Content-Type":
                   "application/json",
 
@@ -1669,10 +1561,8 @@
             }
           );
 
-
         const raw =
           await response.text();
-
 
         console.log(
           "REGISTRATION HTTP STATUS:",
@@ -1684,9 +1574,7 @@
           raw
         );
 
-
         let data;
-
 
         try {
 
@@ -1700,7 +1588,6 @@
           );
         }
 
-
         if (!response.ok) {
 
           throw new Error(
@@ -1710,7 +1597,6 @@
               : "Registration gagal."
           );
         }
-
 
         if (
           !data ||
@@ -1725,17 +1611,14 @@
           );
         }
 
-
         showRegistrationResult(
           data
         );
-
 
         showMessage(
           "success",
           "Registration berhasil."
         );
-
 
       } catch (error) {
 
@@ -1744,7 +1627,6 @@
           error
         );
 
-
         showMessage(
           "error",
           error &&
@@ -1752,7 +1634,6 @@
             ? error.message
             : "Tidak dapat terhubung ke server."
         );
-
 
       } finally {
 
@@ -1768,49 +1649,38 @@
       }
     }
 
-
-    /* =========================
-       SHOW REGISTRATION RESULT
-    ========================== */
-
-    function showRegistrationResult(data) {
+    function showRegistrationResult(
+      data
+    ) {
 
       resultBox.classList.add(
         "show"
       );
 
-
       resultPassId.textContent =
         data.passId || "-";
-
 
       resultName.textContent =
         data.name || "-";
 
-
       resultWhatsapp.textContent =
         data.whatsapp || "-";
-
 
       resultAccess.textContent =
         data.accessType || "-";
 
-
       resultTable.textContent =
         data.tablePackage || "-";
-
 
       const riderId =
         String(
           data.boldRidersId || ""
         ).trim();
 
-
       const riderName =
         String(
           data.boldRidersName || ""
         ).trim();
-
 
       if (
         riderId &&
@@ -1828,10 +1698,8 @@
           "hidden"
         );
 
-
         resultRiderId.textContent =
           riderId;
-
 
         resultRiderName.textContent =
           riderName || "-";
@@ -1847,14 +1715,10 @@
         );
       }
 
-
-      /* QR */
-
       const qrUrl =
         String(
           data.qrCodeUrl || ""
         ).trim();
-
 
       if (qrUrl) {
 
@@ -1876,17 +1740,11 @@
         );
       }
 
-
       resultBox.scrollIntoView({
         behavior: "smooth",
         block: "start"
       });
     }
-
-
-    /* =========================
-       WHATSAPP
-    ========================== */
 
     function openWhatsAppHelp() {
 
@@ -1895,13 +1753,11 @@
           "Halo, saya membutuhkan bantuan terkait registrasi BOLD AFTER DARK."
         );
 
-
       const url =
         "https://wa.me/" +
         WHATSAPP_NUMBER +
         "?text=" +
         message;
-
 
       window.open(
         url,
@@ -1910,11 +1766,9 @@
       );
     }
 
-
-    /* =========================
-       ACCESS CHANGE
-    ========================== */
-
+    /*
+     * ACCESS berubah
+     */
     accessTypeInput.addEventListener(
       "change",
       function() {
@@ -1925,11 +1779,9 @@
       }
     );
 
-
-    /* =========================
-       BOLD RIDERS INPUT
-    ========================== */
-
+    /*
+     * ID BOLD RIDERS berubah.
+     */
     boldRidersIdInput.addEventListener(
       "input",
       function() {
@@ -1948,13 +1800,10 @@
               8
             );
 
-
         boldRidersIdInput.value =
           value;
 
-
         validationRequestNumber++;
-
 
         boldRiderIsValid =
           false;
@@ -1962,13 +1811,20 @@
         boldRiderValidatedId =
           "";
 
+        boldRiderValidatedName =
+          "";
+
+        /*
+         * Setiap ID berubah,
+         * nama harus dikosongkan terlebih dahulu.
+         */
+        nameInput.value = "";
 
         boldRidersOwner.className =
           "rider-owner hidden";
 
         boldRidersOwner.textContent =
           "";
-
 
         if (
           value.length < 8
@@ -1983,7 +1839,6 @@
           return;
         }
 
-
         if (
           value.length === 8
         ) {
@@ -1992,11 +1847,6 @@
         }
       }
     );
-
-
-    /* =========================
-       FORM SUBMIT
-    ========================== */
 
     registrationForm.addEventListener(
       "submit",
@@ -2008,21 +1858,15 @@
       }
     );
 
-
-    /* =========================
-       WHATSAPP BUTTON
-    ========================== */
-
     whatsappButton.addEventListener(
       "click",
       openWhatsAppHelp
     );
 
-
-    /* =========================
-       INITIAL STATE
-    ========================== */
-
+    /*
+     * Kondisi awal:
+     * Access belum dipilih.
+     */
     updateAccessFields();
 
   </script>
