@@ -697,6 +697,7 @@
           ></div>
 
           <!-- HOME BUTTON -->
+
           <button
             id="homeButton"
             class="home-button"
@@ -706,6 +707,7 @@
           </button>
 
           <!-- REPORT BUTTON -->
+
           <button
             id="reportButton"
             class="report-button"
@@ -955,30 +957,6 @@
 
 
     /* ============================================================
-       PAGE ROUTES
-       ============================================================ */
-
-    /*
-      HOME:
-      Jangan gunakan "home.html" karena itu menyebabkan 404
-      jika file tersebut tidak berada di folder admin.
-
-      Route ini menuju halaman utama aplikasi.
-    */
-    const HOME_URL =
-      "/bold-after-dark-scanner/index.html";
-
-    /*
-      REPORT:
-      Untuk sementara mengikuti struktur yang sama.
-      Jika report.html berada di root aplikasi scanner,
-      gunakan path absolut ini.
-    */
-    const REPORT_URL =
-      "/bold-after-dark-scanner/report.html";
-
-
-    /* ============================================================
        ADMIN LOGIN
        ============================================================ */
 
@@ -1174,8 +1152,18 @@
       "click",
       function() {
 
+        /*
+         * HOME HARUS MENUJU ROOT DOMAIN:
+         *
+         * https://boldafterdark.my.id/index.html
+         *
+         * Bukan:
+         * /bold-after-dark-scanner/index.html
+         */
+
         window.location.href =
-          HOME_URL;
+          window.location.origin +
+          "/index.html";
 
       }
     );
@@ -1189,8 +1177,14 @@
       "click",
       function() {
 
+        /*
+         * Report berada di folder scanner yang sama
+         * dengan halaman admin.
+         */
+
         window.location.href =
-          REPORT_URL;
+          window.location.origin +
+          "/bold-after-dark-scanner/report.html";
 
       }
     );
