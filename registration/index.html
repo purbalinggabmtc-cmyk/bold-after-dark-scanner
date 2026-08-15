@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -435,7 +436,6 @@
 
       <form id="registrationForm" novalidate>
 
-        <!-- ACCESS -->
         <div class="field">
           <label for="accessType">
             Access <span class="required">*</span>
@@ -468,7 +468,6 @@
           </div>
         </div>
 
-        <!-- BOLD RIDERS ID -->
         <div
           id="boldRidersField"
           class="field hidden"
@@ -499,7 +498,6 @@
           ></div>
         </div>
 
-        <!-- NAMA -->
         <div class="field">
           <label for="name">
             Nama <span class="required">*</span>
@@ -521,7 +519,6 @@
           </div>
         </div>
 
-        <!-- WHATSAPP -->
         <div class="field">
           <label for="whatsapp">
             WhatsApp <span class="required">*</span>
@@ -536,7 +533,6 @@
           >
         </div>
 
-        <!-- TABLE PACKAGE -->
         <div
           id="tablePackageField"
           class="field hidden"
@@ -571,7 +567,6 @@
           </select>
         </div>
 
-        <!-- COMMUNITY -->
         <div class="field">
           <label for="community">
             Community
@@ -585,7 +580,6 @@
           >
         </div>
 
-        <!-- STAY CONNECTED -->
         <div class="field">
           <label for="stayConnected">
             Stay Connected
@@ -639,7 +633,6 @@
 
       </div>
 
-      <!-- RESULT -->
       <div
         id="resultBox"
         class="result"
@@ -934,9 +927,6 @@
       const isBoldRider =
         access === "BOLD RIDERS";
 
-      /*
-       * TABLE PACKAGE
-       */
       if (isVip) {
         tablePackageField.classList.remove(
           "hidden"
@@ -956,9 +946,6 @@
           "";
       }
 
-      /*
-       * BOLD RIDERS
-       */
       if (isBoldRider) {
         boldRidersField.classList.remove(
           "hidden"
@@ -1127,20 +1114,9 @@
           boldRidersStatus.className =
             "rider-status valid";
 
-          /*
-           * HANYA tampilkan:
-           * ID BOLD RIDERS valid.
-           *
-           * Tidak ada lagi:
-           * Nama pemilik: ...
-           */
           boldRidersStatus.textContent =
             "ID BOLD RIDERS valid.";
 
-          /*
-           * Nama otomatis mengikuti data
-           * BOLD RIDERS.
-           */
           if (ownerName) {
             nameInput.value =
               ownerName;
@@ -1229,9 +1205,6 @@
           .trim()
           .toUpperCase();
 
-      const name =
-        nameInput.value.trim();
-
       const whatsapp =
         whatsappInput.value.trim();
 
@@ -1251,9 +1224,6 @@
           .trim()
           .toUpperCase();
 
-      /*
-       * ACCESS
-       */
       if (!accessType) {
         showMessage(
           "error",
@@ -1264,9 +1234,6 @@
         return;
       }
 
-      /*
-       * BOLD RIDERS VALIDATION
-       */
       if (
         accessType === "BOLD RIDERS"
       ) {
@@ -1309,9 +1276,6 @@
         }
       }
 
-      /*
-       * NAMA
-       */
       const finalName =
         nameInput.value.trim();
 
@@ -1325,9 +1289,6 @@
         return;
       }
 
-      /*
-       * WHATSAPP
-       */
       if (!whatsapp) {
         showMessage(
           "error",
@@ -1338,9 +1299,6 @@
         return;
       }
 
-      /*
-       * VIP TABLE
-       */
       if (
         accessType === "VIP" &&
         !tablePackage
@@ -1354,14 +1312,9 @@
         return;
       }
 
-      /*
-       * BODY
-       */
       const body = {
         name: finalName,
-
         whatsapp,
-
         accessType,
 
         tablePackage:
@@ -1370,7 +1323,6 @@
             : "",
 
         community,
-
         stayConnected,
 
         boldRidersId:
@@ -1547,7 +1499,9 @@
           riderId;
 
         resultRiderName.textContent =
-          riderName || data.name || "-";
+          riderName ||
+          data.name ||
+          "-";
       } else {
         resultRiderIdItem.classList.add(
           "hidden"
@@ -1605,9 +1559,6 @@
       );
     }
 
-    /*
-     * ACCESS CHANGE
-     */
     accessTypeInput.addEventListener(
       "change",
       function() {
@@ -1616,9 +1567,6 @@
       }
     );
 
-    /*
-     * BOLD RIDERS ID INPUT
-     */
     boldRidersIdInput.addEventListener(
       "input",
       function() {
@@ -1673,18 +1621,6 @@
       }
     );
 
-    /*
-     * STAY CONNECTED
-     *
-     * Placeholder:
-     * instagram
-     *
-     * Saat fokus:
-     * otomatis menjadi @
-     *
-     * Saat mengetik:
-     * @username
-     */
     stayConnectedInput.addEventListener(
       "focus",
       function() {
@@ -1715,9 +1651,6 @@
             stayConnectedInput.value || ""
           );
 
-        /*
-         * Hanya satu @ di awal.
-         */
         value =
           value.replace(
             /^@+/,
@@ -1733,9 +1666,6 @@
       }
     );
 
-    /*
-     * SUBMIT
-     */
     registrationForm.addEventListener(
       "submit",
       async function(event) {
@@ -1745,20 +1675,14 @@
       }
     );
 
-    /*
-     * WHATSAPP HELP
-     */
     whatsappButton.addEventListener(
       "click",
       openWhatsAppHelp
     );
 
-    /*
-     * INITIAL STATE
-     */
     updateAccessFields();
-
   </script>
 
 </body>
 </html>
+```
