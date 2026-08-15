@@ -85,6 +85,9 @@
       color: var(--white);
     }
 
+    /* BOLD = putih
+       AFTER = merah
+       DARK = putih */
     .brand span {
       color: var(--red);
     }
@@ -183,20 +186,6 @@
       background: var(--red-soft);
     }
 
-    /* HOME BUTTON */
-    .btn-home {
-      background: #ffffff;
-      color: #050505;
-      border: 1px solid #ffffff;
-      font-weight: 900;
-      min-width: 100px;
-    }
-
-    .btn-home:hover {
-      background: #e8e8e8;
-      border-color: #e8e8e8;
-    }
-
     /* =========================================================
        ERROR
        ========================================================= */
@@ -221,7 +210,7 @@
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: 12px;
       margin-bottom: 20px;
     }
@@ -481,7 +470,7 @@
        RESPONSIVE
        ========================================================= */
 
-    @media (max-width: 950px) {
+    @media (max-width: 1100px) {
       .stats {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
@@ -581,7 +570,7 @@
       }
 
       .stats {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(6, 1fr);
         gap: 6px;
         margin-bottom: 12px;
       }
@@ -702,7 +691,7 @@
     <div class="header">
 
       <div class="brand">
-        BOLD <span>AFTER DARK</span>
+        BOLD <span>AFTER</span> DARK
       </div>
 
       <div class="subtitle">
@@ -719,15 +708,6 @@
          ======================================================= -->
 
     <div class="toolbar">
-
-      <!-- HOME BUTTON -->
-      <button
-        type="button"
-        class="btn btn-home"
-        id="homeButton"
-      >
-        HOME
-      </button>
 
       <input
         id="searchInput"
@@ -780,6 +760,14 @@
         id="adminButton"
       >
         ADMIN
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-outline-red"
+        id="homeButton"
+      >
+        HOME
       </button>
 
     </div>
@@ -836,6 +824,21 @@
 
         <div
           id="vipCount"
+          class="stat-value"
+        >
+          0
+        </div>
+      </div>
+
+
+      <!-- BOLD RIDERS DITAMBAHKAN SETELAH VIP -->
+      <div class="stat">
+        <div class="stat-label">
+          BOLD RIDERS
+        </div>
+
+        <div
+          id="boldRidersCount"
           class="stat-value"
         >
           0
@@ -1005,9 +1008,6 @@
        ELEMENTS
        ========================================================= */
 
-    const homeButton =
-      document.getElementById("homeButton");
-
     const searchInput =
       document.getElementById("searchInput");
 
@@ -1028,6 +1028,9 @@
 
     const adminButton =
       document.getElementById("adminButton");
+
+    const homeButton =
+      document.getElementById("homeButton");
 
     const errorBox =
       document.getElementById("errorBox");
@@ -1056,11 +1059,26 @@
           ? ""
           : value
       )
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
 
     }
 
@@ -1072,7 +1090,9 @@
     function normalizeStatus(value) {
 
       const status =
-        String(value || "")
+        String(
+          value || ""
+        )
           .trim()
           .toUpperCase();
 
@@ -1081,18 +1101,26 @@
         status === "CHECKED_IN" ||
         status === "CHECKED-IN"
       ) {
+
         return "USED";
+
       }
 
-      if (status === "UNUSED") {
+      if (
+        status === "UNUSED"
+      ) {
+
         return "UNUSED";
+
       }
 
       if (
         status === "CANCELLED" ||
         status === "CANCELED"
       ) {
+
         return "CANCELLED";
+
       }
 
       return status;
@@ -1106,7 +1134,9 @@
 
     function normalizeAccess(value) {
 
-      return String(value || "")
+      return String(
+        value || ""
+      )
         .trim()
         .toUpperCase();
 
@@ -1120,7 +1150,9 @@
     function formatDate(value) {
 
       if (!value) {
+
         return "-";
+
       }
 
       const date =
@@ -1131,7 +1163,9 @@
           date.getTime()
         )
       ) {
+
         return String(value);
+
       }
 
       return date.toLocaleString(
@@ -1382,27 +1416,38 @@
                 row.access_type
               );
 
+
             const rowStatus =
               normalizeStatus(
                 row.pass_status
               );
 
 
+            /* ACCESS FILTER */
+
             if (
               access &&
               rowAccess !== access
             ) {
+
               return false;
+
             }
 
+
+            /* STATUS FILTER */
 
             if (
               selectedStatus &&
               rowStatus !== selectedStatus
             ) {
+
               return false;
+
             }
 
+
+            /* SEARCH */
 
             if (search) {
 
@@ -1429,9 +1474,13 @@
 
 
               if (
-                !haystack.includes(search)
+                !haystack.includes(
+                  search
+                )
               ) {
+
                 return false;
+
               }
 
             }
@@ -1488,6 +1537,19 @@
         ).length;
 
 
+      /* BOLD RIDERS */
+      const boldRiders =
+        rows.filter(
+          function(row) {
+
+            return normalizeAccess(
+              row.access_type
+            ) === "BOLD RIDERS";
+
+          }
+        ).length;
+
+
       const used =
         rows.filter(
           function(row) {
@@ -1531,6 +1593,12 @@
 
 
       document.getElementById(
+        "boldRidersCount"
+      ).textContent =
+        boldRiders;
+
+
+      document.getElementById(
         "usedCount"
       ).textContent =
         used;
@@ -1556,12 +1624,16 @@
       let className =
         "free";
 
-      if (value === "VIP") {
+      if (
+        value === "VIP"
+      ) {
 
         className =
           "vip";
 
-      } else if (value === "BOLD RIDERS") {
+      } else if (
+        value === "BOLD RIDERS"
+      ) {
 
         className =
           "bold";
@@ -1598,7 +1670,9 @@
         value || "-";
 
 
-      if (value === "USED") {
+      if (
+        value === "USED"
+      ) {
 
         className =
           "used";
@@ -1606,7 +1680,9 @@
         label =
           "USED";
 
-      } else if (value === "UNUSED") {
+      } else if (
+        value === "UNUSED"
+      ) {
 
         className =
           "unused";
@@ -1614,7 +1690,9 @@
         label =
           "UNUSED";
 
-      } else if (value === "CANCELLED") {
+      } else if (
+        value === "CANCELLED"
+      ) {
 
         className =
           "cancelled";
@@ -1687,13 +1765,17 @@
             );
 
 
-          if (status === "USED") {
+          if (
+            status === "USED"
+          ) {
 
             tr.classList.add(
               "used-row"
             );
 
-          } else if (status === "UNUSED") {
+          } else if (
+            status === "UNUSED"
+          ) {
 
             tr.classList.add(
               "unused-row"
@@ -1702,67 +1784,68 @@
           }
 
 
-          tr.innerHTML = `
-            <td>
-              ${escapeHtml(index + 1)}
-            </td>
+          tr.innerHTML =
+            `
+              <td>
+                ${escapeHtml(index + 1)}
+              </td>
 
-            <td>
-              <strong>
-                ${escapeHtml(row.name)}
-              </strong>
-            </td>
+              <td>
+                <strong>
+                  ${escapeHtml(row.name)}
+                </strong>
+              </td>
 
-            <td>
-              ${escapeHtml(row.whatsapp)}
-            </td>
+              <td>
+                ${escapeHtml(row.whatsapp)}
+              </td>
 
-            <td>
-              <strong>
-                ${escapeHtml(row.pass_id)}
-              </strong>
-            </td>
+              <td>
+                <strong>
+                  ${escapeHtml(row.pass_id)}
+                </strong>
+              </td>
 
-            <td>
-              ${accessBadge(row.access_type)}
-            </td>
+              <td>
+                ${accessBadge(row.access_type)}
+              </td>
 
-            <td>
-              ${escapeHtml(
-                row.table_package || "-"
-              )}
-            </td>
+              <td>
+                ${escapeHtml(
+                  row.table_package || "-"
+                )}
+              </td>
 
-            <td>
-              ${escapeHtml(
-                row.community || "-"
-              )}
-            </td>
+              <td>
+                ${escapeHtml(
+                  row.community || "-"
+                )}
+              </td>
 
-            <td>
-              ${statusBadge(
-                row.pass_status
-              )}
-            </td>
+              <td>
+                ${statusBadge(
+                  row.pass_status
+                )}
+              </td>
 
-            <td>
-              ${escapeHtml(
-                formatDate(row.created_at)
-              )}
-            </td>
+              <td>
+                ${escapeHtml(
+                  formatDate(row.created_at)
+                )}
+              </td>
 
-            <td>
-              ${escapeHtml(
-                formatDate(row.checked_in_at)
-              )}
-            </td>
+              <td>
+                ${escapeHtml(
+                  formatDate(row.checked_in_at)
+                )}
+              </td>
 
-            <td>
-              ${escapeHtml(
-                row.checked_in_by || "-"
-              )}
-            </td>
-          `;
+              <td>
+                ${escapeHtml(
+                  row.checked_in_by || "-"
+                )}
+              </td>
+            `;
 
 
           tableBody.appendChild(
@@ -1941,21 +2024,6 @@
 
 
     /* =========================================================
-       HOME BUTTON
-       ========================================================= */
-
-    homeButton.addEventListener(
-      "click",
-      function() {
-
-        window.location.href =
-          "./index.html";
-
-      }
-    );
-
-
-    /* =========================================================
        ADMIN BUTTON
        ========================================================= */
 
@@ -1965,6 +2033,21 @@
 
         window.location.href =
           "./admin.html";
+
+      }
+    );
+
+
+    /* =========================================================
+       HOME BUTTON
+       ========================================================= */
+
+    homeButton.addEventListener(
+      "click",
+      function() {
+
+        window.location.href =
+          "./index.html";
 
       }
     );
