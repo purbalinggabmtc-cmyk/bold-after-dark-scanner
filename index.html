@@ -3,7 +3,6 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta
@@ -13,20 +12,15 @@
 
   <title>BOLD AFTER DARK — CHECK IN</title>
 
-  <script
-    src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
-  </script>
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
   <style>
-
     * {
       box-sizing: border-box;
     }
 
     body {
-
       margin: 0;
-
       min-height: 100vh;
 
       background:
@@ -45,363 +39,269 @@
         sans-serif;
 
       display: flex;
-
       justify-content: center;
-
       align-items: center;
 
       padding: 20px;
-
     }
 
     .container {
-
       width: 100%;
-
       max-width: 480px;
-
       text-align: center;
-
     }
 
     .brand {
-
       font-size: 28px;
-
       font-weight: 900;
-
       letter-spacing: 4px;
-
       margin-bottom: 4px;
-
     }
 
     .brand span {
-
       color: #e00000;
-
     }
 
     .subtitle {
-
       font-size: 13px;
-
       letter-spacing: 3px;
-
       color: #aaa;
-
       margin-bottom: 24px;
-
     }
 
     .scanner-card {
-
       background: #111;
-
       border: 1px solid #333;
-
       border-radius: 18px;
-
       padding: 16px;
 
       box-shadow:
         0 0 30px rgba(255, 0, 0, .12);
-
     }
 
     #reader {
-
       width: 100%;
-
       overflow: hidden;
-
       border-radius: 12px;
+    }
 
+    /*
+      Hilangkan teks error kamera bawaan library
+      yang mengganggu tampilan.
+    */
+    #reader__dashboard_section_swaplink {
+      display: none !important;
+    }
+
+    #reader__status_span {
+      display: none !important;
+    }
+
+    #reader__dashboard_section_csr {
+      display: none !important;
+    }
+
+    #reader video {
+      border-radius: 10px;
     }
 
     .manual {
-
       margin-top: 18px;
-
       display: flex;
-
       gap: 8px;
-
     }
 
     .manual input {
-
       flex: 1;
-
       min-width: 0;
 
       padding: 14px;
 
       background: #1c1c1c;
-
       color: white;
 
       border: 1px solid #444;
-
       border-radius: 8px;
 
       font-size: 15px;
-
       outline: none;
-
     }
 
     .manual input:focus {
-
       border-color: #e00000;
 
       box-shadow:
         0 0 0 2px rgba(224, 0, 0, .12);
-
     }
 
     .manual button {
-
       padding: 14px 18px;
 
       background: #e00000;
-
       color: white;
 
       border: none;
-
       border-radius: 8px;
 
       font-weight: bold;
-
       cursor: pointer;
-
     }
 
     .manual button:active {
-
       transform: scale(.98);
-
     }
 
     .result {
-
       margin-top: 18px;
-
       padding: 20px;
 
       border-radius: 14px;
 
       display: none;
-
     }
 
     .result.valid {
-
       display: block;
 
       background: #062d16;
-
       border: 2px solid #16c75a;
-
     }
 
     .result.used {
-
       display: block;
 
       background: #2d2100;
-
       border: 2px solid #e2b400;
-
     }
 
     .result.invalid {
-
       display: block;
 
       background: #300000;
-
       border: 2px solid #e00000;
-
     }
 
     .result.error {
-
       display: block;
 
       background: #222;
-
       border: 2px solid #777;
-
     }
 
     .result-title {
-
       font-size: 28px;
-
       font-weight: 900;
-
       margin-bottom: 12px;
-
     }
 
     .valid .result-title {
-
       color: #16c75a;
-
     }
 
     .used .result-title {
-
       color: #e2b400;
-
     }
 
     .invalid .result-title {
-
       color: #ff3333;
-
     }
 
     .error .result-title {
-
       color: #ffffff;
-
     }
 
     .detail {
-
       margin-top: 8px;
 
       font-size: 15px;
-
       color: #ddd;
 
       line-height: 1.5;
-
     }
 
     .detail strong {
-
       color: white;
-
     }
 
     .reset {
-
       margin-top: 18px;
 
       width: 100%;
-
       padding: 14px;
 
       background: #e00000;
-
       color: white;
 
       border: none;
-
       border-radius: 8px;
 
       font-weight: bold;
-
       cursor: pointer;
-
       font-size: 15px;
-
     }
 
     .reset:active {
-
       transform: scale(.98);
-
     }
 
     .footer {
-
       margin-top: 20px;
 
       font-size: 11px;
-
       color: #666;
 
       letter-spacing: 2px;
-
     }
 
     .status-text {
-
       margin-top: 12px;
 
       font-size: 12px;
-
       color: #888;
 
       min-height: 18px;
-
     }
 
     @media (max-width: 480px) {
-
       .brand {
-
         font-size: 24px;
-
       }
 
       .scanner-card {
-
         padding: 12px;
-
       }
 
       .manual {
-
         flex-direction: column;
-
       }
 
       .manual button {
-
         width: 100%;
-
       }
-
     }
-
   </style>
-
 </head>
-
 
 <body>
 
-
   <div class="container">
-
 
     <div class="brand">
       BOLD <span>AFTER DARK</span>
     </div>
 
-
     <div class="subtitle">
       EVENT CHECK-IN
     </div>
 
-
     <div class="scanner-card">
 
-
       <div id="reader"></div>
-
 
       <div
         id="scannerStatus"
         class="status-text">
       </div>
-
 
       <div class="manual">
 
@@ -415,54 +315,38 @@
         <button
           type="button"
           id="manualButton">
-
           CHECK
-
         </button>
 
       </div>
 
-
       <div
         id="result"
-        class="result"
-      >
+        class="result">
 
         <div
           id="resultTitle"
           class="result-title">
         </div>
 
-
-        <div
-          id="resultDetails">
-        </div>
-
+        <div id="resultDetails"></div>
 
         <button
           type="button"
           id="resetButton"
           class="reset">
-
           SCAN BERIKUTNYA
-
         </button>
 
       </div>
 
-
     </div>
-
 
     <div class="footer">
-
       BOLD AFTER DARK • THE NIGHT STARTS HERE
-
     </div>
 
-
   </div>
-
 
   <script>
 
@@ -479,9 +363,7 @@
     // =====================================================
 
     let scanner = null;
-
     let processing = false;
-
     let requestTimeout = null;
 
 
@@ -490,51 +372,28 @@
     // =====================================================
 
     const reader =
-      document.getElementById(
-        "reader"
-      );
-
+      document.getElementById("reader");
 
     const scannerStatus =
-      document.getElementById(
-        "scannerStatus"
-      );
-
+      document.getElementById("scannerStatus");
 
     const manualToken =
-      document.getElementById(
-        "manualToken"
-      );
-
+      document.getElementById("manualToken");
 
     const manualButton =
-      document.getElementById(
-        "manualButton"
-      );
-
+      document.getElementById("manualButton");
 
     const result =
-      document.getElementById(
-        "result"
-      );
-
+      document.getElementById("result");
 
     const resultTitle =
-      document.getElementById(
-        "resultTitle"
-      );
-
+      document.getElementById("resultTitle");
 
     const resultDetails =
-      document.getElementById(
-        "resultDetails"
-      );
-
+      document.getElementById("resultDetails");
 
     const resetButton =
-      document.getElementById(
-        "resetButton"
-      );
+      document.getElementById("resetButton");
 
 
     // =====================================================
@@ -542,10 +401,7 @@
     // =====================================================
 
     function setScannerStatus(text) {
-
-      scannerStatus.textContent =
-        text || "";
-
+      scannerStatus.textContent = text || "";
     }
 
 
@@ -557,28 +413,18 @@
 
       processing = false;
 
-      setScannerStatus(
-        "Memulai kamera..."
-      );
+      setScannerStatus("Memulai kamera...");
 
 
       if (scanner) {
 
         try {
-
           await scanner.clear();
-
         } catch (error) {
-
-          console.warn(
-            "Scanner clear:",
-            error
-          );
-
+          console.warn("Scanner clear:", error);
         }
 
         scanner = null;
-
       }
 
 
@@ -589,11 +435,8 @@
 
         scanner =
           new Html5QrcodeScanner(
-
             "reader",
-
             {
-
               fps: 10,
 
               qrbox: {
@@ -604,17 +447,11 @@
               rememberLastUsedCamera: true,
 
               supportedScanTypes: [
-
                 Html5QrcodeScanType.SCAN_TYPE_CAMERA,
-
                 Html5QrcodeScanType.SCAN_TYPE_FILE
-
               ]
-
             },
-
             false
-
           );
 
 
@@ -628,6 +465,7 @@
           "Arahkan kamera ke QR code."
         );
 
+
       } catch (error) {
 
         console.error(
@@ -636,14 +474,11 @@
         );
 
         showServerError({
-
           message:
             "Kamera scanner tidak dapat dimulai."
-
         });
 
       }
-
     }
 
 
@@ -654,16 +489,12 @@
     function onScanSuccess(decodedText) {
 
       if (processing) {
-
         return;
-
       }
 
 
       const token =
-        String(
-          decodedText || ""
-        ).trim();
+        String(decodedText || "").trim();
 
 
       console.log(
@@ -675,25 +506,19 @@
       if (!token) {
 
         showServerError({
-
           message:
             "QR terbaca tetapi token kosong."
-
         });
 
         return;
-
       }
 
 
       processing = true;
 
-
       stopScanner();
 
-
       processToken(token);
-
     }
 
 
@@ -703,8 +528,8 @@
 
     function onScanError(errorMessage) {
 
-      // Error scan biasa sengaja tidak ditampilkan.
-
+      // Sengaja dikosongkan.
+      // Error scanning biasa tidak ditampilkan.
     }
 
 
@@ -715,9 +540,7 @@
     async function stopScanner() {
 
       if (!scanner) {
-
         return;
-
       }
 
 
@@ -736,24 +559,11 @@
 
 
       scanner = null;
-
     }
 
 
     // =====================================================
     // PROCESS TOKEN
-    // =====================================================
-    //
-    // PENTING:
-    // Check-in menggunakan GET.
-    //
-    // Tidak menggunakan:
-    // - POST
-    // - Content-Type JSON
-    // - Authorization
-    // - apikey
-    //
-    // Tujuannya menghindari CORS preflight.
     // =====================================================
 
     async function processToken(token) {
@@ -767,25 +577,20 @@
 
 
       const cleanToken =
-        String(
-          token || ""
-        ).trim();
+        String(token || "").trim();
 
 
       if (!cleanToken) {
 
         showServerError({
-
           message:
             "QR token kosong."
-
         });
 
 
         processing = false;
 
         return;
-
       }
 
 
@@ -793,9 +598,7 @@
         API_URL +
         "?action=checkIn" +
         "&token=" +
-        encodeURIComponent(
-          cleanToken
-        );
+        encodeURIComponent(cleanToken);
 
 
       console.log(
@@ -806,12 +609,9 @@
 
       if (requestTimeout) {
 
-        clearTimeout(
-          requestTimeout
-        );
+        clearTimeout(requestTimeout);
 
         requestTimeout = null;
-
       }
 
 
@@ -820,26 +620,21 @@
 
       requestTimeout =
         setTimeout(
-          function() {
+          function () {
 
             if (finished) {
-
               return;
-
             }
 
 
             finished = true;
 
-
             requestTimeout = null;
 
 
             showServerError({
-
               message:
                 "Server check-in tidak memberikan respons dalam 15 detik."
-
             });
 
           },
@@ -853,19 +648,14 @@
           await fetch(
             requestUrl,
             {
-
               method: "GET",
-
               cache: "no-store"
-
             }
           );
 
 
         if (finished) {
-
           return;
-
         }
 
 
@@ -874,12 +664,9 @@
 
         if (requestTimeout) {
 
-          clearTimeout(
-            requestTimeout
-          );
+          clearTimeout(requestTimeout);
 
           requestTimeout = null;
-
         }
 
 
@@ -905,9 +692,7 @@
         try {
 
           data =
-            JSON.parse(
-              rawResponse
-            );
+            JSON.parse(rawResponse);
 
         } catch (error) {
 
@@ -918,15 +703,12 @@
 
 
           showServerError({
-
             message:
               "Server mengembalikan response yang tidak valid."
-
           });
 
 
           return;
-
         }
 
 
@@ -938,12 +720,11 @@
 
         showResult(data);
 
+
       } catch (error) {
 
         if (finished) {
-
           return;
-
         }
 
 
@@ -952,12 +733,9 @@
 
         if (requestTimeout) {
 
-          clearTimeout(
-            requestTimeout
-          );
+          clearTimeout(requestTimeout);
 
           requestTimeout = null;
-
         }
 
 
@@ -970,11 +748,8 @@
         showServerError({
 
           message:
-            error &&
-            error.message
-
+            error && error.message
               ? error.message
-
               : "Tidak dapat menghubungi server check-in."
 
         });
@@ -991,9 +766,7 @@
     function manualCheckIn() {
 
       if (processing) {
-
         return;
-
       }
 
 
@@ -1010,20 +783,15 @@
 
         manualToken.focus();
 
-
         return;
-
       }
 
 
       processing = true;
 
-
       stopScanner();
 
-
       processToken(token);
-
     }
 
 
@@ -1033,12 +801,9 @@
 
     function showResult(data) {
 
-      result.className =
-        "result";
+      result.className = "result";
 
-
-      result.style.display =
-        "block";
+      result.style.display = "block";
 
 
       // ===================================================
@@ -1050,9 +815,7 @@
         data.status === "VALID"
       ) {
 
-        result.classList.add(
-          "valid"
-        );
+        result.classList.add("valid");
 
 
         resultTitle.textContent =
@@ -1062,64 +825,32 @@
         resultDetails.innerHTML =
 
           '<div class="detail">' +
-
           '<strong>NAMA</strong><br>' +
-
-          escapeHtml(
-            data.name
-          ) +
-
+          escapeHtml(data.name) +
           '</div>' +
 
-
           '<div class="detail">' +
-
           '<strong>PASS ID</strong><br>' +
-
-          escapeHtml(
-            data.passId
-          ) +
-
+          escapeHtml(data.passId) +
           '</div>' +
-
 
           '<div class="detail">' +
-
           '<strong>ACCESS</strong><br>' +
-
-          escapeHtml(
-            data.accessType
-          ) +
-
+          escapeHtml(data.accessType) +
           '</div>' +
-
 
           (
             data.tablePackage
-
               ? '<div class="detail">' +
-
                 '<strong>TABLE</strong><br>' +
-
-                escapeHtml(
-                  data.tablePackage
-                ) +
-
+                escapeHtml(data.tablePackage) +
                 '</div>'
-
               : ""
-
           ) +
-
 
           '<div class="detail">' +
-
           '<strong>CHECK-IN</strong><br>' +
-
-          escapeHtml(
-            data.checkInTime
-          ) +
-
+          escapeHtml(data.checkInTime) +
           '</div>';
 
 
@@ -1129,7 +860,6 @@
 
 
         return;
-
       }
 
 
@@ -1142,9 +872,7 @@
         data.status === "ALREADY_USED"
       ) {
 
-        result.classList.add(
-          "used"
-        );
+        result.classList.add("used");
 
 
         resultTitle.textContent =
@@ -1154,71 +882,36 @@
         resultDetails.innerHTML =
 
           '<div class="detail">' +
-
           '<strong>QR INI SUDAH DIGUNAKAN</strong>' +
-
           '</div>' +
 
-
           '<div class="detail">' +
-
           '<strong>NAMA</strong><br>' +
-
-          escapeHtml(
-            data.name
-          ) +
-
+          escapeHtml(data.name) +
           '</div>' +
 
-
           '<div class="detail">' +
-
           '<strong>PASS ID</strong><br>' +
-
-          escapeHtml(
-            data.passId
-          ) +
-
+          escapeHtml(data.passId) +
           '</div>' +
-
 
           '<div class="detail">' +
-
           '<strong>ACCESS</strong><br>' +
-
-          escapeHtml(
-            data.accessType
-          ) +
-
+          escapeHtml(data.accessType) +
           '</div>' +
-
 
           (
             data.tablePackage
-
               ? '<div class="detail">' +
-
                 '<strong>TABLE</strong><br>' +
-
-                escapeHtml(
-                  data.tablePackage
-                ) +
-
+                escapeHtml(data.tablePackage) +
                 '</div>'
-
               : ""
-
           ) +
-
 
           '<div class="detail">' +
-
           '<strong>CHECK-IN</strong><br>' +
-
-          escapeHtml(
-            data.checkInTime
-          ) +
-
+          escapeHtml(data.checkInTime) +
           '</div>';
 
 
@@ -1228,7 +921,6 @@
 
 
         return;
-
       }
 
 
@@ -1244,9 +936,7 @@
         )
       ) {
 
-        result.classList.add(
-          "invalid"
-        );
+        result.classList.add("invalid");
 
 
         resultTitle.textContent =
@@ -1258,11 +948,8 @@
           '<div class="detail">' +
 
           escapeHtml(
-
             data.message ||
-
             "QR tidak terdaftar."
-
           ) +
 
           '</div>';
@@ -1274,7 +961,6 @@
 
 
         return;
-
       }
 
 
@@ -1282,9 +968,7 @@
       // ERROR
       // ===================================================
 
-      result.classList.add(
-        "error"
-      );
+      result.classList.add("error");
 
 
       resultTitle.textContent =
@@ -1297,11 +981,8 @@
 
         escapeHtml(
 
-          data &&
-          data.message
-
+          data && data.message
             ? data.message
-
             : "Terjadi kesalahan pada server check-in."
 
         ) +
@@ -1312,7 +993,6 @@
       setScannerStatus(
         "Terjadi kesalahan."
       );
-
     }
 
 
@@ -1337,11 +1017,8 @@
       resultDetails.innerHTML =
 
         '<div class="detail">' +
-
         'Memverifikasi QR ke Supabase...' +
-
         '</div>';
-
     }
 
 
@@ -1369,11 +1046,8 @@
 
         escapeHtml(
 
-          error &&
-          error.message
-
+          error && error.message
             ? error.message
-
             : "Tidak dapat menghubungi server check-in."
 
         ) +
@@ -1384,7 +1058,6 @@
       setScannerStatus(
         "Server check-in tidak dapat dihubungi."
       );
-
     }
 
 
@@ -1410,9 +1083,7 @@
 
         '<div class="detail">' +
 
-        escapeHtml(
-          message
-        ) +
+        escapeHtml(message) +
 
         '</div>';
 
@@ -1420,7 +1091,6 @@
       setScannerStatus(
         "Input tidak valid."
       );
-
     }
 
 
@@ -1432,12 +1102,9 @@
 
       if (requestTimeout) {
 
-        clearTimeout(
-          requestTimeout
-        );
+        clearTimeout(requestTimeout);
 
         requestTimeout = null;
-
       }
 
 
@@ -1471,7 +1138,6 @@
 
 
       await startScanner();
-
     }
 
 
@@ -1511,7 +1177,6 @@
           /'/g,
           "&#039;"
         );
-
     }
 
 
@@ -1533,17 +1198,13 @@
 
     manualToken.addEventListener(
       "keydown",
-      function(event) {
+      function (event) {
 
-        if (
-          event.key ===
-          "Enter"
-        ) {
+        if (event.key === "Enter") {
 
           event.preventDefault();
 
           manualCheckIn();
-
         }
 
       }
@@ -1556,7 +1217,7 @@
 
     window.addEventListener(
       "load",
-      function() {
+      function () {
 
         startScanner();
 
@@ -1565,8 +1226,6 @@
 
   </script>
 
-
 </body>
-
 </html>
 ```
