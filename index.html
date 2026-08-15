@@ -1,5 +1,5 @@
+```html
 <!DOCTYPE html>
-
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -105,10 +105,6 @@
       transform: scale(0.98);
     }
 
-    /* ========================================
-       TOMBOL 1 — PUTIH
-       ======================================== */
-
     .btn-registration {
       background: #ffffff;
       color: #000000;
@@ -119,11 +115,6 @@
       background: #eeeeee;
       border-color: #eeeeee;
     }
-
-
-    /* ========================================
-       TOMBOL 2 — MERAH
-       ======================================== */
 
     .btn-scanner {
       background: var(--red);
@@ -136,11 +127,6 @@
       border-color: #f00000;
     }
 
-
-    /* ========================================
-       TOMBOL 3 — PUTIH
-       ======================================== */
-
     .btn-admin {
       background: #ffffff;
       color: #000000;
@@ -151,7 +137,6 @@
       background: #eeeeee;
       border-color: #eeeeee;
     }
-
 
     .copy-status {
       min-height: 18px;
@@ -169,7 +154,6 @@
     }
 
     @media (max-width: 600px) {
-
       body {
         padding: 14px;
       }
@@ -186,106 +170,104 @@
       button {
         font-size: 12px;
       }
-
     }
   </style>
-
 </head>
 
 <body>
 
   <div class="container">
 
-```
-<div class="brand">
-  <span class="bold">BOLD</span>
-  <span class="after"> AFTER </span>
-  <span class="dark">DARK</span>
-</div>
+    <div class="brand">
+      <span class="bold">BOLD</span>
+      <span class="after"> AFTER </span>
+      <span class="dark">DARK</span>
+    </div>
 
-<div class="subtitle">
-  OFFICIAL EVENT ACCESS
-</div>
+    <div class="subtitle">
+      OFFICIAL EVENT ACCESS
+    </div>
 
+    <div class="card">
 
-<div class="card">
+      <div class="button-list">
 
-  <div class="button-list">
+        <button
+          id="copyLinkButton"
+          class="btn-registration"
+          type="button"
+        >
+          COPY LINK FORM REGISTRATION
+        </button>
 
-    <!-- TOMBOL ATAS — PUTIH -->
-    <button
-      id="copyLinkButton"
-      class="btn-registration"
-      type="button"
-    >
-      COPY LINK FORM REGISTRATION
-    </button>
+        <button
+          id="scannerButton"
+          class="btn-scanner"
+          type="button"
+        >
+          QR SCANNER
+        </button>
 
+        <button
+          id="adminButton"
+          class="btn-admin"
+          type="button"
+        >
+          ADMIN
+        </button>
 
-    <!-- TOMBOL TENGAH — MERAH -->
-    <button
-      id="scannerButton"
-      class="btn-scanner"
-      type="button"
-    >
-      QR SCANNER
-    </button>
+      </div>
 
+      <div
+        id="copyStatus"
+        class="copy-status"
+      ></div>
 
-    <!-- TOMBOL BAWAH — PUTIH -->
-    <button
-      id="adminButton"
-      class="btn-admin"
-      type="button"
-    >
-      ADMIN
-    </button>
+    </div>
 
-  </div>
-
-
-  <div
-    id="copyStatus"
-    class="copy-status"
-  ></div>
-
-</div>
-
-
-<div class="footer">
-  BOLD AFTER DARK
-</div>
-```
+    <div class="footer">
+      BOLD AFTER DARK
+    </div>
 
   </div>
 
   <script>
     "use strict";
 
+    /*
+     * Semua link menggunakan domain aktif.
+     *
+     * HOME:
+     * /
+     *
+     * REGISTRATION:
+     * /registration/
+     *
+     * SCANNER:
+     * /scanner.html
+     *
+     * ADMIN:
+     * /admin.html
+     */
 
     const REGISTRATION_URL =
-      "https://purbalinggabmtc-cmyk.github.io/bold-after-dark-scanner/registration/";
-
+      "https://boldafterdark.my.id/registration/";
 
     const SCANNER_URL =
-      "https://purbalinggabmtc-cmyk.github.io/bold-after-dark-scanner/index.html";
-
+      "https://boldafterdark.my.id/scanner.html";
 
     const ADMIN_URL =
-      "https://purbalinggabmtc-cmyk.github.io/bold-after-dark-scanner/admin.html";
+      "https://boldafterdark.my.id/admin.html";
 
 
     const copyLinkButton =
       document.getElementById("copyLinkButton");
 
-
     const scannerButton =
       document.getElementById("scannerButton");
 
-
     const adminButton =
       document.getElementById("adminButton");
-
 
     const copyStatus =
       document.getElementById("copyStatus");
@@ -341,10 +323,8 @@
           }
         }
 
-
         copyStatus.textContent =
           "Link Form Registration berhasil disalin.";
-
 
         setTimeout(
           function() {
@@ -352,7 +332,6 @@
           },
           2500
         );
-
 
       } catch (error) {
 
@@ -363,7 +342,6 @@
 
         copyStatus.textContent =
           "Tidak dapat menyalin link.";
-
       }
     }
 
@@ -405,3 +383,4 @@
 
 </body>
 </html>
+```
