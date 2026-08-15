@@ -132,7 +132,7 @@
     }
 
     /* =========================================================
-       QR READER
+       CAMERA READER
        ========================================================= */
 
     #reader {
@@ -140,6 +140,7 @@
       overflow: hidden;
       border-radius: 12px;
       background: #050505;
+      min-height: 280px;
     }
 
     #reader video {
@@ -147,20 +148,84 @@
       max-width: 100%;
       border-radius: 10px;
       display: block;
+      object-fit: cover;
     }
 
-    #reader__dashboard_section_swaplink,
-    #reader__status_span,
-    #reader__dashboard_section_csr {
+    /*
+      JANGAN sembunyikan:
+      #reader__dashboard_section_csr
+
+      Bagian tersebut diperlukan html5-qrcode
+      untuk proses kamera / permission.
+    */
+
+    #reader__dashboard_section_swaplink {
       display: none !important;
+    }
+
+    #reader__status_span {
+      display: none !important;
+    }
+
+    #reader__dashboard_section {
+      background: #111111 !important;
     }
 
     #reader__scan_region {
       min-height: 220px;
+      background: #050505 !important;
     }
 
     #reader img {
       max-width: 100%;
+    }
+
+    #reader button {
+      background: #e00000 !important;
+      color: #ffffff !important;
+      border: none !important;
+      border-radius: 8px !important;
+      padding: 11px 16px !important;
+      font-weight: 900 !important;
+      cursor: pointer !important;
+    }
+
+    #reader select {
+      background: #1a1a1a !important;
+      color: #ffffff !important;
+      border: 1px solid #444444 !important;
+      border-radius: 7px !important;
+      padding: 8px !important;
+    }
+
+    /* =========================================================
+       CAMERA FALLBACK BUTTON
+       ========================================================= */
+
+    .camera-button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 13px 16px;
+      background: #e00000;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.6px;
+      display: none;
+    }
+
+    .camera-button.show {
+      display: block;
+    }
+
+    .camera-button:hover {
+      background: #ff0000;
+    }
+
+    .camera-button:active {
+      transform: scale(0.98);
     }
 
     /* =========================================================
@@ -173,6 +238,14 @@
       color: #888888;
       font-size: 12px;
       line-height: 1.4;
+    }
+
+    .status-text.error {
+      color: #ff6b6b;
+    }
+
+    .status-text.success {
+      color: #35e878;
     }
 
     /* =========================================================
@@ -378,6 +451,10 @@
         border-radius: 15px;
       }
 
+      #reader {
+        min-height: 250px;
+      }
+
       .manual {
         flex-direction: column;
       }
@@ -403,9 +480,7 @@
   <div class="container">
 
 ```
-<!-- =======================================================
-     HOME BUTTON
-     ======================================================= -->
+<!-- HOME BUTTON -->
 
 <div class="top-nav">
 
@@ -419,9 +494,7 @@
 </div>
 
 
-<!-- =======================================================
-     BRAND
-     ======================================================= -->
+<!-- BRAND -->
 
 <div class="brand">
   BOLD <span>AFTER DARK</span>
@@ -432,13 +505,19 @@
 </div>
 
 
-<!-- =======================================================
-     SCANNER CARD
-     ======================================================= -->
+<!-- SCANNER CARD -->
 
 <div class="scanner-card">
 
   <div id="reader"></div>
+
+  <button
+    type="button"
+    id="cameraButton"
+    class="camera-button"
+  >
+    AKTIFKAN KAMERA
+  </button>
 
   <div
     id="scannerStatus"
@@ -446,9 +525,7 @@
   ></div>
 
 
-  <!-- =====================================================
-       MANUAL TOKEN
-       ===================================================== -->
+  <!-- MANUAL TOKEN -->
 
   <div class="manual">
 
@@ -470,9 +547,7 @@
   </div>
 
 
-  <!-- =====================================================
-       RESULT
-       ===================================================== -->
+  <!-- RESULT -->
 
   <div
     id="result"
@@ -501,9 +576,7 @@
 </div>
 
 
-<!-- =======================================================
-     FOOTER
-     ======================================================= -->
+<!-- FOOTER -->
 
 <div class="footer">
   BOLD AFTER DARK • THE NIGHT STARTS HERE
@@ -513,6 +586,7 @@
   </div>
 
   <script>
+    "use strict";
 
     /* =========================================================
        CONFIG
@@ -532,6 +606,8 @@
 
     let requestTimeout = null;
 
+    let scannerStarting = false;
+
 
     /* =========================================================
        ELEMENTS
@@ -539,6 +615,9 @@
 
     const reader =
       document.getElementById("reader");
+
+    const cameraButton =
+      document.getElementById("cameraButton");
 
     const scannerStatus =
       document.getElementById("scannerStatus");
@@ -566,7 +645,14 @@
        STATUS
        ========================================================= */
 
-    function setScannerStatus(text) {
+    function setScannerStatus(
+      text,
+      type = ""
+    ) {
+
+      scannerStatus.className =
+        "status-text" +
+        (type ? " " + type : "");
 
       scannerStatus.textContent =
         text || "";
@@ -580,11 +666,22 @@
 
     async function startScanner() {
 
+      if (scannerStarting) {
+        return;
+      }
+
+      scannerStarting = true;
+
       processing = false;
+
+      cameraButton.classList.remove(
+        "show"
+      );
 
       setScannerStatus(
         "Memulai kamera..."
       );
+
 
       if (scanner) {
 
@@ -605,6 +702,7 @@
 
       }
 
+
       reader.innerHTML = "";
 
 
@@ -621,7 +719,9 @@
                 height: 250
               },
 
-              rememberLastUsedCamera: true,
+              aspectRatio: 1.0,
+
+              rememberLastUsedCamera: false,
 
               supportedScanTypes: [
                 Html5QrcodeScanType.SCAN_TYPE_CAMERA,
@@ -639,7 +739,29 @@
 
 
         setScannerStatus(
-          "Arahkan kamera ke QR code."
+          "Meminta akses kamera..."
+        );
+
+
+        setTimeout(
+          function() {
+
+            const cameraPermissionButton =
+              reader.querySelector(
+                "button"
+              );
+
+            if (
+              cameraPermissionButton &&
+              !scanner
+            ) {
+              cameraButton.classList.add(
+                "show"
+              );
+            }
+
+          },
+          1500
         );
 
       } catch (error) {
@@ -649,10 +771,119 @@
           error
         );
 
-        showServerError({
-          message:
-            "Kamera scanner tidak dapat dimulai."
-        });
+        cameraButton.classList.add(
+          "show"
+        );
+
+        setScannerStatus(
+          "Kamera belum aktif. Tekan AKTIFKAN KAMERA.",
+          "error"
+        );
+
+      } finally {
+
+        scannerStarting = false;
+
+      }
+
+    }
+
+
+    /* =========================================================
+       MANUAL CAMERA START
+       ========================================================= */
+
+    async function forceStartCamera() {
+
+      cameraButton.disabled = true;
+
+      setScannerStatus(
+        "Mengaktifkan kamera..."
+      );
+
+
+      try {
+
+        if (scanner) {
+
+          try {
+
+            await scanner.clear();
+
+          } catch (error) {
+
+            console.warn(
+              "Scanner clear before retry:",
+              error
+            );
+
+          }
+
+          scanner = null;
+
+        }
+
+
+        reader.innerHTML = "";
+
+
+        scanner =
+          new Html5QrcodeScanner(
+            "reader",
+            {
+              fps: 10,
+
+              qrbox: {
+                width: 250,
+                height: 250
+              },
+
+              aspectRatio: 1.0,
+
+              rememberLastUsedCamera: false,
+
+              supportedScanTypes: [
+                Html5QrcodeScanType.SCAN_TYPE_CAMERA,
+                Html5QrcodeScanType.SCAN_TYPE_FILE
+              ]
+            },
+            false
+          );
+
+
+        scanner.render(
+          onScanSuccess,
+          onScanError
+        );
+
+
+        cameraButton.classList.remove(
+          "show"
+        );
+
+        setScannerStatus(
+          "Arahkan kamera ke QR code."
+        );
+
+      } catch (error) {
+
+        console.error(
+          "FORCE CAMERA ERROR:",
+          error
+        );
+
+        cameraButton.classList.add(
+          "show"
+        );
+
+        setScannerStatus(
+          "Kamera tidak dapat diaktifkan. Pastikan izin kamera diberikan.",
+          "error"
+        );
+
+      } finally {
+
+        cameraButton.disabled = false;
 
       }
 
@@ -663,11 +894,14 @@
        SCAN SUCCESS
        ========================================================= */
 
-    function onScanSuccess(decodedText) {
+    function onScanSuccess(
+      decodedText
+    ) {
 
       if (processing) {
         return;
       }
+
 
       const token =
         String(
@@ -702,7 +936,10 @@
 
     function onScanError() {
 
-      // Error scanning biasa sengaja tidak ditampilkan.
+      /*
+        Error scanning biasa tidak ditampilkan.
+        html5-qrcode akan terus mencoba membaca frame.
+      */
 
     }
 
@@ -717,6 +954,7 @@
         return;
       }
 
+
       try {
 
         await scanner.clear();
@@ -730,6 +968,7 @@
 
       }
 
+
       scanner = null;
 
     }
@@ -739,7 +978,9 @@
        PROCESS TOKEN
        ========================================================= */
 
-    async function processToken(token) {
+    async function processToken(
+      token
+    ) {
 
       showLoading();
 
@@ -984,11 +1225,15 @@
        SHOW RESULT
        ========================================================= */
 
-    function showResult(data) {
+    function showResult(
+      data
+    ) {
 
-      result.className = "result";
+      result.className =
+        "result";
 
-      result.style.display = "block";
+      result.style.display =
+        "block";
 
 
       /* =======================================================
@@ -1054,7 +1299,8 @@
 
 
         setScannerStatus(
-          "Check-in berhasil."
+          "Check-in berhasil.",
+          "success"
         );
 
         return;
@@ -1238,7 +1484,9 @@
        SERVER ERROR
        ========================================================= */
 
-    function showServerError(error) {
+    function showServerError(
+      error
+    ) {
 
       result.className =
         "result error";
@@ -1264,7 +1512,8 @@
 
 
       setScannerStatus(
-        "Server check-in tidak dapat dihubungi."
+        "Server check-in tidak dapat dihubungi.",
+        "error"
       );
 
     }
@@ -1274,7 +1523,9 @@
        TEMPORARY ERROR
        ========================================================= */
 
-    function showTemporaryError(message) {
+    function showTemporaryError(
+      message
+    ) {
 
       result.className =
         "result invalid";
@@ -1297,7 +1548,8 @@
 
 
       setScannerStatus(
-        "Input tidak valid."
+        "Input tidak valid.",
+        "error"
       );
 
     }
@@ -1348,7 +1600,9 @@
        ESCAPE HTML
        ========================================================= */
 
-    function escapeHtml(value) {
+    function escapeHtml(
+      value
+    ) {
 
       return String(
         value == null
@@ -1392,6 +1646,12 @@
     resetButton.addEventListener(
       "click",
       resetScanner
+    );
+
+
+    cameraButton.addEventListener(
+      "click",
+      forceStartCamera
     );
 
 
