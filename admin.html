@@ -1,6 +1,5 @@
-```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,7 +32,7 @@
     }
 
     button {
-      -webkit-tap-highlight-color: transparent;
+      cursor: pointer;
     }
 
     .hidden {
@@ -121,7 +120,7 @@
     }
 
     .primary-button:hover {
-      background: #c80000;
+      background: #ff0000;
     }
 
     .primary-button:disabled {
@@ -182,7 +181,6 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      flex-wrap: wrap;
     }
 
     .admin-email {
@@ -192,13 +190,11 @@
 
     .logout-button,
     .refresh-button,
-    .delete-button,
-    .select-all-button {
+    .delete-selected-button {
       padding: 10px 14px;
       border-radius: 8px;
       cursor: pointer;
       font-weight: 700;
-      border: none;
     }
 
     .logout-button {
@@ -208,16 +204,17 @@
     }
 
     .logout-button:hover {
-      background: #2d2d2d;
+      background: #333333;
     }
 
     .refresh-button {
       background: #e00000;
       color: white;
+      border: none;
     }
 
     .refresh-button:hover {
-      background: #c80000;
+      background: #ff0000;
     }
 
     /* =====================================================
@@ -276,7 +273,7 @@
 
     .filter-select {
       width: auto;
-      min-width: 150px;
+      min-width: 140px;
     }
 
     select {
@@ -288,15 +285,14 @@
       outline: none;
     }
 
-    .selection-bar {
+    .bulk-actions {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      margin-top: 13px;
-      padding-top: 13px;
-      border-top: 1px solid #292929;
-      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid #282828;
     }
 
     .selection-info {
@@ -305,37 +301,21 @@
     }
 
     .selection-info strong {
-      color: #ffffff;
-    }
-
-    .selection-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .select-all-button {
-      background: #222222;
-      color: #ffffff;
-      border: 1px solid #444444;
-    }
-
-    .select-all-button:hover {
-      background: #2d2d2d;
-    }
-
-    .delete-button {
-      background: #8d0000;
       color: white;
     }
 
-    .delete-button:hover {
+    .delete-selected-button {
       background: #b00000;
+      color: white;
+      border: 1px solid #d00000;
     }
 
-    .delete-button:disabled,
-    .select-all-button:disabled {
-      opacity: 0.45;
+    .delete-selected-button:hover {
+      background: #e00000;
+    }
+
+    .delete-selected-button:disabled {
+      opacity: 0.35;
       cursor: not-allowed;
     }
 
@@ -376,7 +356,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 1150px;
+      min-width: 1200px;
     }
 
     th {
@@ -388,12 +368,6 @@
       letter-spacing: 1px;
       text-transform: uppercase;
       white-space: nowrap;
-    }
-
-    th.checkbox-column,
-    td.checkbox-column {
-      width: 48px;
-      text-align: center;
     }
 
     td {
@@ -408,16 +382,17 @@
       background: #151515;
     }
 
-    tr.selected-row td {
-      background: rgba(224, 0, 0, 0.07);
+    .checkbox-cell {
+      width: 48px;
+      text-align: center;
     }
 
     .row-checkbox,
     #selectAllCheckbox {
       width: 17px;
       height: 17px;
-      cursor: pointer;
       accent-color: #e00000;
+      cursor: pointer;
     }
 
     .pass-id-cell {
@@ -445,7 +420,6 @@
       font-size: 10px;
       font-weight: 800;
       letter-spacing: 0.7px;
-      white-space: nowrap;
     }
 
     .badge-unused {
@@ -473,9 +447,9 @@
     }
 
     .badge-bold {
-      background: rgba(255, 100, 0, 0.12);
-      color: #ff9b5f;
-      border: 1px solid rgba(255, 100, 0, 0.35);
+      background: rgba(255, 125, 0, 0.12);
+      color: #ffad66;
+      border: 1px solid rgba(255, 125, 0, 0.35);
     }
 
     /* =====================================================
@@ -496,7 +470,6 @@
       border: 1px solid rgba(224, 0, 0, 0.35);
       color: #ff8f8f;
       font-size: 13px;
-      line-height: 1.5;
     }
 
     .success-banner {
@@ -505,9 +478,8 @@
       border-radius: 9px;
       background: rgba(22, 199, 90, 0.10);
       border: 1px solid rgba(22, 199, 90, 0.30);
-      color: #72eea0;
+      color: #67ed99;
       font-size: 13px;
-      line-height: 1.5;
     }
 
     /* =====================================================
@@ -533,6 +505,7 @@
       .topbar-right {
         width: 100%;
         justify-content: space-between;
+        flex-wrap: wrap;
       }
 
       .stats-grid {
@@ -552,17 +525,13 @@
         width: 100%;
       }
 
-      .selection-bar {
+      .bulk-actions {
         align-items: stretch;
         flex-direction: column;
       }
 
-      .selection-actions {
+      .delete-selected-button {
         width: 100%;
-      }
-
-      .selection-actions button {
-        flex: 1;
       }
     }
 
@@ -595,6 +564,7 @@
       <form id="loginForm">
 
         <div class="form-group">
+
           <label for="loginEmail">
             EMAIL
           </label>
@@ -606,9 +576,11 @@
             autocomplete="username"
             required
           >
+
         </div>
 
         <div class="form-group">
+
           <label for="loginPassword">
             PASSWORD
           </label>
@@ -620,6 +592,7 @@
             autocomplete="current-password"
             required
           >
+
         </div>
 
         <button
@@ -664,7 +637,9 @@
           <div
             id="adminEmail"
             class="admin-email"
-          ></div>
+          >
+            admin@admin.com
+          </div>
 
           <button
             id="refreshButton"
@@ -802,15 +777,15 @@
             id="searchInput"
             class="search-box"
             type="search"
-            placeholder="Search name / WhatsApp / Pass ID..."
+            placeholder="Search name / WhatsApp / Pass ID / BOLD RIDERS..."
             autocomplete="off"
           >
-
 
           <select
             id="statusFilter"
             class="filter-select"
           >
+
             <option value="ALL">
               ALL STATUS
             </option>
@@ -822,6 +797,7 @@
             <option value="USED">
               USED
             </option>
+
           </select>
 
 
@@ -829,6 +805,7 @@
             id="accessFilter"
             class="filter-select"
           >
+
             <option value="ALL">
               ALL ACCESS
             </option>
@@ -844,49 +821,29 @@
             <option value="BOLD RIDERS">
               BOLD RIDERS
             </option>
+
           </select>
 
         </div>
 
 
-        <div class="selection-bar">
+        <div class="bulk-actions">
 
           <div
             id="selectionInfo"
             class="selection-info"
           >
-            <strong>0</strong> selected
+            <strong>0</strong> data dipilih
           </div>
 
-
-          <div class="selection-actions">
-
-            <button
-              id="selectAllButton"
-              class="select-all-button"
-              type="button"
-            >
-              SELECT ALL
-            </button>
-
-            <button
-              id="clearSelectionButton"
-              class="select-all-button"
-              type="button"
-            >
-              CLEAR
-            </button>
-
-            <button
-              id="deleteSelectedButton"
-              class="delete-button"
-              type="button"
-              disabled
-            >
-              DELETE SELECTED
-            </button>
-
-          </div>
+          <button
+            id="deleteSelectedButton"
+            class="delete-selected-button"
+            type="button"
+            disabled
+          >
+            🗑️ HAPUS TERPILIH
+          </button>
 
         </div>
 
@@ -923,11 +880,11 @@
 
               <tr>
 
-                <th class="checkbox-column">
+                <th class="checkbox-cell">
                   <input
                     id="selectAllCheckbox"
                     type="checkbox"
-                    title="Select all visible"
+                    title="Pilih semua"
                   >
                 </th>
 
@@ -963,20 +920,27 @@
                   Check-In
                 </th>
 
+                <th>
+                  Check-In By
+                </th>
+
               </tr>
 
             </thead>
 
-
-            <tbody id="registrationTableBody">
+            <tbody
+              id="registrationTableBody"
+            >
 
               <tr>
+
                 <td
-                  colspan="9"
+                  colspan="10"
                   class="table-message"
                 >
-                  Login untuk melihat registrations.
+                  Silakan login...
                 </td>
+
               </tr>
 
             </tbody>
@@ -993,187 +957,145 @@
 
 
   <!-- =====================================================
-       SCRIPT
+       SUPABASE JS
        ===================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
   <script>
 
-    /*
-     * =====================================================
-     * BOLD AFTER DARK ADMIN
-     * =====================================================
-     *
-     * LOGIN SEMENTARA:
-     *
-     * EMAIL    : admin@admin.com
-     * PASSWORD : 22Jun!2002
-     *
-     * Login sengaja dibuat lokal.
-     *
-     * DATA:
-     * Semua komunikasi data menggunakan:
-     *
-     * /functions/v1/dynamic-service
-     *
-     * Report:
-     *   GET ?action=report
-     *
-     * Delete:
-     *   POST ?action=delete
-     *   body: { ids: ["uuid-1", "uuid-2"] }
-     *
-     * =====================================================
-     */
-
-
-    // =====================================================
-    // CONFIG
-    // =====================================================
+    /* =====================================================
+       CONFIG
+       ===================================================== */
 
     const SUPABASE_URL =
       'https://yrvnmmascklkuzpjkwxn.supabase.co';
 
-
     const SUPABASE_PUBLISHABLE_KEY =
       'sb_publishable_YGi3tPBuF9tW4KKnLJ5dDQ_AcBZ19WH';
 
-
-    const DYNAMIC_SERVICE_URL =
-      SUPABASE_URL +
-      '/functions/v1/dynamic-service';
-
+    /*
+     * LOGIN ADMIN LOKAL
+     *
+     * Ini sengaja tidak menggunakan Supabase Auth.
+     */
 
     const ADMIN_EMAIL =
       'admin@admin.com';
 
-
     const ADMIN_PASSWORD =
       '22Jun!2002';
 
+    const ADMIN_SESSION_KEY =
+      'bold_after_dark_admin_logged_in';
 
-    // =====================================================
-    // ELEMENTS
-    // =====================================================
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    /* =====================================================
+       ELEMENTS
+       ===================================================== */
 
     const loginScreen =
       document.getElementById(
         'loginScreen'
       );
 
-
     const dashboardScreen =
       document.getElementById(
         'dashboardScreen'
       );
-
 
     const loginForm =
       document.getElementById(
         'loginForm'
       );
 
-
     const loginEmail =
       document.getElementById(
         'loginEmail'
       );
-
 
     const loginPassword =
       document.getElementById(
         'loginPassword'
       );
 
-
     const loginButton =
       document.getElementById(
         'loginButton'
       );
-
 
     const loginMessage =
       document.getElementById(
         'loginMessage'
       );
 
-
     const adminEmail =
       document.getElementById(
         'adminEmail'
       );
-
 
     const logoutButton =
       document.getElementById(
         'logoutButton'
       );
 
-
     const refreshButton =
       document.getElementById(
         'refreshButton'
       );
-
 
     const dashboardError =
       document.getElementById(
         'dashboardError'
       );
 
-
     const dashboardSuccess =
       document.getElementById(
         'dashboardSuccess'
       );
-
 
     const searchInput =
       document.getElementById(
         'searchInput'
       );
 
-
     const statusFilter =
       document.getElementById(
         'statusFilter'
       );
-
 
     const accessFilter =
       document.getElementById(
         'accessFilter'
       );
 
-
     const tableBody =
       document.getElementById(
         'registrationTableBody'
       );
-
 
     const tableCount =
       document.getElementById(
         'tableCount'
       );
 
-
     const selectAllCheckbox =
       document.getElementById(
         'selectAllCheckbox'
       );
 
-
-    const selectAllButton =
+    const selectionInfo =
       document.getElementById(
-        'selectAllButton'
+        'selectionInfo'
       );
-
-
-    const clearSelectionButton =
-      document.getElementById(
-        'clearSelectionButton'
-      );
-
 
     const deleteSelectedButton =
       document.getElementById(
@@ -1181,34 +1103,18 @@
       );
 
 
-    const selectionInfo =
-      document.getElementById(
-        'selectionInfo'
-      );
-
-
-    // =====================================================
-    // DATA
-    // =====================================================
+    /* =====================================================
+       DATA
+       ===================================================== */
 
     let registrations = [];
 
-
-    let selectedIds =
-      new Set();
+    let selectedIds = new Set();
 
 
-    // =====================================================
-    // LOCAL SESSION
-    // =====================================================
-
-    const ADMIN_SESSION_KEY =
-      'bold_after_dark_admin_logged_in';
-
-
-    // =====================================================
-    // LOGIN MESSAGE
-    // =====================================================
+    /* =====================================================
+       LOGIN MESSAGE
+       ===================================================== */
 
     function showLoginError(message) {
 
@@ -1232,20 +1138,23 @@
     }
 
 
-    // =====================================================
-    // DASHBOARD MESSAGE
-    // =====================================================
+    /* =====================================================
+       DASHBOARD MESSAGES
+       ===================================================== */
 
-    function showDashboardError(message) {
+    function showDashboardError(text) {
 
-      dashboardError.textContent =
-        message;
-
-      dashboardError.classList.remove(
+      dashboardSuccess.classList.add(
         'hidden'
       );
 
-      dashboardSuccess.classList.add(
+      dashboardSuccess.textContent =
+        '';
+
+      dashboardError.textContent =
+        text;
+
+      dashboardError.classList.remove(
         'hidden'
       );
 
@@ -1264,39 +1173,44 @@
     }
 
 
-    function showDashboardSuccess(message) {
-
-      dashboardSuccess.textContent =
-        message;
-
-      dashboardSuccess.classList.remove(
-        'hidden'
-      );
+    function showDashboardSuccess(text) {
 
       dashboardError.classList.add(
         'hidden'
       );
 
-      window.clearTimeout(
-        window.__successTimer
+      dashboardError.textContent =
+        '';
+
+      dashboardSuccess.textContent =
+        text;
+
+      dashboardSuccess.classList.remove(
+        'hidden'
       );
 
-      window.__successTimer =
-        window.setTimeout(
-          function() {
+      setTimeout(
+        function() {
 
-            dashboardSuccess.classList.add(
-              'hidden'
-            );
+          dashboardSuccess.classList.add(
+            'hidden'
+          );
 
-          },
-          4000
-        );
+        },
+        3000
+      );
 
     }
 
 
-    function clearDashboardSuccess() {
+    function clearDashboardMessages() {
+
+      dashboardError.textContent =
+        '';
+
+      dashboardError.classList.add(
+        'hidden'
+      );
 
       dashboardSuccess.textContent =
         '';
@@ -1308,149 +1222,13 @@
     }
 
 
-    // =====================================================
-    // API REQUEST
-    // =====================================================
-
-    async function dynamicServiceRequest(
-      action,
-      options = {}
-    ) {
-
-      const method =
-        options.method ||
-        'GET';
-
-
-      const url =
-        DYNAMIC_SERVICE_URL +
-        '?action=' +
-        encodeURIComponent(
-          action
-        );
-
-
-      const headers = {
-        'apikey':
-          SUPABASE_PUBLISHABLE_KEY,
-
-        'Authorization':
-          'Bearer ' +
-          SUPABASE_PUBLISHABLE_KEY,
-
-        'Accept':
-          'application/json'
-      };
-
-
-      const fetchOptions = {
-        method,
-        headers
-      };
-
-
-      if (
-        options.body !== undefined
-      ) {
-
-        headers[
-          'Content-Type'
-        ] =
-          'application/json';
-
-
-        fetchOptions.body =
-          JSON.stringify(
-            options.body
-          );
-
-      }
-
-
-      const response =
-        await fetch(
-          url,
-          fetchOptions
-        );
-
-
-      const rawText =
-        await response.text();
-
-
-      let data = null;
-
-
-      try {
-
-        data =
-          rawText
-            ? JSON.parse(rawText)
-            : null;
-
-      }
-
-      catch (parseError) {
-
-        console.error(
-          'DYNAMIC SERVICE JSON PARSE ERROR:',
-          parseError,
-          rawText
-        );
-
-        throw new Error(
-          'Server mengembalikan response yang bukan JSON.'
-        );
-
-      }
-
-
-      if (!response.ok) {
-
-        const serverMessage =
-          data &&
-          (
-            data.message ||
-            data.error ||
-            data.detail
-          );
-
-
-        throw new Error(
-          serverMessage ||
-          'Dynamic service gagal. HTTP ' +
-          response.status
-        );
-
-      }
-
-
-      if (
-        data &&
-        data.success === false
-      ) {
-
-        throw new Error(
-          data.message ||
-          data.detail ||
-          'Dynamic service mengembalikan error.'
-        );
-
-      }
-
-
-      return data;
-
-    }
-
-
-    // =====================================================
-    // LOGIN
-    // =====================================================
+    /* =====================================================
+       LOCAL LOGIN
+       ===================================================== */
 
     loginForm.addEventListener(
       'submit',
-      async function(event) {
+      function(event) {
 
         event.preventDefault();
 
@@ -1468,7 +1246,6 @@
           const email =
             loginEmail.value.trim();
 
-
           const password =
             loginPassword.value;
 
@@ -1485,7 +1262,7 @@
           }
 
 
-          localStorage.setItem(
+          sessionStorage.setItem(
             ADMIN_SESSION_KEY,
             'true'
           );
@@ -1493,8 +1270,7 @@
 
           showDashboard();
 
-
-          await loadRegistrations();
+          loadRegistrations();
 
         }
 
@@ -1506,10 +1282,8 @@
           );
 
           showLoginError(
-            error &&
-            error.message
-              ? error.message
-              : 'Login gagal.'
+            error.message ||
+            'Login gagal.'
           );
 
         }
@@ -1528,9 +1302,9 @@
     );
 
 
-    // =====================================================
-    // SHOW DASHBOARD
-    // =====================================================
+    /* =====================================================
+       SHOW DASHBOARD
+       ===================================================== */
 
     function showDashboard() {
 
@@ -1542,30 +1316,27 @@
         'hidden'
       );
 
-
       adminEmail.textContent =
         ADMIN_EMAIL;
 
     }
 
 
-    // =====================================================
-    // LOGOUT
-    // =====================================================
+    /* =====================================================
+       LOGOUT
+       ===================================================== */
 
     logoutButton.addEventListener(
       'click',
       function() {
 
-        localStorage.removeItem(
+        sessionStorage.removeItem(
           ADMIN_SESSION_KEY
         );
-
 
         registrations = [];
 
         selectedIds.clear();
-
 
         dashboardScreen.classList.add(
           'hidden'
@@ -1575,31 +1346,24 @@
           'hidden'
         );
 
-
         loginPassword.value =
           '';
 
+        clearDashboardMessages();
 
-        clearDashboardError();
-
-        clearDashboardSuccess();
-
-        updateSelectionUI();
+        resetSelection();
 
       }
     );
 
 
-    // =====================================================
-    // LOAD REGISTRATIONS
-    // =====================================================
+    /* =====================================================
+       LOAD REGISTRATIONS
+       ===================================================== */
 
     async function loadRegistrations() {
 
       clearDashboardError();
-
-      clearDashboardSuccess();
-
 
       refreshButton.disabled =
         true;
@@ -1612,7 +1376,7 @@
         `
           <tr>
             <td
-              colspan="9"
+              colspan="10"
               class="table-message"
             >
               Loading registrations...
@@ -1623,89 +1387,61 @@
 
       try {
 
-        const data =
-          await dynamicServiceRequest(
-            'report'
-          );
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from('registrations')
+            .select(
+              `
+                id,
+                pass_id,
+                qr_token,
+                name,
+                whatsapp,
+                access_type,
+                table_package,
+                stay_connected,
+                community,
+                bold_riders_id,
+                bold_riders_name,
+                pass_status,
+                created_at,
+                checked_in_at,
+                checked_in_by
+              `
+            )
+            .order(
+              'created_at',
+              {
+                ascending: false
+              }
+            );
 
 
-        /*
-         * Support beberapa bentuk response:
-         *
-         * {
-         *   registrations: [...]
-         * }
-         *
-         * atau
-         *
-         * {
-         *   data: [...]
-         * }
-         */
+        if (error) {
 
-
-        let rows = [];
-
-
-        if (
-          data &&
-          Array.isArray(
-            data.registrations
-          )
-        ) {
-
-          rows =
-            data.registrations;
-
-        }
-
-        else if (
-          data &&
-          data.data &&
-          Array.isArray(
-            data.data.registrations
-          )
-        ) {
-
-          rows =
-            data.data.registrations;
-
-        }
-
-        else if (
-          data &&
-          Array.isArray(
-            data.data
-          )
-        ) {
-
-          rows =
-            data.data;
+          throw error;
 
         }
 
 
         registrations =
-          Array.isArray(rows)
-            ? rows
+          Array.isArray(data)
+            ? data
             : [];
 
 
         /*
-         * Bersihkan selected ID yang
-         * sudah tidak ada.
+         * Hanya pertahankan ID yang masih ada.
          */
 
-
-        const validIds =
+        const existingIds =
           new Set(
             registrations.map(
               function(row) {
-
-                return String(
-                  row.id
-                );
-
+                return String(row.id);
               }
             )
           );
@@ -1717,11 +1453,9 @@
               selectedIds
             ).filter(
               function(id) {
-
-                return validIds.has(
+                return existingIds.has(
                   id
                 );
-
               }
             )
           );
@@ -1747,7 +1481,6 @@
 
         selectedIds.clear();
 
-
         updateStatistics();
 
         updateSelectionUI();
@@ -1757,7 +1490,7 @@
           `
             <tr>
               <td
-                colspan="9"
+                colspan="10"
                 class="table-message"
               >
                 Tidak dapat membaca data registrations.
@@ -1767,10 +1500,8 @@
 
 
         showDashboardError(
-          error &&
-          error.message
-            ? error.message
-            : 'Gagal memuat data registrasi.'
+          error.message ||
+          'Gagal memuat data registrasi.'
         );
 
       }
@@ -1788,9 +1519,9 @@
     }
 
 
-    // =====================================================
-    // STATISTICS
-    // =====================================================
+    /* =====================================================
+       STATISTICS
+       ===================================================== */
 
     function updateStatistics() {
 
@@ -1814,8 +1545,7 @@
 
 
       const remaining =
-        total -
-        checkedIn;
+        total - checkedIn;
 
 
       const free =
@@ -1901,9 +1631,9 @@
     }
 
 
-    // =====================================================
-    // FILTER
-    // =====================================================
+    /* =====================================================
+       FILTER
+       ===================================================== */
 
     function getFilteredRegistrations() {
 
@@ -1942,12 +1672,6 @@
             ).toLowerCase();
 
 
-          const community =
-            String(
-              row.community || ''
-            ).toLowerCase();
-
-
           const boldRidersId =
             String(
               row.bold_riders_id || ''
@@ -1957,6 +1681,12 @@
           const boldRidersName =
             String(
               row.bold_riders_name || ''
+            ).toLowerCase();
+
+
+          const community =
+            String(
+              row.community || ''
             ).toLowerCase();
 
 
@@ -1977,9 +1707,9 @@
             name.includes(search) ||
             whatsapp.includes(search) ||
             passId.includes(search) ||
-            community.includes(search) ||
             boldRidersId.includes(search) ||
-            boldRidersName.includes(search);
+            boldRidersName.includes(search) ||
+            community.includes(search);
 
 
           const matchesStatus =
@@ -2004,9 +1734,9 @@
     }
 
 
-    // =====================================================
-    // RENDER TABLE
-    // =====================================================
+    /* =====================================================
+       RENDER TABLE
+       ===================================================== */
 
     function renderTable() {
 
@@ -2029,7 +1759,7 @@
           `
             <tr>
               <td
-                colspan="9"
+                colspan="10"
                 class="table-message"
               >
                 Tidak ada data yang cocok.
@@ -2038,14 +1768,7 @@
           `;
 
 
-        selectAllCheckbox.checked =
-          false;
-
-        selectAllCheckbox.indeterminate =
-          false;
-
-
-        updateSelectionUI();
+        updateSelectAllState();
 
         return;
 
@@ -2058,74 +1781,68 @@
             function(row) {
 
               const id =
-                String(
-                  row.id || ''
-                );
+                String(row.id);
 
 
               const checked =
-                selectedIds.has(
-                  id
-                );
+                selectedIds.has(id)
+                  ? 'checked'
+                  : '';
 
 
               return `
-                <tr
-                  class="${
-                    checked
-                      ? 'selected-row'
-                      : ''
-                  }"
-                >
+                <tr>
 
-                  <td class="checkbox-column">
+                  <td class="checkbox-cell">
 
                     <input
                       class="row-checkbox"
                       type="checkbox"
                       data-id="${escapeHtml(id)}"
-                      ${
-                        checked
-                          ? 'checked'
-                          : ''
-                      }
-                      aria-label="Select ${escapeHtml(
-                        row.name || 'registration'
-                      )}"
+                      ${checked}
                     >
 
                   </td>
 
 
                   <td class="name-cell">
+
                     ${escapeHtml(
                       row.name
                     )}
+
                   </td>
 
 
                   <td>
+
                     ${escapeHtml(
                       row.whatsapp
                     )}
+
                   </td>
 
 
                   <td class="pass-id-cell">
+
                     ${escapeHtml(
                       row.pass_id
                     )}
+
                   </td>
 
 
                   <td>
+
                     ${accessBadge(
                       row.access_type
                     )}
+
                   </td>
 
 
                   <td>
+
                     ${
                       row.table_package
                         ? escapeHtml(
@@ -2133,24 +1850,30 @@
                           )
                         : '<span class="muted">—</span>'
                     }
+
                   </td>
 
 
                   <td>
+
                     ${statusBadge(
                       row.pass_status
                     )}
+
                   </td>
 
 
                   <td>
+
                     ${formatDate(
                       row.created_at
                     )}
+
                   </td>
 
 
                   <td>
+
                     ${
                       row.checked_in_at
                         ? formatDate(
@@ -2158,6 +1881,20 @@
                           )
                         : '<span class="muted">—</span>'
                     }
+
+                  </td>
+
+
+                  <td>
+
+                    ${
+                      row.checked_in_by
+                        ? escapeHtml(
+                            row.checked_in_by
+                          )
+                        : '<span class="muted">—</span>'
+                    }
+
                   </td>
 
                 </tr>
@@ -2168,20 +1905,18 @@
           .join('');
 
 
-      bindRowCheckboxes();
+      attachRowCheckboxEvents();
 
-      updateSelectAllCheckbox();
-
-      updateSelectionUI();
+      updateSelectAllState();
 
     }
 
 
-    // =====================================================
-    // ROW CHECKBOX
-    // =====================================================
+    /* =====================================================
+       ROW CHECKBOX
+       ===================================================== */
 
-    function bindRowCheckboxes() {
+    function attachRowCheckboxEvents() {
 
       const checkboxes =
         document.querySelectorAll(
@@ -2198,7 +1933,7 @@
 
               const id =
                 String(
-                  checkbox.dataset.id || ''
+                  checkbox.dataset.id
                 );
 
 
@@ -2206,22 +1941,17 @@
                 checkbox.checked
               ) {
 
-                selectedIds.add(
-                  id
-                );
+                selectedIds.add(id);
 
               }
-
               else {
 
-                selectedIds.delete(
-                  id
-                );
+                selectedIds.delete(id);
 
               }
 
 
-              renderTable();
+              updateSelectionUI();
 
             }
           );
@@ -2232,66 +1962,34 @@
     }
 
 
-    // =====================================================
-    // SELECT ALL VISIBLE
-    // =====================================================
-
-    function selectAllVisible() {
-
-      const rows =
-        getFilteredRegistrations();
-
-
-      rows.forEach(
-        function(row) {
-
-          if (row.id) {
-
-            selectedIds.add(
-              String(row.id)
-            );
-
-          }
-
-        }
-      );
-
-
-      renderTable();
-
-    }
-
-
-    function clearSelection() {
-
-      selectedIds.clear();
-
-      renderTable();
-
-    }
-
-
-    // =====================================================
-    // SELECT ALL CHECKBOX
-    // =====================================================
+    /* =====================================================
+       SELECT ALL
+       ===================================================== */
 
     selectAllCheckbox.addEventListener(
       'change',
       function() {
 
+        const rows =
+          getFilteredRegistrations();
+
+
         if (
           selectAllCheckbox.checked
         ) {
 
-          selectAllVisible();
+          rows.forEach(
+            function(row) {
+
+              selectedIds.add(
+                String(row.id)
+              );
+
+            }
+          );
 
         }
-
         else {
-
-          const rows =
-            getFilteredRegistrations();
-
 
           rows.forEach(
             function(row) {
@@ -2303,48 +2001,18 @@
             }
           );
 
-
-          renderTable();
-
         }
 
-      }
-    );
 
+        renderTable();
 
-    // =====================================================
-    // SELECT ALL BUTTON
-    // =====================================================
-
-    selectAllButton.addEventListener(
-      'click',
-      function() {
-
-        selectAllVisible();
+        updateSelectionUI();
 
       }
     );
 
 
-    // =====================================================
-    // CLEAR SELECTION BUTTON
-    // =====================================================
-
-    clearSelectionButton.addEventListener(
-      'click',
-      function() {
-
-        clearSelection();
-
-      }
-    );
-
-
-    // =====================================================
-    // UPDATE SELECT ALL CHECKBOX
-    // =====================================================
-
-    function updateSelectAllCheckbox() {
+    function updateSelectAllState() {
 
       const rows =
         getFilteredRegistrations();
@@ -2363,30 +2031,20 @@
       }
 
 
-      let selectedVisible =
-        0;
+      const selectedVisible =
+        rows.filter(
+          function(row) {
 
-
-      rows.forEach(
-        function(row) {
-
-          if (
-            selectedIds.has(
+            return selectedIds.has(
               String(row.id)
-            )
-          ) {
-
-            selectedVisible++;
+            );
 
           }
-
-        }
-      );
+        ).length;
 
 
       selectAllCheckbox.checked =
-        selectedVisible ===
-        rows.length;
+        selectedVisible === rows.length;
 
 
       selectAllCheckbox.indeterminate =
@@ -2396,9 +2054,9 @@
     }
 
 
-    // =====================================================
-    // SELECTION UI
-    // =====================================================
+    /* =====================================================
+       SELECTION UI
+       ===================================================== */
 
     function updateSelectionUI() {
 
@@ -2409,29 +2067,36 @@
       selectionInfo.innerHTML =
         '<strong>' +
         count +
-        '</strong> selected';
+        '</strong> data dipilih';
 
 
       deleteSelectedButton.disabled =
         count === 0;
 
 
-      clearSelectionButton.disabled =
-        count === 0;
-
-
-      selectAllButton.disabled =
-        getFilteredRegistrations().length === 0;
-
-
-      updateSelectAllCheckbox();
+      updateSelectAllState();
 
     }
 
 
-    // =====================================================
-    // DELETE SELECTED
-    // =====================================================
+    function resetSelection() {
+
+      selectedIds.clear();
+
+      selectAllCheckbox.checked =
+        false;
+
+      selectAllCheckbox.indeterminate =
+        false;
+
+      updateSelectionUI();
+
+    }
+
+
+    /* =====================================================
+       DELETE SELECTED
+       ===================================================== */
 
     deleteSelectedButton.addEventListener(
       'click',
@@ -2450,72 +2115,16 @@
         }
 
 
-        const selectedRows =
-          registrations.filter(
-            function(row) {
-
-              return selectedIds.has(
-                String(row.id)
-              );
-
-            }
-          );
-
-
-        const names =
-          selectedRows
-            .slice(0, 5)
-            .map(
-              function(row) {
-
-                return row.name ||
-                  row.pass_id ||
-                  row.id;
-
-              }
-            );
-
-
-        let confirmationMessage =
-          'Anda akan menghapus ' +
-          ids.length +
-          ' registrasi.';
-
-
-        if (names.length > 0) {
-
-          confirmationMessage +=
-            '\n\n' +
-            names.join('\n');
-
-        }
-
-
-        if (
-          ids.length > 5
-        ) {
-
-          confirmationMessage +=
-            '\n... dan ' +
-            (
-              ids.length - 5
-            ) +
-            ' lainnya.';
-
-        }
-
-
-        confirmationMessage +=
-          '\n\nData yang dihapus tidak dapat dikembalikan.\n\nLanjutkan?';
-
-
-        const confirmed =
+        const confirmation =
           window.confirm(
-            confirmationMessage
+            'Hapus ' +
+            ids.length +
+            ' registrasi yang dipilih?\n\n' +
+            'Data yang dihapus tidak dapat dikembalikan.'
           );
 
 
-        if (!confirmed) {
+        if (!confirmation) {
 
           return;
 
@@ -2526,61 +2135,71 @@
           true;
 
         deleteSelectedButton.textContent =
-          'DELETING...';
+          'MENGHAPUS...';
 
 
-        clearDashboardError();
-
-        clearDashboardSuccess();
+        clearDashboardMessages();
 
 
         try {
 
           /*
-           * Dynamic service contract:
+           * Delete langsung menggunakan Supabase.
            *
-           * POST
-           * ?action=delete
-           *
-           * {
-           *   ids: [...]
-           * }
+           * Jika muncul error RLS / permission denied,
+           * berarti tabel registrations belum mempunyai
+           * DELETE policy untuk publishable/anon key.
            */
 
+          const {
+            error
+          } =
+            await supabaseClient
+              .from('registrations')
+              .delete()
+              .in(
+                'id',
+                ids
+              );
 
-          const response =
-            await dynamicServiceRequest(
-              'delete',
-              {
-                method: 'POST',
 
-                body: {
-                  ids
-                }
+          if (error) {
+
+            throw error;
+
+          }
+
+
+          /*
+           * Hapus dari memory setelah database berhasil.
+           */
+
+          registrations =
+            registrations.filter(
+              function(row) {
+
+                return !selectedIds.has(
+                  String(row.id)
+                );
+
               }
-            );
-
-
-          const deletedCount =
-            response &&
-            (
-              response.deletedCount ??
-              response.count ??
-              ids.length
             );
 
 
           selectedIds.clear();
 
 
+          updateStatistics();
+
+          renderTable();
+
+          updateSelectionUI();
+
+
           showDashboardSuccess(
-            'Berhasil menghapus ' +
-            deletedCount +
-            ' registrasi.'
+            ids.length +
+            ' registrasi berhasil dihapus.'
           );
-
-
-          await loadRegistrations();
 
         }
 
@@ -2593,21 +2212,19 @@
 
 
           showDashboardError(
-            error &&
-            error.message
-              ? error.message
-              : 'Gagal menghapus registrasi.'
+            'Gagal menghapus registrasi: ' +
+            (
+              error.message ||
+              'Unknown error'
+            )
           );
 
         }
 
         finally {
 
-          deleteSelectedButton.disabled =
-            selectedIds.size === 0;
-
           deleteSelectedButton.textContent =
-            'DELETE SELECTED';
+            '🗑️ HAPUS TERPILIH';
 
           updateSelectionUI();
 
@@ -2617,9 +2234,9 @@
     );
 
 
-    // =====================================================
-    // STATUS BADGE
-    // =====================================================
+    /* =====================================================
+       STATUS BADGE
+       ===================================================== */
 
     function statusBadge(status) {
 
@@ -2629,9 +2246,7 @@
         ).toUpperCase();
 
 
-      if (
-        value === 'USED'
-      ) {
+      if (value === 'USED') {
 
         return `
           <span class="badge badge-used">
@@ -2644,18 +2259,16 @@
 
       return `
         <span class="badge badge-unused">
-          ${escapeHtml(
-            value || 'UNUSED'
-          )}
+          UNUSED
         </span>
       `;
 
     }
 
 
-    // =====================================================
-    // ACCESS BADGE
-    // =====================================================
+    /* =====================================================
+       ACCESS BADGE
+       ===================================================== */
 
     function accessBadge(access) {
 
@@ -2663,19 +2276,6 @@
         String(
           access || ''
         ).toUpperCase();
-
-
-      if (
-        value === 'VIP'
-      ) {
-
-        return `
-          <span class="badge badge-vip">
-            VIP
-          </span>
-        `;
-
-      }
 
 
       if (
@@ -2691,20 +2291,31 @@
       }
 
 
+      if (
+        value === 'VIP'
+      ) {
+
+        return `
+          <span class="badge badge-vip">
+            VIP
+          </span>
+        `;
+
+      }
+
+
       return `
         <span class="badge badge-free">
-          ${escapeHtml(
-            value || 'FREE'
-          )}
+          FREE
         </span>
       `;
 
     }
 
 
-    // =====================================================
-    // DATE FORMAT
-    // =====================================================
+    /* =====================================================
+       DATE FORMAT
+       ===================================================== */
 
     function formatDate(value) {
 
@@ -2743,9 +2354,9 @@
     }
 
 
-    // =====================================================
-    // HTML ESCAPE
-    // =====================================================
+    /* =====================================================
+       HTML ESCAPE
+       ===================================================== */
 
     function escapeHtml(value) {
 
@@ -2778,9 +2389,9 @@
     }
 
 
-    // =====================================================
-    // REFRESH
-    // =====================================================
+    /* =====================================================
+       REFRESH
+       ===================================================== */
 
     refreshButton.addEventListener(
       'click',
@@ -2792,9 +2403,9 @@
     );
 
 
-    // =====================================================
-    // LIVE SEARCH
-    // =====================================================
+    /* =====================================================
+       LIVE SEARCH
+       ===================================================== */
 
     searchInput.addEventListener(
       'input',
@@ -2806,10 +2417,6 @@
     );
 
 
-    // =====================================================
-    // STATUS FILTER
-    // =====================================================
-
     statusFilter.addEventListener(
       'change',
       function() {
@@ -2819,10 +2426,6 @@
       }
     );
 
-
-    // =====================================================
-    // ACCESS FILTER
-    // =====================================================
 
     accessFilter.addEventListener(
       'change',
@@ -2834,14 +2437,14 @@
     );
 
 
-    // =====================================================
-    // RESTORE LOCAL LOGIN
-    // =====================================================
+    /* =====================================================
+       RESTORE LOCAL SESSION
+       ===================================================== */
 
-    function checkLocalSession() {
+    function checkExistingAdminSession() {
 
       const loggedIn =
-        localStorage.getItem(
+        sessionStorage.getItem(
           ADMIN_SESSION_KEY
         );
 
@@ -2859,14 +2462,13 @@
     }
 
 
-    // =====================================================
-    // START
-    // =====================================================
+    /* =====================================================
+       START
+       ===================================================== */
 
-    checkLocalSession();
+    checkExistingAdminSession();
 
   </script>
 
 </body>
 </html>
-```
