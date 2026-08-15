@@ -15,7 +15,12 @@
       margin: 0;
       min-height: 100vh;
       background:
-        radial-gradient(circle at top, #2a0000 0%, #0b0b0b 42%, #000000 100%);
+        radial-gradient(
+          circle at top,
+          #2a0000 0%,
+          #0b0b0b 42%,
+          #000000 100%
+        );
       color: #ffffff;
       font-family: Arial, Helvetica, sans-serif;
     }
@@ -29,6 +34,10 @@
     .hidden {
       display: none !important;
     }
+
+    /* ============================================================
+       LOGIN
+       ============================================================ */
 
     #loginScreen {
       min-height: 100vh;
@@ -48,16 +57,23 @@
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
     }
 
+    /* BOLD = WHITE / AFTER = RED / DARK = WHITE */
+
     .brand {
       text-align: center;
       font-size: 28px;
       font-weight: 900;
       letter-spacing: 3px;
       margin-bottom: 5px;
+      color: #ffffff;
     }
 
-    .brand span {
+    .brand .red {
       color: #e00000;
+    }
+
+    .brand .white {
+      color: #ffffff;
     }
 
     .login-subtitle {
@@ -127,6 +143,10 @@
       color: #ff8f8f;
     }
 
+    /* ============================================================
+       DASHBOARD
+       ============================================================ */
+
     #dashboardScreen {
       min-height: 100vh;
       padding: 25px;
@@ -150,10 +170,15 @@
       font-size: 25px;
       font-weight: 900;
       letter-spacing: 2px;
+      color: #ffffff;
     }
 
-    .topbar-brand span {
+    .topbar-brand .red {
       color: #e00000;
+    }
+
+    .topbar-brand .white {
+      color: #ffffff;
     }
 
     .topbar-right {
@@ -169,6 +194,7 @@
 
     .logout-button,
     .refresh-button,
+    .report-button,
     .delete-button,
     .select-button {
       padding: 10px 14px;
@@ -187,6 +213,23 @@
       background: #e00000;
       color: white;
       border: none;
+    }
+
+    /* ============================================================
+       REPORT BUTTON
+       ============================================================ */
+
+    .report-button {
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #ffffff;
+      transition: 0.15s ease;
+    }
+
+    .report-button:hover {
+      background: #e00000;
+      color: #ffffff;
+      border-color: #e00000;
     }
 
     .delete-button {
@@ -210,6 +253,10 @@
       color: #dddddd;
       border: 1px solid #444444;
     }
+
+    /* ============================================================
+       STATISTICS
+       ============================================================ */
 
     .stats-grid {
       display: grid;
@@ -237,6 +284,10 @@
       font-size: 30px;
       font-weight: 900;
     }
+
+    /* ============================================================
+       CONTROLS
+       ============================================================ */
 
     .controls {
       background: #111111;
@@ -292,6 +343,10 @@
       gap: 8px;
       flex-wrap: wrap;
     }
+
+    /* ============================================================
+       TABLE
+       ============================================================ */
 
     .table-card {
       background: #111111;
@@ -379,6 +434,10 @@
       color: #777777;
     }
 
+    /* ============================================================
+       BADGES
+       ============================================================ */
+
     .badge {
       display: inline-block;
       padding: 5px 9px;
@@ -424,6 +483,10 @@
       color: #777777;
     }
 
+    /* ============================================================
+       MESSAGES
+       ============================================================ */
+
     .error-banner {
       margin-bottom: 18px;
       padding: 13px 15px;
@@ -443,6 +506,17 @@
       border: 1px solid rgba(22, 199, 90, 0.30);
       color: #55e88b;
       font-size: 13px;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+
+    @media (max-width: 1100px) {
+      .topbar-right {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
     }
 
     @media (max-width: 900px) {
@@ -467,6 +541,15 @@
         flex-wrap: wrap;
       }
 
+      .topbar-right button {
+        flex: 1;
+        min-width: 100px;
+      }
+
+      .admin-email {
+        width: 100%;
+      }
+
       .stats-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -489,6 +572,15 @@
       .stats-grid {
         grid-template-columns: 1fr;
       }
+
+      .topbar-right {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .topbar-right button {
+        width: 100%;
+      }
     }
   </style>
 
@@ -496,7 +588,9 @@
 
 <body>
 
-  <!-- LOGIN -->
+  <!-- ============================================================
+       LOGIN
+       ============================================================ -->
 
   <section id="loginScreen">
 
@@ -504,7 +598,7 @@
 <div class="login-card">
 
   <div class="brand">
-    BOLD <span>AFTER DARK</span>
+    BOLD <span class="red">AFTER</span> <span class="white">DARK</span>
   </div>
 
   <div class="login-subtitle">
@@ -557,7 +651,9 @@
 
   </section>
 
-  <!-- DASHBOARD -->
+  <!-- ============================================================
+       DASHBOARD
+       ============================================================ -->
 
   <section
     id="dashboardScreen"
@@ -570,7 +666,7 @@
   <div class="topbar">
 
     <div class="topbar-brand">
-      BOLD <span>AFTER DARK</span>
+      BOLD <span class="red">AFTER</span> <span class="white">DARK</span>
     </div>
 
     <div class="topbar-right">
@@ -579,6 +675,16 @@
         id="adminEmail"
         class="admin-email"
       ></div>
+
+      <!-- REPORT BUTTON -->
+
+      <button
+        id="reportButton"
+        class="report-button"
+        type="button"
+      >
+        LAPORAN
+      </button>
 
       <button
         id="refreshButton"
@@ -601,6 +707,8 @@
   </div>
 
 
+  <!-- MESSAGES -->
+
   <div
     id="dashboardError"
     class="error-banner hidden"
@@ -612,7 +720,9 @@
   ></div>
 
 
-  <!-- STATISTICS -->
+  <!-- ========================================================
+       STATISTICS
+       ======================================================== -->
 
   <div class="stats-grid">
 
@@ -644,7 +754,9 @@
   </div>
 
 
-  <!-- SEARCH / FILTER -->
+  <!-- ========================================================
+       SEARCH / FILTER
+       ======================================================== -->
 
   <div class="controls">
 
@@ -723,7 +835,9 @@
   </div>
 
 
-  <!-- TABLE -->
+  <!-- ========================================================
+       TABLE
+       ======================================================== -->
 
   <div class="table-card">
 
@@ -741,7 +855,6 @@
       </div>
 
     </div>
-
 
     <div class="table-wrapper">
 
@@ -797,11 +910,10 @@
   </section>
 
   <script>
-    /*
-     * ============================================================
-     * CONFIG
-     * ============================================================
-     */
+
+    /* ============================================================
+       CONFIG
+       ============================================================ */
 
     const SUPABASE_URL =
       "https://yrvnmmascklkuzpjkwxn.supabase.co";
@@ -814,14 +926,9 @@
       "/functions/v1/dynamic-service";
 
 
-    /*
-     * ============================================================
-     * ADMIN LOGIN
-     * ============================================================
-     *
-     * Login ini sengaja LOCAL.
-     * Tidak menggunakan Supabase Auth.
-     */
+    /* ============================================================
+       ADMIN LOGIN
+       ============================================================ */
 
     const ADMIN_EMAIL =
       "admin@admin.com";
@@ -830,11 +937,9 @@
       "22Jun!2002";
 
 
-    /*
-     * ============================================================
-     * ELEMENTS
-     * ============================================================
-     */
+    /* ============================================================
+       ELEMENTS
+       ============================================================ */
 
     const loginScreen =
       document.getElementById("loginScreen");
@@ -865,6 +970,9 @@
 
     const refreshButton =
       document.getElementById("refreshButton");
+
+    const reportButton =
+      document.getElementById("reportButton");
 
     const dashboardError =
       document.getElementById("dashboardError");
@@ -903,32 +1011,40 @@
       document.getElementById("selectedInfo");
 
 
-    /*
-     * ============================================================
-     * DATA
-     * ============================================================
-     */
+    /* ============================================================
+       DATA
+       ============================================================ */
 
     let registrations = [];
 
     let selectedIds = new Set();
 
 
-    /*
-     * ============================================================
-     * LOGIN
-     * ============================================================
-     */
+    /* ============================================================
+       LOGIN
+       ============================================================ */
 
     function showLoginError(message) {
-      loginMessage.textContent = message;
-      loginMessage.className = "login-message error";
+
+      loginMessage.textContent =
+        message;
+
+      loginMessage.className =
+        "login-message error";
+
     }
 
+
     function clearLoginError() {
-      loginMessage.textContent = "";
-      loginMessage.className = "login-message";
+
+      loginMessage.textContent =
+        "";
+
+      loginMessage.className =
+        "login-message";
+
     }
+
 
     loginForm.addEventListener(
       "submit",
@@ -954,10 +1070,13 @@
           );
 
           return;
+
         }
 
         loginButton.disabled = true;
-        loginButton.textContent = "LOGIN...";
+
+        loginButton.textContent =
+          "LOGIN...";
 
         setTimeout(
           async function() {
@@ -973,10 +1092,14 @@
             adminEmail.textContent =
               ADMIN_EMAIL;
 
-            loginPassword.value = "";
+            loginPassword.value =
+              "";
 
-            loginButton.disabled = false;
-            loginButton.textContent = "LOGIN";
+            loginButton.disabled =
+              false;
+
+            loginButton.textContent =
+              "LOGIN";
 
             await loadRegistrations();
 
@@ -988,11 +1111,24 @@
     );
 
 
-    /*
-     * ============================================================
-     * LOGOUT
-     * ============================================================
-     */
+    /* ============================================================
+       REPORT BUTTON
+       ============================================================ */
+
+    reportButton.addEventListener(
+      "click",
+      function() {
+
+        window.location.href =
+          "report.html";
+
+      }
+    );
+
+
+    /* ============================================================
+       LOGOUT
+       ============================================================ */
 
     logoutButton.addEventListener(
       "click",
@@ -1010,9 +1146,11 @@
           "hidden"
         );
 
-        loginPassword.value = "";
+        loginPassword.value =
+          "";
 
         clearDashboardError();
+
         clearDashboardSuccess();
 
         renderTable();
@@ -1021,11 +1159,9 @@
     );
 
 
-    /*
-     * ============================================================
-     * MESSAGE
-     * ============================================================
-     */
+    /* ============================================================
+       MESSAGE
+       ============================================================ */
 
     function showDashboardError(message) {
 
@@ -1038,15 +1174,18 @@
 
     }
 
+
     function clearDashboardError() {
 
-      dashboardError.textContent = "";
+      dashboardError.textContent =
+        "";
 
       dashboardError.classList.add(
         "hidden"
       );
 
     }
+
 
     function showDashboardSuccess(message) {
 
@@ -1059,9 +1198,11 @@
 
     }
 
+
     function clearDashboardSuccess() {
 
-      dashboardSuccess.textContent = "";
+      dashboardSuccess.textContent =
+        "";
 
       dashboardSuccess.classList.add(
         "hidden"
@@ -1070,11 +1211,9 @@
     }
 
 
-    /*
-     * ============================================================
-     * DYNAMIC SERVICE REQUEST
-     * ============================================================
-     */
+    /* ============================================================
+       DYNAMIC SERVICE REQUEST
+       ============================================================ */
 
     async function dynamicService(
       action,
@@ -1186,19 +1325,21 @@
     }
 
 
-    /*
-     * ============================================================
-     * LOAD REGISTRATIONS
-     * ============================================================
-     */
+    /* ============================================================
+       LOAD REGISTRATIONS
+       ============================================================ */
 
     async function loadRegistrations() {
 
       clearDashboardError();
+
       clearDashboardSuccess();
 
-      refreshButton.disabled = true;
-      refreshButton.textContent = "LOADING...";
+      refreshButton.disabled =
+        true;
+
+      refreshButton.textContent =
+        "LOADING...";
 
       tableBody.innerHTML =
         `
@@ -1210,10 +1351,6 @@
         `;
 
       try {
-
-        /*
-         * Report tetap lewat dynamic-service.
-         */
 
         const result =
           await dynamicService(
@@ -1233,18 +1370,18 @@
             ? result.registrations
             : [];
 
-        registrations = data;
-
-        /*
-         * Bersihkan selection yang ID-nya
-         * sudah tidak ada.
-         */
+        registrations =
+          data;
 
         const validIds =
           new Set(
             registrations.map(
               function(row) {
-                return String(row.id);
+
+                return String(
+                  row.id
+                );
+
               }
             )
           );
@@ -1255,13 +1392,19 @@
               selectedIds
             ).filter(
               function(id) {
-                return validIds.has(id);
+
+                return validIds.has(
+                  id
+                );
+
               }
             )
           );
 
         updateStatistics();
+
         renderTable();
+
         updateSelectionUI();
 
       } catch (error) {
@@ -1272,10 +1415,13 @@
         );
 
         registrations = [];
+
         selectedIds.clear();
 
         updateStatistics();
+
         renderTable();
+
         updateSelectionUI();
 
         showDashboardError(
@@ -1285,19 +1431,20 @@
 
       } finally {
 
-        refreshButton.disabled = false;
-        refreshButton.textContent = "REFRESH";
+        refreshButton.disabled =
+          false;
+
+        refreshButton.textContent =
+          "REFRESH";
 
       }
 
     }
 
 
-    /*
-     * ============================================================
-     * STATISTICS
-     * ============================================================
-     */
+    /* ============================================================
+       STATISTICS
+       ============================================================ */
 
     function updateStatistics() {
 
@@ -1351,32 +1498,35 @@
 
       document.getElementById(
         "totalCount"
-      ).textContent = total;
+      ).textContent =
+        total;
 
       document.getElementById(
         "checkedInCount"
-      ).textContent = checkedIn;
+      ).textContent =
+        checkedIn;
 
       document.getElementById(
         "remainingCount"
-      ).textContent = remaining;
+      ).textContent =
+        remaining;
 
       document.getElementById(
         "freeCount"
-      ).textContent = free;
+      ).textContent =
+        free;
 
       document.getElementById(
         "vipCount"
-      ).textContent = vip;
+      ).textContent =
+        vip;
 
     }
 
 
-    /*
-     * ============================================================
-     * FILTER
-     * ============================================================
-     */
+    /* ============================================================
+       FILTER
+       ============================================================ */
 
     function getFilteredRegistrations() {
 
@@ -1445,11 +1595,9 @@
     }
 
 
-    /*
-     * ============================================================
-     * RENDER TABLE
-     * ============================================================
-     */
+    /* ============================================================
+       RENDER TABLE
+       ============================================================ */
 
     function renderTable() {
 
@@ -1478,7 +1626,8 @@
             </tr>
           `;
 
-        selectAll.checked = false;
+        selectAll.checked =
+          false;
 
         return;
 
@@ -1489,7 +1638,9 @@
           function(row) {
 
             const id =
-              String(row.id);
+              String(
+                row.id
+              );
 
             const checked =
               selectedIds.has(id)
@@ -1507,7 +1658,9 @@
                     data-id="${escapeHtml(id)}"
                     ${checked}
                     aria-label="Select ${escapeHtml(
-                      row.name || row.pass_id || id
+                      row.name ||
+                      row.pass_id ||
+                      id
                     )}"
                   >
 
@@ -1532,7 +1685,9 @@
                 <td>
                   ${
                     row.table_package
-                      ? escapeHtml(row.table_package)
+                      ? escapeHtml(
+                          row.table_package
+                        )
                       : '<span class="muted">—</span>'
                   }
                 </td>
@@ -1548,7 +1703,9 @@
                 <td>
                   ${
                     row.checked_in_at
-                      ? formatDate(row.checked_in_at)
+                      ? formatDate(
+                          row.checked_in_at
+                        )
                       : '<span class="muted">—</span>'
                   }
                 </td>
@@ -1560,7 +1717,9 @@
         ).join("");
 
       document
-        .querySelectorAll(".row-checkbox")
+        .querySelectorAll(
+          ".row-checkbox"
+        )
         .forEach(
           function(checkbox) {
 
@@ -1573,13 +1732,19 @@
                     checkbox.dataset.id
                   );
 
-                if (checkbox.checked) {
+                if (
+                  checkbox.checked
+                ) {
 
-                  selectedIds.add(id);
+                  selectedIds.add(
+                    id
+                  );
 
                 } else {
 
-                  selectedIds.delete(id);
+                  selectedIds.delete(
+                    id
+                  );
 
                 }
 
@@ -1596,11 +1761,9 @@
     }
 
 
-    /*
-     * ============================================================
-     * SELECTION
-     * ============================================================
-     */
+    /* ============================================================
+       SELECTION
+       ============================================================ */
 
     function updateSelectionUI() {
 
@@ -1609,11 +1772,7 @@
 
       selectedInfo.textContent =
         count +
-        (
-          count === 1
-            ? " selected"
-            : " selected"
-        );
+        " selected";
 
       deleteSelectedButton.disabled =
         count === 0;
@@ -1628,10 +1787,16 @@
       const rows =
         getFilteredRegistrations();
 
-      if (rows.length === 0) {
+      if (
+        rows.length === 0
+      ) {
 
-        selectAll.checked = false;
-        selectAll.indeterminate = false;
+        selectAll.checked =
+          false;
+
+        selectAll.indeterminate =
+          false;
+
         return;
 
       }
@@ -1639,14 +1804,22 @@
       const ids =
         rows.map(
           function(row) {
-            return String(row.id);
+
+            return String(
+              row.id
+            );
+
           }
         );
 
       const selectedCount =
         ids.filter(
           function(id) {
-            return selectedIds.has(id);
+
+            return selectedIds.has(
+              id
+            );
+
           }
         ).length;
 
@@ -1671,15 +1844,23 @@
           function(row) {
 
             const id =
-              String(row.id);
+              String(
+                row.id
+              );
 
-            if (selectAll.checked) {
+            if (
+              selectAll.checked
+            ) {
 
-              selectedIds.add(id);
+              selectedIds.add(
+                id
+              );
 
             } else {
 
-              selectedIds.delete(id);
+              selectedIds.delete(
+                id
+              );
 
             }
 
@@ -1687,6 +1868,7 @@
         );
 
         renderTable();
+
         updateSelectionUI();
 
       }
@@ -1704,13 +1886,16 @@
           function(row) {
 
             selectedIds.add(
-              String(row.id)
+              String(
+                row.id
+              )
             );
 
           }
         );
 
         renderTable();
+
         updateSelectionUI();
 
       }
@@ -1724,17 +1909,16 @@
         selectedIds.clear();
 
         renderTable();
+
         updateSelectionUI();
 
       }
     );
 
 
-    /*
-     * ============================================================
-     * DELETE SELECTED
-     * ============================================================
-     */
+    /* ============================================================
+       DELETE SELECTED
+       ============================================================ */
 
     deleteSelectedButton.addEventListener(
       "click",
@@ -1745,7 +1929,9 @@
             selectedIds
           );
 
-        if (ids.length === 0) {
+        if (
+          ids.length === 0
+        ) {
 
           return;
 
@@ -1756,7 +1942,9 @@
             function(row) {
 
               return selectedIds.has(
-                String(row.id)
+                String(
+                  row.id
+                )
               );
 
             }
@@ -1782,7 +1970,9 @@
           ids.length +
           " registrasi terpilih?";
 
-        if (names.length > 0) {
+        if (
+          names.length > 0
+        ) {
 
           confirmationText +=
             "\n\n" +
@@ -1818,6 +2008,7 @@
         }
 
         clearDashboardError();
+
         clearDashboardSuccess();
 
         deleteSelectedButton.disabled =
@@ -1827,24 +2018,6 @@
           "DELETING...";
 
         try {
-
-          /*
-           * =====================================================
-           * PENTING
-           *
-           * Kirim ID database asli.
-           * Bukan pass_id.
-           * Backend dynamic-service harus menerima:
-           *
-           * {
-           *   "ids": [
-           *     "uuid-1",
-           *     "uuid-2"
-           *   ]
-           * }
-           *
-           * =====================================================
-           */
 
           const result =
             await dynamicService(
@@ -1910,11 +2083,9 @@
     );
 
 
-    /*
-     * ============================================================
-     * BADGES
-     * ============================================================
-     */
+    /* ============================================================
+       BADGES
+       ============================================================ */
 
     function statusBadge(status) {
 
@@ -1923,7 +2094,9 @@
           status || ""
         ).toUpperCase();
 
-      if (value === "USED") {
+      if (
+        value === "USED"
+      ) {
 
         return `
           <span class="badge badge-used">
@@ -1935,7 +2108,9 @@
 
       return `
         <span class="badge badge-unused">
-          ${escapeHtml(value || "UNUSED")}
+          ${escapeHtml(
+            value || "UNUSED"
+          )}
         </span>
       `;
 
@@ -1949,7 +2124,9 @@
           access || ""
         ).toUpperCase();
 
-      if (value === "VIP") {
+      if (
+        value === "VIP"
+      ) {
 
         return `
           <span class="badge badge-vip">
@@ -1973,18 +2150,18 @@
 
       return `
         <span class="badge badge-free">
-          ${escapeHtml(value || "FREE")}
+          ${escapeHtml(
+            value || "FREE"
+          )}
         </span>
       `;
 
     }
 
 
-    /*
-     * ============================================================
-     * DATE
-     * ============================================================
-     */
+    /* ============================================================
+       DATE
+       ============================================================ */
 
     function formatDate(value) {
 
@@ -1995,7 +2172,9 @@
       }
 
       const date =
-        new Date(value);
+        new Date(
+          value
+        );
 
       if (
         Number.isNaN(
@@ -2003,7 +2182,9 @@
         )
       ) {
 
-        return escapeHtml(value);
+        return escapeHtml(
+          value
+        );
 
       }
 
@@ -2020,11 +2201,9 @@
     }
 
 
-    /*
-     * ============================================================
-     * HTML ESCAPE
-     * ============================================================
-     */
+    /* ============================================================
+       HTML ESCAPE
+       ============================================================ */
 
     function escapeHtml(value) {
 
@@ -2057,11 +2236,9 @@
     }
 
 
-    /*
-     * ============================================================
-     * REFRESH
-     * ============================================================
-     */
+    /* ============================================================
+       REFRESH
+       ============================================================ */
 
     refreshButton.addEventListener(
       "click",
@@ -2073,17 +2250,16 @@
     );
 
 
-    /*
-     * ============================================================
-     * LIVE SEARCH
-     * ============================================================
-     */
+    /* ============================================================
+       LIVE SEARCH
+       ============================================================ */
 
     searchInput.addEventListener(
       "input",
       function() {
 
         renderTable();
+
         updateSelectionUI();
 
       }
@@ -2095,6 +2271,7 @@
       function() {
 
         renderTable();
+
         updateSelectionUI();
 
       }
@@ -2106,23 +2283,21 @@
       function() {
 
         renderTable();
+
         updateSelectionUI();
 
       }
     );
 
 
-    /*
-     * ============================================================
-     * START
-     * ============================================================
-     *
-     * Tidak ada Supabase Auth.
-     * Dashboard hanya dibuka setelah login lokal berhasil.
-     */
+    /* ============================================================
+       START
+       ============================================================ */
 
     renderTable();
+
     updateStatistics();
+
     updateSelectionUI();
 
   </script>
