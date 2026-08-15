@@ -908,6 +908,25 @@
   </div>
 
   <script>
+    /*
+      ============================================================
+      CONFIGURATION
+      ============================================================
+
+      Report TIDAK lagi menyimpan alamat Home/Admin secara langsung.
+
+      Sebelum berpindah halaman:
+      1. report.html mengambil navigation.html
+      2. membaca konfigurasi navigasi
+      3. mencari key tujuan
+      4. baru melakukan window.location.href
+
+      Jadi alamat halaman bisa diubah dari satu tempat.
+    */
+
+    const NAVIGATION_REFERENCE_URL =
+      "https://boldafterdark.my.id/navigation.html";
+
     const SUPABASE_URL =
       "https://yrvnmmascklkuzpjkwxn.supabase.co";
 
@@ -918,23 +937,15 @@
       SUPABASE_URL +
       "/functions/v1/dynamic-service";
 
-    /*
-     * ROOT NAVIGATION
-     *
-     * HOME  -> https://boldafterdark.my.id/index.html
-     * ADMIN -> https://boldafterdark.my.id/admin.html
-     *
-     * Sengaja menggunakan absolute URL supaya tidak lagi
-     * masuk ke folder /bold-after-dark-scanner/.
-     */
-    const HOME_URL =
-      "https://boldafterdark.my.id/index.html";
-
-    const ADMIN_URL =
-      "https://boldafterdark.my.id/admin.html";
-
     let allRows = [];
+
     let filteredRows = [];
+
+    /*
+      ============================================================
+      DOM
+      ============================================================
+    */
 
     const searchInput =
       document.getElementById("searchInput");
@@ -975,22 +986,54 @@
     const tableBody =
       document.getElementById("tableBody");
 
+    /*
+      ============================================================
+      HTML ESCAPE
+      ============================================================
+    */
+
     function escapeHtml(value) {
+
       return String(
         value == null
           ? ""
           : value
       )
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
     }
 
+    /*
+      ============================================================
+      NORMALIZE
+      ============================================================
+    */
+
     function normalizeStatus(value) {
+
       const status =
-        String(value || "")
+        String(
+          value || ""
+        )
           .trim()
           .toUpperCase();
 
@@ -999,30 +1042,50 @@
         status === "CHECKED_IN" ||
         status === "CHECKED-IN"
       ) {
+
         return "USED";
+
       }
 
-      if (status === "UNUSED") {
+      if (
+        status === "UNUSED"
+      ) {
+
         return "UNUSED";
+
       }
 
       if (
         status === "CANCELLED" ||
         status === "CANCELED"
       ) {
+
         return "CANCELLED";
+
       }
 
       return status;
+
     }
 
     function normalizeAccess(value) {
-      return String(value || "")
+
+      return String(
+        value || ""
+      )
         .trim()
         .toUpperCase();
+
     }
 
+    /*
+      ============================================================
+      DATE
+      ============================================================
+    */
+
     function formatDate(value) {
+
       if (!value) {
         return "-";
       }
@@ -1035,7 +1098,9 @@
           date.getTime()
         )
       ) {
+
         return String(value);
+
       }
 
       return date.toLocaleString(
@@ -1045,33 +1110,304 @@
           timeStyle: "medium"
         }
       );
+
     }
 
+    /*
+      ============================================================
+      ERROR
+      ============================================================
+    */
+
     function showError(message) {
+
       errorBox.textContent =
         message ||
         "Terjadi kesalahan.";
 
       errorBox.style.display =
         "block";
+
     }
 
     function hideError() {
-      errorBox.textContent = "";
-      errorBox.style.display = "none";
+
+      errorBox.textContent =
+        "";
+
+      errorBox.style.display =
+        "none";
+
     }
 
-    async function loadReport() {
-      hideError();
+    /*
+      ============================================================
+      NAVIGATION REFERENCE SYSTEM
+      ============================================================
 
-      loading.style.display = "block";
-      empty.style.display = "none";
-      tableWrapper.style.display = "none";
+      Fungsi ini adalah bagian penting dari sistem baru.
 
-      refreshButton.disabled = true;
-      refreshButton.textContent = "LOADING...";
+      Contoh:
+        navigateByReference("home")
+        navigateByReference("admin")
+
+      Tidak ada URL Home/Admin yang ditulis langsung di sini.
+
+      report.html membaca navigation.html terlebih dahulu.
+    */
+
+    async function loadNavigationReference() {
+
+      const response =
+        await fetch(
+          NAVIGATION_REFERENCE_URL +
+          "?t=" +
+          Date.now(),
+          {
+            method: "GET",
+            cache: "no-store",
+            headers: {
+              "Accept": "text/html"
+            }
+          }
+        );
+
+      if (!response.ok) {
+
+        throw new Error(
+          "Gagal membaca halaman referensi navigasi. HTTP " +
+          response.status
+        );
+
+      }
+
+      const html =
+        await response.text();
+
+      if (!html) {
+
+        throw new Error(
+          "Halaman referensi navigasi kosong."
+        );
+
+      }
+
+      const parser =
+        new DOMParser();
+
+      const documentReference =
+        parser.parseFromString(
+          html,
+          "text/html"
+        );
+
+      const configElement =
+        documentReference.getElementById(
+          "navigation-config"
+        );
+
+      if (!configElement) {
+
+        throw new Error(
+          "navigation.html tidak memiliki #navigation-config."
+        );
+
+      }
+
+      const rawConfig =
+        configElement.textContent.trim();
+
+      if (!rawConfig) {
+
+        throw new Error(
+          "Konfigurasi navigasi kosong."
+        );
+
+      }
+
+      let config;
 
       try {
+
+        config =
+          JSON.parse(
+            rawConfig
+          );
+
+      } catch (error) {
+
+        throw new Error(
+          "Konfigurasi navigasi bukan JSON yang valid."
+        );
+
+      }
+
+      return config;
+
+    }
+
+    async function navigateByReference(key) {
+
+      hideError();
+
+      const button =
+        key === "home"
+          ? homeButton
+          : key === "admin"
+            ? adminButton
+            : null;
+
+      if (button) {
+
+        button.disabled =
+          true;
+
+        button.dataset.originalText =
+          button.textContent;
+
+        button.textContent =
+          "LOADING...";
+
+      }
+
+      try {
+
+        /*
+          STEP 1
+          Baca halaman referensi.
+        */
+
+        const navigation =
+          await loadNavigationReference();
+
+        /*
+          STEP 2
+          Ambil alamat berdasarkan key.
+        */
+
+        const target =
+          navigation &&
+          navigation[key];
+
+        /*
+          STEP 3
+          Validasi alamat.
+        */
+
+        if (
+          typeof target !== "string" ||
+          !target.trim()
+        ) {
+
+          throw new Error(
+            'Tujuan navigasi "' +
+            key +
+            '" tidak ditemukan di navigation.html.'
+          );
+
+        }
+
+        /*
+          Hanya izinkan HTTP/HTTPS.
+        */
+
+        let targetUrl;
+
+        try {
+
+          targetUrl =
+            new URL(
+              target,
+              window.location.origin
+            );
+
+        } catch (error) {
+
+          throw new Error(
+            'URL tujuan "' +
+            key +
+            '" tidak valid.'
+          );
+
+        }
+
+        if (
+          targetUrl.protocol !== "http:" &&
+          targetUrl.protocol !== "https:"
+        ) {
+
+          throw new Error(
+            'Protocol tujuan "' +
+            key +
+            '" tidak diizinkan.'
+          );
+
+        }
+
+        /*
+          STEP 4
+          Baru eksekusi navigasi.
+        */
+
+        window.location.href =
+          targetUrl.href;
+
+      } catch (error) {
+
+        console.error(
+          "NAVIGATION REFERENCE ERROR:",
+          error
+        );
+
+        showError(
+          error &&
+          error.message
+            ? error.message
+            : "Tidak dapat membaca referensi navigasi."
+        );
+
+        if (button) {
+
+          button.disabled =
+            false;
+
+          button.textContent =
+            button.dataset.originalText ||
+            key.toUpperCase();
+
+        }
+
+      }
+
+    }
+
+    /*
+      ============================================================
+      LOAD REPORT
+      ============================================================
+    */
+
+    async function loadReport() {
+
+      hideError();
+
+      loading.style.display =
+        "block";
+
+      empty.style.display =
+        "none";
+
+      tableWrapper.style.display =
+        "none";
+
+      refreshButton.disabled =
+        true;
+
+      refreshButton.textContent =
+        "LOADING...";
+
+      try {
+
         const params =
           new URLSearchParams();
 
@@ -1118,17 +1454,22 @@
         let data = null;
 
         try {
+
           data =
             raw
               ? JSON.parse(raw)
               : null;
+
         } catch (parseError) {
+
           throw new Error(
             "Server mengembalikan response JSON yang tidak valid."
           );
+
         }
 
         if (!response.ok) {
+
           throw new Error(
             data &&
             data.message
@@ -1138,17 +1479,20 @@
                   response.status
                 )
           );
+
         }
 
         if (
           data &&
           data.success === false
         ) {
+
           throw new Error(
             data.message ||
             data.detail ||
             "Data laporan ditolak server."
           );
+
         }
 
         allRows =
@@ -1162,21 +1506,29 @@
         applyFilters();
 
       } catch (error) {
+
         console.error(
           "REPORT ERROR:",
           error
         );
 
         allRows = [];
+
         filteredRows = [];
 
         updateStatistics([]);
 
-        tableBody.innerHTML = "";
+        tableBody.innerHTML =
+          "";
 
-        loading.style.display = "none";
-        tableWrapper.style.display = "none";
-        empty.style.display = "block";
+        loading.style.display =
+          "none";
+
+        tableWrapper.style.display =
+          "none";
+
+        empty.style.display =
+          "block";
 
         showError(
           error &&
@@ -1186,12 +1538,25 @@
         );
 
       } finally {
-        refreshButton.disabled = false;
-        refreshButton.textContent = "REFRESH";
+
+        refreshButton.disabled =
+          false;
+
+        refreshButton.textContent =
+          "REFRESH";
+
       }
+
     }
 
+    /*
+      ============================================================
+      FILTER
+      ============================================================
+    */
+
     function applyFilters() {
+
       const search =
         searchInput.value
           .trim()
@@ -1210,6 +1575,7 @@
       filteredRows =
         allRows.filter(
           function(row) {
+
             const rowAccess =
               normalizeAccess(
                 row.access_type
@@ -1224,17 +1590,22 @@
               access &&
               rowAccess !== access
             ) {
+
               return false;
+
             }
 
             if (
               selectedStatus &&
               rowStatus !== selectedStatus
             ) {
+
               return false;
+
             }
 
             if (search) {
+
               const haystack =
                 [
                   row.name,
@@ -1247,9 +1618,11 @@
                 ]
                   .map(
                     function(value) {
+
                       return String(
                         value || ""
                       ).toLowerCase();
+
                     }
                   )
                   .join(" ");
@@ -1259,11 +1632,15 @@
                   search
                 )
               ) {
+
                 return false;
+
               }
+
             }
 
             return true;
+
           }
         );
 
@@ -1274,94 +1651,135 @@
       renderTable(
         filteredRows
       );
+
     }
 
+    /*
+      ============================================================
+      STATISTICS
+      ============================================================
+    */
+
     function updateStatistics(rows) {
+
       const total =
         rows.length;
 
       const free =
         rows.filter(
           function(row) {
+
             return normalizeAccess(
               row.access_type
             ) === "FREE";
+
           }
         ).length;
 
       const vip =
         rows.filter(
           function(row) {
+
             return normalizeAccess(
               row.access_type
             ) === "VIP";
+
           }
         ).length;
 
       const boldRiders =
         rows.filter(
           function(row) {
+
             return normalizeAccess(
               row.access_type
             ) === "BOLD RIDERS";
+
           }
         ).length;
 
       const used =
         rows.filter(
           function(row) {
+
             return normalizeStatus(
               row.pass_status
             ) === "USED";
+
           }
         ).length;
 
       const unused =
         rows.filter(
           function(row) {
+
             return normalizeStatus(
               row.pass_status
             ) === "UNUSED";
+
           }
         ).length;
 
       document.getElementById(
         "totalCount"
-      ).textContent = total;
+      ).textContent =
+        total;
 
       document.getElementById(
         "freeCount"
-      ).textContent = free;
+      ).textContent =
+        free;
 
       document.getElementById(
         "vipCount"
-      ).textContent = vip;
+      ).textContent =
+        vip;
 
       document.getElementById(
         "boldRidersCount"
-      ).textContent = boldRiders;
+      ).textContent =
+        boldRiders;
 
       document.getElementById(
         "usedCount"
-      ).textContent = used;
+      ).textContent =
+        used;
 
       document.getElementById(
         "unusedCount"
-      ).textContent = unused;
+      ).textContent =
+        unused;
+
     }
 
+    /*
+      ============================================================
+      BADGES
+      ============================================================
+    */
+
     function accessBadge(access) {
+
       const value =
         normalizeAccess(access);
 
-      let className = "free";
+      let className =
+        "free";
 
-      if (value === "VIP") {
-        className = "vip";
+      if (
+        value === "VIP"
+      ) {
+
+        className =
+          "vip";
+
       } else if (
         value === "BOLD RIDERS"
       ) {
-        className = "bold";
+
+        className =
+          "bold";
+
       }
 
       return (
@@ -1373,30 +1791,50 @@
         ) +
         "</span>"
       );
+
     }
 
     function statusBadge(status) {
+
       const value =
         normalizeStatus(status);
 
-      let className = "unknown";
-      let label = value || "-";
+      let className =
+        "unknown";
 
-      if (value === "USED") {
-        className = "used";
-        label = "USED";
+      let label =
+        value || "-";
+
+      if (
+        value === "USED"
+      ) {
+
+        className =
+          "used";
+
+        label =
+          "USED";
 
       } else if (
         value === "UNUSED"
       ) {
-        className = "unused";
-        label = "UNUSED";
+
+        className =
+          "unused";
+
+        label =
+          "UNUSED";
 
       } else if (
         value === "CANCELLED"
       ) {
-        className = "cancelled";
-        label = "CANCELLED";
+
+        className =
+          "cancelled";
+
+        label =
+          "CANCELLED";
+
       }
 
       return (
@@ -1406,44 +1844,73 @@
         escapeHtml(label) +
         "</span>"
       );
+
     }
 
+    /*
+      ============================================================
+      TABLE
+      ============================================================
+    */
+
     function renderTable(rows) {
-      loading.style.display = "none";
-      tableBody.innerHTML = "";
+
+      loading.style.display =
+        "none";
+
+      tableBody.innerHTML =
+        "";
 
       if (
         !rows ||
         rows.length === 0
       ) {
-        tableWrapper.style.display = "none";
-        empty.style.display = "block";
+
+        tableWrapper.style.display =
+          "none";
+
+        empty.style.display =
+          "block";
+
         return;
+
       }
 
-      empty.style.display = "none";
-      tableWrapper.style.display = "block";
+      empty.style.display =
+        "none";
+
+      tableWrapper.style.display =
+        "block";
 
       rows.forEach(
         function(row, index) {
+
           const tr =
-            document.createElement("tr");
+            document.createElement(
+              "tr"
+            );
 
           const status =
             normalizeStatus(
               row.pass_status
             );
 
-          if (status === "USED") {
+          if (
+            status === "USED"
+          ) {
+
             tr.classList.add(
               "used-row"
             );
+
           } else if (
             status === "UNUSED"
           ) {
+
             tr.classList.add(
               "unused-row"
             );
+
           }
 
           tr.innerHTML = `
@@ -1508,12 +1975,23 @@
             </td>
           `;
 
-          tableBody.appendChild(tr);
+          tableBody.appendChild(
+            tr
+          );
+
         }
       );
+
     }
 
+    /*
+      ============================================================
+      CSV
+      ============================================================
+    */
+
     function csvEscape(value) {
+
       const text =
         String(
           value == null
@@ -1529,18 +2007,22 @@
         ) +
         '"'
       );
+
     }
 
     function downloadCsv() {
+
       if (
         !filteredRows ||
         filteredRows.length === 0
       ) {
+
         alert(
           "Tidak ada data untuk di-download."
         );
 
         return;
+
       }
 
       const headers = [
@@ -1566,6 +2048,7 @@
 
       filteredRows.forEach(
         function(row, index) {
+
           lines.push(
             [
               index + 1,
@@ -1586,6 +2069,7 @@
               .map(csvEscape)
               .join(",")
           );
+
         }
       );
 
@@ -1603,26 +2087,43 @@
         );
 
       const url =
-        URL.createObjectURL(blob);
+        URL.createObjectURL(
+          blob
+        );
 
       const link =
-        document.createElement("a");
+        document.createElement(
+          "a"
+        );
 
-      link.href = url;
+      link.href =
+        url;
 
       link.download =
         "bold-after-dark-audience-report.csv";
 
-      document.body.appendChild(link);
+      document.body.appendChild(
+        link
+      );
 
       link.click();
 
       link.remove();
 
-      URL.revokeObjectURL(url);
+      URL.revokeObjectURL(
+        url
+      );
+
     }
 
+    /*
+      ============================================================
+      PRINT
+      ============================================================
+    */
+
     function printReport() {
+
       document.getElementById(
         "printDate"
       ).textContent =
@@ -1631,31 +2132,34 @@
         );
 
       window.print();
+
     }
 
     /*
-     * HOME
-     * FIXED:
-     * https://boldafterdark.my.id/index.html
-     */
+      ============================================================
+      BUTTON EVENTS
+      ============================================================
+    */
+
     homeButton.addEventListener(
       "click",
       function() {
-        window.location.href =
-          HOME_URL;
+
+        navigateByReference(
+          "home"
+        );
+
       }
     );
 
-    /*
-     * ADMIN
-     * FIXED:
-     * https://boldafterdark.my.id/admin.html
-     */
     adminButton.addEventListener(
       "click",
       function() {
-        window.location.href =
-          ADMIN_URL;
+
+        navigateByReference(
+          "admin"
+        );
+
       }
     );
 
@@ -1689,10 +2193,17 @@
       applyFilters
     );
 
+    /*
+      ============================================================
+      INITIAL LOAD
+      ============================================================
+    */
+
     window.addEventListener(
       "load",
       loadReport
     );
+
   </script>
 
 </body>
