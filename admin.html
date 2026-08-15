@@ -1,8 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>BOLD AFTER DARK — Admin Dashboard</title>
 
   <style>
@@ -28,6 +30,14 @@
     input,
     select {
       font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.98);
     }
 
     .hidden {
@@ -117,6 +127,10 @@
       color: white;
       font-weight: 800;
       cursor: pointer;
+    }
+
+    .primary-button:hover:not(:disabled) {
+      background: #ff0000;
     }
 
     .primary-button:disabled {
@@ -216,6 +230,8 @@
       border-color: #e00000;
     }
 
+    /* LOGOUT */
+
     .logout-button {
       background: #222222;
       color: white;
@@ -225,6 +241,8 @@
     .logout-button:hover {
       background: #333333;
     }
+
+    /* REFRESH */
 
     .refresh-button {
       background: #e00000;
@@ -236,7 +254,7 @@
       background: #c00000;
     }
 
-    /* REPORT BUTTON */
+    /* REPORT */
 
     .report-button {
       background: #ffffff;
@@ -250,6 +268,8 @@
       color: #ffffff;
       border-color: #e00000;
     }
+
+    /* DELETE */
 
     .delete-button {
       background: #b00000;
@@ -266,6 +286,8 @@
       opacity: 0.45;
       cursor: not-allowed;
     }
+
+    /* SELECT */
 
     .select-button {
       background: #222222;
@@ -343,6 +365,11 @@
       background: #1b1b1b;
       color: white;
       outline: none;
+    }
+
+    select:focus {
+      border-color: #e00000;
+      box-shadow: 0 0 0 2px rgba(224, 0, 0, 0.12);
     }
 
     .bulk-bar {
@@ -619,7 +646,9 @@
     <div class="login-card">
 
       <div class="brand">
-        BOLD <span class="red">AFTER</span> <span class="white">DARK</span>
+        BOLD
+        <span class="red">AFTER</span>
+        <span class="white">DARK</span>
       </div>
 
       <div class="login-subtitle">
@@ -629,7 +658,9 @@
       <form id="loginForm">
 
         <div class="form-group">
-          <label for="loginEmail">EMAIL</label>
+          <label for="loginEmail">
+            EMAIL
+          </label>
 
           <input
             id="loginEmail"
@@ -641,7 +672,9 @@
         </div>
 
         <div class="form-group">
-          <label for="loginPassword">PASSWORD</label>
+          <label for="loginPassword">
+            PASSWORD
+          </label>
 
           <input
             id="loginPassword"
@@ -686,7 +719,9 @@
       <div class="topbar">
 
         <div class="topbar-brand">
-          BOLD <span class="red">AFTER</span> <span class="white">DARK</span>
+          BOLD
+          <span class="red">AFTER</span>
+          <span class="white">DARK</span>
         </div>
 
         <div class="topbar-right">
@@ -696,8 +731,6 @@
             class="admin-email"
           ></div>
 
-          <!-- HOME BUTTON -->
-
           <button
             id="homeButton"
             class="home-button"
@@ -705,8 +738,6 @@
           >
             HOME
           </button>
-
-          <!-- REPORT BUTTON -->
 
           <button
             id="reportButton"
@@ -757,28 +788,68 @@
       <div class="stats-grid">
 
         <div class="stat-card">
-          <div class="stat-label">Total</div>
-          <div id="totalCount" class="stat-value">0</div>
+          <div class="stat-label">
+            Total
+          </div>
+
+          <div
+            id="totalCount"
+            class="stat-value"
+          >
+            0
+          </div>
         </div>
 
         <div class="stat-card">
-          <div class="stat-label">Check-In</div>
-          <div id="checkedInCount" class="stat-value">0</div>
+          <div class="stat-label">
+            Check-In
+          </div>
+
+          <div
+            id="checkedInCount"
+            class="stat-value"
+          >
+            0
+          </div>
         </div>
 
         <div class="stat-card">
-          <div class="stat-label">Remaining</div>
-          <div id="remainingCount" class="stat-value">0</div>
+          <div class="stat-label">
+            Remaining
+          </div>
+
+          <div
+            id="remainingCount"
+            class="stat-value"
+          >
+            0
+          </div>
         </div>
 
         <div class="stat-card">
-          <div class="stat-label">FREE</div>
-          <div id="freeCount" class="stat-value">0</div>
+          <div class="stat-label">
+            FREE
+          </div>
+
+          <div
+            id="freeCount"
+            class="stat-value"
+          >
+            0
+          </div>
         </div>
 
         <div class="stat-card">
-          <div class="stat-label">VIP</div>
-          <div id="vipCount" class="stat-value">0</div>
+          <div class="stat-label">
+            VIP
+          </div>
+
+          <div
+            id="vipCount"
+            class="stat-value"
+          >
+            0
+          </div>
         </div>
 
       </div>
@@ -804,19 +875,38 @@
             id="statusFilter"
             class="filter-select"
           >
-            <option value="ALL">ALL STATUS</option>
-            <option value="UNUSED">UNUSED</option>
-            <option value="USED">USED</option>
+            <option value="ALL">
+              ALL STATUS
+            </option>
+
+            <option value="UNUSED">
+              UNUSED
+            </option>
+
+            <option value="USED">
+              USED
+            </option>
           </select>
 
           <select
             id="accessFilter"
             class="filter-select"
           >
-            <option value="ALL">ALL ACCESS</option>
-            <option value="FREE">FREE</option>
-            <option value="VIP">VIP</option>
-            <option value="BOLD RIDERS">BOLD RIDERS</option>
+            <option value="ALL">
+              ALL ACCESS
+            </option>
+
+            <option value="FREE">
+              FREE
+            </option>
+
+            <option value="VIP">
+              VIP
+            </option>
+
+            <option value="BOLD RIDERS">
+              BOLD RIDERS
+            </option>
           </select>
 
         </div>
@@ -902,14 +992,37 @@
                   >
                 </th>
 
-                <th>Name</th>
-                <th>WhatsApp</th>
-                <th>Pass ID</th>
-                <th>Access</th>
-                <th>Table</th>
-                <th>Status</th>
-                <th>Registered</th>
-                <th>Check-In</th>
+                <th>
+                  Name
+                </th>
+
+                <th>
+                  WhatsApp
+                </th>
+
+                <th>
+                  Pass ID
+                </th>
+
+                <th>
+                  Access
+                </th>
+
+                <th>
+                  Table
+                </th>
+
+                <th>
+                  Status
+                </th>
+
+                <th>
+                  Registered
+                </th>
+
+                <th>
+                  Check-In
+                </th>
 
               </tr>
 
@@ -918,12 +1031,14 @@
             <tbody id="registrationTableBody">
 
               <tr>
+
                 <td
                   colspan="9"
                   class="table-message"
                 >
                   Loading registrations...
                 </td>
+
               </tr>
 
             </tbody>
@@ -939,7 +1054,19 @@
   </section>
 
 
+  <!-- ============================================================
+       CENTRAL NAVIGATION
+       ============================================================ -->
+
+  <script src="/config/navigation.js"></script>
+
+
+  <!-- ============================================================
+       ADMIN JAVASCRIPT
+       ============================================================ -->
+
   <script>
+    "use strict";
 
     /* ============================================================
        CONFIG
@@ -972,76 +1099,124 @@
        ============================================================ */
 
     const loginScreen =
-      document.getElementById("loginScreen");
+      document.getElementById(
+        "loginScreen"
+      );
 
     const dashboardScreen =
-      document.getElementById("dashboardScreen");
+      document.getElementById(
+        "dashboardScreen"
+      );
 
     const loginForm =
-      document.getElementById("loginForm");
+      document.getElementById(
+        "loginForm"
+      );
 
     const loginEmail =
-      document.getElementById("loginEmail");
+      document.getElementById(
+        "loginEmail"
+      );
 
     const loginPassword =
-      document.getElementById("loginPassword");
+      document.getElementById(
+        "loginPassword"
+      );
 
     const loginButton =
-      document.getElementById("loginButton");
+      document.getElementById(
+        "loginButton"
+      );
 
     const loginMessage =
-      document.getElementById("loginMessage");
+      document.getElementById(
+        "loginMessage"
+      );
 
     const adminEmail =
-      document.getElementById("adminEmail");
+      document.getElementById(
+        "adminEmail"
+      );
 
     const homeButton =
-      document.getElementById("homeButton");
+      document.getElementById(
+        "homeButton"
+      );
 
     const logoutButton =
-      document.getElementById("logoutButton");
+      document.getElementById(
+        "logoutButton"
+      );
 
     const refreshButton =
-      document.getElementById("refreshButton");
+      document.getElementById(
+        "refreshButton"
+      );
 
     const reportButton =
-      document.getElementById("reportButton");
+      document.getElementById(
+        "reportButton"
+      );
 
     const dashboardError =
-      document.getElementById("dashboardError");
+      document.getElementById(
+        "dashboardError"
+      );
 
     const dashboardSuccess =
-      document.getElementById("dashboardSuccess");
+      document.getElementById(
+        "dashboardSuccess"
+      );
 
     const searchInput =
-      document.getElementById("searchInput");
+      document.getElementById(
+        "searchInput"
+      );
 
     const statusFilter =
-      document.getElementById("statusFilter");
+      document.getElementById(
+        "statusFilter"
+      );
 
     const accessFilter =
-      document.getElementById("accessFilter");
+      document.getElementById(
+        "accessFilter"
+      );
 
     const tableBody =
-      document.getElementById("registrationTableBody");
+      document.getElementById(
+        "registrationTableBody"
+      );
 
     const tableCount =
-      document.getElementById("tableCount");
+      document.getElementById(
+        "tableCount"
+      );
 
     const selectAll =
-      document.getElementById("selectAll");
+      document.getElementById(
+        "selectAll"
+      );
 
     const selectAllButton =
-      document.getElementById("selectAllButton");
+      document.getElementById(
+        "selectAllButton"
+      );
 
     const clearSelectionButton =
-      document.getElementById("clearSelectionButton");
+      document.getElementById(
+        "clearSelectionButton"
+      );
 
     const deleteSelectedButton =
-      document.getElementById("deleteSelectedButton");
+      document.getElementById(
+        "deleteSelectedButton"
+      );
 
     const selectedInfo =
-      document.getElementById("selectedInfo");
+      document.getElementById(
+        "selectedInfo"
+      );
 
 
     /* ============================================================
@@ -1058,24 +1233,20 @@
        ============================================================ */
 
     function showLoginError(message) {
-
       loginMessage.textContent =
         message;
 
       loginMessage.className =
         "login-message error";
-
     }
 
 
     function clearLoginError() {
-
       loginMessage.textContent =
         "";
 
       loginMessage.className =
         "login-message";
-
     }
 
 
@@ -1103,10 +1274,10 @@
           );
 
           return;
-
         }
 
-        loginButton.disabled = true;
+        loginButton.disabled =
+          true;
 
         loginButton.textContent =
           "LOGIN...";
@@ -1145,7 +1316,7 @@
 
 
     /* ============================================================
-       HOME BUTTON
+       CENTRAL NAVIGATION
        ============================================================ */
 
     homeButton.addEventListener(
@@ -1153,36 +1324,37 @@
       function() {
 
         /*
-         * HOME HARUS MENUJU ROOT DOMAIN:
+         * URL TIDAK DISIMPAN DI ADMIN.HTML.
          *
-         * https://boldafterdark.my.id/index.html
+         * Semua navigasi dikelola oleh:
          *
-         * Bukan:
-         * /bold-after-dark-scanner/index.html
+         * /config/navigation.js
+         *
+         * HOME:
+         * APP_NAVIGATION.home
          */
 
-        window.location.href =
-          "https://boldafterdark.my.id/index.html";
+        navigateTo(
+          "home"
+        );
 
       }
     );
 
-
-    /* ============================================================
-       REPORT BUTTON
-       ============================================================ */
 
     reportButton.addEventListener(
       "click",
       function() {
 
         /*
-         * Report berada di folder scanner yang sama
-         * dengan halaman admin.
+         * REPORT juga dikelola oleh:
+         *
+         * /config/navigation.js
          */
 
-        window.location.href =
-          "https://boldafterdark.my.id/report.html";
+        navigateTo(
+          "report"
+        );
 
       }
     );
@@ -1288,13 +1460,18 @@
       const url =
         DYNAMIC_SERVICE_URL +
         "?action=" +
-        encodeURIComponent(action);
+        encodeURIComponent(
+          action
+        );
 
       const fetchOptions = {
         method,
         headers: {
-          "Content-Type": "application/json",
-          "apikey": SUPABASE_PUBLISHABLE_KEY
+          "Content-Type":
+            "application/json",
+
+          "apikey":
+            SUPABASE_PUBLISHABLE_KEY
         }
       };
 
@@ -1303,7 +1480,9 @@
       ) {
 
         fetchOptions.body =
-          JSON.stringify(options.body);
+          JSON.stringify(
+            options.body
+          );
 
       }
 
@@ -1344,12 +1523,17 @@
           "Response dynamic-service bukan JSON. HTTP " +
           response.status +
           ": " +
-          raw.slice(0, 500)
+          raw.slice(
+            0,
+            500
+          )
         );
 
       }
 
-      if (!response.ok) {
+      if (
+        !response.ok
+      ) {
 
         throw new Error(
           data &&
@@ -1406,7 +1590,10 @@
       tableBody.innerHTML =
         `
           <tr>
-            <td colspan="9" class="table-message">
+            <td
+              colspan="9"
+              class="table-message"
+            >
               Loading registrations...
             </td>
           </tr>
@@ -1487,8 +1674,10 @@
         updateSelectionUI();
 
         showDashboardError(
-          error.message ||
-          "Gagal memuat registrasi."
+          error &&
+          error.message
+            ? error.message
+            : "Gagal memuat registrasi."
         );
 
       } finally {
@@ -1519,7 +1708,8 @@
 
             return (
               String(
-                row.pass_status || ""
+                row.pass_status ||
+                ""
               ).toUpperCase() ===
               "USED"
             );
@@ -1528,7 +1718,8 @@
         ).length;
 
       const remaining =
-        total - checkedIn;
+        total -
+        checkedIn;
 
       const free =
         registrations.filter(
@@ -1536,7 +1727,8 @@
 
             return (
               String(
-                row.access_type || ""
+                row.access_type ||
+                ""
               ).toUpperCase() ===
               "FREE"
             );
@@ -1550,7 +1742,8 @@
 
             return (
               String(
-                row.access_type || ""
+                row.access_type ||
+                ""
               ).toUpperCase() ===
               "VIP"
             );
@@ -1608,34 +1801,53 @@
 
           const name =
             String(
-              row.name || ""
+              row.name ||
+              ""
             ).toLowerCase();
 
           const whatsapp =
             String(
-              row.whatsapp || ""
+              row.whatsapp ||
+              ""
             ).toLowerCase();
 
           const passId =
             String(
-              row.pass_id || ""
+              row.pass_id ||
+              ""
+            ).toLowerCase();
+
+          const community =
+            String(
+              row.community ||
+              ""
+            ).toLowerCase();
+
+          const tablePackage =
+            String(
+              row.table_package ||
+              ""
             ).toLowerCase();
 
           const rowStatus =
             String(
-              row.pass_status || ""
+              row.pass_status ||
+              ""
             ).toUpperCase();
 
           const rowAccess =
             String(
-              row.access_type || ""
+              row.access_type ||
+              ""
             ).toUpperCase();
 
           const matchesSearch =
             !search ||
             name.includes(search) ||
             whatsapp.includes(search) ||
-            passId.includes(search);
+            passId.includes(search) ||
+            community.includes(search) ||
+            tablePackage.includes(search);
 
           const matchesStatus =
             status === "ALL" ||
@@ -1674,7 +1886,9 @@
             : " records"
         );
 
-      if (rows.length === 0) {
+      if (
+        rows.length === 0
+      ) {
 
         tableBody.innerHTML =
           `
@@ -1689,6 +1903,9 @@
           `;
 
         selectAll.checked =
+          false;
+
+        selectAll.indeterminate =
           false;
 
         return;
@@ -1729,19 +1946,27 @@
                 </td>
 
                 <td class="name-cell">
-                  ${escapeHtml(row.name)}
+                  ${escapeHtml(
+                    row.name
+                  )}
                 </td>
 
                 <td>
-                  ${escapeHtml(row.whatsapp)}
+                  ${escapeHtml(
+                    row.whatsapp
+                  )}
                 </td>
 
                 <td class="pass-id-cell">
-                  ${escapeHtml(row.pass_id)}
+                  ${escapeHtml(
+                    row.pass_id
+                  )}
                 </td>
 
                 <td>
-                  ${accessBadge(row.access_type)}
+                  ${accessBadge(
+                    row.access_type
+                  )}
                 </td>
 
                 <td>
@@ -1755,11 +1980,15 @@
                 </td>
 
                 <td>
-                  ${statusBadge(row.pass_status)}
+                  ${statusBadge(
+                    row.pass_status
+                  )}
                 </td>
 
                 <td>
-                  ${formatDate(row.created_at)}
+                  ${formatDate(
+                    row.created_at
+                  )}
                 </td>
 
                 <td>
@@ -1776,7 +2005,8 @@
             `;
 
           }
-        ).join("");
+        )
+        .join("");
 
       document
         .querySelectorAll(
@@ -1886,7 +2116,8 @@
         ).length;
 
       selectAll.checked =
-        selectedCount === ids.length;
+        selectedCount ===
+        ids.length;
 
       selectAll.indeterminate =
         selectedCount > 0 &&
@@ -2014,7 +2245,10 @@
 
         const names =
           selectedRows
-            .slice(0, 5)
+            .slice(
+              0,
+              5
+            )
             .map(
               function(row) {
 
@@ -2038,7 +2272,9 @@
 
           confirmationText +=
             "\n\n" +
-            names.join("\n");
+            names.join(
+              "\n"
+            );
 
         }
 
@@ -2049,7 +2285,8 @@
           confirmationText +=
             "\n... dan " +
             (
-              selectedRows.length - 5
+              selectedRows.length -
+              5
             ) +
             " lainnya.";
 
@@ -2063,7 +2300,9 @@
             confirmationText
           );
 
-        if (!confirmed) {
+        if (
+          !confirmed
+        ) {
 
           return;
 
@@ -2086,6 +2325,7 @@
               "delete",
               {
                 method: "POST",
+
                 body: {
                   ids: ids
                 }
@@ -2153,7 +2393,8 @@
 
       const value =
         String(
-          status || ""
+          status ||
+          ""
         ).toUpperCase();
 
       if (
@@ -2171,7 +2412,8 @@
       return `
         <span class="badge badge-unused">
           ${escapeHtml(
-            value || "UNUSED"
+            value ||
+            "UNUSED"
           )}
         </span>
       `;
@@ -2183,7 +2425,8 @@
 
       const value =
         String(
-          access || ""
+          access ||
+          ""
         ).toUpperCase();
 
       if (
@@ -2213,7 +2456,8 @@
       return `
         <span class="badge badge-free">
           ${escapeHtml(
-            value || "FREE"
+            value ||
+            "FREE"
           )}
         </span>
       `;
@@ -2227,7 +2471,9 @@
 
     function formatDate(value) {
 
-      if (!value) {
+      if (
+        !value
+      ) {
 
         return "—";
 
@@ -2254,8 +2500,11 @@
         date.toLocaleString(
           "id-ID",
           {
-            dateStyle: "short",
-            timeStyle: "short"
+            dateStyle:
+              "short",
+
+            timeStyle:
+              "short"
           }
         )
       );
@@ -2366,3 +2615,4 @@
 
 </body>
 </html>
+```
