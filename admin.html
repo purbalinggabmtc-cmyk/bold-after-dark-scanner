@@ -1,8 +1,6 @@
-# admin.html
-
-```html
 <!DOCTYPE html>
-<html lang="id">
+
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,11 +33,7 @@
     }
 
     button {
-      transition: 0.15s ease;
-    }
-
-    button:active {
-      transform: scale(0.98);
+      -webkit-tap-highlight-color: transparent;
     }
 
     .hidden {
@@ -126,10 +120,6 @@
       cursor: pointer;
     }
 
-    .primary-button:hover {
-      background: #ff1111;
-    }
-
     .primary-button:disabled {
       opacity: 0.5;
       cursor: not-allowed;
@@ -188,7 +178,6 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      flex-wrap: wrap;
     }
 
     .admin-email {
@@ -198,12 +187,11 @@
 
     .logout-button,
     .refresh-button,
-    .danger-button {
+    .delete-button {
       padding: 10px 14px;
       border-radius: 8px;
       cursor: pointer;
       font-weight: 700;
-      border: none;
     }
 
     .logout-button {
@@ -212,26 +200,16 @@
       border: 1px solid #444444;
     }
 
-    .logout-button:hover {
-      background: #303030;
-    }
-
     .refresh-button {
       background: #e00000;
       color: white;
+      border: none;
     }
 
-    .refresh-button:hover {
-      background: #ff1111;
-    }
-
-    .danger-button {
-      background: #7a0000;
-      color: white;
-    }
-
-    .danger-button:hover {
-      background: #a00000;
+    .refresh-button:disabled,
+    .delete-button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
     }
 
     /* =====================================================
@@ -240,8 +218,7 @@
 
     .stats-grid {
       display: grid;
-      grid-template-columns:
-        repeat(6, minmax(0, 1fr));
+      grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: 14px;
       margin-bottom: 22px;
     }
@@ -282,6 +259,7 @@
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
+      align-items: center;
     }
 
     .search-box {
@@ -291,7 +269,7 @@
 
     .filter-select {
       width: auto;
-      min-width: 150px;
+      min-width: 145px;
     }
 
     select {
@@ -303,12 +281,22 @@
       outline: none;
     }
 
-    .danger-row {
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid #242424;
-      display: flex;
-      justify-content: flex-end;
+    .delete-button {
+      background: #8b0000;
+      color: white;
+      border: 1px solid #b00000;
+      min-width: 170px;
+    }
+
+    .delete-button:not(:disabled):hover {
+      background: #b00000;
+    }
+
+    .selected-info {
+      color: #888888;
+      font-size: 12px;
+      margin-left: auto;
+      white-space: nowrap;
     }
 
     /* =====================================================
@@ -348,7 +336,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 1250px;
+      min-width: 1150px;
     }
 
     th {
@@ -374,6 +362,19 @@
       background: #151515;
     }
 
+    .checkbox-cell {
+      width: 48px;
+      text-align: center;
+    }
+
+    .row-checkbox,
+    #selectAllCheckbox {
+      width: 17px;
+      height: 17px;
+      accent-color: #e00000;
+      cursor: pointer;
+    }
+
     .pass-id-cell {
       font-weight: 800;
       color: white;
@@ -388,19 +389,9 @@
       color: #777777;
     }
 
-    .delete-button {
-      padding: 7px 10px;
-      border-radius: 7px;
-      border: 1px solid rgba(224, 0, 0, 0.4);
-      background: rgba(224, 0, 0, 0.12);
-      color: #ff7777;
-      cursor: pointer;
-      font-size: 11px;
+    .bold-riders-text {
+      color: #ff8b8b;
       font-weight: 800;
-    }
-
-    .delete-button:hover {
-      background: rgba(224, 0, 0, 0.25);
     }
 
     /* =====================================================
@@ -428,6 +419,12 @@
       border: 1px solid rgba(224, 180, 0, 0.3);
     }
 
+    .badge-cancelled {
+      background: rgba(224, 0, 0, 0.12);
+      color: #ff7777;
+      border: 1px solid rgba(224, 0, 0, 0.35);
+    }
+
     .badge-free {
       background: rgba(100, 100, 100, 0.18);
       color: #cccccc;
@@ -441,9 +438,9 @@
     }
 
     .badge-bold {
-      background: rgba(255, 145, 0, 0.12);
-      color: #ffb45c;
-      border: 1px solid rgba(255, 145, 0, 0.35);
+      background: rgba(255, 94, 0, 0.12);
+      color: #ff9b65;
+      border: 1px solid rgba(255, 94, 0, 0.35);
     }
 
     /* =====================================================
@@ -471,8 +468,8 @@
       padding: 13px 15px;
       border-radius: 9px;
       background: rgba(22, 199, 90, 0.10);
-      border: 1px solid rgba(22, 199, 90, 0.35);
-      color: #55e88b;
+      border: 1px solid rgba(22, 199, 90, 0.30);
+      color: #65e99a;
       font-size: 13px;
     }
 
@@ -482,12 +479,11 @@
 
     @media (max-width: 1100px) {
       .stats-grid {
-        grid-template-columns:
-          repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
       #dashboardScreen {
         padding: 15px;
       }
@@ -500,11 +496,11 @@
       .topbar-right {
         width: 100%;
         justify-content: space-between;
+        flex-wrap: wrap;
       }
 
       .stats-grid {
-        grid-template-columns:
-          repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .stat-value {
@@ -513,19 +509,17 @@
 
       .controls-row {
         flex-direction: column;
+        align-items: stretch;
       }
 
       .search-box,
-      .filter-select {
+      .filter-select,
+      .delete-button {
         width: 100%;
       }
 
-      .danger-row {
-        justify-content: stretch;
-      }
-
-      .danger-row button {
-        width: 100%;
+      .selected-info {
+        margin-left: 0;
       }
     }
 
@@ -535,82 +529,84 @@
       }
     }
   </style>
+
 </head>
 
 <body>
 
   <!-- =====================================================
-       LOGIN
+       LOGIN SCREEN
        ===================================================== -->
 
   <section id="loginScreen">
 
-    <div class="login-card">
+```
+<div class="login-card">
 
-      <div class="brand">
-        BOLD <span>AFTER DARK</span>
-      </div>
+  <div class="brand">
+    BOLD <span>AFTER DARK</span>
+  </div>
 
-      <div class="login-subtitle">
-        ADMIN DASHBOARD
-      </div>
+  <div class="login-subtitle">
+    ADMIN DASHBOARD
+  </div>
 
-      <form id="loginForm">
+  <form id="loginForm">
 
-        <div class="form-group">
+    <div class="form-group">
 
-          <label for="loginEmail">
-            EMAIL
-          </label>
+      <label for="loginEmail">
+        EMAIL
+      </label>
 
-          <input
-            id="loginEmail"
-            type="email"
-            placeholder="admin@admin.com"
-            autocomplete="username"
-            required
-          >
-
-        </div>
-
-        <div class="form-group">
-
-          <label for="loginPassword">
-            PASSWORD
-          </label>
-
-          <input
-            id="loginPassword"
-            type="password"
-            placeholder="Password"
-            autocomplete="current-password"
-            required
-          >
-
-        </div>
-
-        <button
-          id="loginButton"
-          class="primary-button"
-          type="submit"
-        >
-          LOGIN
-        </button>
-
-      </form>
-
-      <div
-        id="loginMessage"
-        class="login-message"
-      ></div>
+      <input
+        id="loginEmail"
+        type="email"
+        placeholder="admin@admin.com"
+        autocomplete="username"
+        required
+      >
 
     </div>
 
+    <div class="form-group">
+
+      <label for="loginPassword">
+        PASSWORD
+      </label>
+
+      <input
+        id="loginPassword"
+        type="password"
+        placeholder="Password"
+        autocomplete="current-password"
+        required
+      >
+
+    </div>
+
+    <button
+      id="loginButton"
+      class="primary-button"
+      type="submit"
+    >
+      LOGIN
+    </button>
+
+  </form>
+
+  <div
+    id="loginMessage"
+    class="login-message"
+  ></div>
+
+</div>
+```
+
   </section>
 
-
   <!-- =====================================================
-       DASHBOARD
+       DASHBOARD SCREEN
        ===================================================== -->
 
   <section
@@ -618,329 +614,340 @@
     class="hidden"
   >
 
-    <div class="dashboard">
+```
+<div class="dashboard">
 
-      <div class="topbar">
+  <div class="topbar">
 
-        <div class="topbar-brand">
-          BOLD <span>AFTER DARK</span>
-        </div>
+    <div class="topbar-brand">
+      BOLD <span>AFTER DARK</span>
+    </div>
 
-        <div class="topbar-right">
+    <div class="topbar-right">
 
-          <div
-            id="adminEmail"
-            class="admin-email"
-          ></div>
+      <div
+        id="adminEmail"
+        class="admin-email"
+      ></div>
 
-          <button
-            id="refreshButton"
-            class="refresh-button"
-            type="button"
-          >
-            REFRESH
-          </button>
+      <button
+        id="refreshButton"
+        class="refresh-button"
+        type="button"
+      >
+        REFRESH
+      </button>
 
-          <button
-            id="logoutButton"
-            class="logout-button"
-            type="button"
-          >
-            LOGOUT
-          </button>
+      <button
+        id="logoutButton"
+        class="logout-button"
+        type="button"
+      >
+        LOGOUT
+      </button>
 
-        </div>
+    </div>
 
+  </div>
+
+
+  <div
+    id="dashboardError"
+    class="error-banner hidden"
+  ></div>
+
+  <div
+    id="dashboardSuccess"
+    class="success-banner hidden"
+  ></div>
+
+
+  <!-- =================================================
+       STATISTICS
+       ================================================= -->
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <div class="stat-label">
+        Total
       </div>
+
+      <div
+        id="totalCount"
+        class="stat-value"
+      >
+        0
+      </div>
+    </div>
+
+
+    <div class="stat-card">
+      <div class="stat-label">
+        Check-In
+      </div>
+
+      <div
+        id="checkedInCount"
+        class="stat-value"
+      >
+        0
+      </div>
+    </div>
+
+
+    <div class="stat-card">
+      <div class="stat-label">
+        Remaining
+      </div>
+
+      <div
+        id="remainingCount"
+        class="stat-value"
+      >
+        0
+      </div>
+    </div>
+
+
+    <div class="stat-card">
+      <div class="stat-label">
+        FREE
+      </div>
+
+      <div
+        id="freeCount"
+        class="stat-value"
+      >
+        0
+      </div>
+    </div>
+
+
+    <div class="stat-card">
+      <div class="stat-label">
+        VIP
+      </div>
+
+      <div
+        id="vipCount"
+        class="stat-value"
+      >
+        0
+      </div>
+    </div>
+
+
+    <div class="stat-card">
+      <div class="stat-label">
+        BOLD RIDERS
+      </div>
+
+      <div
+        id="boldRidersCount"
+        class="stat-value"
+      >
+        0
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- =================================================
+       SEARCH / FILTER / DELETE
+       ================================================= -->
+
+  <div class="controls">
+
+    <div class="controls-row">
+
+      <input
+        id="searchInput"
+        class="search-box"
+        type="search"
+        placeholder="Search name / WhatsApp / Pass ID / BOLD RIDERS ID..."
+        autocomplete="off"
+      >
+
+
+      <select
+        id="statusFilter"
+        class="filter-select"
+      >
+
+        <option value="ALL">
+          ALL STATUS
+        </option>
+
+        <option value="UNUSED">
+          UNUSED
+        </option>
+
+        <option value="USED">
+          USED
+        </option>
+
+        <option value="CANCELLED">
+          CANCELLED
+        </option>
+
+      </select>
+
+
+      <select
+        id="accessFilter"
+        class="filter-select"
+      >
+
+        <option value="ALL">
+          ALL ACCESS
+        </option>
+
+        <option value="FREE">
+          FREE
+        </option>
+
+        <option value="VIP">
+          VIP
+        </option>
+
+        <option value="BOLD RIDERS">
+          BOLD RIDERS
+        </option>
+
+      </select>
+
+
+      <button
+        id="deleteSelectedButton"
+        class="delete-button"
+        type="button"
+        disabled
+      >
+        HAPUS TERPILIH
+      </button>
 
 
       <div
-        id="dashboardError"
-        class="error-banner hidden"
-      ></div>
-
-      <div
-        id="dashboardSuccess"
-        class="success-banner hidden"
-      ></div>
-
-
-      <!-- =================================================
-           STATISTICS
-           ================================================= -->
-
-      <div class="stats-grid">
-
-        <div class="stat-card">
-          <div class="stat-label">
-            Total
-          </div>
-
-          <div
-            id="totalCount"
-            class="stat-value"
-          >
-            0
-          </div>
-        </div>
-
-
-        <div class="stat-card">
-          <div class="stat-label">
-            Check-In
-          </div>
-
-          <div
-            id="checkedInCount"
-            class="stat-value"
-          >
-            0
-          </div>
-        </div>
-
-
-        <div class="stat-card">
-          <div class="stat-label">
-            Remaining
-          </div>
-
-          <div
-            id="remainingCount"
-            class="stat-value"
-          >
-            0
-          </div>
-        </div>
-
-
-        <div class="stat-card">
-          <div class="stat-label">
-            FREE
-          </div>
-
-          <div
-            id="freeCount"
-            class="stat-value"
-          >
-            0
-          </div>
-        </div>
-
-
-        <div class="stat-card">
-          <div class="stat-label">
-            VIP
-          </div>
-
-          <div
-            id="vipCount"
-            class="stat-value"
-          >
-            0
-          </div>
-        </div>
-
-
-        <div class="stat-card">
-          <div class="stat-label">
-            BOLD RIDERS
-          </div>
-
-          <div
-            id="boldRidersCount"
-            class="stat-value"
-          >
-            0
-          </div>
-        </div>
-
-      </div>
-
-
-      <!-- =================================================
-           SEARCH / FILTER
-           ================================================= -->
-
-      <div class="controls">
-
-        <div class="controls-row">
-
-          <input
-            id="searchInput"
-            class="search-box"
-            type="search"
-            placeholder="Search name / WhatsApp / Pass ID / BOLD RIDERS ID..."
-            autocomplete="off"
-          >
-
-
-          <select
-            id="statusFilter"
-            class="filter-select"
-          >
-
-            <option value="ALL">
-              ALL STATUS
-            </option>
-
-            <option value="UNUSED">
-              UNUSED
-            </option>
-
-            <option value="USED">
-              USED
-            </option>
-
-          </select>
-
-
-          <select
-            id="accessFilter"
-            class="filter-select"
-          >
-
-            <option value="ALL">
-              ALL ACCESS
-            </option>
-
-            <option value="FREE">
-              FREE
-            </option>
-
-            <option value="VIP">
-              VIP
-            </option>
-
-            <option value="BOLD RIDERS">
-              BOLD RIDERS
-            </option>
-
-          </select>
-
-        </div>
-
-
-        <div class="danger-row">
-
-          <button
-            id="deleteAllButton"
-            class="danger-button"
-            type="button"
-          >
-            🗑️ HAPUS SEMUA DATA TESTING
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- =================================================
-           TABLE
-           ================================================= -->
-
-      <div class="table-card">
-
-        <div class="table-header">
-
-          <div class="table-title">
-            REGISTRATIONS
-          </div>
-
-          <div
-            id="tableCount"
-            class="table-count"
-          >
-            0 records
-          </div>
-
-        </div>
-
-
-        <div class="table-wrapper">
-
-          <table>
-
-            <thead>
-
-              <tr>
-
-                <th>
-                  Name
-                </th>
-
-                <th>
-                  WhatsApp
-                </th>
-
-                <th>
-                  Pass ID
-                </th>
-
-                <th>
-                  Access
-                </th>
-
-                <th>
-                  BOLD RIDERS ID
-                </th>
-
-                <th>
-                  BOLD RIDERS Name
-                </th>
-
-                <th>
-                  Table
-                </th>
-
-                <th>
-                  Status
-                </th>
-
-                <th>
-                  Registered
-                </th>
-
-                <th>
-                  Check-In
-                </th>
-
-                <th>
-                  Action
-                </th>
-
-              </tr>
-
-            </thead>
-
-
-            <tbody
-              id="registrationTableBody"
-            >
-
-              <tr>
-
-                <td
-                  colspan="11"
-                  class="table-message"
-                >
-                  Silakan login.
-                </td>
-
-              </tr>
-
-            </tbody>
-
-          </table>
-
-        </div>
-
+        id="selectedInfo"
+        class="selected-info"
+      >
+        0 dipilih
       </div>
 
     </div>
 
-  </section>
+  </div>
 
+
+  <!-- =================================================
+       REGISTRATION TABLE
+       ================================================= -->
+
+  <div class="table-card">
+
+    <div class="table-header">
+
+      <div class="table-title">
+        REGISTRATIONS
+      </div>
+
+      <div
+        id="tableCount"
+        class="table-count"
+      >
+        0 records
+      </div>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th class="checkbox-cell">
+
+              <input
+                id="selectAllCheckbox"
+                type="checkbox"
+                title="Pilih semua"
+              >
+
+            </th>
+
+            <th>
+              Name
+            </th>
+
+            <th>
+              WhatsApp
+            </th>
+
+            <th>
+              Pass ID
+            </th>
+
+            <th>
+              Access
+            </th>
+
+            <th>
+              BOLD RIDERS
+            </th>
+
+            <th>
+              Table
+            </th>
+
+            <th>
+              Status
+            </th>
+
+            <th>
+              Registered
+            </th>
+
+            <th>
+              Check-In
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody
+          id="registrationTableBody"
+        >
+
+          <tr>
+
+            <td
+              colspan="10"
+              class="table-message"
+            >
+              Loading registrations...
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+```
+
+  </section>
 
   <!-- =====================================================
        SUPABASE
@@ -948,12 +955,11 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
   <script>
 
-    /* =====================================================
-       CONFIG
-       ===================================================== */
+    // =====================================================
+    // SUPABASE CONFIG
+    // =====================================================
 
     const SUPABASE_URL =
       'https://yrvnmmascklkuzpjkwxn.supabase.co';
@@ -966,13 +972,28 @@
       '/functions/v1/dynamic-service';
 
 
-    /*
-      LOGIN YANG DIMINTA USER.
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
 
-      CATATAN:
-      Ini adalah login halaman/admin lokal.
-      Kredensial akan terlihat jika seseorang membaca source HTML.
-    */
+
+    // =====================================================
+    // ADMIN LOGIN
+    // =====================================================
+    //
+    // Login Supabase Auth tetap digunakan.
+    //
+    // Kredensial yang digunakan:
+    //
+    // EMAIL:
+    // admin@admin.com
+    //
+    // PASSWORD:
+    // 22Jun!2002
+    //
+    // =====================================================
 
     const ADMIN_EMAIL =
       'admin@admin.com';
@@ -981,20 +1002,9 @@
       '22Jun!2002';
 
 
-    /* =====================================================
-       SUPABASE CLIENT
-       ===================================================== */
-
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-      );
-
-
-    /* =====================================================
-       ELEMENTS
-       ===================================================== */
+    // =====================================================
+    // ELEMENTS
+    // =====================================================
 
     const loginScreen =
       document.getElementById(
@@ -1046,9 +1056,19 @@
         'refreshButton'
       );
 
-    const deleteAllButton =
+    const deleteSelectedButton =
       document.getElementById(
-        'deleteAllButton'
+        'deleteSelectedButton'
+      );
+
+    const selectedInfo =
+      document.getElementById(
+        'selectedInfo'
+      );
+
+    const selectAllCheckbox =
+      document.getElementById(
+        'selectAllCheckbox'
       );
 
     const dashboardError =
@@ -1087,18 +1107,18 @@
       );
 
 
-    /* =====================================================
-       DATA
-       ===================================================== */
+    // =====================================================
+    // DATA
+    // =====================================================
 
     let registrations = [];
 
-    let adminLoggedIn = false;
+    let selectedIds = new Set();
 
 
-    /* =====================================================
-       MESSAGE
-       ===================================================== */
+    // =====================================================
+    // LOGIN MESSAGE
+    // =====================================================
 
     function showLoginError(message) {
 
@@ -1122,11 +1142,18 @@
     }
 
 
+    // =====================================================
+    // DASHBOARD MESSAGES
+    // =====================================================
+
     function showDashboardError(text) {
 
       dashboardSuccess.classList.add(
         'hidden'
       );
+
+      dashboardSuccess.textContent =
+        '';
 
       dashboardError.textContent =
         text;
@@ -1152,6 +1179,9 @@
 
     function showDashboardSuccess(text) {
 
+      dashboardError.textContent =
+        '';
+
       dashboardError.classList.add(
         'hidden'
       );
@@ -1163,7 +1193,7 @@
         'hidden'
       );
 
-      setTimeout(
+      window.setTimeout(
         function() {
 
           dashboardSuccess.classList.add(
@@ -1171,66 +1201,152 @@
           );
 
         },
-        3500
+        4000
       );
 
     }
 
 
-    /* =====================================================
-       LOGIN
-       ===================================================== */
+    function clearDashboardMessages() {
+
+      clearDashboardError();
+
+      dashboardSuccess.textContent =
+        '';
+
+      dashboardSuccess.classList.add(
+        'hidden'
+      );
+
+    }
+
+
+    // =====================================================
+    // LOGIN
+    // =====================================================
 
     loginForm.addEventListener(
       'submit',
-      function(event) {
+      async function(event) {
 
         event.preventDefault();
 
         clearLoginError();
 
-        const email =
-          loginEmail.value.trim();
+        loginButton.disabled =
+          true;
 
-        const password =
-          loginPassword.value;
+        loginButton.textContent =
+          'LOGGING IN...';
 
 
-        if (
-          email !== ADMIN_EMAIL ||
-          password !== ADMIN_PASSWORD
-        ) {
+        try {
 
-          showLoginError(
-            'Email atau password salah.'
+          const email =
+            loginEmail.value
+              .trim()
+              .toLowerCase();
+
+          const password =
+            loginPassword.value;
+
+
+          if (
+            email !==
+            ADMIN_EMAIL
+          ) {
+
+            throw new Error(
+              'Email admin tidak sesuai.'
+            );
+
+          }
+
+
+          if (
+            password !==
+            ADMIN_PASSWORD
+          ) {
+
+            throw new Error(
+              'Password admin salah.'
+            );
+
+          }
+
+
+          const {
+            data,
+            error
+          } =
+            await supabaseClient.auth.signInWithPassword(
+              {
+                email,
+                password
+              }
+            );
+
+
+          if (error) {
+
+            throw error;
+
+          }
+
+
+          if (!data.session) {
+
+            throw new Error(
+              'Login berhasil tetapi session tidak tersedia.'
+            );
+
+          }
+
+
+          showDashboard(
+            data.user
           );
 
-          return;
+
+          await loadRegistrations();
 
         }
 
+        catch (error) {
 
-        adminLoggedIn = true;
+          console.error(
+            'LOGIN ERROR:',
+            error
+          );
 
-        sessionStorage.setItem(
-          'bold_admin_logged_in',
-          'true'
-        );
+          showLoginError(
+            error &&
+            error.message
+              ? error.message
+              : 'Login gagal.'
+          );
 
+        }
 
-        showDashboard();
+        finally {
 
-        loadRegistrations();
+          loginButton.disabled =
+            false;
+
+          loginButton.textContent =
+            'LOGIN';
+
+        }
 
       }
     );
 
 
-    /* =====================================================
-       SHOW DASHBOARD
-       ===================================================== */
+    // =====================================================
+    // SHOW DASHBOARD
+    // =====================================================
 
-    function showDashboard() {
+    function showDashboard(user) {
 
       loginScreen.classList.add(
         'hidden'
@@ -1240,27 +1356,31 @@
         'hidden'
       );
 
+
       adminEmail.textContent =
-        ADMIN_EMAIL;
+        user &&
+        user.email
+          ? user.email
+          : ADMIN_EMAIL;
 
     }
 
 
-    /* =====================================================
-       LOGOUT
-       ===================================================== */
+    // =====================================================
+    // LOGOUT
+    // =====================================================
 
     logoutButton.addEventListener(
       'click',
-      function() {
+      async function() {
 
-        adminLoggedIn = false;
-
-        sessionStorage.removeItem(
-          'bold_admin_logged_in'
-        );
+        await supabaseClient.auth.signOut();
 
         registrations = [];
+
+        selectedIds.clear();
+
+        updateSelectionUI();
 
         dashboardScreen.classList.add(
           'hidden'
@@ -1270,48 +1390,158 @@
           'hidden'
         );
 
-        loginEmail.value =
-          '';
-
         loginPassword.value =
           '';
 
-        clearDashboardError();
-
-        dashboardSuccess.classList.add(
-          'hidden'
-        );
-
-        updateStatistics();
-
-        tableBody.innerHTML =
-          `
-            <tr>
-              <td
-                colspan="11"
-                class="table-message"
-              >
-                Silakan login.
-              </td>
-            </tr>
-          `;
+        clearDashboardMessages();
 
       }
     );
 
 
-    /* =====================================================
-       LOAD REGISTRATIONS
-       MENGGUNAKAN dynamic-service
-       ===================================================== */
+    // =====================================================
+    // DYNAMIC SERVICE REQUEST
+    // =====================================================
+
+    async function callDynamicService(
+      action,
+      options
+    ) {
+
+      const {
+        data: sessionData,
+        error: sessionError
+      } =
+        await supabaseClient.auth.getSession();
+
+
+      if (sessionError) {
+
+        throw sessionError;
+
+      }
+
+
+      const session =
+        sessionData &&
+        sessionData.session
+          ? sessionData.session
+          : null;
+
+
+      if (!session) {
+
+        throw new Error(
+          'Session admin tidak tersedia. Silakan login kembali.'
+        );
+
+      }
+
+
+      const requestOptions =
+        options || {};
+
+
+      const response =
+        await fetch(
+          DYNAMIC_SERVICE_URL +
+          '?action=' +
+          encodeURIComponent(
+            action
+          ),
+          {
+            method:
+              requestOptions.method ||
+              'POST',
+
+            headers: {
+              'Content-Type':
+                'application/json',
+
+              'apikey':
+                SUPABASE_PUBLISHABLE_KEY,
+
+              'Authorization':
+                'Bearer ' +
+                session.access_token
+            },
+
+            body:
+              requestOptions.body
+                ? JSON.stringify(
+                    requestOptions.body
+                  )
+                : undefined
+          }
+        );
+
+
+      const rawText =
+        await response.text();
+
+
+      let result;
+
+      try {
+
+        result =
+          rawText
+            ? JSON.parse(rawText)
+            : {};
+
+      }
+
+      catch (parseError) {
+
+        console.error(
+          'DYNAMIC SERVICE RAW RESPONSE:',
+          rawText
+        );
+
+        throw new Error(
+          'Response dynamic-service bukan JSON yang valid.'
+        );
+
+      }
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          result &&
+          result.message
+            ? result.message
+            : 'Dynamic service gagal.'
+        );
+
+      }
+
+
+      if (
+        result &&
+        result.success === false
+      ) {
+
+        throw new Error(
+          result.message ||
+          'Dynamic service gagal.'
+        );
+
+      }
+
+
+      return result;
+
+    }
+
+
+    // =====================================================
+    // LOAD REGISTRATIONS
+    // =====================================================
 
     async function loadRegistrations() {
 
-      if (!adminLoggedIn) {
-        return;
-      }
-
-      clearDashboardError();
+      clearDashboardMessages();
 
       refreshButton.disabled =
         true;
@@ -1324,7 +1554,7 @@
         `
           <tr>
             <td
-              colspan="11"
+              colspan="10"
               class="table-message"
             >
               Loading registrations...
@@ -1335,78 +1565,17 @@
 
       try {
 
-        const response =
-          await fetch(
-            DYNAMIC_SERVICE_URL +
-            '?action=report'
+        const result =
+          await callDynamicService(
+            'report',
+            {
+              method: 'GET'
+            }
           );
 
 
-        const rawText =
-          await response.text();
-
-
-        let result;
-
-        try {
-
-          result =
-            JSON.parse(
-              rawText
-            );
-
-        }
-
-        catch (parseError) {
-
-          console.error(
-            'REPORT PARSE ERROR:',
-            parseError
-          );
-
-          throw new Error(
-            'Response dynamic-service bukan JSON yang valid.'
-          );
-
-        }
-
-
-        console.log(
-          'REPORT HTTP STATUS:',
-          response.status
-        );
-
-        console.log(
-          'REPORT RESPONSE:',
-          result
-        );
-
-
-        if (!response.ok) {
-
-          throw new Error(
-            result.message ||
-            result.detail ||
-            'Gagal mengambil data registrasi.'
-          );
-
-        }
-
-
-        if (
-          result.success === false
-        ) {
-
-          throw new Error(
-            result.message ||
-            result.detail ||
-            'Gagal mengambil data registrasi.'
-          );
-
-        }
-
-
-        registrations =
+        const rows =
+          result &&
           Array.isArray(
             result.registrations
           )
@@ -1414,9 +1583,17 @@
             : [];
 
 
+        registrations =
+          rows;
+
+
+        selectedIds.clear();
+
         updateStatistics();
 
         renderTable();
+
+        updateSelectionUI();
 
       }
 
@@ -1430,14 +1607,18 @@
 
         registrations = [];
 
+        selectedIds.clear();
+
         updateStatistics();
+
+        updateSelectionUI();
 
 
         tableBody.innerHTML =
           `
             <tr>
               <td
-                colspan="11"
+                colspan="10"
                 class="table-message"
               >
                 Tidak dapat membaca data registrations.
@@ -1447,8 +1628,10 @@
 
 
         showDashboardError(
-          error.message ||
-          'Gagal memuat data registrasi.'
+          error &&
+          error.message
+            ? error.message
+            : 'Gagal memuat data registrasi.'
         );
 
       }
@@ -1466,9 +1649,9 @@
     }
 
 
-    /* =====================================================
-       STATISTICS
-       ===================================================== */
+    // =====================================================
+    // STATISTICS
+    // =====================================================
 
     function updateStatistics() {
 
@@ -1493,8 +1676,19 @@
 
 
       const remaining =
-        total -
-        checkedIn;
+        registrations.filter(
+          function(row) {
+
+            return (
+              String(
+                row.pass_status || ''
+              )
+                .toUpperCase() !==
+              'USED'
+            );
+
+          }
+        ).length;
 
 
       const free =
@@ -1583,9 +1777,9 @@
     }
 
 
-    /* =====================================================
-       FILTER
-       ===================================================== */
+    // =====================================================
+    // FILTER
+    // =====================================================
 
     function getFilteredRegistrations() {
 
@@ -1641,6 +1835,13 @@
               .toLowerCase();
 
 
+          const community =
+            String(
+              row.community || ''
+            )
+              .toLowerCase();
+
+
           const rowStatus =
             String(
               row.pass_status || ''
@@ -1661,7 +1862,8 @@
             whatsapp.includes(search) ||
             passId.includes(search) ||
             boldRidersId.includes(search) ||
-            boldRidersName.includes(search);
+            boldRidersName.includes(search) ||
+            community.includes(search);
 
 
           const matchesStatus =
@@ -1686,9 +1888,9 @@
     }
 
 
-    /* =====================================================
-       RENDER TABLE
-       ===================================================== */
+    // =====================================================
+    // RENDER TABLE
+    // =====================================================
 
     function renderTable() {
 
@@ -1705,21 +1907,22 @@
         );
 
 
-      if (
-        rows.length === 0
-      ) {
+      if (rows.length === 0) {
 
         tableBody.innerHTML =
           `
             <tr>
               <td
-                colspan="11"
+                colspan="10"
                 class="table-message"
               >
                 Tidak ada data yang cocok.
               </td>
             </tr>
           `;
+
+
+        updateSelectAllState();
 
         return;
 
@@ -1731,8 +1934,69 @@
           .map(
             function(row) {
 
+              const rowId =
+                String(
+                  row.id || ''
+                );
+
+
+              const isSelected =
+                selectedIds.has(
+                  rowId
+                );
+
+
+              const boldRidersDisplay =
+                row.bold_riders_name ||
+                row.bold_riders_id
+                  ? `
+                    <div class="bold-riders-text">
+                      ${escapeHtml(
+                        row.bold_riders_name ||
+                        row.bold_riders_id
+                      )}
+                    </div>
+
+                    ${
+                      row.bold_riders_id
+                        ? `
+                          <div class="muted">
+                            ${escapeHtml(
+                              row.bold_riders_id
+                            )}
+                          </div>
+                        `
+                        : ''
+                    }
+                  `
+                  : `
+                    <span class="muted">
+                      —
+                    </span>
+                  `;
+
+
               return `
                 <tr>
+
+                  <td class="checkbox-cell">
+
+                    <input
+                      type="checkbox"
+                      class="row-checkbox"
+                      data-id="${escapeHtml(
+                        rowId
+                      )}"
+                      ${
+                        isSelected
+                          ? 'checked'
+                          : ''
+                      }
+                      aria-label="Pilih registrasi"
+                    >
+
+                  </td>
+
 
                   <td class="name-cell">
                     ${escapeHtml(
@@ -1740,11 +2004,13 @@
                     )}
                   </td>
 
+
                   <td>
                     ${escapeHtml(
                       row.whatsapp
                     )}
                   </td>
+
 
                   <td class="pass-id-cell">
                     ${escapeHtml(
@@ -1752,31 +2018,18 @@
                     )}
                   </td>
 
+
                   <td>
                     ${accessBadge(
                       row.access_type
                     )}
                   </td>
 
-                  <td>
-                    ${
-                      row.bold_riders_id
-                        ? escapeHtml(
-                            row.bold_riders_id
-                          )
-                        : '<span class="muted">—</span>'
-                    }
-                  </td>
 
                   <td>
-                    ${
-                      row.bold_riders_name
-                        ? escapeHtml(
-                            row.bold_riders_name
-                          )
-                        : '<span class="muted">—</span>'
-                    }
+                    ${boldRidersDisplay}
                   </td>
+
 
                   <td>
                     ${
@@ -1788,17 +2041,20 @@
                     }
                   </td>
 
+
                   <td>
                     ${statusBadge(
                       row.pass_status
                     )}
                   </td>
 
+
                   <td>
                     ${formatDate(
                       row.created_at
                     )}
                   </td>
+
 
                   <td>
                     ${
@@ -1810,21 +2066,6 @@
                     }
                   </td>
 
-                  <td>
-                    <button
-                      class="delete-button"
-                      type="button"
-                      data-id="${escapeHtml(
-                        row.id
-                      )}"
-                      data-pass-id="${escapeHtml(
-                        row.pass_id
-                      )}"
-                    >
-                      HAPUS
-                    </button>
-                  </td>
-
                 </tr>
               `;
 
@@ -1833,44 +2074,334 @@
           .join('');
 
 
-      document
-        .querySelectorAll(
-          '.delete-button'
-        )
-        .forEach(
-          function(button) {
+      bindRowCheckboxes();
 
-            button.addEventListener(
-              'click',
-              function() {
-
-                const id =
-                  button.getAttribute(
-                    'data-id'
-                  );
-
-                const passId =
-                  button.getAttribute(
-                    'data-pass-id'
-                  );
-
-                deleteRegistration(
-                  id,
-                  passId
-                );
-
-              }
-            );
-
-          }
-        );
+      updateSelectAllState();
 
     }
 
 
-    /* =====================================================
-       STATUS BADGE
-       ===================================================== */
+    // =====================================================
+    // ROW CHECKBOXES
+    // =====================================================
+
+    function bindRowCheckboxes() {
+
+      const checkboxes =
+        tableBody.querySelectorAll(
+          '.row-checkbox'
+        );
+
+
+      checkboxes.forEach(
+        function(checkbox) {
+
+          checkbox.addEventListener(
+            'change',
+            function() {
+
+              const id =
+                String(
+                  checkbox.dataset.id || ''
+                );
+
+
+              if (!id) {
+
+                return;
+
+              }
+
+
+              if (checkbox.checked) {
+
+                selectedIds.add(id);
+
+              }
+
+              else {
+
+                selectedIds.delete(id);
+
+              }
+
+
+              updateSelectionUI();
+
+            }
+          );
+
+        }
+      );
+
+    }
+
+
+    // =====================================================
+    // SELECT ALL
+    // =====================================================
+
+    selectAllCheckbox.addEventListener(
+      'change',
+      function() {
+
+        const rows =
+          getFilteredRegistrations();
+
+
+        if (
+          selectAllCheckbox.checked
+        ) {
+
+          rows.forEach(
+            function(row) {
+
+              if (row.id != null) {
+
+                selectedIds.add(
+                  String(row.id)
+                );
+
+              }
+
+            }
+          );
+
+        }
+
+        else {
+
+          rows.forEach(
+            function(row) {
+
+              if (row.id != null) {
+
+                selectedIds.delete(
+                  String(row.id)
+                );
+
+              }
+
+            }
+          );
+
+        }
+
+
+        renderTable();
+
+        updateSelectionUI();
+
+      }
+    );
+
+
+    function updateSelectAllState() {
+
+      const rows =
+        getFilteredRegistrations();
+
+
+      if (rows.length === 0) {
+
+        selectAllCheckbox.checked =
+          false;
+
+        selectAllCheckbox.indeterminate =
+          false;
+
+        return;
+
+      }
+
+
+      const rowIds =
+        rows
+          .map(
+            function(row) {
+
+              return String(
+                row.id || ''
+              );
+
+            }
+          )
+          .filter(Boolean);
+
+
+      const selectedVisibleCount =
+        rowIds.filter(
+          function(id) {
+
+            return selectedIds.has(
+              id
+            );
+
+          }
+        ).length;
+
+
+      selectAllCheckbox.checked =
+        selectedVisibleCount ===
+        rowIds.length;
+
+
+      selectAllCheckbox.indeterminate =
+        selectedVisibleCount > 0 &&
+        selectedVisibleCount <
+          rowIds.length;
+
+    }
+
+
+    function updateSelectionUI() {
+
+      const count =
+        selectedIds.size;
+
+
+      selectedInfo.textContent =
+        count +
+        (
+          count === 1
+            ? ' dipilih'
+            : ' dipilih'
+        );
+
+
+      deleteSelectedButton.disabled =
+        count === 0;
+
+
+      deleteSelectedButton.textContent =
+        count > 0
+          ? 'HAPUS ' + count + ' TERPILIH'
+          : 'HAPUS TERPILIH';
+
+
+      updateSelectAllState();
+
+    }
+
+
+    // =====================================================
+    // DELETE SELECTED
+    // =====================================================
+
+    deleteSelectedButton.addEventListener(
+      'click',
+      async function() {
+
+        const ids =
+          Array.from(
+            selectedIds
+          );
+
+
+        if (ids.length === 0) {
+
+          return;
+
+        }
+
+
+        const confirmation =
+          confirm(
+            'Hapus ' +
+            ids.length +
+            ' registrasi yang dipilih?\n\n' +
+            'Data yang dihapus tidak dapat dikembalikan.'
+          );
+
+
+        if (!confirmation) {
+
+          return;
+
+        }
+
+
+        clearDashboardMessages();
+
+
+        deleteSelectedButton.disabled =
+          true;
+
+        deleteSelectedButton.textContent =
+          'MENGHAPUS...';
+
+
+        try {
+
+          const result =
+            await callDynamicService(
+              'delete',
+              {
+                method: 'POST',
+
+                body: {
+                  ids
+                }
+              }
+            );
+
+
+          const deletedCount =
+            result &&
+            Number.isFinite(
+              Number(
+                result.deletedCount
+              )
+            )
+              ? Number(
+                  result.deletedCount
+                )
+              : ids.length;
+
+
+          selectedIds.clear();
+
+
+          showDashboardSuccess(
+            deletedCount +
+            ' registrasi berhasil dihapus.'
+          );
+
+
+          await loadRegistrations();
+
+        }
+
+        catch (error) {
+
+          console.error(
+            'DELETE REGISTRATIONS ERROR:',
+            error
+          );
+
+
+          showDashboardError(
+            error &&
+            error.message
+              ? error.message
+              : 'Gagal menghapus registrasi.'
+          );
+
+        }
+
+        finally {
+
+          updateSelectionUI();
+
+        }
+
+      }
+    );
+
+
+    // =====================================================
+    // STATUS BADGE
+    // =====================================================
 
     function statusBadge(status) {
 
@@ -1881,13 +2412,25 @@
           .toUpperCase();
 
 
-      if (
-        value === 'USED'
-      ) {
+      if (value === 'USED') {
 
         return `
           <span class="badge badge-used">
             USED
+          </span>
+        `;
+
+      }
+
+
+      if (
+        value ===
+        'CANCELLED'
+      ) {
+
+        return `
+          <span class="badge badge-cancelled">
+            CANCELLED
           </span>
         `;
 
@@ -1903,9 +2446,9 @@
     }
 
 
-    /* =====================================================
-       ACCESS BADGE
-       ===================================================== */
+    // =====================================================
+    // ACCESS BADGE
+    // =====================================================
 
     function accessBadge(access) {
 
@@ -1917,12 +2460,13 @@
 
 
       if (
-        value === 'VIP'
+        value ===
+        'BOLD RIDERS'
       ) {
 
         return `
-          <span class="badge badge-vip">
-            VIP
+          <span class="badge badge-bold">
+            BOLD RIDERS
           </span>
         `;
 
@@ -1930,12 +2474,13 @@
 
 
       if (
-        value === 'BOLD RIDERS'
+        value ===
+        'VIP'
       ) {
 
         return `
-          <span class="badge badge-bold">
-            BOLD RIDERS
+          <span class="badge badge-vip">
+            VIP
           </span>
         `;
 
@@ -1951,310 +2496,16 @@
     }
 
 
-    /* =====================================================
-       DELETE ONE
-       ===================================================== */
-
-    async function deleteRegistration(
-      id,
-      passId
-    ) {
-
-      if (!adminLoggedIn) {
-        return;
-      }
-
-
-      const confirmed =
-        window.confirm(
-          'Hapus registrasi dengan Pass ID "' +
-          passId +
-          '"?\n\nData yang dihapus tidak dapat dikembalikan.'
-        );
-
-
-      if (!confirmed) {
-        return;
-      }
-
-
-      try {
-
-        /*
-          Action delete akan ditangani
-          oleh dynamic-service.
-        */
-
-        const response =
-          await fetch(
-            DYNAMIC_SERVICE_URL +
-            '?action=delete',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type':
-                  'application/json'
-              },
-              body: JSON.stringify({
-                id: id
-              })
-            }
-          );
-
-
-        const rawText =
-          await response.text();
-
-
-        let result;
-
-        try {
-
-          result =
-            JSON.parse(
-              rawText
-            );
-
-        }
-
-        catch (parseError) {
-
-          throw new Error(
-            'Response delete bukan JSON yang valid.'
-          );
-
-        }
-
-
-        if (!response.ok) {
-
-          throw new Error(
-            result.message ||
-            result.detail ||
-            'Gagal menghapus registrasi.'
-          );
-
-        }
-
-
-        if (
-          result.success === false
-        ) {
-
-          throw new Error(
-            result.message ||
-            result.detail ||
-            'Gagal menghapus registrasi.'
-          );
-
-        }
-
-
-        showDashboardSuccess(
-          'Registrasi ' +
-          passId +
-          ' berhasil dihapus.'
-        );
-
-
-        await loadRegistrations();
-
-      }
-
-      catch (error) {
-
-        console.error(
-          'DELETE REGISTRATION ERROR:',
-          error
-        );
-
-
-        showDashboardError(
-          error.message ||
-          'Gagal menghapus registrasi.'
-        );
-
-      }
-
-    }
-
-
-    /* =====================================================
-       DELETE ALL
-       ===================================================== */
-
-    deleteAllButton.addEventListener(
-      'click',
-      async function() {
-
-        if (!adminLoggedIn) {
-          return;
-        }
-
-
-        if (
-          registrations.length === 0
-        ) {
-
-          window.alert(
-            'Tidak ada data registrasi yang perlu dihapus.'
-          );
-
-          return;
-
-        }
-
-
-        const firstConfirm =
-          window.confirm(
-            'PERINGATAN!\n\n' +
-            'Anda akan menghapus SEMUA data registrasi.\n\n' +
-            'Jumlah data saat ini: ' +
-            registrations.length +
-            '\n\n' +
-            'Lanjutkan?'
-          );
-
-
-        if (!firstConfirm) {
-          return;
-        }
-
-
-        const secondConfirm =
-          window.confirm(
-            'KONFIRMASI TERAKHIR\n\n' +
-            'Semua data testing registrations akan dihapus permanen.\n\n' +
-            'Klik OK untuk benar-benar menghapus.'
-          );
-
-
-        if (!secondConfirm) {
-          return;
-        }
-
-
-        deleteAllButton.disabled =
-          true;
-
-        deleteAllButton.textContent =
-          'MENGHAPUS...';
-
-
-        try {
-
-          const response =
-            await fetch(
-              DYNAMIC_SERVICE_URL +
-              '?action=deleteAll',
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type':
-                    'application/json'
-                },
-                body: JSON.stringify({
-                  confirm:
-                    'DELETE_ALL_TESTING_DATA'
-                })
-              }
-            );
-
-
-          const rawText =
-            await response.text();
-
-
-          let result;
-
-          try {
-
-            result =
-              JSON.parse(
-                rawText
-              );
-
-          }
-
-          catch (parseError) {
-
-            throw new Error(
-              'Response deleteAll bukan JSON yang valid.'
-            );
-
-          }
-
-
-          if (!response.ok) {
-
-            throw new Error(
-              result.message ||
-              result.detail ||
-              'Gagal menghapus semua data.'
-            );
-
-          }
-
-
-          if (
-            result.success === false
-          ) {
-
-            throw new Error(
-              result.message ||
-              result.detail ||
-              'Gagal menghapus semua data.'
-            );
-
-          }
-
-
-          showDashboardSuccess(
-            'Semua data testing berhasil dihapus.'
-          );
-
-
-          await loadRegistrations();
-
-        }
-
-        catch (error) {
-
-          console.error(
-            'DELETE ALL ERROR:',
-            error
-          );
-
-
-          showDashboardError(
-            error.message ||
-            'Gagal menghapus semua data.'
-          );
-
-        }
-
-        finally {
-
-          deleteAllButton.disabled =
-            false;
-
-          deleteAllButton.textContent =
-            '🗑️ HAPUS SEMUA DATA TESTING';
-
-        }
-
-      }
-    );
-
-
-    /* =====================================================
-       DATE FORMAT
-       ===================================================== */
+    // =====================================================
+    // DATE FORMAT
+    // =====================================================
 
     function formatDate(value) {
 
       if (!value) {
+
         return '—';
+
       }
 
 
@@ -2286,9 +2537,9 @@
     }
 
 
-    /* =====================================================
-       HTML ESCAPE
-       ===================================================== */
+    // =====================================================
+    // HTML ESCAPE
+    // =====================================================
 
     function escapeHtml(value) {
 
@@ -2321,9 +2572,9 @@
     }
 
 
-    /* =====================================================
-       REFRESH
-       ===================================================== */
+    // =====================================================
+    // REFRESH
+    // =====================================================
 
     refreshButton.addEventListener(
       'click',
@@ -2335,15 +2586,17 @@
     );
 
 
-    /* =====================================================
-       LIVE SEARCH
-       ===================================================== */
+    // =====================================================
+    // LIVE SEARCH
+    // =====================================================
 
     searchInput.addEventListener(
       'input',
       function() {
 
         renderTable();
+
+        updateSelectionUI();
 
       }
     );
@@ -2355,6 +2608,8 @@
 
         renderTable();
 
+        updateSelectionUI();
+
       }
     );
 
@@ -2365,45 +2620,152 @@
 
         renderTable();
 
+        updateSelectionUI();
+
       }
     );
 
 
-    /* =====================================================
-       SESSION HALAMAN ADMIN
-       ===================================================== */
+    // =====================================================
+    // CHECK EXISTING SESSION
+    // =====================================================
 
-    function checkAdminSession() {
+    async function checkExistingSession() {
 
-      const loggedIn =
-        sessionStorage.getItem(
-          'bold_admin_logged_in'
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth.getSession();
+
+
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        const session =
+          data &&
+          data.session
+            ? data.session
+            : null;
+
+
+        if (
+          session &&
+          session.user
+        ) {
+
+          if (
+            String(
+              session.user.email ||
+              ''
+            )
+              .toLowerCase() !==
+            ADMIN_EMAIL
+          ) {
+
+            await supabaseClient.auth.signOut();
+
+            return;
+
+          }
+
+
+          showDashboard(
+            session.user
+          );
+
+
+          await loadRegistrations();
+
+        }
+
+      }
+
+      catch (error) {
+
+        console.error(
+          'SESSION ERROR:',
+          error
         );
-
-
-      if (
-        loggedIn === 'true'
-      ) {
-
-        adminLoggedIn = true;
-
-        showDashboard();
-
-        loadRegistrations();
 
       }
 
     }
 
 
-    /* =====================================================
-       START
-       ===================================================== */
+    // =====================================================
+    // AUTH STATE
+    // =====================================================
 
-    checkAdminSession();
+    supabaseClient.auth.onAuthStateChange(
+      function(
+        event,
+        session
+      ) {
+
+        if (
+          event ===
+          'SIGNED_OUT'
+        ) {
+
+          registrations = [];
+
+          selectedIds.clear();
+
+          updateSelectionUI();
+
+          dashboardScreen.classList.add(
+            'hidden'
+          );
+
+          loginScreen.classList.remove(
+            'hidden'
+          );
+
+        }
+
+
+        if (
+          event ===
+          'SIGNED_IN' &&
+          session &&
+          session.user
+        ) {
+
+          if (
+            String(
+              session.user.email ||
+              ''
+            )
+              .toLowerCase() ===
+            ADMIN_EMAIL
+          ) {
+
+            showDashboard(
+              session.user
+            );
+
+          }
+
+        }
+
+      }
+    );
+
+
+    // =====================================================
+    // START
+    // =====================================================
+
+    checkExistingSession();
 
   </script>
 
 </body>
 </html>
-```
