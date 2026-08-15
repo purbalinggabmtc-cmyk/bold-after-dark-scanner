@@ -85,11 +85,19 @@
       color: var(--white);
     }
 
-    /* BOLD = putih
-       AFTER = merah
-       DARK = putih */
-    .brand span {
+    /* BOLD = PUTIH */
+    .brand .bold {
+      color: #ffffff;
+    }
+
+    /* AFTER = MERAH */
+    .brand .after {
       color: var(--red);
+    }
+
+    /* DARK = PUTIH */
+    .brand .dark {
+      color: #ffffff;
     }
 
     .subtitle {
@@ -470,7 +478,7 @@
        RESPONSIVE
        ========================================================= */
 
-    @media (max-width: 1100px) {
+    @media (max-width: 1150px) {
       .stats {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
@@ -551,8 +559,13 @@
         color: #000;
       }
 
-      .brand span {
-        color: #000;
+      .brand .bold,
+      .brand .dark {
+        color: #000 !important;
+      }
+
+      .brand .after {
+        color: #000 !important;
       }
 
       .subtitle {
@@ -691,7 +704,9 @@
     <div class="header">
 
       <div class="brand">
-        BOLD <span>AFTER</span> DARK
+        <span class="bold">BOLD</span>
+        <span class="after"> AFTER </span>
+        <span class="dark">DARK</span>
       </div>
 
       <div class="subtitle">
@@ -732,6 +747,14 @@
 
       <button
         type="button"
+        class="btn btn-dark"
+        id="homeButton"
+      >
+        HOME
+      </button>
+
+      <button
+        type="button"
         class="btn btn-red"
         id="refreshButton"
       >
@@ -762,14 +785,6 @@
         ADMIN
       </button>
 
-      <button
-        type="button"
-        class="btn btn-outline-red"
-        id="homeButton"
-      >
-        HOME
-      </button>
-
     </div>
 
 
@@ -785,6 +800,7 @@
 
     <!-- =======================================================
          STATISTICS
+         TOTAL | FREE | VIP | BOLD RIDERS | USED | UNUSED
          ======================================================= -->
 
     <div class="stats">
@@ -831,7 +847,6 @@
       </div>
 
 
-      <!-- BOLD RIDERS DITAMBAHKAN SETELAH VIP -->
       <div class="stat">
         <div class="stat-label">
           BOLD RIDERS
@@ -1017,6 +1032,9 @@
     const statusFilter =
       document.getElementById("statusFilter");
 
+    const homeButton =
+      document.getElementById("homeButton");
+
     const refreshButton =
       document.getElementById("refreshButton");
 
@@ -1028,9 +1046,6 @@
 
     const adminButton =
       document.getElementById("adminButton");
-
-    const homeButton =
-      document.getElementById("homeButton");
 
     const errorBox =
       document.getElementById("errorBox");
@@ -1537,7 +1552,6 @@
         ).length;
 
 
-      /* BOLD RIDERS */
       const boldRiders =
         rows.filter(
           function(row) {
@@ -2024,6 +2038,24 @@
 
 
     /* =========================================================
+       HOME BUTTON
+       =========================================================
+       HOME -> index.html
+       BUKAN scanner.html
+       ========================================================= */
+
+    homeButton.addEventListener(
+      "click",
+      function() {
+
+        window.location.href =
+          "./index.html";
+
+      }
+    );
+
+
+    /* =========================================================
        ADMIN BUTTON
        ========================================================= */
 
@@ -2033,21 +2065,6 @@
 
         window.location.href =
           "./admin.html";
-
-      }
-    );
-
-
-    /* =========================================================
-       HOME BUTTON
-       ========================================================= */
-
-    homeButton.addEventListener(
-      "click",
-      function() {
-
-        window.location.href =
-          "./index.html";
 
       }
     );
