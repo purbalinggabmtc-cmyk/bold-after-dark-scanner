@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -158,19 +157,11 @@
       color: #ff8c8c;
     }
 
-    .rider-owner {
-      margin-top: 10px;
-      padding: 11px 13px;
-      border: 1px solid #145b32;
-      border-radius: 8px;
-      background: #071d10;
-      color: #55e68b;
-      font-size: 13px;
+    .bold-rider-name {
+      border-color: #145b32 !important;
+      background: #071d10 !important;
+      color: #55e68b !important;
       font-weight: 700;
-    }
-
-    .rider-owner strong {
-      color: #fff;
     }
 
     .access-info {
@@ -182,13 +173,6 @@
       color: #aaa;
       font-size: 12px;
       line-height: 1.5;
-    }
-
-    .name-locked {
-      border-color: #145b32 !important;
-      background: #071d10 !important;
-      color: #55e68b !important;
-      font-weight: 700;
     }
 
     .button-row {
@@ -454,7 +438,7 @@
 
       <form id="registrationForm" novalidate>
 
-        <!-- 1. ACCESS -->
+        <!-- ACCESS -->
         <div class="field">
           <label for="accessType">
             Access <span class="required">*</span>
@@ -487,7 +471,7 @@
           </div>
         </div>
 
-        <!-- 2. BOLD RIDERS ID -->
+        <!-- ID BOLD RIDERS -->
         <div
           id="boldRidersField"
           class="field hidden"
@@ -516,14 +500,9 @@
             id="boldRidersStatus"
             class="rider-status"
           ></div>
-
-          <div
-            id="boldRidersOwner"
-            class="rider-owner hidden"
-          ></div>
         </div>
 
-        <!-- 3. NAMA -->
+        <!-- NAMA -->
         <div class="field">
           <label for="name">
             Nama <span class="required">*</span>
@@ -545,7 +524,7 @@
           </div>
         </div>
 
-        <!-- 4. WHATSAPP -->
+        <!-- WHATSAPP -->
         <div class="field">
           <label for="whatsapp">
             WhatsApp <span class="required">*</span>
@@ -560,7 +539,7 @@
           >
         </div>
 
-        <!-- 5. TABLE PACKAGE -->
+        <!-- TABLE PACKAGE -->
         <div
           id="tablePackageField"
           class="field hidden"
@@ -595,7 +574,7 @@
           </select>
         </div>
 
-        <!-- 6. COMMUNITY -->
+        <!-- COMMUNITY -->
         <div class="field">
           <label for="community">
             Community
@@ -609,7 +588,7 @@
           >
         </div>
 
-        <!-- 7. STAY CONNECTED -->
+        <!-- STAY CONNECTED -->
         <div class="field">
           <label for="stayConnected">
             Stay Connected
@@ -656,6 +635,7 @@
 
       </div>
 
+      <!-- RESULT -->
       <div
         id="resultBox"
         class="result"
@@ -815,21 +795,6 @@
     const registrationForm =
       document.getElementById("registrationForm");
 
-    const accessTypeInput =
-      document.getElementById("accessType");
-
-    const boldRidersField =
-      document.getElementById("boldRidersField");
-
-    const boldRidersIdInput =
-      document.getElementById("boldRidersId");
-
-    const boldRidersStatus =
-      document.getElementById("boldRidersStatus");
-
-    const boldRidersOwner =
-      document.getElementById("boldRidersOwner");
-
     const nameInput =
       document.getElementById("name");
 
@@ -839,11 +804,23 @@
     const whatsappInput =
       document.getElementById("whatsapp");
 
+    const accessTypeInput =
+      document.getElementById("accessType");
+
     const tablePackageInput =
       document.getElementById("tablePackage");
 
     const tablePackageField =
       document.getElementById("tablePackageField");
+
+    const boldRidersField =
+      document.getElementById("boldRidersField");
+
+    const boldRidersIdInput =
+      document.getElementById("boldRidersId");
+
+    const boldRidersStatus =
+      document.getElementById("boldRidersStatus");
 
     const communityInput =
       document.getElementById("community");
@@ -931,38 +908,15 @@
       boldRidersStatus.textContent =
         "";
 
-      boldRidersOwner.className =
-        "rider-owner hidden";
-
-      boldRidersOwner.textContent =
-        "";
-    }
-
-    function setManualNameMode() {
+      nameInput.value = "";
       nameInput.disabled = false;
-      nameInput.readOnly = false;
-      nameInput.classList.remove("name-locked");
+      nameInput.classList.remove(
+        "bold-rider-name"
+      );
 
-      nameHelp.classList.add("hidden");
-
-      if (
-        String(accessTypeInput.value || "")
-          .trim()
-          .toUpperCase() !== "BOLD RIDERS"
-      ) {
-        nameInput.value = "";
-      }
-    }
-
-    function setBoldRiderNameMode(name) {
-      nameInput.value =
-        String(name || "").trim();
-
-      nameInput.disabled = true;
-      nameInput.readOnly = true;
-      nameInput.classList.add("name-locked");
-
-      nameHelp.classList.remove("hidden");
+      nameHelp.classList.add(
+        "hidden"
+      );
     }
 
     function updateAccessFields() {
@@ -981,7 +935,6 @@
 
       /*
        * VIP
-       * Table Package muncul.
        */
       if (isVip) {
         tablePackageField.classList.remove(
@@ -1004,7 +957,6 @@
 
       /*
        * BOLD RIDERS
-       * ID BR muncul tepat di bawah Access.
        */
       if (isBoldRider) {
         boldRidersField.classList.remove(
@@ -1014,16 +966,20 @@
         boldRidersIdInput.required =
           true;
 
-        /*
-         * Nama tidak boleh diketik manual.
-         * Nama akan diisi setelah ID BR valid.
-         */
-        nameInput.value = "";
-        nameInput.disabled = true;
-        nameInput.readOnly = true;
-        nameInput.classList.add("name-locked");
+        nameHelp.classList.remove(
+          "hidden"
+        );
 
-        nameHelp.classList.remove("hidden");
+        /*
+         * Nama tidak boleh diubah
+         * secara manual untuk BOLD RIDERS.
+         */
+        nameInput.disabled =
+          true;
+
+        nameInput.classList.add(
+          "bold-rider-name"
+        );
 
       } else {
         boldRidersField.classList.add(
@@ -1038,11 +994,16 @@
 
         clearBoldRiderValidation();
 
-        /*
-         * FREE / VIP:
-         * Nama kembali menjadi input manual.
-         */
-        setManualNameMode();
+        nameInput.disabled =
+          false;
+
+        nameInput.classList.remove(
+          "bold-rider-name"
+        );
+
+        nameHelp.classList.add(
+          "hidden"
+        );
       }
     }
 
@@ -1069,14 +1030,11 @@
       boldRiderValidatedName =
         "";
 
-      nameInput.value =
-        "";
-
-      boldRidersOwner.className =
-        "rider-owner hidden";
-
-      boldRidersOwner.textContent =
-        "";
+      /*
+       * Reset nama ketika ID sedang
+       * divalidasi ulang.
+       */
+      nameInput.value = "";
 
       if (!riderId) {
         boldRidersStatus.className =
@@ -1163,22 +1121,27 @@
             ).trim();
 
           /*
-           * ID valid tetapi nama pemilik kosong:
-           * jangan izinkan registrasi karena
-           * nama BOLD RIDERS harus berasal dari database.
+           * ID valid tetapi nama pemilik
+           * tidak tersedia dari server.
            */
           if (!ownerName) {
-            boldRiderIsValid = false;
-            boldRiderValidatedId = "";
-            boldRiderValidatedName = "";
+            boldRiderIsValid =
+              false;
+
+            boldRiderValidatedId =
+              "";
+
+            boldRiderValidatedName =
+              "";
 
             boldRidersStatus.className =
               "rider-status invalid";
 
             boldRidersStatus.textContent =
-              "ID valid, tetapi nama BOLD RIDERS tidak ditemukan.";
+              "ID BOLD RIDERS valid, tetapi nama tidak ditemukan.";
 
-            nameInput.value = "";
+            nameInput.value =
+              "";
 
             return false;
           }
@@ -1192,27 +1155,32 @@
           boldRiderValidatedName =
             ownerName;
 
+          /*
+           * Nama otomatis dari server.
+           */
+          nameInput.value =
+            ownerName;
+
+          nameInput.disabled =
+            true;
+
+          nameInput.classList.add(
+            "bold-rider-name"
+          );
+
+          nameHelp.classList.remove(
+            "hidden"
+          );
+
+          /*
+           * SESUAI PERMINTAAN:
+           * hanya tampil status valid.
+           */
           boldRidersStatus.className =
             "rider-status valid";
 
           boldRidersStatus.textContent =
             "ID BOLD RIDERS valid.";
-
-          boldRidersOwner.className =
-            "rider-owner";
-
-          boldRidersOwner.innerHTML =
-            "Nama pemilik: <strong>" +
-            escapeHtml(ownerName) +
-            "</strong>";
-
-          /*
-           * INI BAGIAN PENTING:
-           * Nama otomatis mengikuti database.
-           */
-          setBoldRiderNameMode(
-            ownerName
-          );
 
           return true;
         }
@@ -1275,36 +1243,14 @@
       }
     }
 
-    function escapeHtml(value) {
-      return String(
-        value == null
-          ? ""
-          : value
-      )
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-        .replace(
-          /</g,
-          "&lt;"
-        )
-        .replace(
-          />/g,
-          "&gt;"
-        )
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-        .replace(
-          /'/g,
-          "&#039;"
-        );
-    }
-
     async function submitRegistration() {
       hideMessage();
+
+      const name =
+        nameInput.value.trim();
+
+      const whatsapp =
+        whatsappInput.value.trim();
 
       const accessType =
         String(
@@ -1312,12 +1258,6 @@
         )
           .trim()
           .toUpperCase();
-
-      let name =
-        nameInput.value.trim();
-
-      const whatsapp =
-        whatsappInput.value.trim();
 
       const tablePackage =
         tablePackageInput.value.trim();
@@ -1335,6 +1275,9 @@
           .trim()
           .toUpperCase();
 
+      /*
+       * ACCESS
+       */
       if (!accessType) {
         showMessage(
           "error",
@@ -1346,9 +1289,7 @@
       }
 
       /*
-       * BOLD RIDERS:
-       * ID harus valid dan nama harus berasal
-       * dari hasil validasi database.
+       * BOLD RIDERS VALIDATION
        */
       if (
         accessType === "BOLD RIDERS"
@@ -1368,8 +1309,7 @@
         if (
           !boldRiderIsValid ||
           boldRiderValidatedId !==
-            boldRidersId ||
-          !boldRiderValidatedName
+            boldRidersId
         ) {
           showMessage(
             "error",
@@ -1386,32 +1326,15 @@
           if (
             !boldRiderIsValid ||
             boldRiderValidatedId !==
-              boldRidersId ||
-            !boldRiderValidatedName
+              boldRidersId
           ) {
-            showMessage(
-              "error",
-              "Data BOLD RIDERS tidak valid."
-            );
-
             return;
           }
         }
-
-        /*
-         * Jangan pernah mengambil nama dari
-         * input manual untuk BOLD RIDERS.
-         */
-        name =
-          boldRiderValidatedName;
-
-        nameInput.value =
-          name;
       }
 
       /*
-       * FREE / VIP:
-       * Nama tetap manual.
+       * NAME
        */
       if (!name) {
         showMessage(
@@ -1423,6 +1346,9 @@
         return;
       }
 
+      /*
+       * WHATSAPP
+       */
       if (!whatsapp) {
         showMessage(
           "error",
@@ -1433,6 +1359,9 @@
         return;
       }
 
+      /*
+       * VIP TABLE
+       */
       if (
         accessType === "VIP" &&
         !tablePackage
@@ -1457,6 +1386,7 @@
             : "",
 
         community,
+
         stayConnected,
 
         boldRidersId:
@@ -1584,7 +1514,9 @@
       }
     }
 
-    function showRegistrationResult(data) {
+    function showRegistrationResult(
+      data
+    ) {
       resultBox.classList.add(
         "show"
       );
@@ -1634,6 +1566,7 @@
 
         resultRiderName.textContent =
           riderName || "-";
+
       } else {
         resultRiderIdItem.classList.add(
           "hidden"
@@ -1692,22 +1625,32 @@
     }
 
     /*
-     * Saat Access berubah:
-     * - BOLD RIDERS -> ID muncul
-     * - VIP -> Table Package muncul
-     * - FREE -> keduanya disembunyikan
+     * ACCESS CHANGE
      */
     accessTypeInput.addEventListener(
       "change",
       function() {
+        validationRequestNumber++;
+
         updateAccessFields();
+
         hideMessage();
+
+        if (
+          String(
+            accessTypeInput.value || ""
+          ).toUpperCase() ===
+          "BOLD RIDERS"
+        ) {
+          boldRidersIdInput.focus();
+        } else {
+          nameInput.focus();
+        }
       }
     );
 
     /*
-     * Validasi ID BOLD RIDERS otomatis
-     * ketika sudah 8 karakter.
+     * BOLD RIDERS ID INPUT
      */
     boldRidersIdInput.addEventListener(
       "input",
@@ -1743,11 +1686,12 @@
         nameInput.value =
           "";
 
-        boldRidersOwner.className =
-          "rider-owner hidden";
+        nameInput.disabled =
+          true;
 
-        boldRidersOwner.textContent =
-          "";
+        nameInput.classList.add(
+          "bold-rider-name"
+        );
 
         if (
           value.length < 8
@@ -1770,29 +1714,8 @@
     );
 
     /*
-     * Proteksi tambahan:
-     * selama BOLD RIDERS aktif, user tidak dapat
-     * mengubah nama secara manual.
+     * FORM SUBMIT
      */
-    nameInput.addEventListener(
-      "input",
-      function() {
-        const access =
-          String(
-            accessTypeInput.value || ""
-          )
-            .trim()
-            .toUpperCase();
-
-        if (
-          access === "BOLD RIDERS"
-        ) {
-          nameInput.value =
-            boldRiderValidatedName || "";
-        }
-      }
-    );
-
     registrationForm.addEventListener(
       "submit",
       async function(event) {
@@ -1802,14 +1725,19 @@
       }
     );
 
+    /*
+     * WHATSAPP HELP
+     */
     whatsappButton.addEventListener(
       "click",
       openWhatsAppHelp
     );
 
+    /*
+     * INITIAL STATE
+     */
     updateAccessFields();
   </script>
 
 </body>
 </html>
-```
