@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -56,8 +55,6 @@
       padding: 30px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
     }
-
-    /* BOLD = WHITE / AFTER = RED / DARK = WHITE */
 
     .brand {
       text-align: center;
@@ -192,6 +189,7 @@
       font-size: 12px;
     }
 
+    .home-button,
     .logout-button,
     .refresh-button,
     .report-button,
@@ -203,10 +201,28 @@
       font-weight: 700;
     }
 
+    /* HOME */
+    .home-button {
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #ffffff;
+      transition: 0.15s ease;
+    }
+
+    .home-button:hover {
+      background: #e00000;
+      color: #ffffff;
+      border-color: #e00000;
+    }
+
     .logout-button {
       background: #222222;
       color: white;
       border: 1px solid #444444;
+    }
+
+    .logout-button:hover {
+      background: #333333;
     }
 
     .refresh-button {
@@ -215,9 +231,11 @@
       border: none;
     }
 
-    /* ============================================================
-       REPORT BUTTON
-       ============================================================ */
+    .refresh-button:hover:not(:disabled) {
+      background: #c00000;
+    }
+
+    /* REPORT BUTTON */
 
     .report-button {
       background: #ffffff;
@@ -252,6 +270,10 @@
       background: #222222;
       color: #dddddd;
       border: 1px solid #444444;
+    }
+
+    .select-button:hover {
+      background: #333333;
     }
 
     /* ============================================================
@@ -583,7 +605,6 @@
       }
     }
   </style>
-
 </head>
 
 <body>
@@ -594,62 +615,61 @@
 
   <section id="loginScreen">
 
-```
-<div class="login-card">
+    <div class="login-card">
 
-  <div class="brand">
-    BOLD <span class="red">AFTER</span> <span class="white">DARK</span>
-  </div>
+      <div class="brand">
+        BOLD <span class="red">AFTER</span> <span class="white">DARK</span>
+      </div>
 
-  <div class="login-subtitle">
-    ADMIN DASHBOARD
-  </div>
+      <div class="login-subtitle">
+        ADMIN DASHBOARD
+      </div>
 
-  <form id="loginForm">
+      <form id="loginForm">
 
-    <div class="form-group">
-      <label for="loginEmail">EMAIL</label>
+        <div class="form-group">
+          <label for="loginEmail">EMAIL</label>
 
-      <input
-        id="loginEmail"
-        type="email"
-        placeholder="admin@admin.com"
-        autocomplete="username"
-        required
-      >
+          <input
+            id="loginEmail"
+            type="email"
+            placeholder="admin@admin.com"
+            autocomplete="username"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="loginPassword">PASSWORD</label>
+
+          <input
+            id="loginPassword"
+            type="password"
+            placeholder="Password"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        <button
+          id="loginButton"
+          class="primary-button"
+          type="submit"
+        >
+          LOGIN
+        </button>
+
+      </form>
+
+      <div
+        id="loginMessage"
+        class="login-message"
+      ></div>
+
     </div>
-
-    <div class="form-group">
-      <label for="loginPassword">PASSWORD</label>
-
-      <input
-        id="loginPassword"
-        type="password"
-        placeholder="Password"
-        autocomplete="current-password"
-        required
-      >
-    </div>
-
-    <button
-      id="loginButton"
-      class="primary-button"
-      type="submit"
-    >
-      LOGIN
-    </button>
-
-  </form>
-
-  <div
-    id="loginMessage"
-    class="login-message"
-  ></div>
-
-</div>
-```
 
   </section>
+
 
   <!-- ============================================================
        DASHBOARD
@@ -660,254 +680,261 @@
     class="hidden"
   >
 
-```
-<div class="dashboard">
+    <div class="dashboard">
 
-  <div class="topbar">
+      <div class="topbar">
 
-    <div class="topbar-brand">
-      BOLD <span class="red">AFTER</span> <span class="white">DARK</span>
-    </div>
+        <div class="topbar-brand">
+          BOLD <span class="red">AFTER</span> <span class="white">DARK</span>
+        </div>
 
-    <div class="topbar-right">
+        <div class="topbar-right">
+
+          <div
+            id="adminEmail"
+            class="admin-email"
+          ></div>
+
+          <!-- HOME BUTTON -->
+          <button
+            id="homeButton"
+            class="home-button"
+            type="button"
+          >
+            HOME
+          </button>
+
+          <!-- REPORT BUTTON -->
+          <button
+            id="reportButton"
+            class="report-button"
+            type="button"
+          >
+            LAPORAN
+          </button>
+
+          <button
+            id="refreshButton"
+            class="refresh-button"
+            type="button"
+          >
+            REFRESH
+          </button>
+
+          <button
+            id="logoutButton"
+            class="logout-button"
+            type="button"
+          >
+            LOGOUT
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- MESSAGES -->
 
       <div
-        id="adminEmail"
-        class="admin-email"
+        id="dashboardError"
+        class="error-banner hidden"
       ></div>
 
-      <!-- REPORT BUTTON -->
-
-      <button
-        id="reportButton"
-        class="report-button"
-        type="button"
-      >
-        LAPORAN
-      </button>
-
-      <button
-        id="refreshButton"
-        class="refresh-button"
-        type="button"
-      >
-        REFRESH
-      </button>
-
-      <button
-        id="logoutButton"
-        class="logout-button"
-        type="button"
-      >
-        LOGOUT
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- MESSAGES -->
-
-  <div
-    id="dashboardError"
-    class="error-banner hidden"
-  ></div>
-
-  <div
-    id="dashboardSuccess"
-    class="success-banner hidden"
-  ></div>
-
-
-  <!-- ========================================================
-       STATISTICS
-       ======================================================== -->
-
-  <div class="stats-grid">
-
-    <div class="stat-card">
-      <div class="stat-label">Total</div>
-      <div id="totalCount" class="stat-value">0</div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-label">Check-In</div>
-      <div id="checkedInCount" class="stat-value">0</div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-label">Remaining</div>
-      <div id="remainingCount" class="stat-value">0</div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-label">FREE</div>
-      <div id="freeCount" class="stat-value">0</div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-label">VIP</div>
-      <div id="vipCount" class="stat-value">0</div>
-    </div>
-
-  </div>
-
-
-  <!-- ========================================================
-       SEARCH / FILTER
-       ======================================================== -->
-
-  <div class="controls">
-
-    <div class="controls-row">
-
-      <input
-        id="searchInput"
-        class="search-box"
-        type="search"
-        placeholder="Search name / WhatsApp / Pass ID..."
-        autocomplete="off"
-      >
-
-      <select
-        id="statusFilter"
-        class="filter-select"
-      >
-        <option value="ALL">ALL STATUS</option>
-        <option value="UNUSED">UNUSED</option>
-        <option value="USED">USED</option>
-      </select>
-
-      <select
-        id="accessFilter"
-        class="filter-select"
-      >
-        <option value="ALL">ALL ACCESS</option>
-        <option value="FREE">FREE</option>
-        <option value="VIP">VIP</option>
-        <option value="BOLD RIDERS">BOLD RIDERS</option>
-      </select>
-
-    </div>
-
-
-    <div class="bulk-bar">
-
       <div
-        id="selectedInfo"
-        class="selected-info"
-      >
-        0 selected
+        id="dashboardSuccess"
+        class="success-banner hidden"
+      ></div>
+
+
+      <!-- ========================================================
+           STATISTICS
+           ======================================================== -->
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <div class="stat-label">Total</div>
+          <div id="totalCount" class="stat-value">0</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Check-In</div>
+          <div id="checkedInCount" class="stat-value">0</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Remaining</div>
+          <div id="remainingCount" class="stat-value">0</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">FREE</div>
+          <div id="freeCount" class="stat-value">0</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">VIP</div>
+          <div id="vipCount" class="stat-value">0</div>
+        </div>
+
       </div>
 
-      <div class="bulk-actions">
 
-        <button
-          id="selectAllButton"
-          class="select-button"
-          type="button"
-        >
-          SELECT ALL
-        </button>
+      <!-- ========================================================
+           SEARCH / FILTER
+           ======================================================== -->
 
-        <button
-          id="clearSelectionButton"
-          class="select-button"
-          type="button"
-        >
-          CLEAR
-        </button>
+      <div class="controls">
 
-        <button
-          id="deleteSelectedButton"
-          class="delete-button"
-          type="button"
-          disabled
-        >
-          DELETE SELECTED
-        </button>
+        <div class="controls-row">
 
-      </div>
+          <input
+            id="searchInput"
+            class="search-box"
+            type="search"
+            placeholder="Search name / WhatsApp / Pass ID..."
+            autocomplete="off"
+          >
 
-    </div>
+          <select
+            id="statusFilter"
+            class="filter-select"
+          >
+            <option value="ALL">ALL STATUS</option>
+            <option value="UNUSED">UNUSED</option>
+            <option value="USED">USED</option>
+          </select>
 
-  </div>
+          <select
+            id="accessFilter"
+            class="filter-select"
+          >
+            <option value="ALL">ALL ACCESS</option>
+            <option value="FREE">FREE</option>
+            <option value="VIP">VIP</option>
+            <option value="BOLD RIDERS">BOLD RIDERS</option>
+          </select>
+
+        </div>
 
 
-  <!-- ========================================================
-       TABLE
-       ======================================================== -->
+        <div class="bulk-bar">
 
-  <div class="table-card">
+          <div
+            id="selectedInfo"
+            class="selected-info"
+          >
+            0 selected
+          </div>
 
-    <div class="table-header">
+          <div class="bulk-actions">
 
-      <div class="table-title">
-        REGISTRATIONS
-      </div>
-
-      <div
-        id="tableCount"
-        class="table-count"
-      >
-        0 records
-      </div>
-
-    </div>
-
-    <div class="table-wrapper">
-
-      <table>
-
-        <thead>
-
-          <tr>
-
-            <th class="checkbox-cell">
-              <input
-                id="selectAll"
-                type="checkbox"
-                title="Select all"
-              >
-            </th>
-
-            <th>Name</th>
-            <th>WhatsApp</th>
-            <th>Pass ID</th>
-            <th>Access</th>
-            <th>Table</th>
-            <th>Status</th>
-            <th>Registered</th>
-            <th>Check-In</th>
-
-          </tr>
-
-        </thead>
-
-        <tbody id="registrationTableBody">
-
-          <tr>
-            <td
-              colspan="9"
-              class="table-message"
+            <button
+              id="selectAllButton"
+              class="select-button"
+              type="button"
             >
-              Loading registrations...
-            </td>
-          </tr>
+              SELECT ALL
+            </button>
 
-        </tbody>
+            <button
+              id="clearSelectionButton"
+              class="select-button"
+              type="button"
+            >
+              CLEAR
+            </button>
 
-      </table>
+            <button
+              id="deleteSelectedButton"
+              class="delete-button"
+              type="button"
+              disabled
+            >
+              DELETE SELECTED
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ========================================================
+           TABLE
+           ======================================================== -->
+
+      <div class="table-card">
+
+        <div class="table-header">
+
+          <div class="table-title">
+            REGISTRATIONS
+          </div>
+
+          <div
+            id="tableCount"
+            class="table-count"
+          >
+            0 records
+          </div>
+
+        </div>
+
+        <div class="table-wrapper">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th class="checkbox-cell">
+                  <input
+                    id="selectAll"
+                    type="checkbox"
+                    title="Select all"
+                  >
+                </th>
+
+                <th>Name</th>
+                <th>WhatsApp</th>
+                <th>Pass ID</th>
+                <th>Access</th>
+                <th>Table</th>
+                <th>Status</th>
+                <th>Registered</th>
+                <th>Check-In</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="registrationTableBody">
+
+              <tr>
+                <td
+                  colspan="9"
+                  class="table-message"
+                >
+                  Loading registrations...
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
 
     </div>
-
-  </div>
-
-</div>
-```
 
   </section>
+
 
   <script>
 
@@ -964,6 +991,9 @@
 
     const adminEmail =
       document.getElementById("adminEmail");
+
+    const homeButton =
+      document.getElementById("homeButton");
 
     const logoutButton =
       document.getElementById("logoutButton");
@@ -1106,6 +1136,21 @@
           },
           150
         );
+
+      }
+    );
+
+
+    /* ============================================================
+       HOME BUTTON
+       ============================================================ */
+
+    homeButton.addEventListener(
+      "click",
+      function() {
+
+        window.location.href =
+          "home.html";
 
       }
     );
