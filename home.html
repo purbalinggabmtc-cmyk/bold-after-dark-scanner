@@ -90,7 +90,6 @@
       width: 100%;
       min-height: 54px;
       padding: 15px 18px;
-      border: 1px solid transparent;
       border-radius: 10px;
       font-size: 13px;
       font-weight: 900;
@@ -106,36 +105,53 @@
       transform: scale(0.98);
     }
 
-    .btn-primary {
+    /* ========================================
+       TOMBOL 1 — PUTIH
+       ======================================== */
+
+    .btn-registration {
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #ffffff;
+    }
+
+    .btn-registration:hover {
+      background: #eeeeee;
+      border-color: #eeeeee;
+    }
+
+
+    /* ========================================
+       TOMBOL 2 — MERAH
+       ======================================== */
+
+    .btn-scanner {
       background: var(--red);
-      color: #fff;
+      color: #ffffff;
+      border: 1px solid var(--red);
     }
 
-    .btn-primary:hover {
+    .btn-scanner:hover {
       background: #f00000;
+      border-color: #f00000;
     }
 
-    .btn-secondary {
-      background: #181818;
-      color: #fff;
-      border-color: #3a3a3a;
-    }
 
-    .btn-secondary:hover {
-      background: #222;
-      border-color: #555;
-    }
+    /* ========================================
+       TOMBOL 3 — PUTIH
+       ======================================== */
 
     .btn-admin {
-      background: #0d0d0d;
-      color: #aaa;
-      border-color: #292929;
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #ffffff;
     }
 
     .btn-admin:hover {
-      background: #171717;
-      color: #fff;
+      background: #eeeeee;
+      border-color: #eeeeee;
     }
+
 
     .copy-status {
       min-height: 18px;
@@ -153,6 +169,7 @@
     }
 
     @media (max-width: 600px) {
+
       body {
         padding: 14px;
       }
@@ -169,6 +186,7 @@
       button {
         font-size: 12px;
       }
+
     }
   </style>
 
@@ -189,26 +207,32 @@
   OFFICIAL EVENT ACCESS
 </div>
 
+
 <div class="card">
 
   <div class="button-list">
 
+    <!-- TOMBOL ATAS — PUTIH -->
     <button
       id="copyLinkButton"
-      class="btn-primary"
+      class="btn-registration"
       type="button"
     >
       COPY LINK FORM REGISTRATION
     </button>
 
+
+    <!-- TOMBOL TENGAH — MERAH -->
     <button
       id="scannerButton"
-      class="btn-secondary"
+      class="btn-scanner"
       type="button"
     >
       QR SCANNER
     </button>
 
+
+    <!-- TOMBOL BAWAH — PUTIH -->
     <button
       id="adminButton"
       class="btn-admin"
@@ -219,12 +243,14 @@
 
   </div>
 
+
   <div
     id="copyStatus"
     class="copy-status"
   ></div>
 
 </div>
+
 
 <div class="footer">
   BOLD AFTER DARK
@@ -236,11 +262,14 @@
   <script>
     "use strict";
 
+
     const REGISTRATION_URL =
       "https://purbalinggabmtc-cmyk.github.io/bold-after-dark-scanner/registration/";
 
+
     const SCANNER_URL =
       "https://purbalinggabmtc-cmyk.github.io/bold-after-dark-scanner/index.html";
+
 
     const ADMIN_URL =
       "https://purbalinggabmtc-cmyk.github.io/bold-after-dark-scanner/admin.html";
@@ -249,11 +278,14 @@
     const copyLinkButton =
       document.getElementById("copyLinkButton");
 
+
     const scannerButton =
       document.getElementById("scannerButton");
 
+
     const adminButton =
       document.getElementById("adminButton");
+
 
     const copyStatus =
       document.getElementById("copyStatus");
@@ -309,8 +341,10 @@
           }
         }
 
+
         copyStatus.textContent =
           "Link Form Registration berhasil disalin.";
+
 
         setTimeout(
           function() {
@@ -318,6 +352,7 @@
           },
           2500
         );
+
 
       } catch (error) {
 
@@ -334,14 +369,18 @@
 
 
     function openScanner() {
+
       window.location.href =
         SCANNER_URL;
+
     }
 
 
     function openAdmin() {
+
       window.location.href =
         ADMIN_URL;
+
     }
 
 
@@ -350,10 +389,12 @@
       copyRegistrationLink
     );
 
+
     scannerButton.addEventListener(
       "click",
       openScanner
     );
+
 
     adminButton.addEventListener(
       "click",
