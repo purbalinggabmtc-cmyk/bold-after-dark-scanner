@@ -12,17 +12,16 @@
 
   <title>BOLD AFTER DARK — CHECK IN</title>
 
-  <!-- =========================================================
-       NAVIGATION CONFIG
-       ========================================================= -->
+  <!-- QR SCANNER LIBRARY -->
+  <script
+    src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"
+  ></script>
 
-  <script src="/config/navigation.js"></script>
-
-  <!-- =========================================================
-       QR SCANNER
-       ========================================================= -->
-
-  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <!-- CENTRAL NAVIGATION CONFIG -->
+  <script
+    src="/config/navigation.js"
+    defer
+  ></script>
 
   <style>
 
@@ -33,17 +32,16 @@
     :root {
       --black: #050505;
       --card: #111111;
-      --red: #e00000;
-      --red-hover: #ff0000;
+      --card-2: #181818;
       --white: #ffffff;
       --gray: #999999;
-      --border: #333333;
+      --red: #e00000;
+      --green: #16c75a;
+      --yellow: #e2b400;
     }
 
     body {
-
       margin: 0;
-
       min-height: 100vh;
 
       background:
@@ -62,9 +60,7 @@
         sans-serif;
 
       display: flex;
-
       justify-content: center;
-
       align-items: center;
 
       padding: 20px;
@@ -83,34 +79,32 @@
       transform: scale(0.98);
     }
 
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     .container {
-
       width: 100%;
-
-      max-width: 480px;
-
+      max-width: 500px;
       text-align: center;
     }
 
     /* =========================================================
-       TOP NAVIGATION
+       NAVIGATION
        ========================================================= */
 
     .top-nav {
-
       width: 100%;
-
       margin-bottom: 18px;
-
       text-align: left;
     }
 
     .home-button {
-
       display: inline-flex;
 
       align-items: center;
-
       justify-content: center;
 
       padding: 11px 16px;
@@ -126,7 +120,6 @@
       text-decoration: none;
 
       font-size: 13px;
-
       font-weight: 800;
 
       letter-spacing: 0.5px;
@@ -137,10 +130,12 @@
     }
 
     .home-button:hover {
-
       background: #1d1d1d;
+      border-color: #e00000;
+    }
 
-      border-color: var(--red);
+    .home-button:active {
+      transform: scale(0.98);
     }
 
     /* =========================================================
@@ -148,29 +143,20 @@
        ========================================================= */
 
     .brand {
-
       font-size: 28px;
-
       font-weight: 900;
-
       letter-spacing: 4px;
-
       margin-bottom: 4px;
     }
 
     .brand span {
-
-      color: var(--red);
+      color: #e00000;
     }
 
     .subtitle {
-
       font-size: 13px;
-
       letter-spacing: 3px;
-
       color: #aaaaaa;
-
       margin-bottom: 24px;
     }
 
@@ -179,10 +165,9 @@
        ========================================================= */
 
     .scanner-card {
+      background: #111111;
 
-      background: var(--card);
-
-      border: 1px solid var(--border);
+      border: 1px solid #333333;
 
       border-radius: 18px;
 
@@ -192,36 +177,187 @@
         0 0 30px rgba(255, 0, 0, 0.12);
     }
 
-    #reader {
+    /* =========================================================
+       CAMERA AREA
+       ========================================================= */
+
+    .camera-title {
+      margin-bottom: 12px;
+
+      color: #aaaaaa;
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+      letter-spacing: 2px;
+    }
+
+    .camera-container {
+      position: relative;
 
       width: 100%;
 
-      overflow: hidden;
+      min-height: 300px;
+
+      background: #000000;
+
+      border:
+        1px solid
+        #333333;
 
       border-radius: 12px;
 
-      min-height: 250px;
+      overflow: hidden;
 
-      background: #050505;
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+    }
+
+    #reader {
+      width: 100%;
+      min-height: 280px;
     }
 
     #reader video {
-
       width: 100% !important;
+      height: auto !important;
+
+      display: block;
 
       border-radius: 10px;
     }
 
-    #reader__dashboard_section_swaplink,
-    #reader__status_span,
-    #reader__dashboard_section_csr {
-
-      display: none !important;
+    #reader img {
+      max-width: 100%;
     }
 
-    #reader__scan_region {
+    /* =========================================================
+       CAMERA PLACEHOLDER
+       ========================================================= */
 
-      min-height: 180px;
+    .camera-placeholder {
+      position: absolute;
+
+      inset: 0;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 30px;
+
+      background: #080808;
+
+      color: #777777;
+
+      z-index: 5;
+    }
+
+    .camera-placeholder.hidden {
+      display: none;
+    }
+
+    .camera-icon {
+      font-size: 45px;
+
+      margin-bottom: 12px;
+    }
+
+    .camera-placeholder-title {
+      color: #ffffff;
+
+      font-size: 15px;
+
+      font-weight: 800;
+
+      margin-bottom: 7px;
+    }
+
+    .camera-placeholder-text {
+      color: #777777;
+
+      font-size: 12px;
+
+      line-height: 1.5;
+
+      max-width: 300px;
+    }
+
+    .start-camera-button {
+      margin-top: 16px;
+
+      padding: 12px 18px;
+
+      background: #e00000;
+
+      color: #ffffff;
+
+      border: none;
+
+      border-radius: 8px;
+
+      font-weight: 800;
+    }
+
+    .start-camera-button:hover {
+      background: #ff0000;
+    }
+
+    /* =========================================================
+       SCANNER STATUS
+       ========================================================= */
+
+    .status-text {
+      margin-top: 12px;
+
+      min-height: 18px;
+
+      font-size: 12px;
+
+      color: #888888;
+
+      line-height: 1.5;
+    }
+
+    /* =========================================================
+       CAMERA ERROR
+       ========================================================= */
+
+    .camera-error {
+      display: none;
+
+      margin-top: 12px;
+
+      padding: 12px;
+
+      background:
+        rgba(224, 0, 0, 0.10);
+
+      border:
+        1px solid
+        rgba(224, 0, 0, 0.45);
+
+      border-radius: 8px;
+
+      color: #ff9a9a;
+
+      font-size: 11px;
+
+      line-height: 1.5;
+
+      text-align: left;
+    }
+
+    .camera-error.visible {
+      display: block;
     }
 
     /* =========================================================
@@ -229,7 +365,6 @@
        ========================================================= */
 
     .manual {
-
       margin-top: 18px;
 
       display: flex;
@@ -238,7 +373,6 @@
     }
 
     .manual input {
-
       flex: 1;
 
       min-width: 0;
@@ -249,7 +383,9 @@
 
       color: #ffffff;
 
-      border: 1px solid #444444;
+      border:
+        1px solid
+        #444444;
 
       border-radius: 8px;
 
@@ -259,23 +395,21 @@
     }
 
     .manual input::placeholder {
-
       color: #777777;
     }
 
     .manual input:focus {
-
-      border-color: var(--red);
+      border-color: #e00000;
 
       box-shadow:
-        0 0 0 2px rgba(224, 0, 0, 0.12);
+        0 0 0 2px
+        rgba(224, 0, 0, 0.12);
     }
 
     .manual button {
-
       padding: 14px 18px;
 
-      background: var(--red);
+      background: #e00000;
 
       color: #ffffff;
 
@@ -284,20 +418,10 @@
       border-radius: 8px;
 
       font-weight: bold;
-
-      cursor: pointer;
     }
 
     .manual button:hover {
-
-      background: var(--red-hover);
-    }
-
-    .manual button:disabled {
-
-      opacity: 0.5;
-
-      cursor: not-allowed;
+      background: #ff0000;
     }
 
     /* =========================================================
@@ -305,7 +429,6 @@
        ========================================================= */
 
     .result {
-
       margin-top: 18px;
 
       padding: 20px;
@@ -313,46 +436,51 @@
       border-radius: 14px;
 
       display: none;
+
+      text-align: center;
     }
 
     .result.valid {
-
       display: block;
 
       background: #062d16;
 
-      border: 2px solid #16c75a;
+      border:
+        2px solid
+        #16c75a;
     }
 
     .result.used {
-
       display: block;
 
       background: #2d2100;
 
-      border: 2px solid #e2b400;
+      border:
+        2px solid
+        #e2b400;
     }
 
     .result.invalid {
-
       display: block;
 
       background: #300000;
 
-      border: 2px solid var(--red);
+      border:
+        2px solid
+        #e00000;
     }
 
     .result.error {
-
       display: block;
 
       background: #222222;
 
-      border: 2px solid #777777;
+      border:
+        2px solid
+        #777777;
     }
 
     .result-title {
-
       font-size: 28px;
 
       font-weight: 900;
@@ -377,7 +505,6 @@
     }
 
     .detail {
-
       margin-top: 8px;
 
       font-size: 15px;
@@ -388,7 +515,6 @@
     }
 
     .detail strong {
-
       color: #ffffff;
     }
 
@@ -397,14 +523,13 @@
        ========================================================= */
 
     .reset {
-
       margin-top: 18px;
 
       width: 100%;
 
       padding: 14px;
 
-      background: var(--red);
+      background: #e00000;
 
       color: #ffffff;
 
@@ -420,52 +545,7 @@
     }
 
     .reset:hover {
-
-      background: var(--red-hover);
-    }
-
-    /* =========================================================
-       STATUS
-       ========================================================= */
-
-    .status-text {
-
-      margin-top: 12px;
-
-      font-size: 12px;
-
-      color: #888888;
-
-      min-height: 18px;
-
-      line-height: 1.5;
-    }
-
-    /* =========================================================
-       NAVIGATION ERROR
-       ========================================================= */
-
-    .navigation-error {
-
-      display: none;
-
-      margin-top: 12px;
-
-      padding: 10px 12px;
-
-      background: rgba(224, 0, 0, 0.1);
-
-      border: 1px solid rgba(224, 0, 0, 0.4);
-
-      border-radius: 8px;
-
-      color: #ff8b8b;
-
-      font-size: 11px;
-
-      line-height: 1.5;
-
-      text-align: left;
+      background: #ff0000;
     }
 
     /* =========================================================
@@ -473,7 +553,6 @@
        ========================================================= */
 
     .footer {
-
       margin-top: 20px;
 
       font-size: 11px;
@@ -490,58 +569,50 @@
     @media (max-width: 480px) {
 
       body {
-
         padding: 14px;
       }
 
-      .top-nav {
-
-        margin-bottom: 14px;
-      }
-
       .home-button {
-
         width: 100%;
       }
 
       .brand {
-
         font-size: 23px;
-
         letter-spacing: 3px;
       }
 
       .subtitle {
-
         font-size: 11px;
-
         letter-spacing: 2px;
       }
 
       .scanner-card {
-
         padding: 12px;
 
         border-radius: 15px;
       }
 
-      .manual {
+      .camera-container {
+        min-height: 260px;
+      }
 
+      #reader {
+        min-height: 240px;
+      }
+
+      .manual {
         flex-direction: column;
       }
 
       .manual button {
-
         width: 100%;
       }
 
       .result {
-
         padding: 18px 14px;
       }
 
       .result-title {
-
         font-size: 22px;
       }
 
@@ -576,15 +647,11 @@
          ======================================================= -->
 
     <div class="brand">
-
       BOLD <span>AFTER DARK</span>
-
     </div>
 
     <div class="subtitle">
-
       EVENT CHECK-IN
-
     </div>
 
     <!-- =======================================================
@@ -593,20 +660,54 @@
 
     <div class="scanner-card">
 
-      <div id="reader"></div>
+      <div class="camera-title">
+        QR CODE SCANNER
+      </div>
+
+      <div class="camera-container">
+
+        <div id="reader"></div>
+
+        <div
+          id="cameraPlaceholder"
+          class="camera-placeholder"
+        >
+
+          <div class="camera-icon">
+            📷
+          </div>
+
+          <div class="camera-placeholder-title">
+            KAMERA BELUM AKTIF
+          </div>
+
+          <div class="camera-placeholder-text">
+            Tekan tombol di bawah untuk mengaktifkan
+            kamera scanner.
+          </div>
+
+          <button
+            type="button"
+            id="startCameraButton"
+            class="start-camera-button"
+          >
+            AKTIFKAN KAMERA
+          </button>
+
+        </div>
+
+      </div>
 
       <div
         id="scannerStatus"
         class="status-text"
-      ></div>
-
-      <!-- =====================================================
-           NAVIGATION ERROR
-           ===================================================== -->
+      >
+        Menyiapkan scanner...
+      </div>
 
       <div
-        id="navigationError"
-        class="navigation-error"
+        id="cameraError"
+        class="camera-error"
       ></div>
 
       <!-- =====================================================
@@ -665,9 +766,7 @@
          ======================================================= -->
 
     <div class="footer">
-
       BOLD AFTER DARK • THE NIGHT STARTS HERE
-
     </div>
 
   </div>
@@ -694,6 +793,27 @@
 
 
     /* =========================================================
+       CENTRAL NAVIGATION FILE
+       ========================================================= */
+
+    const NAVIGATION_SCRIPT =
+      "/config/navigation.js";
+
+
+    /* =========================================================
+       STATE
+       ========================================================= */
+
+    let scanner = null;
+
+    let processing = false;
+
+    let navigationConfig = null;
+
+    let scannerStarted = false;
+
+
+    /* =========================================================
        ELEMENTS
        ========================================================= */
 
@@ -707,14 +827,24 @@
         "reader"
       );
 
+    const cameraPlaceholder =
+      document.getElementById(
+        "cameraPlaceholder"
+      );
+
+    const startCameraButton =
+      document.getElementById(
+        "startCameraButton"
+      );
+
     const scannerStatus =
       document.getElementById(
         "scannerStatus"
       );
 
-    const navigationError =
+    const cameraError =
       document.getElementById(
-        "navigationError"
+        "cameraError"
       );
 
     const manualToken =
@@ -749,227 +879,6 @@
 
 
     /* =========================================================
-       STATE
-       ========================================================= */
-
-    let scanner = null;
-
-    let processing = false;
-
-    let requestTimeout = null;
-
-
-    /* =========================================================
-       NAVIGATION CONFIGURATION
-       ========================================================= */
-
-    function getNavigationConfig() {
-
-      const config =
-        window.BOLD_AFTER_DARK_NAVIGATION;
-
-      if (
-        !config ||
-        typeof config !== "object"
-      ) {
-
-        throw new Error(
-          "window.BOLD_AFTER_DARK_NAVIGATION tidak tersedia."
-        );
-
-      }
-
-      const requiredPages = [
-        "home",
-        "admin",
-        "report",
-        "scanner",
-        "registration"
-      ];
-
-      requiredPages.forEach(
-        function(page) {
-
-          if (
-            typeof config[page] !== "string" ||
-            !config[page].trim()
-          ) {
-
-            throw new Error(
-              "URL '" +
-              page +
-              "' tidak tersedia di navigation.js."
-            );
-
-          }
-
-        }
-      );
-
-      requiredPages.forEach(
-        function(page) {
-
-          const url =
-            new URL(
-              config[page],
-              window.location.origin
-            );
-
-          if (
-            url.protocol !== "https:" &&
-            url.protocol !== "http:"
-          ) {
-
-            throw new Error(
-              "Protocol URL '" +
-              page +
-              "' tidak valid."
-            );
-
-          }
-
-        }
-      );
-
-      return config;
-    }
-
-
-    /* =========================================================
-       LOAD / VALIDATE NAVIGATION
-       ========================================================= */
-
-    function validateNavigation() {
-
-      try {
-
-        const config =
-          getNavigationConfig();
-
-        /*
-         * HOME SELALU mengambil dari:
-         *
-         * window.BOLD_AFTER_DARK_NAVIGATION.home
-         *
-         * Bukan dari scanner.html.
-         */
-
-        homeButton.href =
-          config.home;
-
-        navigationError.style.display =
-          "none";
-
-        console.log(
-          "NAVIGATION CONFIG:",
-          config
-        );
-
-        console.log(
-          "HOME URL:",
-          config.home
-        );
-
-        return true;
-
-      } catch (error) {
-
-        console.error(
-          "NAVIGATION ERROR:",
-          error
-        );
-
-        homeButton.href =
-          "#";
-
-        navigationError.textContent =
-          "Konfigurasi navigasi tidak dapat dimuat. " +
-          "Pastikan /config/navigation.js tersedia " +
-          "dan window.BOLD_AFTER_DARK_NAVIGATION " +
-          "terdefinisi dengan benar.";
-
-        navigationError.style.display =
-          "block";
-
-        return false;
-
-      }
-
-    }
-
-
-    /* =========================================================
-       NAVIGATION
-       ========================================================= */
-
-    function navigateTo(pageName) {
-
-      try {
-
-        const config =
-          getNavigationConfig();
-
-        const target =
-          config[pageName];
-
-        if (
-          !target
-        ) {
-
-          throw new Error(
-            "URL halaman '" +
-            pageName +
-            "' tidak tersedia."
-          );
-
-        }
-
-        console.log(
-          "NAVIGATE:",
-          pageName,
-          "→",
-          target
-        );
-
-        window.location.assign(
-          target
-        );
-
-      } catch (error) {
-
-        console.error(
-          "NAVIGATION FAILED:",
-          error
-        );
-
-        alert(
-          "Alamat halaman tidak dapat dibaca dari navigation.js."
-        );
-
-      }
-
-    }
-
-
-    /* =========================================================
-       HOME BUTTON
-       ========================================================= */
-
-    homeButton.addEventListener(
-      "click",
-      function(event) {
-
-        event.preventDefault();
-
-        navigateTo(
-          "home"
-        );
-
-      }
-    );
-
-
-    /* =========================================================
        STATUS
        ========================================================= */
 
@@ -984,97 +893,535 @@
 
 
     /* =========================================================
-       START SCANNER
+       CAMERA ERROR
        ========================================================= */
 
-    async function startScanner() {
+    function showCameraError(
+      message
+    ) {
 
-      processing = false;
+      cameraError.textContent =
+        message || "Kamera tidak dapat digunakan.";
 
-      setScannerStatus(
-        "Memulai kamera..."
+      cameraError.classList.add(
+        "visible"
       );
 
-      if (scanner) {
+    }
 
-        try {
 
-          await scanner.clear();
+    function hideCameraError() {
 
-        } catch (error) {
+      cameraError.textContent =
+        "";
 
-          console.warn(
-            "Scanner clear:",
-            error
+      cameraError.classList.remove(
+        "visible"
+      );
+
+    }
+
+
+    /* =========================================================
+       LOAD NAVIGATION.JS
+       ========================================================= */
+
+    function loadNavigationConfig() {
+
+      return new Promise(
+        function(resolve) {
+
+          /*
+           * Jika navigation.js sudah berhasil
+           * dimuat melalui <script defer>,
+           * langsung gunakan konfigurasinya.
+           */
+
+          if (
+            window.BOLD_AFTER_DARK_NAVIGATION
+          ) {
+
+            try {
+
+              validateNavigation(
+                window.BOLD_AFTER_DARK_NAVIGATION
+              );
+
+              navigationConfig =
+                window.BOLD_AFTER_DARK_NAVIGATION;
+
+              resolve(
+                navigationConfig
+              );
+
+              return;
+
+            } catch (error) {
+
+              console.error(
+                "Navigation validation error:",
+                error
+              );
+
+            }
+
+          }
+
+
+          /*
+           * Kalau belum tersedia,
+           * load ulang navigation.js secara
+           * dinamis.
+           */
+
+          const script =
+            document.createElement(
+              "script"
+            );
+
+          script.src =
+            NAVIGATION_SCRIPT +
+            "?t=" +
+            Date.now();
+
+          script.async =
+            false;
+
+          script.onload =
+            function() {
+
+              try {
+
+                const config =
+                  window.BOLD_AFTER_DARK_NAVIGATION;
+
+                validateNavigation(
+                  config
+                );
+
+                navigationConfig =
+                  config;
+
+                resolve(
+                  config
+                );
+
+              } catch (error) {
+
+                console.error(
+                  "Navigation config invalid:",
+                  error
+                );
+
+                navigationConfig =
+                  null;
+
+                resolve(
+                  null
+                );
+
+              }
+
+            };
+
+
+          script.onerror =
+            function() {
+
+              console.error(
+                "navigation.js tidak dapat dimuat."
+              );
+
+              navigationConfig =
+                null;
+
+              resolve(
+                null
+              );
+
+            };
+
+
+          document.head.appendChild(
+            script
           );
 
         }
+      );
 
-        scanner = null;
+    }
+
+
+    /* =========================================================
+       VALIDATE NAVIGATION
+       ========================================================= */
+
+    function validateNavigation(
+      config
+    ) {
+
+      if (
+        !config ||
+        typeof config !== "object"
+      ) {
+
+        throw new Error(
+          "Konfigurasi navigation tidak ditemukan."
+        );
 
       }
 
-      reader.innerHTML =
-        "";
+
+      const requiredPages = [
+        "home",
+        "admin",
+        "report",
+        "scanner",
+        "registration"
+      ];
+
+
+      requiredPages.forEach(
+        function(page) {
+
+          if (
+            typeof config[page] !== "string" ||
+            !config[page].trim()
+          ) {
+
+            throw new Error(
+              "Navigation '" +
+              page +
+              "' tidak tersedia."
+            );
+
+          }
+
+
+          const url =
+            new URL(
+              config[page],
+              window.location.origin
+            );
+
+
+          if (
+            url.protocol !== "http:" &&
+            url.protocol !== "https:"
+          ) {
+
+            throw new Error(
+              "URL navigation '" +
+              page +
+              "' tidak valid."
+            );
+
+          }
+
+        }
+      );
+
+
+      return true;
+
+    }
+
+
+    /* =========================================================
+       NAVIGATE
+       ========================================================= */
+
+    async function navigateTo(
+      page
+    ) {
+
+      /*
+       * Baca ulang navigation.js sebelum
+       * melakukan redirect.
+       */
+
+      const config =
+        await loadNavigationConfig();
+
+
+      if (!config) {
+
+        alert(
+          "Konfigurasi navigasi tidak dapat dimuat."
+        );
+
+        return;
+
+      }
+
+
+      const target =
+        config[page];
+
+
+      if (
+        typeof target !== "string" ||
+        !target.trim()
+      ) {
+
+        alert(
+          "Alamat halaman '" +
+          page +
+          "' tidak tersedia."
+        );
+
+        return;
+
+      }
+
+
+      window.location.href =
+        target;
+
+    }
+
+
+    /* =========================================================
+       HOME BUTTON
+       ========================================================= */
+
+    homeButton.addEventListener(
+      "click",
+      async function(event) {
+
+        event.preventDefault();
+
+        await navigateTo(
+          "home"
+        );
+
+      }
+    );
+
+
+    /* =========================================================
+       START CAMERA
+       ========================================================= */
+
+    async function startCamera() {
+
+      if (scannerStarted) {
+
+        return;
+
+      }
+
+
+      hideCameraError();
+
+
+      /*
+       * Pastikan library tersedia.
+       */
+
+      if (
+        typeof Html5Qrcode === "undefined"
+      ) {
+
+        showCameraError(
+          "Library QR scanner belum berhasil dimuat. Periksa koneksi internet atau CDN html5-qrcode."
+        );
+
+        setScannerStatus(
+          "Library scanner tidak tersedia."
+        );
+
+        return;
+
+      }
+
+
+      scannerStarted =
+        true;
+
+
+      setScannerStatus(
+        "Meminta akses kamera..."
+      );
+
 
       try {
 
-        if (
-          typeof Html5QrcodeScanner ===
-          "undefined"
-        ) {
+        /*
+         * Bersihkan area sebelumnya.
+         */
 
-          throw new Error(
-            "Library html5-qrcode tidak berhasil dimuat."
+        reader.innerHTML =
+          "";
+
+
+        scanner =
+          new Html5Qrcode(
+            "reader"
+          );
+
+
+        /*
+         * Konfigurasi kamera.
+         */
+
+        const config = {
+
+          fps: 10,
+
+          qrbox: function(
+            viewfinderWidth,
+            viewfinderHeight
+          ) {
+
+            const minDimension =
+              Math.min(
+                viewfinderWidth,
+                viewfinderHeight
+              );
+
+            const size =
+              Math.floor(
+                minDimension * 0.70
+              );
+
+            return {
+              width: size,
+              height: size
+            };
+
+          },
+
+          aspectRatio: 1.0,
+
+          disableFlip: false
+
+        };
+
+
+        /*
+         * Kamera belakang menjadi
+         * prioritas.
+         */
+
+        let cameraConfig = {
+          facingMode: "environment"
+        };
+
+
+        try {
+
+          await scanner.start(
+            cameraConfig,
+            config,
+            onScanSuccess,
+            onScanFailure
+          );
+
+        } catch (firstCameraError) {
+
+          console.warn(
+            "Environment camera failed:",
+            firstCameraError
+          );
+
+
+          /*
+           * Fallback:
+           * cari kamera yang tersedia.
+           */
+
+          const cameras =
+            await Html5Qrcode.getCameras();
+
+
+          if (
+            !cameras ||
+            cameras.length === 0
+          ) {
+
+            throw new Error(
+              "Tidak ada kamera yang terdeteksi pada perangkat ini."
+            );
+
+          }
+
+
+          const selectedCamera =
+            cameras[
+              cameras.length - 1
+            ];
+
+
+          await scanner.start(
+            selectedCamera.id,
+            config,
+            onScanSuccess,
+            onScanFailure
           );
 
         }
 
-        scanner =
-          new Html5QrcodeScanner(
-            "reader",
-            {
 
-              fps: 10,
-
-              qrbox: {
-                width: 250,
-                height: 250
-              },
-
-              rememberLastUsedCamera:
-                true,
-
-              supportedScanTypes: [
-                Html5QrcodeScanType.SCAN_TYPE_CAMERA,
-                Html5QrcodeScanType.SCAN_TYPE_FILE
-              ]
-
-            },
-            false
-          );
-
-        scanner.render(
-          onScanSuccess,
-          onScanError
+        cameraPlaceholder.classList.add(
+          "hidden"
         );
+
 
         setScannerStatus(
-          "Arahkan kamera ke QR code."
+          "Kamera aktif. Arahkan kamera ke QR code."
         );
+
 
       } catch (error) {
 
         console.error(
-          "SCANNER INITIALIZATION ERROR:",
+          "CAMERA START ERROR:",
           error
         );
 
-        showServerError({
-          message:
-            error.message ||
-            "Kamera scanner tidak dapat dimulai."
-        });
+
+        scannerStarted =
+          false;
+
+
+        scanner =
+          null;
+
+
+        let message =
+          "Kamera tidak dapat dimulai.";
+
+
+        if (
+          error &&
+          error.message
+        ) {
+
+          message +=
+            " " +
+            error.message;
+
+        }
+
+
+        message +=
+          " Pastikan izin kamera diberikan kepada browser dan halaman dibuka melalui HTTPS.";
+
+
+        showCameraError(
+          message
+        );
+
+
+        setScannerStatus(
+          "Kamera gagal dimulai."
+        );
+
+
+        cameraPlaceholder.classList.remove(
+          "hidden"
+        );
 
       }
 
@@ -1082,43 +1429,44 @@
 
 
     /* =========================================================
-       QR SUCCESS
+       SCAN SUCCESS
        ========================================================= */
 
     function onScanSuccess(
       decodedText
     ) {
 
-      if (
-        processing
-      ) {
+      if (processing) {
 
         return;
 
       }
+
 
       const token =
         String(
           decodedText || ""
         ).trim();
 
-      if (
-        !token
-      ) {
 
-        showServerError({
-          message:
-            "QR terbaca tetapi token kosong."
-        });
+      if (!token) {
 
         return;
 
       }
 
+
       processing =
         true;
 
-      stopScanner();
+
+      setScannerStatus(
+        "QR terbaca. Memverifikasi..."
+      );
+
+
+      stopCamera();
+
 
       processToken(
         token
@@ -1128,32 +1476,48 @@
 
 
     /* =========================================================
-       QR ERROR
+       SCAN FAILURE
        ========================================================= */
 
-    function onScanError() {
+    function onScanFailure(
+      errorMessage
+    ) {
 
       /*
-       * Error scanning frame biasa
-       * sengaja tidak ditampilkan.
+       * Jangan tampilkan error scanning
+       * biasa karena callback ini dipanggil
+       * berkali-kali selama kamera aktif.
        */
 
     }
 
 
     /* =========================================================
-       STOP SCANNER
+       STOP CAMERA
        ========================================================= */
 
-    async function stopScanner() {
+    async function stopCamera() {
 
-      if (
-        !scanner
-      ) {
+      if (!scanner) {
 
         return;
 
       }
+
+
+      try {
+
+        await scanner.stop();
+
+      } catch (error) {
+
+        console.warn(
+          "Camera stop warning:",
+          error
+        );
+
+      }
+
 
       try {
 
@@ -1162,13 +1526,18 @@
       } catch (error) {
 
         console.warn(
-          "Scanner stop:",
+          "Camera clear warning:",
           error
         );
 
       }
 
-      scanner = null;
+
+      scanner =
+        null;
+
+      scannerStarted =
+        false;
 
     }
 
@@ -1183,18 +1552,14 @@
 
       showLoading();
 
-      setScannerStatus(
-        "Menghubungi server Supabase..."
-      );
 
       const cleanToken =
         String(
           token || ""
         ).trim();
 
-      if (
-        !cleanToken
-      ) {
+
+      if (!cleanToken) {
 
         showServerError({
           message:
@@ -1208,6 +1573,12 @@
 
       }
 
+
+      setScannerStatus(
+        "Menghubungi server Supabase..."
+      );
+
+
       const requestUrl =
         API_URL +
         "?action=checkIn&token=" +
@@ -1215,48 +1586,6 @@
           cleanToken
         );
 
-      if (
-        requestTimeout
-      ) {
-
-        clearTimeout(
-          requestTimeout
-        );
-
-        requestTimeout =
-          null;
-
-      }
-
-      let finished =
-        false;
-
-      requestTimeout =
-        setTimeout(
-          function() {
-
-            if (
-              finished
-            ) {
-
-              return;
-
-            }
-
-            finished =
-              true;
-
-            requestTimeout =
-              null;
-
-            showServerError({
-              message:
-                "Server check-in tidak memberikan respons dalam 15 detik."
-            });
-
-          },
-          15000
-        );
 
       try {
 
@@ -1264,13 +1593,11 @@
           await fetch(
             requestUrl,
             {
-
               method: "GET",
 
               cache: "no-store",
 
               headers: {
-
                 "Accept":
                   "application/json",
 
@@ -1280,41 +1607,30 @@
                 "Authorization":
                   "Bearer " +
                   SUPABASE_PUBLISHABLE_KEY
-
               }
-
             }
           );
 
-        if (
-          finished
-        ) {
-
-          return;
-
-        }
-
-        finished =
-          true;
-
-        if (
-          requestTimeout
-        ) {
-
-          clearTimeout(
-            requestTimeout
-          );
-
-          requestTimeout =
-            null;
-
-        }
 
         const rawResponse =
           await response.text();
 
+
+        console.log(
+          "CHECK-IN HTTP:",
+          response.status
+        );
+
+
+        console.log(
+          "CHECK-IN RESPONSE:",
+          rawResponse
+        );
+
+
         let data =
           null;
+
 
         try {
 
@@ -1327,54 +1643,46 @@
 
         } catch (error) {
 
-          console.error(
-            "JSON PARSE ERROR:",
-            error
-          );
-
           showServerError({
             message:
-              "Server mengembalikan response yang tidak valid."
+              "Server mengembalikan response JSON yang tidak valid."
           });
 
           return;
 
         }
 
-        showResult(
-          data
-        );
 
-      } catch (error) {
+        if (!response.ok) {
 
-        if (
-          finished
-        ) {
+          showServerError({
+            message:
+              data &&
+              data.message
+                ? data.message
+                : (
+                    "Server check-in error. HTTP " +
+                    response.status
+                  )
+          });
 
           return;
 
         }
 
-        finished =
-          true;
 
-        if (
-          requestTimeout
-        ) {
+        showResult(
+          data
+        );
 
-          clearTimeout(
-            requestTimeout
-          );
 
-          requestTimeout =
-            null;
-
-        }
+      } catch (error) {
 
         console.error(
-          "CHECK-IN REQUEST ERROR:",
+          "CHECK-IN ERROR:",
           error
         );
+
 
         showServerError({
           message:
@@ -1393,22 +1701,20 @@
        MANUAL CHECK-IN
        ========================================================= */
 
-    function manualCheckIn() {
+    async function manualCheckIn() {
 
-      if (
-        processing
-      ) {
+      if (processing) {
 
         return;
 
       }
 
+
       const token =
         manualToken.value.trim();
 
-      if (
-        !token
-      ) {
+
+      if (!token) {
 
         showTemporaryError(
           "QR TOKEN KOSONG"
@@ -1420,10 +1726,13 @@
 
       }
 
+
       processing =
         true;
 
-      stopScanner();
+
+      await stopCamera();
+
 
       processToken(
         token
@@ -1433,7 +1742,7 @@
 
 
     /* =========================================================
-       RESULT
+       SHOW RESULT
        ========================================================= */
 
     function showResult(
@@ -1442,6 +1751,7 @@
 
       result.className =
         "result";
+
 
       result.style.display =
         "block";
@@ -1460,10 +1770,13 @@
           "valid"
         );
 
+
         resultTitle.textContent =
           "✓ ENTRY APPROVED";
 
+
         resultDetails.innerHTML =
+
           '<div class="detail">' +
             '<strong>NAMA</strong><br>' +
             escapeHtml(
@@ -1505,9 +1818,11 @@
             ) +
           '</div>';
 
+
         setScannerStatus(
           "Check-in berhasil."
         );
+
 
         return;
 
@@ -1520,20 +1835,20 @@
 
       if (
         data &&
-        (
-          data.status === "ALREADY_USED" ||
-          data.status === "ALREADY-USED"
-        )
+        data.status === "ALREADY_USED"
       ) {
 
         result.classList.add(
           "used"
         );
 
+
         resultTitle.textContent =
           "⚠ ALREADY USED";
 
+
         resultDetails.innerHTML =
+
           '<div class="detail">' +
             '<strong>QR INI SUDAH DIGUNAKAN</strong>' +
           '</div>' +
@@ -1579,9 +1894,11 @@
             ) +
           '</div>';
 
+
         setScannerStatus(
           "QR sudah pernah digunakan."
         );
+
 
         return;
 
@@ -1604,10 +1921,13 @@
           "invalid"
         );
 
+
         resultTitle.textContent =
           "✕ INVALID QR";
 
+
         resultDetails.innerHTML =
+
           '<div class="detail">' +
             escapeHtml(
               data.message ||
@@ -1615,9 +1935,11 @@
             ) +
           '</div>';
 
+
         setScannerStatus(
           "QR tidak valid."
         );
+
 
         return;
 
@@ -1632,10 +1954,13 @@
         "error"
       );
 
+
       resultTitle.textContent =
         "SYSTEM ERROR";
 
+
       resultDetails.innerHTML =
+
         '<div class="detail">' +
           escapeHtml(
             data &&
@@ -1644,6 +1969,7 @@
               : "Terjadi kesalahan pada server check-in."
           ) +
         '</div>';
+
 
       setScannerStatus(
         "Terjadi kesalahan."
@@ -1661,13 +1987,17 @@
       result.className =
         "result error";
 
+
       result.style.display =
         "block";
+
 
       resultTitle.textContent =
         "CHECKING...";
 
+
       resultDetails.innerHTML =
+
         '<div class="detail">' +
           'Memverifikasi QR ke Supabase...' +
         '</div>';
@@ -1686,13 +2016,17 @@
       result.className =
         "result error";
 
+
       result.style.display =
         "block";
+
 
       resultTitle.textContent =
         "SYSTEM ERROR";
 
+
       resultDetails.innerHTML =
+
         '<div class="detail">' +
           escapeHtml(
             error &&
@@ -1701,6 +2035,7 @@
               : "Tidak dapat menghubungi server check-in."
           ) +
         '</div>';
+
 
       setScannerStatus(
         "Server check-in tidak dapat dihubungi."
@@ -1720,18 +2055,23 @@
       result.className =
         "result invalid";
 
+
       result.style.display =
         "block";
+
 
       resultTitle.textContent =
         "✕ INVALID";
 
+
       resultDetails.innerHTML =
+
         '<div class="detail">' +
           escapeHtml(
             message
           ) +
         '</div>';
+
 
       setScannerStatus(
         "Input tidak valid."
@@ -1746,38 +2086,47 @@
 
     async function resetScanner() {
 
-      if (
-        requestTimeout
-      ) {
-
-        clearTimeout(
-          requestTimeout
-        );
-
-        requestTimeout =
-          null;
-
-      }
-
       result.style.display =
         "none";
+
 
       result.className =
         "result";
 
+
       resultTitle.textContent =
         "";
+
 
       resultDetails.innerHTML =
         "";
 
+
       manualToken.value =
         "";
+
 
       processing =
         false;
 
-      await startScanner();
+
+      hideCameraError();
+
+
+      cameraPlaceholder.classList.remove(
+        "hidden"
+      );
+
+
+      setScannerStatus(
+        "Siap mengaktifkan kamera."
+      );
+
+
+      /*
+       * Jangan otomatis membuka kamera.
+       * User tekan AKTIFKAN KAMERA.
+       */
 
     }
 
@@ -1823,15 +2172,41 @@
        EVENT LISTENERS
        ========================================================= */
 
+    startCameraButton.addEventListener(
+      "click",
+      async function() {
+
+        startCameraButton.disabled =
+          true;
+
+        startCameraButton.textContent =
+          "MEMULAI...";
+
+
+        await startCamera();
+
+
+        startCameraButton.disabled =
+          false;
+
+        startCameraButton.textContent =
+          "AKTIFKAN KAMERA";
+
+      }
+    );
+
+
     manualButton.addEventListener(
       "click",
       manualCheckIn
     );
 
+
     resetButton.addEventListener(
       "click",
       resetScanner
     );
+
 
     manualToken.addEventListener(
       "keydown",
@@ -1856,18 +2231,73 @@
        ========================================================= */
 
     window.addEventListener(
-      "load",
+      "DOMContentLoaded",
       async function() {
 
+        setScannerStatus(
+          "Memuat konfigurasi navigasi..."
+        );
+
+
         /*
-         * 1. Validasi navigation.js
-         * 2. Pasang href HOME
-         * 3. Baru jalankan kamera
+         * Navigation tidak boleh menghalangi
+         * scanner.
          */
 
-        validateNavigation();
+        await loadNavigationConfig();
 
-        await startScanner();
+
+        /*
+         * Scanner TIDAK langsung meminta kamera.
+         *
+         * User akan melihat tombol:
+         *
+         * AKTIFKAN KAMERA
+         *
+         * lalu browser meminta permission.
+         */
+
+        if (
+          typeof Html5Qrcode === "undefined"
+        ) {
+
+          showCameraError(
+            "Library scanner belum tersedia. Periksa koneksi internet."
+          );
+
+          setScannerStatus(
+            "Library scanner tidak tersedia."
+          );
+
+          return;
+
+        }
+
+
+        setScannerStatus(
+          "Scanner siap. Tekan AKTIFKAN KAMERA."
+        );
+
+      }
+    );
+
+
+    /* =========================================================
+       PAGE UNLOAD
+       ========================================================= */
+
+    window.addEventListener(
+      "beforeunload",
+      function() {
+
+        if (scanner) {
+
+          scanner.stop()
+            .catch(
+              function() {}
+            );
+
+        }
 
       }
     );
