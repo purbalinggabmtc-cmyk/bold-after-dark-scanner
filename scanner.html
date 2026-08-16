@@ -45,6 +45,25 @@
       padding: 20px;
     }
 
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     .container {
       width: 100%;
       max-width: 480px;
@@ -141,8 +160,6 @@
       overflow: hidden;
       border-radius: 12px;
     }
-
-    /* Sembunyikan elemen bawaan html5-qrcode */
 
     #reader__dashboard_section_swaplink,
     #reader__status_span,
@@ -472,8 +489,6 @@
 
     <!-- =======================================================
          HOME BUTTON
-         URL TIDAK DITULIS DI SINI.
-         URL DIBACA DARI navigation.html.
          ======================================================= -->
 
     <div class="top-nav">
@@ -606,20 +621,19 @@
        NAVIGATION CONFIGURATION
        =========================================================
 
-       PENTING:
+       SEMUA URL HALAMAN WEBSITE DIAMBIL DARI:
 
-       Jangan ubah URL di scanner.html.
+       https://boldafterdark.my.id/config/navigation.js
 
-       Semua URL halaman website dibaca dari:
+       Scanner TIDAK menyimpan alamat Home/Admin/Report
+       secara langsung.
 
-       https://boldafterdark.my.id/navigation.html
-
-       Jadi apabila Home berubah, cukup edit
-       navigation.html.
+       Sebelum redirect, scanner akan membaca
+       navigation.js terlebih dahulu.
        ========================================================= */
 
     const NAVIGATION_URL =
-      "https://boldafterdark.my.id/navigation.html";
+      "https://boldafterdark.my.id/config/navigation.js";
 
 
     /* =========================================================
@@ -691,12 +705,41 @@
 
 
     /* =========================================================
-       NAVIGATION — LOAD REFERENCE PAGE
+       LOAD navigation.js
+       =========================================================
+
+       navigation.js diharapkan membuat object global:
+
+       window.BOLD_AFTER_DARK_NAVIGATION
+
+       Contoh:
+
+       window.BOLD_AFTER_DARK_NAVIGATION = {
+         home: "https://boldafterdark.my.id/index.html",
+         admin: "https://boldafterdark.my.id/admin.html",
+         report: "https://boldafterdark.my.id/report.html",
+         scanner: "https://boldafterdark.my.id/scanner.html"
+       };
+
+       Kita load file tersebut sebagai JavaScript.
        ========================================================= */
 
     async function loadNavigationConfig() {
 
       try {
+
+        /*
+         * Hapus konfigurasi lama supaya setiap
+         * pemanggilan benar-benar membaca versi terbaru.
+         */
+
+        navigationConfig = null;
+
+        /*
+         * Fetch navigation.js terlebih dahulu.
+         *
+         * Cache dinonaktifkan dengan query timestamp.
+         */
 
         const response =
           await fetch(
@@ -710,7 +753,7 @@
 
               headers: {
                 "Accept":
-                  "text/html"
+                  "application/javascript,text/javascript,*/*"
               }
             }
           );
@@ -718,52 +761,73 @@
         if (!response.ok) {
 
           throw new Error(
-            "navigation.html HTTP " +
+            "navigation.js HTTP " +
             response.status
           );
 
         }
 
-        const html =
+        const javascript =
           await response.text();
 
-        const parser =
-          new DOMParser();
-
-        const documentObject =
-          parser.parseFromString(
-            html,
-            "text/html"
-          );
-
-        const configElement =
-          documentObject.getElementById(
-            "navigation-config"
-          );
-
-        if (!configElement) {
+        if (!javascript.trim()) {
 
           throw new Error(
-            "Elemen navigation-config tidak ditemukan."
+            "navigation.js kosong."
           );
 
         }
 
-        const rawConfig =
-          configElement.textContent.trim();
+        /*
+         * Jalankan navigation.js dalam scope
+         * global halaman ini.
+         *
+         * navigation.js harus mengisi:
+         *
+         * window.BOLD_AFTER_DARK_NAVIGATION
+         */
 
-        if (!rawConfig) {
+        const previousConfig =
+          window.BOLD_AFTER_DARK_NAVIGATION;
 
-          throw new Error(
-            "Konfigurasi navigasi kosong."
+        window.BOLD_AFTER_DARK_NAVIGATION =
+          undefined;
+
+        /*
+         * Function constructor dipakai agar isi
+         * navigation.js dieksekusi sebagai JavaScript.
+         */
+
+        const executeNavigation =
+          new Function(
+            javascript
           );
 
-        }
+        executeNavigation();
 
         const config =
-          JSON.parse(
-            rawConfig
+          window.BOLD_AFTER_DARK_NAVIGATION;
+
+        /*
+         * Jika navigation.js tidak membuat
+         * object konfigurasi.
+         */
+
+        if (!config) {
+
+          /*
+           * Kembalikan konfigurasi lama bila ada,
+           * lalu anggap konfigurasi tidak valid.
+           */
+
+          window.BOLD_AFTER_DARK_NAVIGATION =
+            previousConfig;
+
+          throw new Error(
+            "window.BOLD_AFTER_DARK_NAVIGATION tidak ditemukan."
           );
+
+        }
 
         validateNavigationConfig(
           config
@@ -775,7 +839,12 @@
         navigationError.style.display =
           "none";
 
-        return config;
+        console.log(
+          "NAVIGATION CONFIG LOADED:",
+          navigationConfig
+        );
+
+        return navigationConfig;
 
       } catch (error) {
 
@@ -789,7 +858,9 @@
 
         navigationError.textContent =
           "Konfigurasi navigasi tidak dapat dimuat. " +
-          "Pastikan navigation.html tersedia.";
+          "Pastikan /config/navigation.js tersedia " +
+          "dan window.BOLD_AFTER_DARK_NAVIGATION " +
+          "terdefinisi dengan benar.";
 
         navigationError.style.display =
           "block";
@@ -802,7 +873,7 @@
 
 
     /* =========================================================
-       NAVIGATION — VALIDATION
+       NAVIGATION VALIDATION
        ========================================================= */
 
     function validateNavigationConfig(
@@ -884,21 +955,23 @@
 
 
     /* =========================================================
-       NAVIGATION — GO TO PAGE
+       NAVIGATION
+       =========================================================
+
+       Setiap klik navigasi:
+
+       1. Baca navigation.js.
+       2. Ambil URL terbaru.
+       3. Validasi URL.
+       4. Baru redirect.
+
+       Jadi URL tidak perlu ditulis ulang
+       di scanner.html.
        ========================================================= */
 
     async function navigateTo(
       pageName
     ) {
-
-      /*
-       * Selalu baca navigation.html
-       * sebelum redirect.
-       *
-       * Jadi kalau URL berubah di
-       * navigation.html, halaman ini
-       * langsung menggunakan URL terbaru.
-       */
 
       const config =
         await loadNavigationConfig();
@@ -906,7 +979,7 @@
       if (!config) {
 
         alert(
-          "Alamat halaman tidak dapat dibaca dari navigation.html."
+          "Alamat halaman tidak dapat dibaca dari navigation.js."
         );
 
         return;
@@ -924,15 +997,46 @@
         alert(
           "Alamat halaman '" +
           pageName +
-          "' tidak tersedia."
+          "' tidak tersedia di navigation.js."
         );
 
         return;
 
       }
 
-      window.location.href =
-        target;
+      try {
+
+        const url =
+          new URL(
+            target
+          );
+
+        if (
+          url.protocol !== "https:" &&
+          url.protocol !== "http:"
+        ) {
+
+          throw new Error(
+            "URL tidak valid."
+          );
+
+        }
+
+        window.location.href =
+          url.href;
+
+      } catch (error) {
+
+        console.error(
+          "NAVIGATION REDIRECT ERROR:",
+          error
+        );
+
+        alert(
+          "Alamat halaman tidak valid."
+        );
+
+      }
 
     }
 
@@ -946,6 +1050,10 @@
       async function(event) {
 
         event.preventDefault();
+
+        if (processing) {
+          return;
+        }
 
         homeButton.style.pointerEvents =
           "none";
@@ -1117,8 +1225,7 @@
     function onScanError() {
 
       /*
-       * Error scanning biasa
-       * tidak ditampilkan.
+       * Error scanning biasa tidak ditampilkan.
        */
 
     }
@@ -1224,6 +1331,8 @@
                 "Server check-in tidak memberikan respons dalam 15 detik."
             });
 
+            processing = false;
+
           },
           15000
         );
@@ -1283,6 +1392,8 @@
               "Server mengembalikan response yang tidak valid."
           });
 
+          processing = false;
+
           return;
 
         }
@@ -1323,6 +1434,8 @@
               ? error.message
               : "Tidak dapat menghubungi server check-in."
         });
+
+        processing = false;
 
       }
 
@@ -1442,6 +1555,8 @@
           "Check-in berhasil."
         );
 
+        processing = false;
+
         return;
 
       }
@@ -1513,6 +1628,8 @@
           "QR sudah pernah digunakan."
         );
 
+        processing = false;
+
         return;
 
       }
@@ -1549,6 +1666,8 @@
           "QR tidak valid."
         );
 
+        processing = false;
+
         return;
 
       }
@@ -1578,6 +1697,8 @@
       setScannerStatus(
         "Terjadi kesalahan."
       );
+
+      processing = false;
 
     }
 
@@ -1756,6 +1877,7 @@
       manualCheckIn
     );
 
+
     resetButton.addEventListener(
       "click",
       resetScanner
@@ -1789,12 +1911,10 @@
       async function() {
 
         /*
-         * Load konfigurasi terlebih dahulu.
+         * Load navigation.js saat halaman dibuka.
          *
-         * Scanner tetap dapat bekerja meskipun
-         * navigation.html bermasalah.
-         *
-         * Yang terpengaruh hanya navigasi.
+         * Jika gagal, scanner tetap dicoba
+         * untuk dijalankan.
          */
 
         await loadNavigationConfig();
