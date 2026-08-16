@@ -1,35 +1,28 @@
-javascript
-// ============================================================
-// BOLD AFTER DARK
-// CENTRAL NAVIGATION CONFIGURATION
-// File:
-// /config/navigation.js
-// ============================================================
+"use strict";
 
-(function () {
-  "use strict";
+/*
+ * BOLD AFTER DARK
+ * CENTRAL NAVIGATION CONFIGURATION
+ *
+ * Semua halaman menggunakan file ini sebagai
+ * sumber alamat navigasi.
+ */
 
-  const NAVIGATION = Object.freeze({
-    home:
-      "https://boldafterdark.my.id/index.html",
+window.BOLD_AFTER_DARK_NAVIGATION = Object.freeze({
 
-    admin:
-      "https://boldafterdark.my.id/admin.html",
+  home:
+    "https://boldafterdark.my.id/index.html",
 
-    report:
-      "https://boldafterdark.my.id/report.html",
+  admin:
+    "https://boldafterdark.my.id/admin.html",
 
-    scanner:
-      "https://boldafterdark.my.id/scanner.html",
+  report:
+    "https://boldafterdark.my.id/report.html",
 
-    registration:
-      "https://boldafterdark.my.id/registration/index.html"
-  });
+  scanner:
+    "https://boldafterdark.my.id/scanner.html",
 
-  // ----------------------------------------------------------
-  // Expose configuration globally
-  // ----------------------------------------------------------
+  registration:
+    "https://boldafterdark.my.id/registration/index.html"
 
-  window.BOLD_AFTER_DARK_NAVIGATION = NAVIGATION;
-
-})();
+});
