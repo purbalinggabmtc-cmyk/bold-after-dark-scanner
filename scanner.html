@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -2197,54 +2196,3 @@
 
 </body>
 </html>
-```
-
-**Dan ada satu hal yang sangat penting:** `navigation.js` yang kamu kirim sebelumnya menggunakan:
-
-```js
-const NAVIGATION = Object.freeze({
-```
-
-Itu **tidak sama** dengan yang dicari scanner di:
-
-```js
-window.BOLD_AFTER_DARK_NAVIGATION
-```
-
-Jadi ubah `/config/navigation.js` menjadi ini:
-
-```js
-"use strict";
-
-window.BOLD_AFTER_DARK_NAVIGATION = Object.freeze({
-  home: "https://boldafterdark.my.id/index.html",
-  admin: "https://boldafterdark.my.id/admin.html",
-  report: "https://boldafterdark.my.id/report.html",
-  scanner: "https://boldafterdark.my.id/scanner.html",
-  registration: "https://boldafterdark.my.id/registration/index.html"
-});
-```
-
-Dengan versi `scanner.html` di atas, **kegagalan `navigation.js` tidak akan lagi mematikan kamera**. Bahkan jika `/config/navigation.js` gagal dimuat, scanner menggunakan alamat fallback dan kamera tetap mencoba aktif.
-
-**Urutan file yang harus ada:**
-
-```text
-/
-├── index.html
-├── admin.html
-├── report.html
-├── scanner.html
-└── config/
-    └── navigation.js
-```
-
-Dan aksesnya:
-
-```text
-https://boldafterdark.my.id/scanner.html
-```
-
-Bukan lagi:
-
-https://boldafterdark.my.id/bold-after-dark-scanner/index.html
