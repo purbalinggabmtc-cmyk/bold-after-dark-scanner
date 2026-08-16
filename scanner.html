@@ -1,7 +1,7 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -11,13 +11,21 @@
 
   <title>BOLD AFTER DARK — CHECK IN</title>
 
-  <!-- QR SCANNER LIBRARY -->
+  <!-- =========================================================
+       HTML5 QR CODE
+       ========================================================= -->
+
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
-  <!-- CENTRAL NAVIGATION CONFIG -->
+  <!-- =========================================================
+       CENTRAL NAVIGATION CONFIG
+       HARUS DIMUAT SEBELUM SCRIPT UTAMA
+       ========================================================= -->
+
   <script src="/config/navigation.js"></script>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -34,7 +42,7 @@
           #000000 100%
         );
 
-      color: white;
+      color: #ffffff;
 
       font-family:
         Arial,
@@ -61,12 +69,6 @@
       transform: scale(0.98);
     }
 
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
     .container {
       width: 100%;
       max-width: 480px;
@@ -90,24 +92,22 @@
 
       padding: 11px 16px;
 
-      background: #111;
+      background: #111111;
+      color: #ffffff;
 
-      color: white;
-
-      border: 1px solid #444;
-
+      border: 1px solid #444444;
       border-radius: 8px;
 
       text-decoration: none;
 
       font-size: 13px;
       font-weight: 800;
-
       letter-spacing: 0.5px;
 
       transition:
         background 0.15s ease,
-        border-color 0.15s ease;
+        border-color 0.15s ease,
+        opacity 0.15s ease;
     }
 
     .home-button:hover {
@@ -131,10 +131,6 @@
       color: #ffffff;
     }
 
-    .brand .bold {
-      color: #ffffff;
-    }
-
     .brand .after {
       color: #e00000;
     }
@@ -146,7 +142,7 @@
     .subtitle {
       font-size: 13px;
       letter-spacing: 3px;
-      color: #aaa;
+      color: #aaaaaa;
       margin-bottom: 24px;
     }
 
@@ -155,9 +151,9 @@
        ========================================================= */
 
     .scanner-card {
-      background: #111;
+      background: #111111;
 
-      border: 1px solid #333;
+      border: 1px solid #333333;
 
       border-radius: 18px;
 
@@ -169,74 +165,28 @@
 
     #reader {
       width: 100%;
-      min-height: 280px;
-
       overflow: hidden;
-
       border-radius: 12px;
-
-      background: #080808;
     }
 
     #reader video {
       width: 100% !important;
-      max-width: 100% !important;
-
+      max-width: 100%;
       border-radius: 10px;
     }
 
-    #reader img {
-      max-width: 100%;
+    #reader__dashboard_section_swaplink,
+    #reader__status_span,
+    #reader__dashboard_section_csr {
+      display: none !important;
     }
 
     #reader__scan_region {
-      min-height: 250px;
+      min-height: 180px;
     }
 
-    #reader__dashboard {
-      background: #111 !important;
-      color: white !important;
-      padding: 10px !important;
-    }
-
-    #reader__dashboard_section {
-      color: white !important;
-    }
-
-    #reader__dashboard_section_csr {
-      color: white !important;
-    }
-
-    #reader__dashboard_section_swaplink {
-      color: #ff4444 !important;
-    }
-
-    #reader__status_span {
-      color: #aaa !important;
-    }
-
-    #reader button {
-      background: #e00000 !important;
-      color: white !important;
-
-      border: none !important;
-      border-radius: 7px !important;
-
-      padding: 9px 13px !important;
-
-      font-weight: 700 !important;
-      cursor: pointer !important;
-    }
-
-    #reader select {
-      background: #1b1b1b !important;
-      color: white !important;
-
-      border: 1px solid #444 !important;
-
-      border-radius: 7px !important;
-
-      padding: 8px !important;
+    #reader__scan_region img {
+      max-width: 100%;
     }
 
     /* =========================================================
@@ -260,9 +210,9 @@
 
       background: #1c1c1c;
 
-      color: white;
+      color: #ffffff;
 
-      border: 1px solid #444;
+      border: 1px solid #444444;
 
       border-radius: 8px;
 
@@ -272,7 +222,7 @@
     }
 
     .manual input::placeholder {
-      color: #777;
+      color: #777777;
     }
 
     .manual input:focus {
@@ -287,7 +237,7 @@
 
       background: #e00000;
 
-      color: white;
+      color: #ffffff;
 
       border: none;
 
@@ -302,8 +252,9 @@
       background: #ff0000;
     }
 
-    .manual button:active {
-      transform: scale(0.98);
+    .manual button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
     /* =========================================================
@@ -347,9 +298,9 @@
     .result.error {
       display: block;
 
-      background: #222;
+      background: #222222;
 
-      border: 2px solid #777;
+      border: 2px solid #777777;
     }
 
     .result-title {
@@ -373,7 +324,7 @@
     }
 
     .error .result-title {
-      color: #fff;
+      color: #ffffff;
     }
 
     .detail {
@@ -381,13 +332,13 @@
 
       font-size: 15px;
 
-      color: #ddd;
+      color: #dddddd;
 
       line-height: 1.5;
     }
 
     .detail strong {
-      color: white;
+      color: #ffffff;
     }
 
     /* =========================================================
@@ -403,7 +354,7 @@
 
       background: #e00000;
 
-      color: white;
+      color: #ffffff;
 
       border: none;
 
@@ -420,10 +371,6 @@
       background: #ff0000;
     }
 
-    .reset:active {
-      transform: scale(0.98);
-    }
-
     /* =========================================================
        STATUS
        ========================================================= */
@@ -433,25 +380,11 @@
 
       font-size: 12px;
 
-      color: #888;
+      color: #888888;
 
       min-height: 18px;
 
       line-height: 1.5;
-    }
-
-    /* =========================================================
-       FOOTER
-       ========================================================= */
-
-    .footer {
-      margin-top: 20px;
-
-      font-size: 11px;
-
-      color: #666;
-
-      letter-spacing: 2px;
     }
 
     /* =========================================================
@@ -467,9 +400,7 @@
 
       background: rgba(224, 0, 0, 0.1);
 
-      border:
-        1px solid
-        rgba(224, 0, 0, 0.4);
+      border: 1px solid rgba(224, 0, 0, 0.4);
 
       border-radius: 8px;
 
@@ -483,10 +414,25 @@
     }
 
     /* =========================================================
+       FOOTER
+       ========================================================= */
+
+    .footer {
+      margin-top: 20px;
+
+      font-size: 11px;
+
+      color: #666666;
+
+      letter-spacing: 2px;
+    }
+
+    /* =========================================================
        MOBILE
        ========================================================= */
 
     @media (max-width: 480px) {
+
       body {
         padding: 14px;
       }
@@ -511,7 +457,6 @@
 
       .scanner-card {
         padding: 12px;
-
         border-radius: 15px;
       }
 
@@ -534,8 +479,11 @@
       .result-title {
         font-size: 22px;
       }
+
     }
+
   </style>
+
 </head>
 
 <body>
@@ -543,8 +491,9 @@
   <div class="container">
 
     <!-- =======================================================
-         HOME BUTTON
-         URL DIBACA DARI /config/navigation.js
+         HOME
+         URL TIDAK DITULIS DI SINI.
+         URL DIAMBIL DARI /config/navigation.js
          ======================================================= -->
 
     <div class="top-nav">
@@ -564,9 +513,7 @@
          ======================================================= -->
 
     <div class="brand">
-      <span class="bold">BOLD</span>
-      <span class="after"> AFTER</span>
-      <span class="dark"> DARK</span>
+      BOLD <span class="after">AFTER</span> <span class="dark">DARK</span>
     </div>
 
     <div class="subtitle">
@@ -574,7 +521,7 @@
     </div>
 
     <!-- =======================================================
-         SCANNER CARD
+         SCANNER
          ======================================================= -->
 
     <div class="scanner-card">
@@ -584,18 +531,16 @@
       <div
         id="scannerStatus"
         class="status-text"
-      >
-        Memulai kamera...
-      </div>
-
-      <!-- NAVIGATION ERROR -->
+      ></div>
 
       <div
         id="navigationError"
         class="navigation-error"
       ></div>
 
-      <!-- MANUAL TOKEN -->
+      <!-- =====================================================
+           MANUAL TOKEN
+           ===================================================== -->
 
       <div class="manual">
 
@@ -616,7 +561,9 @@
 
       </div>
 
-      <!-- RESULT -->
+      <!-- =====================================================
+           RESULT
+           ===================================================== -->
 
       <div
         id="result"
@@ -642,8 +589,6 @@
 
     </div>
 
-    <!-- FOOTER -->
-
     <div class="footer">
       BOLD AFTER DARK • THE NIGHT STARTS HERE
     </div>
@@ -651,6 +596,7 @@
   </div>
 
   <script>
+
     "use strict";
 
     /* =========================================================
@@ -666,39 +612,6 @@
     const API_URL =
       SUPABASE_URL +
       "/functions/v1/dynamic-service";
-
-
-    /* =========================================================
-       NAVIGATION
-       =========================================================
-
-       Sumber:
-       /config/navigation.js
-
-       Isi navigation.js:
-
-       const NAVIGATION = Object.freeze({
-         home: "https://boldafterdark.my.id/index.html",
-         admin: "https://boldafterdark.my.id/admin.html",
-         report: "https://boldafterdark.my.id/report.html",
-         scanner: "https://boldafterdark.my.id/scanner.html",
-         registration: "https://boldafterdark.my.id/registration/index.html"
-       });
-
-       ========================================================= */
-
-    let navigationConfig = null;
-
-
-    /* =========================================================
-       SCANNER STATE
-       ========================================================= */
-
-    let html5QrCode = null;
-
-    let processing = false;
-
-    let requestTimeout = null;
 
 
     /* =========================================================
@@ -757,10 +670,36 @@
 
 
     /* =========================================================
-       LOAD NAVIGATION
+       STATE
        ========================================================= */
 
-    function loadNavigationConfig() {
+    let scanner = null;
+
+    let processing = false;
+
+    let requestTimeout = null;
+
+
+    /* =========================================================
+       NAVIGATION CONFIG
+       =========================================================
+
+       navigation.js yang kamu punya:
+
+       const NAVIGATION = Object.freeze({
+         home: "...",
+         admin: "...",
+         report: "...",
+         scanner: "...",
+         registration: "..."
+       });
+
+       Karena navigation.js dimuat sebagai script biasa
+       sebelum script ini, binding NAVIGATION tersedia
+       untuk script ini.
+       ========================================================= */
+
+    function getNavigationConfig() {
 
       try {
 
@@ -780,7 +719,7 @@
         ) {
 
           throw new Error(
-            "Format NAVIGATION tidak valid."
+            "NAVIGATION bukan object."
           );
 
         }
@@ -789,53 +728,51 @@
           "home",
           "admin",
           "report",
-          "scanner"
+          "scanner",
+          "registration"
         ];
 
-        requiredPages.forEach(
-          function(page) {
+        for (
+          const page of requiredPages
+        ) {
 
-            if (
-              typeof NAVIGATION[page] !== "string" ||
-              !NAVIGATION[page].trim()
-            ) {
+          if (
+            typeof NAVIGATION[page] !== "string" ||
+            !NAVIGATION[page].trim()
+          ) {
 
-              throw new Error(
-                "URL " +
-                page +
-                " tidak tersedia."
-              );
-
-            }
-
-            const url =
-              new URL(
-                NAVIGATION[page]
-              );
-
-            if (
-              url.protocol !== "https:" &&
-              url.protocol !== "http:"
-            ) {
-
-              throw new Error(
-                "Protocol URL " +
-                page +
-                " tidak valid."
-              );
-
-            }
+            throw new Error(
+              "URL '" +
+              page +
+              "' tidak tersedia."
+            );
 
           }
-        );
 
-        navigationConfig =
-          NAVIGATION;
+          const url =
+            new URL(
+              NAVIGATION[page]
+            );
+
+          if (
+            url.protocol !== "https:" &&
+            url.protocol !== "http:"
+          ) {
+
+            throw new Error(
+              "Protocol URL '" +
+              page +
+              "' tidak valid."
+            );
+
+          }
+
+        }
 
         navigationError.style.display =
           "none";
 
-        return true;
+        return NAVIGATION;
 
       } catch (error) {
 
@@ -843,9 +780,6 @@
           "NAVIGATION ERROR:",
           error
         );
-
-        navigationConfig =
-          null;
 
         navigationError.textContent =
           "Konfigurasi navigasi tidak dapat dimuat. " +
@@ -855,7 +789,7 @@
         navigationError.style.display =
           "block";
 
-        return false;
+        return null;
 
       }
 
@@ -863,33 +797,28 @@
 
 
     /* =========================================================
-       NAVIGATION
+       NAVIGATE
        ========================================================= */
 
     function navigateTo(
       pageName
     ) {
 
-      if (
-        !navigationConfig
-      ) {
+      const config =
+        getNavigationConfig();
 
-        if (
-          !loadNavigationConfig()
-        ) {
+      if (!config) {
 
-          alert(
-            "Konfigurasi navigasi tidak dapat dimuat."
-          );
+        alert(
+          "Alamat halaman tidak dapat dibaca dari navigation.js."
+        );
 
-          return;
-
-        }
+        return;
 
       }
 
       const target =
-        navigationConfig[pageName];
+        config[pageName];
 
       if (
         typeof target !== "string" ||
@@ -906,8 +835,9 @@
 
       }
 
-      window.location.href =
-        target;
+      window.location.assign(
+        target
+      );
 
     }
 
@@ -921,6 +851,12 @@
       function(event) {
 
         event.preventDefault();
+
+        homeButton.style.pointerEvents =
+          "none";
+
+        homeButton.style.opacity =
+          "0.6";
 
         navigateTo(
           "home"
@@ -945,7 +881,7 @@
 
 
     /* =========================================================
-       START CAMERA
+       START SCANNER
        ========================================================= */
 
     async function startScanner() {
@@ -957,220 +893,107 @@
       );
 
       /*
-       * Pastikan library tersedia.
+       * Pastikan scanner lama dihentikan
+       * sebelum membuat scanner baru.
        */
 
-      if (
-        typeof Html5Qrcode === "undefined"
-      ) {
-
-        showServerError({
-          message:
-            "Library kamera QR tidak berhasil dimuat."
-        });
-
-        return;
-
-      }
-
-      /*
-       * Bersihkan scanner lama.
-       */
-
-      if (html5QrCode) {
+      if (scanner) {
 
         try {
 
-          const state =
-            html5QrCode.getState();
-
-          if (
-            state ===
-            Html5QrcodeScannerState.SCANNING
-          ) {
-
-            await html5QrCode.stop();
-
-          }
+          await scanner.clear();
 
         } catch (error) {
 
           console.warn(
-            "Stop previous scanner:",
+            "Scanner clear:",
             error
           );
 
         }
 
-        try {
-
-          await html5QrCode.clear();
-
-        } catch (error) {
-
-          console.warn(
-            "Clear previous scanner:",
-            error
-          );
-
-        }
-
-        html5QrCode =
-          null;
+        scanner = null;
 
       }
-
-      /*
-       * Bersihkan reader.
-       */
 
       reader.innerHTML =
         "";
 
-      /*
-       * Buat instance kamera.
-       */
-
-      html5QrCode =
-        new Html5Qrcode(
-          "reader"
-        );
-
       try {
 
         /*
-         * Ambil daftar kamera.
+         * Pastikan library html5-qrcode
+         * benar-benar tersedia.
          */
 
-        const cameras =
-          await Html5Qrcode.getCameras();
-
         if (
-          !cameras ||
-          cameras.length === 0
+          typeof Html5QrcodeScanner ===
+          "undefined"
         ) {
 
           throw new Error(
-            "Kamera tidak ditemukan."
+            "Library HTML5 QR Code tidak tersedia."
           );
 
         }
 
-        /*
-         * Prioritaskan kamera belakang.
-         */
-
-        let selectedCamera =
-          cameras[0];
-
-        for (
-          const camera of cameras
+        if (
+          typeof Html5QrcodeScanType ===
+          "undefined"
         ) {
 
-          const label =
-            String(
-              camera.label || ""
-            ).toLowerCase();
-
-          if (
-            label.includes("back") ||
-            label.includes("rear") ||
-            label.includes("environment")
-          ) {
-
-            selectedCamera =
-              camera;
-
-            break;
-
-          }
+          throw new Error(
+            "HTML5 QR Code ScanType tidak tersedia."
+          );
 
         }
 
-        /*
-         * Mulai kamera.
-         */
+        scanner =
+          new Html5QrcodeScanner(
+            "reader",
+            {
+              fps: 10,
 
-        await html5QrCode.start(
+              qrbox: {
+                width: 250,
+                height: 250
+              },
 
-          selectedCamera.id,
+              aspectRatio: 1.0,
 
-          {
-            fps: 10,
+              rememberLastUsedCamera: true,
 
-            qrbox: function(
-              viewfinderWidth,
-              viewfinderHeight
-            ) {
-
-              const minEdge =
-                Math.min(
-                  viewfinderWidth,
-                  viewfinderHeight
-                );
-
-              const size =
-                Math.min(
-                  280,
-                  Math.floor(
-                    minEdge * 0.72
-                  )
-                );
-
-              return {
-                width: size,
-                height: size
-              };
-
+              supportedScanTypes: [
+                Html5QrcodeScanType.SCAN_TYPE_CAMERA,
+                Html5QrcodeScanType.SCAN_TYPE_FILE
+              ]
             },
+            false
+          );
 
-            aspectRatio:
-              1.0,
-
-            disableFlip:
-              false
-
-          },
-
+        scanner.render(
           onScanSuccess,
-
           onScanError
-
         );
 
         setScannerStatus(
-          "Kamera aktif. Arahkan kamera ke QR code."
+          "Pilih kamera lalu arahkan ke QR code."
         );
 
       } catch (error) {
 
         console.error(
-          "CAMERA START ERROR:",
+          "SCANNER INITIALIZATION ERROR:",
           error
         );
 
-        let message =
-          "Kamera tidak dapat diaktifkan.";
-
-        if (
-          error &&
-          error.message
-        ) {
-
-          message =
-            error.message;
-
-        }
-
         showServerError({
           message:
-            message +
-            " Pastikan izin kamera diberikan dan halaman dibuka melalui HTTPS."
+            error &&
+            error.message
+              ? error.message
+              : "Kamera scanner tidak dapat dimulai."
         });
-
-        setScannerStatus(
-          "Kamera tidak aktif."
-        );
 
       }
 
@@ -1178,10 +1001,10 @@
 
 
     /* =========================================================
-       QR SCAN SUCCESS
+       SCAN SUCCESS
        ========================================================= */
 
-    async function onScanSuccess(
+    function onScanSuccess(
       decodedText
     ) {
 
@@ -1196,6 +1019,11 @@
 
       if (!token) {
 
+        showServerError({
+          message:
+            "QR terbaca tetapi token kosong."
+        });
+
         return;
 
       }
@@ -1203,9 +1031,9 @@
       processing =
         true;
 
-      await stopScanner();
+      stopScanner();
 
-      await processToken(
+      processToken(
         token
       );
 
@@ -1213,17 +1041,13 @@
 
 
     /* =========================================================
-       QR SCAN ERROR
+       SCAN ERROR
        ========================================================= */
 
-    function onScanError(
-      errorMessage
-    ) {
+    function onScanError() {
 
       /*
-       * Error scan biasa tidak ditampilkan
-       * karena callback ini dipanggil terus-menerus
-       * ketika kamera belum menemukan QR.
+       * Error scan normal tidak ditampilkan.
        */
 
     }
@@ -1235,48 +1059,27 @@
 
     async function stopScanner() {
 
-      if (!html5QrCode) {
+      if (!scanner) {
         return;
       }
 
       try {
 
-        const state =
-          html5QrCode.getState();
-
-        if (
-          state ===
-          Html5QrcodeScannerState.SCANNING
-        ) {
-
-          await html5QrCode.stop();
-
-        }
+        await scanner.clear();
 
       } catch (error) {
 
         console.warn(
-          "SCANNER STOP ERROR:",
+          "Scanner stop:",
           error
         );
 
       }
 
-      try {
+      scanner = null;
 
-        await html5QrCode.clear();
-
-      } catch (error) {
-
-        console.warn(
-          "SCANNER CLEAR ERROR:",
-          error
-        );
-
-      }
-
-      html5QrCode =
-        null;
+      reader.innerHTML =
+        "";
 
     }
 
@@ -1354,6 +1157,9 @@
                 "Server check-in tidak memberikan respons dalam 15 detik."
             });
 
+            processing =
+              false;
+
           },
           15000
         );
@@ -1427,13 +1233,14 @@
               "Server mengembalikan response yang tidak valid."
           });
 
+          processing =
+            false;
+
           return;
 
         }
 
-        if (
-          !response.ok
-        ) {
+        if (!response.ok) {
 
           showServerError({
             message:
@@ -1441,10 +1248,13 @@
               data.message
                 ? data.message
                 : (
-                    "Check-in gagal. HTTP " +
+                    "Server check-in gagal. HTTP " +
                     response.status
                   )
           });
+
+          processing =
+            false;
 
           return;
 
@@ -1487,6 +1297,9 @@
               : "Tidak dapat menghubungi server check-in."
         });
 
+        processing =
+          false;
+
       }
 
     }
@@ -1496,7 +1309,7 @@
        MANUAL CHECK-IN
        ========================================================= */
 
-    async function manualCheckIn() {
+    function manualCheckIn() {
 
       if (processing) {
         return;
@@ -1520,9 +1333,9 @@
       processing =
         true;
 
-      await stopScanner();
+      stopScanner();
 
-      await processToken(
+      processToken(
         token
       );
 
@@ -1606,6 +1419,9 @@
           "Check-in berhasil."
         );
 
+        processing =
+          true;
+
         return;
 
       }
@@ -1680,6 +1496,9 @@
           "QR sudah pernah digunakan."
         );
 
+        processing =
+          true;
+
         return;
 
       }
@@ -1716,6 +1535,9 @@
           "QR tidak valid."
         );
 
+        processing =
+          true;
+
         return;
 
       }
@@ -1746,11 +1568,14 @@
         "Terjadi kesalahan."
       );
 
+      processing =
+        false;
+
     }
 
 
     /* =========================================================
-       SHOW LOADING
+       LOADING
        ========================================================= */
 
     function showLoading() {
@@ -1838,7 +1663,7 @@
 
 
     /* =========================================================
-       RESET SCANNER
+       RESET
        ========================================================= */
 
     async function resetScanner() {
@@ -1917,7 +1742,7 @@
 
 
     /* =========================================================
-       EVENT LISTENERS
+       EVENTS
        ========================================================= */
 
     manualButton.addEventListener(
@@ -1950,23 +1775,22 @@
 
     /* =========================================================
        PAGE LOAD
+       =========================================================
+
+       Urutannya sengaja:
+
+       1. navigation.js sudah dimuat oleh <script src>
+       2. konfigurasi diperiksa
+       3. scanner langsung dimulai
+
+       Error navigation TIDAK menghentikan kamera.
        ========================================================= */
 
     window.addEventListener(
       "load",
       async function() {
 
-        /*
-         * Load navigation.
-         *
-         * Kegagalan navigation TIDAK menghentikan kamera.
-         */
-
-        loadNavigationConfig();
-
-        /*
-         * Kamera dijalankan secara terpisah.
-         */
+        getNavigationConfig();
 
         await startScanner();
 
@@ -1977,4 +1801,3 @@
 
 </body>
 </html>
-```
