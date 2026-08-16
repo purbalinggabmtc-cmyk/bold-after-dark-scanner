@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
   <meta charset="UTF-8">
 
   <meta
@@ -11,10 +10,17 @@
 
   <title>BOLD AFTER DARK — CHECK IN</title>
 
+  <!-- =========================================================
+       CENTRAL NAVIGATION CONFIG
+       Harus dimuat SEBELUM kode scanner di bawah.
+       ========================================================= -->
+
+  <script src="/config/navigation.js"></script>
+
+  <!-- QR SCANNER -->
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
   <style>
-
     * {
       box-sizing: border-box;
     }
@@ -31,7 +37,7 @@
           #000000 100%
         );
 
-      color: white;
+      color: #ffffff;
 
       font-family:
         Arial,
@@ -52,16 +58,6 @@
 
     button {
       cursor: pointer;
-    }
-
-    button:active {
-      transform: scale(0.98);
-    }
-
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
     }
 
     .container {
@@ -87,12 +83,10 @@
 
       padding: 11px 16px;
 
-      background: #111;
+      background: #111111;
+      color: #ffffff;
 
-      color: white;
-
-      border: 1px solid #444;
-
+      border: 1px solid #444444;
       border-radius: 8px;
 
       text-decoration: none;
@@ -116,6 +110,11 @@
       transform: scale(0.98);
     }
 
+    .home-button.loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
     /* =========================================================
        BRAND
        ========================================================= */
@@ -134,7 +133,7 @@
     .subtitle {
       font-size: 13px;
       letter-spacing: 3px;
-      color: #aaa;
+      color: #aaaaaa;
       margin-bottom: 24px;
     }
 
@@ -143,9 +142,9 @@
        ========================================================= */
 
     .scanner-card {
-      background: #111;
+      background: #111111;
 
-      border: 1px solid #333;
+      border: 1px solid #333333;
 
       border-radius: 18px;
 
@@ -196,9 +195,9 @@
 
       background: #1c1c1c;
 
-      color: white;
+      color: #ffffff;
 
-      border: 1px solid #444;
+      border: 1px solid #444444;
 
       border-radius: 8px;
 
@@ -208,7 +207,7 @@
     }
 
     .manual input::placeholder {
-      color: #777;
+      color: #777777;
     }
 
     .manual input:focus {
@@ -223,7 +222,7 @@
 
       background: #e00000;
 
-      color: white;
+      color: #ffffff;
 
       border: none;
 
@@ -288,9 +287,9 @@
     .result.error {
       display: block;
 
-      background: #222;
+      background: #222222;
 
-      border: 2px solid #777;
+      border: 2px solid #777777;
     }
 
     .result-title {
@@ -314,7 +313,7 @@
     }
 
     .error .result-title {
-      color: #fff;
+      color: #ffffff;
     }
 
     .detail {
@@ -322,13 +321,13 @@
 
       font-size: 15px;
 
-      color: #ddd;
+      color: #dddddd;
 
       line-height: 1.5;
     }
 
     .detail strong {
-      color: white;
+      color: #ffffff;
     }
 
     /* =========================================================
@@ -344,7 +343,7 @@
 
       background: #e00000;
 
-      color: white;
+      color: #ffffff;
 
       border: none;
 
@@ -374,25 +373,11 @@
 
       font-size: 12px;
 
-      color: #888;
+      color: #888888;
 
       min-height: 18px;
 
       line-height: 1.5;
-    }
-
-    /* =========================================================
-       FOOTER
-       ========================================================= */
-
-    .footer {
-      margin-top: 20px;
-
-      font-size: 11px;
-
-      color: #666;
-
-      letter-spacing: 2px;
     }
 
     /* =========================================================
@@ -404,7 +389,7 @@
 
       margin-top: 12px;
 
-      padding: 10px 12px;
+      padding: 12px;
 
       background: rgba(224, 0, 0, 0.1);
 
@@ -424,11 +409,24 @@
     }
 
     /* =========================================================
+       FOOTER
+       ========================================================= */
+
+    .footer {
+      margin-top: 20px;
+
+      font-size: 11px;
+
+      color: #666666;
+
+      letter-spacing: 2px;
+    }
+
+    /* =========================================================
        MOBILE
        ========================================================= */
 
     @media (max-width: 480px) {
-
       body {
         padding: 14px;
       }
@@ -476,11 +474,8 @@
       .result-title {
         font-size: 22px;
       }
-
     }
-
   </style>
-
 </head>
 
 <body>
@@ -489,6 +484,16 @@
 
     <!-- =======================================================
          HOME BUTTON
+
+         Tidak menyimpan URL Home di sini.
+
+         URL dibaca dari:
+         /config/navigation.js
+
+         Jika navigation.js berisi:
+         home: "https://boldafterdark.my.id/index.html"
+
+         maka tombol ini akan menuju URL tersebut.
          ======================================================= -->
 
     <div class="top-nav">
@@ -599,7 +604,6 @@
   </div>
 
   <script>
-
     "use strict";
 
     /* =========================================================
@@ -618,22 +622,26 @@
 
 
     /* =========================================================
-       NAVIGATION CONFIGURATION
+       CENTRAL NAVIGATION
        =========================================================
 
-       SEMUA URL HALAMAN WEBSITE DIAMBIL DARI:
+       PENTING:
 
-       https://boldafterdark.my.id/config/navigation.js
+       Scanner TIDAK lagi mencari navigation.html.
 
-       Scanner TIDAK menyimpan alamat Home/Admin/Report
-       secara langsung.
+       Scanner hanya membaca:
 
-       Sebelum redirect, scanner akan membaca
-       navigation.js terlebih dahulu.
+       window.BOLD_AFTER_DARK_NAVIGATION
+
+       yang didefinisikan oleh:
+
+       /config/navigation.js
        ========================================================= */
 
-    const NAVIGATION_URL =
-      "https://boldafterdark.my.id/config/navigation.js";
+    const NAVIGATION_SCRIPT_URL =
+      "/config/navigation.js";
+
+    let navigationConfig = null;
 
 
     /* =========================================================
@@ -645,8 +653,6 @@
     let processing = false;
 
     let requestTimeout = null;
-
-    let navigationConfig = null;
 
 
     /* =========================================================
@@ -705,175 +711,35 @@
 
 
     /* =========================================================
-       LOAD navigation.js
-       =========================================================
-
-       navigation.js diharapkan membuat object global:
-
-       window.BOLD_AFTER_DARK_NAVIGATION
-
-       Contoh:
-
-       window.BOLD_AFTER_DARK_NAVIGATION = {
-         home: "https://boldafterdark.my.id/index.html",
-         admin: "https://boldafterdark.my.id/admin.html",
-         report: "https://boldafterdark.my.id/report.html",
-         scanner: "https://boldafterdark.my.id/scanner.html"
-       };
-
-       Kita load file tersebut sebagai JavaScript.
+       NAVIGATION ERROR
        ========================================================= */
 
-    async function loadNavigationConfig() {
+    function showNavigationError(
+      message
+    ) {
 
-      try {
+      navigationError.textContent =
+        message;
 
-        /*
-         * Hapus konfigurasi lama supaya setiap
-         * pemanggilan benar-benar membaca versi terbaru.
-         */
+      navigationError.style.display =
+        "block";
 
-        navigationConfig = null;
+    }
 
-        /*
-         * Fetch navigation.js terlebih dahulu.
-         *
-         * Cache dinonaktifkan dengan query timestamp.
-         */
 
-        const response =
-          await fetch(
-            NAVIGATION_URL +
-            "?t=" +
-            Date.now(),
-            {
-              method: "GET",
+    function hideNavigationError() {
 
-              cache: "no-store",
+      navigationError.textContent =
+        "";
 
-              headers: {
-                "Accept":
-                  "application/javascript,text/javascript,*/*"
-              }
-            }
-          );
-
-        if (!response.ok) {
-
-          throw new Error(
-            "navigation.js HTTP " +
-            response.status
-          );
-
-        }
-
-        const javascript =
-          await response.text();
-
-        if (!javascript.trim()) {
-
-          throw new Error(
-            "navigation.js kosong."
-          );
-
-        }
-
-        /*
-         * Jalankan navigation.js dalam scope
-         * global halaman ini.
-         *
-         * navigation.js harus mengisi:
-         *
-         * window.BOLD_AFTER_DARK_NAVIGATION
-         */
-
-        const previousConfig =
-          window.BOLD_AFTER_DARK_NAVIGATION;
-
-        window.BOLD_AFTER_DARK_NAVIGATION =
-          undefined;
-
-        /*
-         * Function constructor dipakai agar isi
-         * navigation.js dieksekusi sebagai JavaScript.
-         */
-
-        const executeNavigation =
-          new Function(
-            javascript
-          );
-
-        executeNavigation();
-
-        const config =
-          window.BOLD_AFTER_DARK_NAVIGATION;
-
-        /*
-         * Jika navigation.js tidak membuat
-         * object konfigurasi.
-         */
-
-        if (!config) {
-
-          /*
-           * Kembalikan konfigurasi lama bila ada,
-           * lalu anggap konfigurasi tidak valid.
-           */
-
-          window.BOLD_AFTER_DARK_NAVIGATION =
-            previousConfig;
-
-          throw new Error(
-            "window.BOLD_AFTER_DARK_NAVIGATION tidak ditemukan."
-          );
-
-        }
-
-        validateNavigationConfig(
-          config
-        );
-
-        navigationConfig =
-          config;
-
-        navigationError.style.display =
-          "none";
-
-        console.log(
-          "NAVIGATION CONFIG LOADED:",
-          navigationConfig
-        );
-
-        return navigationConfig;
-
-      } catch (error) {
-
-        console.error(
-          "NAVIGATION CONFIG ERROR:",
-          error
-        );
-
-        navigationConfig =
-          null;
-
-        navigationError.textContent =
-          "Konfigurasi navigasi tidak dapat dimuat. " +
-          "Pastikan /config/navigation.js tersedia " +
-          "dan window.BOLD_AFTER_DARK_NAVIGATION " +
-          "terdefinisi dengan benar.";
-
-        navigationError.style.display =
-          "block";
-
-        return null;
-
-      }
+      navigationError.style.display =
+        "none";
 
     }
 
 
     /* =========================================================
-       NAVIGATION VALIDATION
+       VALIDATE NAVIGATION
        ========================================================= */
 
     function validateNavigationConfig(
@@ -886,7 +752,7 @@
       ) {
 
         throw new Error(
-          "Format konfigurasi navigasi tidak valid."
+          "window.BOLD_AFTER_DARK_NAVIGATION tidak valid."
         );
 
       }
@@ -895,7 +761,8 @@
         "home",
         "admin",
         "report",
-        "scanner"
+        "scanner",
+        "registration"
       ];
 
       requiredPages.forEach(
@@ -907,9 +774,9 @@
           ) {
 
             throw new Error(
-              "URL halaman '" +
+              "URL '" +
               page +
-              "' tidak tersedia."
+              "' tidak tersedia di navigation.js."
             );
 
           }
@@ -917,31 +784,36 @@
         }
       );
 
+
       requiredPages.forEach(
         function(page) {
 
+          let url;
+
           try {
 
-            const url =
+            url =
               new URL(
                 config[page]
               );
 
-            if (
-              url.protocol !== "https:" &&
-              url.protocol !== "http:"
-            ) {
-
-              throw new Error(
-                "Protocol URL tidak valid."
-              );
-
-            }
-
           } catch (error) {
 
             throw new Error(
-              "URL halaman '" +
+              "URL '" +
+              page +
+              "' tidak valid."
+            );
+
+          }
+
+          if (
+            url.protocol !== "https:" &&
+            url.protocol !== "http:"
+          ) {
+
+            throw new Error(
+              "Protocol URL '" +
               page +
               "' tidak valid."
             );
@@ -951,43 +823,284 @@
         }
       );
 
+      return true;
+
     }
 
 
     /* =========================================================
-       NAVIGATION
+       LOAD NAVIGATION.JS
+
+       Fungsi ini sengaja memiliki fallback loader.
+
+       Jika script /config/navigation.js gagal dimuat pada
+       saat halaman pertama dibuka, scanner akan mencoba
+       memuat ulang file tersebut secara dinamis.
+
+       Ini membantu menghindari masalah:
+       - cache
+       - script belum tersedia
+       - urutan loading
+       - deployment file
+       ========================================================= */
+
+    function loadNavigationScript() {
+
+      return new Promise(
+        function(resolve, reject) {
+
+          if (
+            window.BOLD_AFTER_DARK_NAVIGATION
+          ) {
+
+            resolve(
+              window.BOLD_AFTER_DARK_NAVIGATION
+            );
+
+            return;
+
+          }
+
+          const existingScript =
+            document.querySelector(
+              'script[src="/config/navigation.js"]'
+            );
+
+          if (existingScript) {
+
+            existingScript.addEventListener(
+              "load",
+              function() {
+
+                if (
+                  window.BOLD_AFTER_DARK_NAVIGATION
+                ) {
+
+                  resolve(
+                    window.BOLD_AFTER_DARK_NAVIGATION
+                  );
+
+                } else {
+
+                  reject(
+                    new Error(
+                      "navigation.js berhasil dimuat tetapi window.BOLD_AFTER_DARK_NAVIGATION tidak ditemukan."
+                    )
+                  );
+
+                }
+
+              },
+              {
+                once: true
+              }
+            );
+
+            existingScript.addEventListener(
+              "error",
+              function() {
+
+                reject(
+                  new Error(
+                    "File /config/navigation.js tidak dapat dimuat."
+                  )
+                );
+
+              },
+              {
+                once: true
+              }
+            );
+
+            /*
+             * Script mungkin sebenarnya sudah selesai dimuat
+             * sebelum listener dipasang.
+             */
+            setTimeout(
+              function() {
+
+                if (
+                  window.BOLD_AFTER_DARK_NAVIGATION
+                ) {
+
+                  resolve(
+                    window.BOLD_AFTER_DARK_NAVIGATION
+                  );
+
+                }
+
+              },
+              100
+            );
+
+            return;
+
+          }
+
+
+          const script =
+            document.createElement(
+              "script"
+            );
+
+          script.src =
+            NAVIGATION_SCRIPT_URL +
+            "?t=" +
+            Date.now();
+
+          script.async =
+            false;
+
+          script.onload =
+            function() {
+
+              if (
+                window.BOLD_AFTER_DARK_NAVIGATION
+              ) {
+
+                resolve(
+                  window.BOLD_AFTER_DARK_NAVIGATION
+                );
+
+              } else {
+
+                reject(
+                  new Error(
+                    "navigation.js berhasil dimuat tetapi window.BOLD_AFTER_DARK_NAVIGATION tidak terdefinisi."
+                  )
+                );
+
+              }
+
+            };
+
+          script.onerror =
+            function() {
+
+              reject(
+                new Error(
+                  "File /config/navigation.js tidak ditemukan atau tidak dapat dimuat."
+                )
+              );
+
+            };
+
+          document.head.appendChild(
+            script
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================================================
+       INITIALIZE NAVIGATION
+       ========================================================= */
+
+    async function initializeNavigation() {
+
+      try {
+
+        hideNavigationError();
+
+        /*
+         * Jika konfigurasi sudah tersedia,
+         * langsung gunakan.
+         */
+
+        if (
+          window.BOLD_AFTER_DARK_NAVIGATION
+        ) {
+
+          validateNavigationConfig(
+            window.BOLD_AFTER_DARK_NAVIGATION
+          );
+
+          navigationConfig =
+            window.BOLD_AFTER_DARK_NAVIGATION;
+
+          return true;
+
+        }
+
+
+        /*
+         * Kalau belum tersedia,
+         * coba load navigation.js.
+         */
+
+        const config =
+          await loadNavigationScript();
+
+        validateNavigationConfig(
+          config
+        );
+
+        navigationConfig =
+          config;
+
+        return true;
+
+      } catch (error) {
+
+        console.error(
+          "NAVIGATION INITIALIZATION ERROR:",
+          error
+        );
+
+        navigationConfig =
+          null;
+
+        showNavigationError(
+          "Konfigurasi navigasi tidak dapat dimuat. " +
+          "Pastikan /config/navigation.js tersedia " +
+          "dan window.BOLD_AFTER_DARK_NAVIGATION " +
+          "terdefinisi dengan benar."
+        );
+
+        return false;
+
+      }
+
+    }
+
+
+    /* =========================================================
+       NAVIGATE TO PAGE
        =========================================================
 
-       Setiap klik navigasi:
+       Setiap kali tombol navigasi ditekan,
+       konfigurasi dicek lagi.
 
-       1. Baca navigation.js.
-       2. Ambil URL terbaru.
-       3. Validasi URL.
-       4. Baru redirect.
-
-       Jadi URL tidak perlu ditulis ulang
-       di scanner.html.
+       Jadi apabila URL berubah di navigation.js,
+       halaman tidak perlu diedit satu per satu.
        ========================================================= */
 
     async function navigateTo(
       pageName
     ) {
 
-      const config =
-        await loadNavigationConfig();
+      const initialized =
+        await initializeNavigation();
 
-      if (!config) {
+      if (!initialized) {
 
         alert(
-          "Alamat halaman tidak dapat dibaca dari navigation.js."
+          "Konfigurasi navigasi tidak dapat dimuat.\n\n" +
+          "Pastikan file /config/navigation.js tersedia."
         );
 
         return;
 
       }
 
+
       const target =
-        config[pageName];
+        navigationConfig[
+          pageName
+        ];
 
       if (
         typeof target !== "string" ||
@@ -997,46 +1110,42 @@
         alert(
           "Alamat halaman '" +
           pageName +
-          "' tidak tersedia di navigation.js."
+          "' tidak tersedia."
         );
 
         return;
 
       }
 
+
+      /*
+       * Pastikan URL benar-benar absolute.
+       */
+
+      let targetUrl;
+
       try {
 
-        const url =
+        targetUrl =
           new URL(
             target
-          );
-
-        if (
-          url.protocol !== "https:" &&
-          url.protocol !== "http:"
-        ) {
-
-          throw new Error(
-            "URL tidak valid."
-          );
-
-        }
-
-        window.location.href =
-          url.href;
+          ).href;
 
       } catch (error) {
 
-        console.error(
-          "NAVIGATION REDIRECT ERROR:",
-          error
+        alert(
+          "Alamat halaman '" +
+          pageName +
+          "' tidak valid."
         );
 
-        alert(
-          "Alamat halaman tidak valid."
-        );
+        return;
 
       }
+
+
+      window.location.href =
+        targetUrl;
 
     }
 
@@ -1051,15 +1160,12 @@
 
         event.preventDefault();
 
-        if (processing) {
-          return;
-        }
+        homeButton.classList.add(
+          "loading"
+        );
 
-        homeButton.style.pointerEvents =
-          "none";
-
-        homeButton.style.opacity =
-          "0.6";
+        homeButton.textContent =
+          "MEMBUKA HOME...";
 
         try {
 
@@ -1069,11 +1175,12 @@
 
         } finally {
 
-          homeButton.style.pointerEvents =
-            "";
+          homeButton.classList.remove(
+            "loading"
+          );
 
-          homeButton.style.opacity =
-            "";
+          homeButton.textContent =
+            "← HOME";
 
         }
 
@@ -1101,11 +1208,13 @@
 
     async function startScanner() {
 
-      processing = false;
+      processing =
+        false;
 
       setScannerStatus(
         "Memulai kamera..."
       );
+
 
       if (scanner) {
 
@@ -1122,12 +1231,30 @@
 
         }
 
-        scanner = null;
+        scanner =
+          null;
 
       }
 
+
       reader.innerHTML =
         "";
+
+
+      if (
+        typeof Html5QrcodeScanner ===
+        "undefined"
+      ) {
+
+        showServerError({
+          message:
+            "Library QR scanner tidak berhasil dimuat."
+        });
+
+        return;
+
+      }
+
 
       try {
 
@@ -1153,10 +1280,12 @@
             false
           );
 
+
         scanner.render(
           onScanSuccess,
           onScanError
         );
+
 
         setScannerStatus(
           "Arahkan kamera ke QR code."
@@ -1191,10 +1320,12 @@
         return;
       }
 
+
       const token =
         String(
           decodedText || ""
         ).trim();
+
 
       if (!token) {
 
@@ -1207,9 +1338,13 @@
 
       }
 
-      processing = true;
+
+      processing =
+        true;
+
 
       stopScanner();
+
 
       processToken(
         token
@@ -1225,7 +1360,7 @@
     function onScanError() {
 
       /*
-       * Error scanning biasa tidak ditampilkan.
+       * Error scan biasa tidak ditampilkan.
        */
 
     }
@@ -1241,6 +1376,7 @@
         return;
       }
 
+
       try {
 
         await scanner.clear();
@@ -1254,7 +1390,9 @@
 
       }
 
-      scanner = null;
+
+      scanner =
+        null;
 
     }
 
@@ -1273,10 +1411,12 @@
         "Menghubungi server Supabase..."
       );
 
+
       const cleanToken =
         String(
           token || ""
         ).trim();
+
 
       if (!cleanToken) {
 
@@ -1285,11 +1425,13 @@
             "QR token kosong."
         });
 
-        processing = false;
+        processing =
+          false;
 
         return;
 
       }
+
 
       const requestUrl =
         API_URL +
@@ -1297,6 +1439,7 @@
         encodeURIComponent(
           cleanToken
         );
+
 
       if (requestTimeout) {
 
@@ -1309,8 +1452,10 @@
 
       }
 
+
       let finished =
         false;
+
 
       requestTimeout =
         setTimeout(
@@ -1320,22 +1465,24 @@
               return;
             }
 
+
             finished =
               true;
 
+
             requestTimeout =
               null;
+
 
             showServerError({
               message:
                 "Server check-in tidak memberikan respons dalam 15 detik."
             });
 
-            processing = false;
-
           },
           15000
         );
+
 
       try {
 
@@ -1345,16 +1492,31 @@
             {
               method: "GET",
 
-              cache: "no-store"
+              cache: "no-store",
+
+              headers: {
+                "Accept":
+                  "application/json",
+
+                "apikey":
+                  SUPABASE_PUBLISHABLE_KEY,
+
+                "Authorization":
+                  "Bearer " +
+                  SUPABASE_PUBLISHABLE_KEY
+              }
             }
           );
+
 
         if (finished) {
           return;
         }
 
+
         finished =
           true;
+
 
         if (requestTimeout) {
 
@@ -1367,11 +1529,14 @@
 
         }
 
+
         const rawResponse =
           await response.text();
 
+
         let data =
           null;
+
 
         try {
 
@@ -1384,7 +1549,8 @@
 
           console.error(
             "JSON PARSE ERROR:",
-            error
+            error,
+            rawResponse
           );
 
           showServerError({
@@ -1392,11 +1558,28 @@
               "Server mengembalikan response yang tidak valid."
           });
 
-          processing = false;
+          return;
+
+        }
+
+
+        if (!response.ok) {
+
+          showServerError({
+            message:
+              data &&
+              data.message
+                ? data.message
+                : (
+                    "Server check-in error. HTTP " +
+                    response.status
+                  )
+          });
 
           return;
 
         }
+
 
         showResult(
           data
@@ -1408,8 +1591,10 @@
           return;
         }
 
+
         finished =
           true;
+
 
         if (requestTimeout) {
 
@@ -1422,10 +1607,12 @@
 
         }
 
+
         console.error(
           "CHECK-IN REQUEST ERROR:",
           error
         );
+
 
         showServerError({
           message:
@@ -1434,8 +1621,6 @@
               ? error.message
               : "Tidak dapat menghubungi server check-in."
         });
-
-        processing = false;
 
       }
 
@@ -1452,8 +1637,10 @@
         return;
       }
 
+
       const token =
         manualToken.value.trim();
+
 
       if (!token) {
 
@@ -1467,9 +1654,13 @@
 
       }
 
-      processing = true;
+
+      processing =
+        true;
+
 
       stopScanner();
+
 
       processToken(
         token
@@ -1506,8 +1697,10 @@
           "valid"
         );
 
+
         resultTitle.textContent =
           "✓ ENTRY APPROVED";
+
 
         resultDetails.innerHTML =
           '<div class="detail">' +
@@ -1551,11 +1744,11 @@
           ) +
           '</div>';
 
+
         setScannerStatus(
           "Check-in berhasil."
         );
 
-        processing = false;
 
         return;
 
@@ -1568,15 +1761,20 @@
 
       if (
         data &&
-        data.status === "ALREADY_USED"
+        (
+          data.status === "ALREADY_USED" ||
+          data.status === "ALREADY-USED"
+        )
       ) {
 
         result.classList.add(
           "used"
         );
 
+
         resultTitle.textContent =
           "⚠ ALREADY USED";
+
 
         resultDetails.innerHTML =
           '<div class="detail">' +
@@ -1624,11 +1822,11 @@
           ) +
           '</div>';
 
+
         setScannerStatus(
           "QR sudah pernah digunakan."
         );
 
-        processing = false;
 
         return;
 
@@ -1643,7 +1841,8 @@
         data &&
         (
           data.status === "INVALID" ||
-          data.status === "NOT_FOUND"
+          data.status === "NOT_FOUND" ||
+          data.status === "NOTFOUND"
         )
       ) {
 
@@ -1651,8 +1850,10 @@
           "invalid"
         );
 
+
         resultTitle.textContent =
           "✕ INVALID QR";
+
 
         resultDetails.innerHTML =
           '<div class="detail">' +
@@ -1662,11 +1863,11 @@
           ) +
           '</div>';
 
+
         setScannerStatus(
           "QR tidak valid."
         );
 
-        processing = false;
 
         return;
 
@@ -1681,8 +1882,10 @@
         "error"
       );
 
+
       resultTitle.textContent =
         "SYSTEM ERROR";
+
 
       resultDetails.innerHTML =
         '<div class="detail">' +
@@ -1694,11 +1897,10 @@
         ) +
         '</div>';
 
+
       setScannerStatus(
         "Terjadi kesalahan."
       );
-
-      processing = false;
 
     }
 
@@ -1715,8 +1917,10 @@
       result.style.display =
         "block";
 
+
       resultTitle.textContent =
         "CHECKING...";
+
 
       resultDetails.innerHTML =
         '<div class="detail">' +
@@ -1740,8 +1944,10 @@
       result.style.display =
         "block";
 
+
       resultTitle.textContent =
         "SYSTEM ERROR";
+
 
       resultDetails.innerHTML =
         '<div class="detail">' +
@@ -1752,6 +1958,7 @@
             : "Tidak dapat menghubungi server check-in."
         ) +
         '</div>';
+
 
       setScannerStatus(
         "Server check-in tidak dapat dihubungi."
@@ -1774,8 +1981,10 @@
       result.style.display =
         "block";
 
+
       resultTitle.textContent =
         "✕ INVALID";
+
 
       resultDetails.innerHTML =
         '<div class="detail">' +
@@ -1783,6 +1992,7 @@
           message
         ) +
         '</div>';
+
 
       setScannerStatus(
         "Input tidak valid."
@@ -1808,23 +2018,30 @@
 
       }
 
+
       result.style.display =
         "none";
+
 
       result.className =
         "result";
 
+
       resultTitle.textContent =
         "";
+
 
       resultDetails.innerHTML =
         "";
 
+
       manualToken.value =
         "";
 
+
       processing =
         false;
+
 
       await startScanner();
 
@@ -1911,13 +2128,13 @@
       async function() {
 
         /*
-         * Load navigation.js saat halaman dibuka.
+         * Inisialisasi navigation terlebih dahulu.
          *
-         * Jika gagal, scanner tetap dicoba
-         * untuk dijalankan.
+         * Jika gagal, scanner tetap boleh dimulai.
+         * Yang gagal hanya sistem navigasi.
          */
 
-        await loadNavigationConfig();
+        await initializeNavigation();
 
         await startScanner();
 
