@@ -1,9 +1,35 @@
+javascript
+// ============================================================
+// BOLD AFTER DARK
+// CENTRAL NAVIGATION CONFIGURATION
+// File:
 // /config/navigation.js
+// ============================================================
 
-const NAVIGATION = Object.freeze({
-  home: "https://boldafterdark.my.id/index.html",
-  admin: "https://boldafterdark.my.id/admin.html",
-  report: "https://boldafterdark.my.id/report.html",
-  scanner: "https://boldafterdark.my.id/scanner.html",
-  registration: "https://boldafterdark.my.id/registration/index.html"
-});
+(function () {
+  "use strict";
+
+  const NAVIGATION = Object.freeze({
+    home:
+      "https://boldafterdark.my.id/index.html",
+
+    admin:
+      "https://boldafterdark.my.id/admin.html",
+
+    report:
+      "https://boldafterdark.my.id/report.html",
+
+    scanner:
+      "https://boldafterdark.my.id/scanner.html",
+
+    registration:
+      "https://boldafterdark.my.id/registration/index.html"
+  });
+
+  // ----------------------------------------------------------
+  // Expose configuration globally
+  // ----------------------------------------------------------
+
+  window.BOLD_AFTER_DARK_NAVIGATION = NAVIGATION;
+
+})();
