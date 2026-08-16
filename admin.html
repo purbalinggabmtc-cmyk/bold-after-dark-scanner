@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,14 +29,6 @@
     input,
     select {
       font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    button:active {
-      transform: scale(0.98);
     }
 
     .hidden {
@@ -127,10 +118,6 @@
       color: white;
       font-weight: 800;
       cursor: pointer;
-    }
-
-    .primary-button:hover:not(:disabled) {
-      background: #ff0000;
     }
 
     .primary-button:disabled {
@@ -230,8 +217,6 @@
       border-color: #e00000;
     }
 
-    /* LOGOUT */
-
     .logout-button {
       background: #222222;
       color: white;
@@ -241,8 +226,6 @@
     .logout-button:hover {
       background: #333333;
     }
-
-    /* REFRESH */
 
     .refresh-button {
       background: #e00000;
@@ -254,7 +237,7 @@
       background: #c00000;
     }
 
-    /* REPORT */
+    /* REPORT BUTTON */
 
     .report-button {
       background: #ffffff;
@@ -268,8 +251,6 @@
       color: #ffffff;
       border-color: #e00000;
     }
-
-    /* DELETE */
 
     .delete-button {
       background: #b00000;
@@ -286,8 +267,6 @@
       opacity: 0.45;
       cursor: not-allowed;
     }
-
-    /* SELECT */
 
     .select-button {
       background: #222222;
@@ -365,11 +344,6 @@
       background: #1b1b1b;
       color: white;
       outline: none;
-    }
-
-    select:focus {
-      border-color: #e00000;
-      box-shadow: 0 0 0 2px rgba(224, 0, 0, 0.12);
     }
 
     .bulk-bar {
@@ -646,9 +620,7 @@
     <div class="login-card">
 
       <div class="brand">
-        BOLD
-        <span class="red">AFTER</span>
-        <span class="white">DARK</span>
+        BOLD <span class="red">AFTER</span> <span class="white">DARK</span>
       </div>
 
       <div class="login-subtitle">
@@ -658,6 +630,7 @@
       <form id="loginForm">
 
         <div class="form-group">
+
           <label for="loginEmail">
             EMAIL
           </label>
@@ -669,9 +642,11 @@
             autocomplete="username"
             required
           >
+
         </div>
 
         <div class="form-group">
+
           <label for="loginPassword">
             PASSWORD
           </label>
@@ -683,6 +658,7 @@
             autocomplete="current-password"
             required
           >
+
         </div>
 
         <button
@@ -1055,21 +1031,37 @@
 
 
   <!-- ============================================================
-       CENTRAL NAVIGATION
+       CENTRAL NAVIGATION CONFIGURATION
+       ============================================================
+
+       URL halaman TIDAK disimpan di admin.html.
+
+       Semua alamat diambil dari:
+
+       /config/navigation.js
+
+       Contoh isi navigation.js:
+
+       const NAVIGATION = Object.freeze({
+         home: "https://boldafterdark.my.id/index.html",
+         admin: "https://boldafterdark.my.id/admin.html",
+         report: "https://boldafterdark.my.id/report.html",
+         scanner: "https://boldafterdark.my.id/scanner.html",
+         registration: "https://boldafterdark.my.id/registration/index.html"
+       });
+
        ============================================================ -->
 
   <script src="/config/navigation.js"></script>
 
 
-  <!-- ============================================================
-       ADMIN JAVASCRIPT
-       ============================================================ -->
-
   <script>
+
     "use strict";
 
+
     /* ============================================================
-       CONFIG
+       SUPABASE CONFIG
        ============================================================ */
 
     const SUPABASE_URL =
@@ -1092,6 +1084,160 @@
 
     const ADMIN_PASSWORD =
       "22Jun!2002";
+
+
+    /* ============================================================
+       NAVIGATION VALIDATION
+       ============================================================ */
+
+    function validateNavigation() {
+
+      if (
+        typeof NAVIGATION === "undefined"
+      ) {
+
+        throw new Error(
+          "NAVIGATION tidak ditemukan. Pastikan /config/navigation.js berhasil dimuat."
+        );
+
+      }
+
+      if (
+        !NAVIGATION ||
+        typeof NAVIGATION !== "object"
+      ) {
+
+        throw new Error(
+          "Konfigurasi NAVIGATION tidak valid."
+        );
+
+      }
+
+      const requiredPages = [
+        "home",
+        "admin",
+        "report",
+        "scanner"
+      ];
+
+      requiredPages.forEach(
+        function(pageName) {
+
+          if (
+            typeof NAVIGATION[pageName] !== "string" ||
+            !NAVIGATION[pageName].trim()
+          ) {
+
+            throw new Error(
+              "NAVIGATION." +
+              pageName +
+              " tidak tersedia."
+            );
+
+          }
+
+          let url;
+
+          try {
+
+            url =
+              new URL(
+                NAVIGATION[pageName]
+              );
+
+          } catch (error) {
+
+            throw new Error(
+              "NAVIGATION." +
+              pageName +
+              " bukan URL yang valid."
+            );
+
+          }
+
+          if (
+            url.protocol !== "https:" &&
+            url.protocol !== "http:"
+          ) {
+
+            throw new Error(
+              "NAVIGATION." +
+              pageName +
+              " harus menggunakan HTTP atau HTTPS."
+            );
+
+          }
+
+        }
+      );
+
+      return true;
+
+    }
+
+
+    /* ============================================================
+       NAVIGATION
+       ============================================================ */
+
+    async function navigateTo(
+      pageName
+    ) {
+
+      try {
+
+        validateNavigation();
+
+        const target =
+          NAVIGATION[pageName];
+
+        if (
+          typeof target !== "string" ||
+          !target.trim()
+        ) {
+
+          throw new Error(
+            "Alamat halaman '" +
+            pageName +
+            "' tidak tersedia."
+          );
+
+        }
+
+        /*
+         * Gunakan URL ABSOLUT langsung.
+         *
+         * Jangan lagi menggunakan:
+         *
+         * window.location.origin + target
+         *
+         * karena target sudah berupa URL lengkap.
+         */
+
+        window.location.assign(
+          target
+        );
+
+      } catch (error) {
+
+        console.error(
+          "NAVIGATION ERROR:",
+          error
+        );
+
+        showDashboardError(
+          "Navigasi gagal.\n\n" +
+          (
+            error &&
+            error.message
+              ? error.message
+              : "Konfigurasi navigasi tidak dapat digunakan."
+          )
+        );
+
+      }
+
+    }
 
 
     /* ============================================================
@@ -1225,28 +1371,35 @@
 
     let registrations = [];
 
-    let selectedIds = new Set();
+    let selectedIds =
+      new Set();
 
 
     /* ============================================================
        LOGIN
        ============================================================ */
 
-    function showLoginError(message) {
+    function showLoginError(
+      message
+    ) {
+
       loginMessage.textContent =
         message;
 
       loginMessage.className =
         "login-message error";
+
     }
 
 
     function clearLoginError() {
+
       loginMessage.textContent =
         "";
 
       loginMessage.className =
         "login-message";
+
     }
 
 
@@ -1274,6 +1427,7 @@
           );
 
           return;
+
         }
 
         loginButton.disabled =
@@ -1316,23 +1470,12 @@
 
 
     /* ============================================================
-       CENTRAL NAVIGATION
+       HOME BUTTON
        ============================================================ */
 
     homeButton.addEventListener(
       "click",
       function() {
-
-        /*
-         * URL TIDAK DISIMPAN DI ADMIN.HTML.
-         *
-         * Semua navigasi dikelola oleh:
-         *
-         * /config/navigation.js
-         *
-         * HOME:
-         * APP_NAVIGATION.home
-         */
 
         navigateTo(
           "home"
@@ -1342,15 +1485,13 @@
     );
 
 
+    /* ============================================================
+       REPORT BUTTON
+       ============================================================ */
+
     reportButton.addEventListener(
       "click",
       function() {
-
-        /*
-         * REPORT juga dikelola oleh:
-         *
-         * /config/navigation.js
-         */
 
         navigateTo(
           "report"
@@ -1397,7 +1538,9 @@
        MESSAGE
        ============================================================ */
 
-    function showDashboardError(message) {
+    function showDashboardError(
+      message
+    ) {
 
       dashboardError.textContent =
         message;
@@ -1421,7 +1564,9 @@
     }
 
 
-    function showDashboardSuccess(message) {
+    function showDashboardSuccess(
+      message
+    ) {
 
       dashboardSuccess.textContent =
         message;
@@ -1466,6 +1611,7 @@
 
       const fetchOptions = {
         method,
+
         headers: {
           "Content-Type":
             "application/json",
@@ -1508,7 +1654,8 @@
         raw
       );
 
-      let data = null;
+      let data =
+        null;
 
       try {
 
@@ -1674,10 +1821,8 @@
         updateSelectionUI();
 
         showDashboardError(
-          error &&
-          error.message
-            ? error.message
-            : "Gagal memuat registrasi."
+          error.message ||
+          "Gagal memuat registrasi."
         );
 
       } finally {
@@ -1817,18 +1962,6 @@
               ""
             ).toLowerCase();
 
-          const community =
-            String(
-              row.community ||
-              ""
-            ).toLowerCase();
-
-          const tablePackage =
-            String(
-              row.table_package ||
-              ""
-            ).toLowerCase();
-
           const rowStatus =
             String(
               row.pass_status ||
@@ -1843,11 +1976,15 @@
 
           const matchesSearch =
             !search ||
-            name.includes(search) ||
-            whatsapp.includes(search) ||
-            passId.includes(search) ||
-            community.includes(search) ||
-            tablePackage.includes(search);
+            name.includes(
+              search
+            ) ||
+            whatsapp.includes(
+              search
+            ) ||
+            passId.includes(
+              search
+            );
 
           const matchesStatus =
             status === "ALL" ||
@@ -1905,9 +2042,6 @@
         selectAll.checked =
           false;
 
-        selectAll.indeterminate =
-          false;
-
         return;
 
       }
@@ -1922,7 +2056,9 @@
               );
 
             const checked =
-              selectedIds.has(id)
+              selectedIds.has(
+                id
+              )
                 ? "checked"
                 : "";
 
@@ -2005,8 +2141,7 @@
             `;
 
           }
-        )
-        .join("");
+        ).join("");
 
       document
         .querySelectorAll(
@@ -2324,10 +2459,12 @@
             await dynamicService(
               "delete",
               {
-                method: "POST",
+                method:
+                  "POST",
 
                 body: {
-                  ids: ids
+                  ids:
+                    ids
                 }
               }
             );
@@ -2389,7 +2526,9 @@
        BADGES
        ============================================================ */
 
-    function statusBadge(status) {
+    function statusBadge(
+      status
+    ) {
 
       const value =
         String(
@@ -2421,7 +2560,9 @@
     }
 
 
-    function accessBadge(access) {
+    function accessBadge(
+      access
+    ) {
 
       const value =
         String(
@@ -2469,7 +2610,9 @@
        DATE
        ============================================================ */
 
-    function formatDate(value) {
+    function formatDate(
+      value
+    ) {
 
       if (
         !value
@@ -2516,7 +2659,9 @@
        HTML ESCAPE
        ============================================================ */
 
-    function escapeHtml(value) {
+    function escapeHtml(
+      value
+    ) {
 
       return String(
         value == null
@@ -2605,6 +2750,24 @@
        START
        ============================================================ */
 
+    try {
+
+      validateNavigation();
+
+      console.log(
+        "NAVIGATION CONFIG LOADED:",
+        NAVIGATION
+      );
+
+    } catch (error) {
+
+      console.error(
+        "NAVIGATION CONFIG ERROR:",
+        error
+      );
+
+    }
+
     renderTable();
 
     updateStatistics();
@@ -2615,4 +2778,3 @@
 
 </body>
 </html>
-```
