@@ -7,7 +7,8 @@
 const APP_NAVIGATION = {
   home: "https://boldafterdark.my.id/index.html",
   admin: "https://boldafterdark.my.id/admin.html",
-  report: "https://boldafterdark.my.id/report.html"
+  report: "https://boldafterdark.my.id/report.html",
+  scanner: "https://boldafterdark.my.id/scanner.html"
 };
 
 function navigateTo(page) {
