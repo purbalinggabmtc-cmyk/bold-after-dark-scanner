@@ -1,23 +1,9 @@
-/* BOLD AFTER DARK
- * Central Navigation Reference
- * --------------------------------
- * Semua URL navigasi utama disimpan di satu tempat.
- */
+// /config/navigation.js
 
-const APP_NAVIGATION = {
+const NAVIGATION = Object.freeze({
   home: "https://boldafterdark.my.id/index.html",
   admin: "https://boldafterdark.my.id/admin.html",
   report: "https://boldafterdark.my.id/report.html",
-  scanner: "https://boldafterdark.my.id/scanner.html"
-};
-
-function navigateTo(page) {
-  const target = APP_NAVIGATION[page];
-
-  if (!target) {
-    console.error("Navigation target tidak ditemukan:", page);
-    return;
-  }
-
-  window.location.assign(target);
-}
+  scanner: "https://boldafterdark.my.id/scanner.html",
+  registration: "https://boldafterdark.my.id/registration/index.html"
+});
