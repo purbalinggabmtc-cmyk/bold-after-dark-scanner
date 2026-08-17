@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -436,6 +435,7 @@
 
       <form id="registrationForm" novalidate>
 
+        <!-- ACCESS -->
         <div class="field">
           <label for="accessType">
             Access <span class="required">*</span>
@@ -468,6 +468,13 @@
           </div>
         </div>
 
+        <!-- VIP OPTIONS -->
+        <div
+          id="vipOptionsContainer"
+          class="hidden"
+        ></div>
+
+        <!-- BOLD RIDERS ID -->
         <div
           id="boldRidersField"
           class="field hidden"
@@ -498,6 +505,7 @@
           ></div>
         </div>
 
+        <!-- NAMA -->
         <div class="field">
           <label for="name">
             Nama <span class="required">*</span>
@@ -519,6 +527,7 @@
           </div>
         </div>
 
+        <!-- WHATSAPP -->
         <div class="field">
           <label for="whatsapp">
             WhatsApp <span class="required">*</span>
@@ -533,40 +542,7 @@
           >
         </div>
 
-        <div
-          id="tablePackageField"
-          class="field hidden"
-        >
-          <label for="tablePackage">
-            Table Package <span class="required">*</span>
-          </label>
-
-          <select
-            id="tablePackage"
-            name="tablePackage"
-          >
-            <option value="">
-              Pilih Table Package
-            </option>
-
-            <option value="TABLE 1">
-              TABLE 1
-            </option>
-
-            <option value="TABLE 2">
-              TABLE 2
-            </option>
-
-            <option value="TABLE 3">
-              TABLE 3
-            </option>
-
-            <option value="TABLE 4">
-              TABLE 4
-            </option>
-          </select>
-        </div>
-
+        <!-- COMMUNITY -->
         <div class="field">
           <label for="community">
             Community
@@ -580,6 +556,7 @@
           >
         </div>
 
+        <!-- STAY CONNECTED -->
         <div class="field">
           <label for="stayConnected">
             Stay Connected
@@ -633,6 +610,7 @@
 
       </div>
 
+      <!-- RESULT -->
       <div
         id="resultBox"
         class="result"
@@ -804,11 +782,8 @@
     const accessTypeInput =
       document.getElementById("accessType");
 
-    const tablePackageInput =
-      document.getElementById("tablePackage");
-
-    const tablePackageField =
-      document.getElementById("tablePackageField");
+    const vipOptionsContainer =
+      document.getElementById("vipOptionsContainer");
 
     const boldRidersField =
       document.getElementById("boldRidersField");
@@ -913,6 +888,158 @@
       nameHelp.classList.add("hidden");
     }
 
+    const VIP_OPTIONS_URL =
+      "https://boldafterdark.my.id/config/vip-options.html";
+
+    let vipOptionsLoaded = false;
+    let vipOptionsLoading = null;
+
+    async function loadVipOptions() {
+      if (vipOptionsLoaded) {
+        return true;
+      }
+
+      if (vipOptionsLoading) {
+        return vipOptionsLoading;
+      }
+
+      vipOptionsLoading = (async function() {
+        try {
+          const response =
+            await fetch(
+              VIP_OPTIONS_URL +
+              "?t=" +
+              Date.now(),
+              {
+                method: "GET",
+                cache: "no-store",
+                credentials: "same-origin",
+                headers: {
+                  "Accept": "text/html"
+                }
+              }
+            );
+
+          if (!response.ok) {
+            throw new Error(
+              "VIP options HTTP " +
+              response.status
+            );
+          }
+
+          const html =
+            await response.text();
+
+          const parser =
+            new DOMParser();
+
+          const externalDocument =
+            parser.parseFromString(
+              html,
+              "text/html"
+            );
+
+          const externalStyles =
+            externalDocument.querySelectorAll(
+              "style"
+            );
+
+          externalStyles.forEach(
+            function(styleElement) {
+              const styleId =
+                "vip-options-external-style";
+
+              if (!document.getElementById(styleId)) {
+                const style =
+                  document.createElement("style");
+
+                style.id = styleId;
+                style.textContent =
+                  styleElement.textContent || "";
+
+                document.head.appendChild(style);
+              }
+            }
+          );
+
+          const externalBody =
+            externalDocument.body;
+
+          if (!externalBody) {
+            throw new Error(
+              "Isi VIP options tidak ditemukan."
+            );
+          }
+
+          vipOptionsContainer.innerHTML =
+            externalBody.innerHTML;
+
+          const vipInputs =
+            vipOptionsContainer.querySelectorAll(
+              'input[name="vipOption"]'
+            );
+
+          if (!vipInputs.length) {
+            throw new Error(
+              "Pilihan VIP tidak ditemukan di vip-options.html."
+            );
+          }
+
+          vipInputs.forEach(
+            function(input) {
+              input.required = true;
+            }
+          );
+
+          vipOptionsLoaded = true;
+          return true;
+
+        } catch (error) {
+          console.error(
+            "VIP OPTIONS LOAD ERROR:",
+            error
+          );
+
+          vipOptionsContainer.innerHTML =
+            '<div class="access-info" style="border-color:#e00000;color:#ff8b8b;">' +
+            'Opsi VIP tidak dapat dimuat. Silakan coba lagi.' +
+            '</div>';
+
+          vipOptionsLoaded = false;
+          return false;
+
+        } finally {
+          vipOptionsLoading = null;
+        }
+      })();
+
+      return vipOptionsLoading;
+    }
+
+    function getSelectedVipOption() {
+      const selected =
+        vipOptionsContainer.querySelector(
+          'input[name="vipOption"]:checked'
+        );
+
+      return selected
+        ? String(selected.value || "").trim()
+        : "";
+    }
+
+    function clearVipSelection() {
+      const vipInputs =
+        vipOptionsContainer.querySelectorAll(
+          'input[name="vipOption"]'
+        );
+
+      vipInputs.forEach(
+        function(input) {
+          input.checked = false;
+        }
+      );
+    }
+
     function updateAccessFields() {
       const access =
         String(
@@ -927,25 +1054,29 @@
       const isBoldRider =
         access === "BOLD RIDERS";
 
+      /*
+       * VIP OPTIONS
+       *
+       * Opsi VIP dibaca dari file terpisah:
+       * /config/vip-options.html
+       */
       if (isVip) {
-        tablePackageField.classList.remove(
+        vipOptionsContainer.classList.remove(
           "hidden"
         );
 
-        tablePackageInput.required =
-          true;
+        loadVipOptions();
       } else {
-        tablePackageField.classList.add(
+        vipOptionsContainer.classList.add(
           "hidden"
         );
 
-        tablePackageInput.required =
-          false;
-
-        tablePackageInput.value =
-          "";
+        clearVipSelection();
       }
 
+      /*
+       * BOLD RIDERS
+       */
       if (isBoldRider) {
         boldRidersField.classList.remove(
           "hidden"
@@ -1114,9 +1245,20 @@
           boldRidersStatus.className =
             "rider-status valid";
 
+          /*
+           * HANYA tampilkan:
+           * ID BOLD RIDERS valid.
+           *
+           * Tidak ada lagi:
+           * Nama pemilik: ...
+           */
           boldRidersStatus.textContent =
             "ID BOLD RIDERS valid.";
 
+          /*
+           * Nama otomatis mengikuti data
+           * BOLD RIDERS.
+           */
           if (ownerName) {
             nameInput.value =
               ownerName;
@@ -1205,11 +1347,14 @@
           .trim()
           .toUpperCase();
 
+      const name =
+        nameInput.value.trim();
+
       const whatsapp =
         whatsappInput.value.trim();
 
       const tablePackage =
-        tablePackageInput.value.trim();
+        getSelectedVipOption();
 
       const community =
         communityInput.value.trim();
@@ -1224,6 +1369,9 @@
           .trim()
           .toUpperCase();
 
+      /*
+       * ACCESS
+       */
       if (!accessType) {
         showMessage(
           "error",
@@ -1234,6 +1382,9 @@
         return;
       }
 
+      /*
+       * BOLD RIDERS VALIDATION
+       */
       if (
         accessType === "BOLD RIDERS"
       ) {
@@ -1276,6 +1427,9 @@
         }
       }
 
+      /*
+       * NAMA
+       */
       const finalName =
         nameInput.value.trim();
 
@@ -1289,6 +1443,9 @@
         return;
       }
 
+      /*
+       * WHATSAPP
+       */
       if (!whatsapp) {
         showMessage(
           "error",
@@ -1299,22 +1456,49 @@
         return;
       }
 
-      if (
-        accessType === "VIP" &&
-        !tablePackage
-      ) {
-        showMessage(
-          "error",
-          "Table Package wajib dipilih untuk VIP."
-        );
+      /*
+       * VIP OPTIONS
+       */
+      if (accessType === "VIP") {
+        const vipLoaded =
+          await loadVipOptions();
 
-        tablePackageInput.focus();
-        return;
+        if (!vipLoaded) {
+          showMessage(
+            "error",
+            "Opsi VIP belum dapat dimuat. Silakan coba lagi."
+          );
+
+          return;
+        }
+
+        if (!tablePackage) {
+          showMessage(
+            "error",
+            "Silakan pilih salah satu opsi VIP."
+          );
+
+          const firstVipInput =
+            vipOptionsContainer.querySelector(
+              'input[name="vipOption"]'
+            );
+
+          if (firstVipInput) {
+            firstVipInput.focus();
+          }
+
+          return;
+        }
       }
 
+      /*
+       * BODY
+       */
       const body = {
         name: finalName,
+
         whatsapp,
+
         accessType,
 
         tablePackage:
@@ -1323,6 +1507,7 @@
             : "",
 
         community,
+
         stayConnected,
 
         boldRidersId:
@@ -1499,9 +1684,7 @@
           riderId;
 
         resultRiderName.textContent =
-          riderName ||
-          data.name ||
-          "-";
+          riderName || data.name || "-";
       } else {
         resultRiderIdItem.classList.add(
           "hidden"
@@ -1559,6 +1742,9 @@
       );
     }
 
+    /*
+     * ACCESS CHANGE
+     */
     accessTypeInput.addEventListener(
       "change",
       function() {
@@ -1567,6 +1753,9 @@
       }
     );
 
+    /*
+     * BOLD RIDERS ID INPUT
+     */
     boldRidersIdInput.addEventListener(
       "input",
       function() {
@@ -1621,6 +1810,18 @@
       }
     );
 
+    /*
+     * STAY CONNECTED
+     *
+     * Placeholder:
+     * instagram
+     *
+     * Saat fokus:
+     * otomatis menjadi @
+     *
+     * Saat mengetik:
+     * @username
+     */
     stayConnectedInput.addEventListener(
       "focus",
       function() {
@@ -1651,6 +1852,9 @@
             stayConnectedInput.value || ""
           );
 
+        /*
+         * Hanya satu @ di awal.
+         */
         value =
           value.replace(
             /^@+/,
@@ -1666,6 +1870,9 @@
       }
     );
 
+    /*
+     * SUBMIT
+     */
     registrationForm.addEventListener(
       "submit",
       async function(event) {
@@ -1675,14 +1882,20 @@
       }
     );
 
+    /*
+     * WHATSAPP HELP
+     */
     whatsappButton.addEventListener(
       "click",
       openWhatsAppHelp
     );
 
+    /*
+     * INITIAL STATE
+     */
     updateAccessFields();
+
   </script>
 
 </body>
 </html>
-```
