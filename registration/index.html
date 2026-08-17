@@ -1070,7 +1070,7 @@ function showMessage(type, message) {
             {
               method: "GET",
               cache: "no-store",
-              credentials: "same-origin",
+              credentials: "omit",
               headers: {
                 "Accept": "text/html"
               }
@@ -1106,7 +1106,7 @@ function showMessage(type, message) {
            * FORMAT 1
            * JSON:
            *
-           * <script id="vip-options-config" type="application/json">
+           * contoh elemen konfigurasi JSON: <script id="vip-options-config" type="application/json">
            * [
            *   {
            *     "id": "...",
@@ -1116,7 +1116,7 @@ function showMessage(type, message) {
            *     "benefits": [...]
            *   }
            * ]
-           * </script>
+           * [script configuration ditutup di file sumber, bukan ditulis sebagai tag literal di komentar]
            */
           const configElement =
             doc.getElementById(
@@ -2136,6 +2136,129 @@ function showMessage(type, message) {
       function() {
         updateAccessFields();
         hideMessage();
+      }
+    );
+
+    /*
+     * VIP PACKAGE DROPDOWN
+     */
+    vipPackageSelect.addEventListener(
+      "change",
+      function() {
+        const selectedIndex =
+          vipPackageSelect.selectedIndex;
+
+        vipOptionError.classList.remove(
+          "visible"
+        );
+
+        if (
+          selectedIndex < 1 ||
+          !vipPackageSelect.value
+        ) {
+          vipOptionDetail.classList.remove(
+            "visible"
+          );
+
+          vipOptionDetail.innerHTML =
+            "";
+
+          return;
+        }
+
+        const option =
+          vipPackageSelect.options[
+            selectedIndex
+          ];
+
+        const index =
+          Number(
+            option.dataset.index
+          );
+
+        const pkg =
+          vipPackages[index];
+
+        if (!pkg) {
+          vipOptionDetail.classList.remove(
+            "visible"
+          );
+
+          vipOptionDetail.innerHTML =
+            "";
+
+          return;
+        }
+
+        const name =
+          String(
+            pkg.name ||
+            pkg.title ||
+            "VIP Package"
+          );
+
+        const price =
+          String(
+            pkg.price ||
+            ""
+          ).trim();
+
+        const description =
+          String(
+            pkg.description ||
+            pkg.details ||
+            ""
+          ).trim();
+
+        const benefits =
+          Array.isArray(
+            pkg.benefits
+          )
+            ? pkg.benefits.join(
+                ", "
+              )
+            : String(
+                pkg.benefits ||
+                ""
+              ).trim();
+
+        let html =
+          "<strong>" +
+          escapeHtml(
+            name
+          ) +
+          "</strong>";
+
+        if (price) {
+          html +=
+            "<br><strong>Harga:</strong> " +
+            escapeHtml(
+              price
+            );
+        }
+
+        if (description) {
+          html +=
+            "<br><strong>Info:</strong> " +
+            escapeHtml(
+              description
+            );
+        }
+
+        if (benefits) {
+          html +=
+            "<br><strong>Benefit:</strong> " +
+            escapeHtml(
+              benefits
+            );
+        }
+
+        vipOptionDetail.innerHTML =
+          html;
+
+        vipOptionDetail.classList.add(
+          "visible"
+        );
       }
     );
 
