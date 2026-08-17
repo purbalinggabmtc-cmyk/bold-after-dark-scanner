@@ -2,110 +2,410 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>VIP OPTIONS — BOLD AFTER DARK</title>
+  <title>BOLD AFTER DARK — REGISTRATION</title>
 
   <style>
     * {
       box-sizing: border-box;
     }
 
-    .vip-options {
-      width: 100%;
-      margin-top: 16px;
-      padding: 18px;
-
-      background: #111;
-      border: 1px solid #333;
-      border-radius: 12px;
+    :root {
+      --red: #e00000;
+      --red-dark: #9d0000;
+      --bg: #050505;
+      --card: #111111;
+      --card-2: #171717;
+      --border: #333333;
+      --text: #ffffff;
+      --muted: #999999;
+      --green: #20d96b;
+      --yellow: #e6c229;
     }
 
-    .vip-title {
-      margin-bottom: 6px;
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(
+          circle at top,
+          #2a0000 0%,
+          #080808 42%,
+          #000000 100%
+        );
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 20px;
+    }
 
-      color: white;
+    .container {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+    }
 
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: 4px;
+    }
+
+    .brand span {
+      color: var(--red);
+    }
+
+    .subtitle {
+      margin-top: 7px;
+      color: #aaa;
+      font-size: 12px;
+      letter-spacing: 3px;
+    }
+
+    .card {
+      background: rgba(17, 17, 17, 0.96);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .section-title {
       font-size: 16px;
       font-weight: 900;
-
       letter-spacing: 1px;
+      margin-bottom: 18px;
     }
 
-    .vip-title span {
-      color: #e00000;
-    }
-
-    .vip-description {
+    .field {
       margin-bottom: 16px;
+    }
 
-      color: #999;
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      color: #ddd;
+      font-size: 13px;
+      font-weight: 700;
+    }
 
+    .required {
+      color: var(--red);
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 48px;
+      padding: 13px 14px;
+      border-radius: 9px;
+      border: 1px solid #444;
+      background: #0d0d0d;
+      color: #fff;
+      outline: none;
+      font-size: 14px;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 2px rgba(224, 0, 0, 0.12);
+    }
+
+    input:disabled,
+    select:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    input::placeholder {
+      color: #777;
+    }
+
+    .field-help {
+      margin-top: 6px;
+      color: #777;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .rider-status {
+      margin-top: 8px;
+      min-height: 20px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .rider-status.loading {
+      color: #aaa;
+    }
+
+    .rider-status.valid {
+      color: var(--green);
+    }
+
+    .rider-status.invalid {
+      color: #ff5c5c;
+    }
+
+    .rider-status.error {
+      color: #ff8c8c;
+    }
+
+    .access-info {
+      margin-top: 10px;
+      padding: 11px 13px;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background: #181818;
+      color: #aaa;
       font-size: 12px;
       line-height: 1.5;
     }
 
-    .vip-option {
-      display: block;
-
-      margin-bottom: 10px;
-      padding: 14px;
-
-      background: #181818;
-
-      border: 1px solid #444;
-      border-radius: 8px;
-
-      cursor: pointer;
-
-      transition:
-        border-color 0.15s ease,
-        background 0.15s ease;
+    .button-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
     }
 
-    .vip-option:last-child {
-      margin-bottom: 0;
-    }
-
-    .vip-option:hover {
-      background: #202020;
-      border-color: #e00000;
-    }
-
-    .vip-option input {
-      margin-right: 8px;
-    }
-
-    .vip-option-label {
-      color: white;
-
+    button {
+      min-height: 48px;
+      padding: 13px 18px;
+      border: none;
+      border-radius: 9px;
       font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-primary {
+      flex: 1;
+      background: var(--red);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #f00000;
+    }
+
+    .btn-whatsapp {
+      width: 100%;
+      background: #128c4a;
+      color: #fff;
+    }
+
+    .btn-whatsapp:hover {
+      background: #16a557;
+    }
+
+    .message {
+      display: none;
+      margin-bottom: 18px;
+      padding: 14px;
+      border-radius: 9px;
+      font-size: 13px;
+      line-height: 1.5;
       font-weight: 700;
     }
 
-    .vip-option-detail {
+    .message.show {
       display: block;
-
-      margin-top: 5px;
-      margin-left: 24px;
-
-      color: #888;
-
-      font-size: 11px;
-      line-height: 1.4;
     }
 
-    @media (max-width: 480px) {
-      .vip-options {
-        padding: 14px;
+    .message.error {
+      background: #300000;
+      border: 1px solid var(--red);
+      color: #ff8888;
+    }
+
+    .message.success {
+      background: #062d16;
+      border: 1px solid #15934a;
+      color: #62eb98;
+    }
+
+    .message.info {
+      background: #1d1900;
+      border: 1px solid #a38c00;
+      color: #f0d44d;
+    }
+
+    .result {
+      display: none;
+      margin-top: 22px;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .success-card {
+      background: #0c180f;
+      border: 1px solid #197a3f;
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .success-title {
+      color: var(--green);
+      font-size: 20px;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .ticket {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .ticket-label {
+      color: #888;
+      font-size: 11px;
+      letter-spacing: 2px;
+      margin-bottom: 5px;
+    }
+
+    .ticket-id {
+      color: #fff;
+      font-size: 27px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .result-item {
+      background: #101010;
+      border: 1px solid #292929;
+      border-radius: 9px;
+      padding: 12px;
+    }
+
+    .result-label {
+      color: #777;
+      font-size: 10px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .result-value {
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    .qr-box {
+      margin-top: 18px;
+      padding: 15px;
+      background: #fff;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .qr-box img {
+      width: 260px;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .qr-caption {
+      margin-top: 8px;
+      color: #111;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .footer {
+      text-align: center;
+      color: #555;
+      font-size: 10px;
+      letter-spacing: 2px;
+      margin-top: 20px;
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      color: #aaa;
+      padding: 10px 0;
+      font-size: 13px;
+    }
+
+    .loading.show {
+      display: block;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid #555;
+      border-top-color: var(--red);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      vertical-align: -2px;
+      margin-right: 6px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
       }
 
-      .vip-title {
-        font-size: 15px;
+      .card {
+        padding: 17px;
+      }
+
+      .brand {
+        font-size: 23px;
+        letter-spacing: 3px;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .button-row {
+        flex-direction: column;
+      }
+
+      .btn-primary {
+        width: 100%;
       }
     }
   </style>
@@ -113,65 +413,1496 @@
 
 <body>
 
-  <div class="vip-options">
+  <div class="container">
 
-    <div class="vip-title">
-      VIP <span>OPTIONS</span>
+    <div class="header">
+      <div class="brand">
+        BOLD <span>AFTER DARK</span>
+      </div>
+
+      <div class="subtitle">
+        REGISTRATION
+      </div>
     </div>
 
-    <div class="vip-description">
-      Pilih opsi VIP yang tersedia untuk reservasi Anda.
+    <div class="card">
+
+      <div id="messageBox" class="message"></div>
+
+      <div class="section-title">
+        REGISTRATION FORM
+      </div>
+
+      <form id="registrationForm" novalidate>
+
+        <!-- ACCESS -->
+        <div class="field">
+          <label for="accessType">
+            Access <span class="required">*</span>
+          </label>
+
+          <select
+            id="accessType"
+            name="accessType"
+            required
+          >
+            <option value="">
+              Pilih Access
+            </option>
+
+            <option value="FREE">
+              FREE
+            </option>
+
+            <option value="VIP">
+              VIP
+            </option>
+
+            <option value="BOLD RIDERS">
+              BOLD RIDERS
+            </option>
+          </select>
+
+          <div class="access-info">
+            Pilih BOLD RIDERS jika Anda memiliki ID BOLD RIDERS yang terdaftar.
+          </div>
+        </div>
+
+        <!-- VIP OPTIONS -->
+        <div
+          id="vipOptionsContainer"
+          class="hidden"
+        ></div>
+
+        <!-- BOLD RIDERS ID -->
+        <div
+          id="boldRidersField"
+          class="field hidden"
+        >
+          <label for="boldRidersId">
+            ID BOLD RIDERS <span class="required">*</span>
+          </label>
+
+          <input
+            id="boldRidersId"
+            name="boldRidersId"
+            type="text"
+            inputmode="text"
+            maxlength="8"
+            minlength="8"
+            autocomplete="off"
+            spellcheck="false"
+            autocapitalize="characters"
+          >
+
+          <div class="field-help">
+            Masukkan ID BOLD RIDERS sebanyak 8 karakter.
+          </div>
+
+          <div
+            id="boldRidersStatus"
+            class="rider-status"
+          ></div>
+        </div>
+
+        <!-- NAMA -->
+        <div class="field">
+          <label for="name">
+            Nama <span class="required">*</span>
+          </label>
+
+          <input
+            id="name"
+            name="name"
+            type="text"
+            autocomplete="name"
+            required
+          >
+
+          <div
+            id="nameHelp"
+            class="field-help hidden"
+          >
+            Nama otomatis mengikuti nama pemilik ID BOLD RIDERS yang tervalidasi.
+          </div>
+        </div>
+
+        <!-- WHATSAPP -->
+        <div class="field">
+          <label for="whatsapp">
+            WhatsApp <span class="required">*</span>
+          </label>
+
+          <input
+            id="whatsapp"
+            name="whatsapp"
+            type="tel"
+            autocomplete="tel"
+            required
+          >
+        </div>
+
+        <!-- COMMUNITY -->
+        <div class="field">
+          <label for="community">
+            Community
+          </label>
+
+          <input
+            id="community"
+            name="community"
+            type="text"
+            autocomplete="organization"
+          >
+        </div>
+
+        <!-- STAY CONNECTED -->
+        <div class="field">
+          <label for="stayConnected">
+            Stay Connected
+          </label>
+
+          <input
+            id="stayConnected"
+            name="stayConnected"
+            type="text"
+            placeholder="instagram"
+            autocomplete="off"
+            spellcheck="false"
+          >
+
+          <div class="field-help">
+            Instagram / social media
+          </div>
+        </div>
+
+        <div
+          id="loadingBox"
+          class="loading"
+        >
+          <span class="spinner"></span>
+          Memproses registrasi...
+        </div>
+
+        <div class="button-row">
+
+          <button
+            id="submitButton"
+            class="btn-primary"
+            type="submit"
+          >
+            REGISTER NOW
+          </button>
+
+        </div>
+
+      </form>
+
+      <div class="button-row">
+
+        <button
+          id="whatsappButton"
+          class="btn-whatsapp"
+          type="button"
+        >
+          BANTUAN VIA WHATSAPP
+        </button>
+
+      </div>
+
+      <!-- RESULT -->
+      <div
+        id="resultBox"
+        class="result"
+      >
+
+        <div class="success-card">
+
+          <div class="success-title">
+            REGISTRATION BERHASIL
+          </div>
+
+          <div class="ticket">
+
+            <div class="ticket-label">
+              TICKET ID
+            </div>
+
+            <div
+              id="resultPassId"
+              class="ticket-id"
+            >
+              -
+            </div>
+
+          </div>
+
+          <div class="result-grid">
+
+            <div class="result-item">
+              <div class="result-label">
+                Nama
+              </div>
+
+              <div
+                id="resultName"
+                class="result-value"
+              >
+                -
+              </div>
+            </div>
+
+            <div class="result-item">
+              <div class="result-label">
+                WhatsApp
+              </div>
+
+              <div
+                id="resultWhatsapp"
+                class="result-value"
+              >
+                -
+              </div>
+            </div>
+
+            <div class="result-item">
+              <div class="result-label">
+                Access
+              </div>
+
+              <div
+                id="resultAccess"
+                class="result-value"
+              >
+                -
+              </div>
+            </div>
+
+            <div class="result-item">
+              <div class="result-label">
+                Table Package
+              </div>
+
+              <div
+                id="resultTable"
+                class="result-value"
+              >
+                -
+              </div>
+            </div>
+
+            <div
+              id="resultRiderIdItem"
+              class="result-item hidden"
+            >
+              <div class="result-label">
+                BOLD RIDERS ID
+              </div>
+
+              <div
+                id="resultRiderId"
+                class="result-value"
+              >
+                -
+              </div>
+            </div>
+
+            <div
+              id="resultRiderNameItem"
+              class="result-item hidden"
+            >
+              <div class="result-label">
+                Nama BOLD RIDERS
+              </div>
+
+              <div
+                id="resultRiderName"
+                class="result-value"
+              >
+                -
+              </div>
+            </div>
+
+          </div>
+
+          <div
+            id="qrBox"
+            class="qr-box hidden"
+          >
+            <img
+              id="qrImage"
+              src=""
+              alt="QR Code"
+            >
+
+            <div class="qr-caption">
+              Tunjukkan QR Code ini saat check-in.
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
 
-    <label class="vip-option">
-      <input
-        type="radio"
-        name="vipOption"
-        value="VIP TABLE"
-      >
-
-      <span class="vip-option-label">
-        VIP TABLE
-      </span>
-
-      <span class="vip-option-detail">
-        Akses VIP dengan pilihan meja VIP.
-      </span>
-    </label>
-
-    <label class="vip-option">
-      <input
-        type="radio"
-        name="vipOption"
-        value="VIP STANDING"
-      >
-
-      <span class="vip-option-label">
-        VIP STANDING
-      </span>
-
-      <span class="vip-option-detail">
-        Akses area VIP tanpa reservasi meja.
-      </span>
-    </label>
-
-    <label class="vip-option">
-      <input
-        type="radio"
-        name="vipOption"
-        value="VIP PACKAGE"
-      >
-
-      <span class="vip-option-label">
-        VIP PACKAGE
-      </span>
-
-      <span class="vip-option-detail">
-        Pilihan paket VIP khusus.
-      </span>
-    </label>
+    <div class="footer">
+      BOLD AFTER DARK • REGISTRATION
+    </div>
 
   </div>
+
+  <script>
+    "use strict";
+
+    const API_URL =
+      "https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/dynamic-service";
+
+    const BOLD_RIDER_VALIDATION_URL =
+      "https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/validate-bold-rider";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_YGi3tPBuF9tW4KKnLJ5dDQ_AcBZ19WH";
+
+    const WHATSAPP_NUMBER =
+      "6282324854187";
+
+    const registrationForm =
+      document.getElementById("registrationForm");
+
+    const nameInput =
+      document.getElementById("name");
+
+    const nameHelp =
+      document.getElementById("nameHelp");
+
+    const whatsappInput =
+      document.getElementById("whatsapp");
+
+    const accessTypeInput =
+      document.getElementById("accessType");
+
+    const vipPackageSelect =
+      document.getElementById("vipPackageSelect");
+
+    const vipOptionDetail =
+      document.getElementById("vipOptionDetail");
+
+    const vipOptionError =
+      document.getElementById("vipOptionError");
+
+    const vipOptionsContainer =
+      document.getElementById("vipOptionsContainer");
+
+    const boldRidersField =
+      document.getElementById("boldRidersField");
+
+    const boldRidersIdInput =
+      document.getElementById("boldRidersId");
+
+    const boldRidersStatus =
+      document.getElementById("boldRidersStatus");
+
+    const communityInput =
+      document.getElementById("community");
+
+    const stayConnectedInput =
+      document.getElementById("stayConnected");
+
+    const submitButton =
+      document.getElementById("submitButton");
+
+    const whatsappButton =
+      document.getElementById("whatsappButton");
+
+    const loadingBox =
+      document.getElementById("loadingBox");
+
+    const messageBox =
+      document.getElementById("messageBox");
+
+    const resultBox =
+      document.getElementById("resultBox");
+
+    const resultPassId =
+      document.getElementById("resultPassId");
+
+    const resultName =
+      document.getElementById("resultName");
+
+    const resultWhatsapp =
+      document.getElementById("resultWhatsapp");
+
+    const resultAccess =
+      document.getElementById("resultAccess");
+
+    const resultTable =
+      document.getElementById("resultTable");
+
+    const resultRiderIdItem =
+      document.getElementById("resultRiderIdItem");
+
+    const resultRiderNameItem =
+      document.getElementById("resultRiderNameItem");
+
+    const resultRiderId =
+      document.getElementById("resultRiderId");
+
+    const resultRiderName =
+      document.getElementById("resultRiderName");
+
+    const qrBox =
+      document.getElementById("qrBox");
+
+    const qrImage =
+      document.getElementById("qrImage");
+
+    let boldRiderIsValid = false;
+    let boldRiderValidatedId = "";
+    let boldRiderOwnerName = "";
+    let validationRequestNumber = 0;
+
+    function getSelectedVipPackage() {
+      const selected = vipPackageSelect.value;
+
+      if (!selected) {
+        return "";
+      }
+
+      const option =
+        vipPackageSelect.options[
+          vipPackageSelect.selectedIndex
+        ];
+
+      const index =
+        Number(option.dataset.index);
+
+      const pkg =
+        vipPackages[index];
+
+      if (!pkg) {
+        return selected;
+      }
+
+      return String(
+        pkg.name ||
+        pkg.title ||
+        selected
+      );
+    }
+
+function showMessage(type, message) {
+      messageBox.className =
+        "message show " + type;
+
+      messageBox.textContent =
+        message || "";
+    }
+
+    function hideMessage() {
+      messageBox.className =
+        "message";
+
+      messageBox.textContent =
+        "";
+    }
+
+    function clearBoldRiderValidation() {
+      boldRiderIsValid = false;
+      boldRiderValidatedId = "";
+      boldRiderOwnerName = "";
+
+      boldRidersStatus.className =
+        "rider-status";
+
+      boldRidersStatus.textContent =
+        "";
+
+      nameInput.value = "";
+
+      nameInput.readOnly = false;
+      nameInput.style.borderColor = "";
+
+      nameHelp.classList.add("hidden");
+    }
+
+    const VIP_OPTIONS_URL =
+      "https://boldafterdark.my.id/config/vip-options.html";
+
+    let vipOptionsLoaded = false;
+    let vipOptionsLoading = null;
+
+    async function loadVipOptions() {
+      vipOptionsContainer.style.display = "none";
+      vipOptionError.classList.remove("visible");
+      vipOptionDetail.classList.remove("visible");
+      vipPackageSelect.innerHTML =
+        '<option value="">Memuat paket VIP...</option>';
+
+      try {
+        const response = await fetch(
+          "https://boldafterdark.my.id/config/vip-options.html?t=" + Date.now(),
+          {
+            method: "GET",
+            cache: "no-store",
+            headers: { "Accept": "text/html" }
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("VIP options HTTP " + response.status);
+        }
+
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        const configElement =
+          doc.getElementById("vip-options-config");
+
+        if (!configElement) {
+          throw new Error(
+            "Elemen vip-options-config tidak ditemukan."
+          );
+        }
+
+        const raw = configElement.textContent.trim();
+
+        if (!raw) {
+          throw new Error("Konfigurasi VIP kosong.");
+        }
+
+        const config = JSON.parse(raw);
+
+        if (!Array.isArray(config)) {
+          throw new Error("Format konfigurasi VIP harus berupa array.");
+        }
+
+        vipPackages = config;
+
+        vipPackageSelect.innerHTML =
+          '<option value="">Pilih paket VIP...</option>';
+
+        vipPackages.forEach(function(pkg, index) {
+          const option = document.createElement("option");
+
+          option.value =
+            String(pkg.id || pkg.value || pkg.name || index);
+
+          option.textContent =
+            String(
+              pkg.name ||
+              pkg.title ||
+              ("VIP Package " + (index + 1))
+            ) +
+            (
+              pkg.price
+                ? " — " + String(pkg.price)
+                : ""
+            );
+
+          option.dataset.index = String(index);
+
+          vipPackageSelect.appendChild(option);
+        });
+
+        vipOptionsContainer.style.display = "block";
+      } catch (error) {
+        console.error("VIP OPTIONS ERROR:", error);
+
+        vipPackages = [];
+
+        vipPackageSelect.innerHTML =
+          '<option value="">Paket VIP tidak tersedia</option>';
+
+        vipOptionError.textContent =
+          "Pilihan VIP tidak dapat dimuat.";
+
+        vipOptionError.classList.add("visible");
+        vipOptionsContainer.style.display = "block";
+      }
+    }
+
+function getSelectedVipOption() {
+      const selected =
+        vipOptionsContainer.querySelector(
+          'input[name="vipOption"]:checked'
+        );
+
+      return selected
+        ? String(selected.value || "").trim()
+        : "";
+    }
+
+    function clearVipSelection() {
+      const vipInputs =
+        vipOptionsContainer.querySelectorAll(
+          'input[name="vipOption"]'
+        );
+
+      vipInputs.forEach(
+        function(input) {
+          input.checked = false;
+        }
+      );
+    }
+
+    function updateAccessFields() {
+      const access =
+        String(
+          accessTypeInput.value || ""
+        )
+          .trim()
+          .toUpperCase();
+
+      const isVip =
+        access === "VIP";
+
+      const isBoldRider =
+        access === "BOLD RIDERS";
+
+      /*
+       * VIP OPTIONS
+       *
+       * Opsi VIP dibaca dari file terpisah:
+       * /config/vip-options.html
+       */
+      if (isVip) {
+        vipOptionsContainer.classList.remove(
+          "hidden"
+        );
+
+        loadVipOptions();
+      } else {
+        vipOptionsContainer.classList.add(
+          "hidden"
+        );
+
+        clearVipSelection();
+      }
+
+      /*
+       * BOLD RIDERS
+       */
+      if (isBoldRider) {
+        boldRidersField.classList.remove(
+          "hidden"
+        );
+
+        boldRidersIdInput.required =
+          true;
+
+        nameInput.readOnly =
+          true;
+
+        nameInput.style.borderColor =
+          "#145b32";
+
+        nameHelp.classList.remove(
+          "hidden"
+        );
+
+      } else {
+        boldRidersField.classList.add(
+          "hidden"
+        );
+
+        boldRidersIdInput.required =
+          false;
+
+        boldRidersIdInput.value =
+          "";
+
+        nameInput.readOnly =
+          false;
+
+        nameInput.style.borderColor =
+          "";
+
+        nameHelp.classList.add(
+          "hidden"
+        );
+
+        clearBoldRiderValidation();
+      }
+    }
+
+    async function validateBoldRider() {
+      const requestNumber =
+        ++validationRequestNumber;
+
+      const riderId =
+        String(
+          boldRidersIdInput.value || ""
+        )
+          .trim()
+          .toUpperCase();
+
+      boldRidersIdInput.value =
+        riderId;
+
+      boldRiderIsValid =
+        false;
+
+      boldRiderValidatedId =
+        "";
+
+      boldRiderOwnerName =
+        "";
+
+      if (!riderId) {
+        boldRidersStatus.className =
+          "rider-status";
+
+        boldRidersStatus.textContent =
+          "";
+
+        nameInput.value =
+          "";
+
+        return false;
+      }
+
+      if (riderId.length !== 8) {
+        boldRidersStatus.className =
+          "rider-status";
+
+        boldRidersStatus.textContent =
+          "";
+
+        nameInput.value =
+          "";
+
+        return false;
+      }
+
+      boldRidersStatus.className =
+        "rider-status loading";
+
+      boldRidersStatus.textContent =
+        "Memeriksa ID BOLD RIDERS...";
+
+      try {
+        const url =
+          BOLD_RIDER_VALIDATION_URL +
+          "?action=validateBoldRider" +
+          "&boldRidersId=" +
+          encodeURIComponent(riderId);
+
+        const response =
+          await fetch(
+            url,
+            {
+              method: "GET",
+              credentials: "omit",
+              cache: "no-store"
+            }
+          );
+
+        if (
+          requestNumber !==
+          validationRequestNumber
+        ) {
+          return false;
+        }
+
+        const raw =
+          await response.text();
+
+        console.log(
+          "BOLD RIDERS VALIDATION HTTP STATUS:",
+          response.status
+        );
+
+        console.log(
+          "BOLD RIDERS VALIDATION RAW RESPONSE:",
+          raw
+        );
+
+        let data;
+
+        try {
+          data =
+            JSON.parse(raw);
+        } catch {
+          throw new Error(
+            "Server mengembalikan response JSON yang tidak valid."
+          );
+        }
+
+        if (
+          data &&
+          data.success === true &&
+          data.status === "VALID"
+        ) {
+          const ownerName =
+            String(
+              data.boldRidersName || ""
+            ).trim();
+
+          boldRiderIsValid =
+            true;
+
+          boldRiderValidatedId =
+            riderId;
+
+          boldRiderOwnerName =
+            ownerName;
+
+          boldRidersStatus.className =
+            "rider-status valid";
+
+          /*
+           * HANYA tampilkan:
+           * ID BOLD RIDERS valid.
+           *
+           * Tidak ada lagi:
+           * Nama pemilik: ...
+           */
+          boldRidersStatus.textContent =
+            "ID BOLD RIDERS valid.";
+
+          /*
+           * Nama otomatis mengikuti data
+           * BOLD RIDERS.
+           */
+          if (ownerName) {
+            nameInput.value =
+              ownerName;
+
+            nameInput.readOnly =
+              true;
+
+            nameInput.style.borderColor =
+              "#145b32";
+          } else {
+            nameInput.value =
+              "";
+
+            nameInput.readOnly =
+              true;
+          }
+
+          return true;
+        }
+
+        boldRiderIsValid =
+          false;
+
+        boldRiderValidatedId =
+          "";
+
+        boldRiderOwnerName =
+          "";
+
+        nameInput.value =
+          "";
+
+        boldRidersStatus.className =
+          "rider-status invalid";
+
+        boldRidersStatus.textContent =
+          data &&
+          data.message
+            ? data.message
+            : "ID BOLD RIDERS tidak terdaftar.";
+
+        return false;
+
+      } catch (error) {
+        if (
+          requestNumber !==
+          validationRequestNumber
+        ) {
+          return false;
+        }
+
+        console.error(
+          "BOLD RIDERS VALIDATION ERROR:",
+          error
+        );
+
+        boldRiderIsValid =
+          false;
+
+        boldRiderValidatedId =
+          "";
+
+        boldRiderOwnerName =
+          "";
+
+        nameInput.value =
+          "";
+
+        boldRidersStatus.className =
+          "rider-status error";
+
+        boldRidersStatus.textContent =
+          "Tidak dapat terhubung ke server.";
+
+        return false;
+      }
+    }
+
+    async function submitRegistration() {
+      hideMessage();
+
+      const accessType =
+        String(
+          accessTypeInput.value || ""
+        )
+          .trim()
+          .toUpperCase();
+
+      const name =
+        nameInput.value.trim();
+
+      const whatsapp =
+        whatsappInput.value.trim();
+
+      const tablePackage =
+        getSelectedVipOption();
+
+      const community =
+        communityInput.value.trim();
+
+      const stayConnected =
+        stayConnectedInput.value.trim();
+
+      const boldRidersId =
+        String(
+          boldRidersIdInput.value || ""
+        )
+          .trim()
+          .toUpperCase();
+
+      /*
+       * ACCESS
+       */
+      if (!accessType) {
+        showMessage(
+          "error",
+          "Silakan pilih Access."
+        );
+
+        accessTypeInput.focus();
+        return;
+      }
+
+      /*
+       * BOLD RIDERS VALIDATION
+       */
+      if (
+        accessType === "BOLD RIDERS"
+      ) {
+        if (
+          boldRidersId.length !== 8
+        ) {
+          showMessage(
+            "error",
+            "ID BOLD RIDERS harus 8 karakter."
+          );
+
+          boldRidersIdInput.focus();
+          return;
+        }
+
+        if (
+          !boldRiderIsValid ||
+          boldRiderValidatedId !==
+            boldRidersId
+        ) {
+          showMessage(
+            "error",
+            "ID BOLD RIDERS belum tervalidasi atau tidak terdaftar."
+          );
+
+          const valid =
+            await validateBoldRider();
+
+          if (!valid) {
+            return;
+          }
+
+          if (
+            !boldRiderIsValid ||
+            boldRiderValidatedId !==
+              boldRidersId
+          ) {
+            return;
+          }
+        }
+      }
+
+      /*
+       * NAMA
+       */
+      const finalName =
+        nameInput.value.trim();
+
+      if (!finalName) {
+        showMessage(
+          "error",
+          "Nama wajib diisi."
+        );
+
+        nameInput.focus();
+        return;
+      }
+
+      /*
+       * WHATSAPP
+       */
+      if (!whatsapp) {
+        showMessage(
+          "error",
+          "WhatsApp wajib diisi."
+        );
+
+        whatsappInput.focus();
+        return;
+      }
+
+      /*
+       * VIP OPTIONS
+       */
+      if (accessType === "VIP") {
+        const vipLoaded =
+          await loadVipOptions();
+
+        if (!vipLoaded) {
+          showMessage(
+            "error",
+            "Opsi VIP belum dapat dimuat. Silakan coba lagi."
+          );
+
+          return;
+        }
+
+        if (!tablePackage) {
+          showMessage(
+            "error",
+            "Silakan pilih salah satu opsi VIP."
+          );
+
+          const firstVipInput =
+            vipOptionsContainer.querySelector(
+              'input[name="vipOption"]'
+            );
+
+          if (firstVipInput) {
+            firstVipInput.focus();
+          }
+
+          return;
+        }
+      }
+
+      /*
+       * BODY
+       */
+      const body = {
+        name: finalName,
+
+        whatsapp,
+
+        accessType,
+
+        tablePackage:
+          accessType === "VIP"
+            ? tablePackage
+            : "",
+
+        community,
+
+        stayConnected,
+
+        boldRidersId:
+          accessType === "BOLD RIDERS"
+            ? boldRidersId
+            : ""
+      };
+
+      submitButton.disabled =
+        true;
+
+      accessTypeInput.disabled =
+        true;
+
+      loadingBox.classList.add(
+        "show"
+      );
+
+      try {
+        const response =
+          await fetch(
+            API_URL +
+            "?action=register",
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json",
+
+                "Accept":
+                  "application/json",
+
+                "apikey":
+                  SUPABASE_PUBLISHABLE_KEY,
+
+                "Authorization":
+                  "Bearer " +
+                  SUPABASE_PUBLISHABLE_KEY
+              },
+
+              body:
+                JSON.stringify(body)
+            }
+          );
+
+        const raw =
+          await response.text();
+
+        console.log(
+          "REGISTRATION HTTP STATUS:",
+          response.status
+        );
+
+        console.log(
+          "REGISTRATION RAW RESPONSE:",
+          raw
+        );
+
+        let data;
+
+        try {
+          data =
+            JSON.parse(raw);
+        } catch {
+          throw new Error(
+            "Server mengembalikan response JSON yang tidak valid."
+          );
+        }
+
+        if (!response.ok) {
+          throw new Error(
+            data &&
+            data.message
+              ? data.message
+              : "Registration gagal."
+          );
+        }
+
+        if (
+          !data ||
+          data.success !== true
+        ) {
+          throw new Error(
+            data &&
+            data.message
+              ? data.message
+              : "Registration gagal."
+          );
+        }
+
+        showRegistrationResult(
+          data
+        );
+
+        showMessage(
+          "success",
+          "Registration berhasil."
+        );
+
+      } catch (error) {
+        console.error(
+          "REGISTRATION ERROR:",
+          error
+        );
+
+        showMessage(
+          "error",
+          error &&
+          error.message
+            ? error.message
+            : "Tidak dapat terhubung ke server."
+        );
+
+      } finally {
+        submitButton.disabled =
+          false;
+
+        accessTypeInput.disabled =
+          false;
+
+        loadingBox.classList.remove(
+          "show"
+        );
+      }
+    }
+
+    function showRegistrationResult(data) {
+      resultBox.classList.add(
+        "show"
+      );
+
+      resultPassId.textContent =
+        data.passId || "-";
+
+      resultName.textContent =
+        data.name || "-";
+
+      resultWhatsapp.textContent =
+        data.whatsapp || "-";
+
+      resultAccess.textContent =
+        data.accessType || "-";
+
+      resultTable.textContent =
+        data.tablePackage || "-";
+
+      const riderId =
+        String(
+          data.boldRidersId || ""
+        ).trim();
+
+      const riderName =
+        String(
+          data.boldRidersName || ""
+        ).trim();
+
+      if (
+        riderId &&
+        String(
+          data.accessType || ""
+        ).toUpperCase() ===
+          "BOLD RIDERS"
+      ) {
+        resultRiderIdItem.classList.remove(
+          "hidden"
+        );
+
+        resultRiderNameItem.classList.remove(
+          "hidden"
+        );
+
+        resultRiderId.textContent =
+          riderId;
+
+        resultRiderName.textContent =
+          riderName || data.name || "-";
+      } else {
+        resultRiderIdItem.classList.add(
+          "hidden"
+        );
+
+        resultRiderNameItem.classList.add(
+          "hidden"
+        );
+      }
+
+      const qrUrl =
+        String(
+          data.qrCodeUrl || ""
+        ).trim();
+
+      if (qrUrl) {
+        qrImage.src =
+          qrUrl;
+
+        qrBox.classList.remove(
+          "hidden"
+        );
+      } else {
+        qrImage.removeAttribute(
+          "src"
+        );
+
+        qrBox.classList.add(
+          "hidden"
+        );
+      }
+
+      resultBox.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+
+    function openWhatsAppHelp() {
+      const message =
+        encodeURIComponent(
+          "Halo, saya membutuhkan bantuan terkait registrasi BOLD AFTER DARK."
+        );
+
+      const url =
+        "https://wa.me/" +
+        WHATSAPP_NUMBER +
+        "?text=" +
+        message;
+
+      window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    }
+
+    /*
+     * ACCESS CHANGE
+     */
+    accessTypeInput.addEventListener(
+      "change",
+      function() {
+        updateAccessFields();
+        hideMessage();
+      }
+    );
+
+    /*
+     * BOLD RIDERS ID INPUT
+     */
+    boldRidersIdInput.addEventListener(
+      "input",
+      function() {
+        const value =
+          String(
+            boldRidersIdInput.value || ""
+          )
+            .toUpperCase()
+            .replace(
+              /[^A-Z0-9]/g,
+              ""
+            )
+            .slice(
+              0,
+              8
+            );
+
+        boldRidersIdInput.value =
+          value;
+
+        validationRequestNumber++;
+
+        boldRiderIsValid =
+          false;
+
+        boldRiderValidatedId =
+          "";
+
+        boldRiderOwnerName =
+          "";
+
+        nameInput.value =
+          "";
+
+        if (
+          value.length < 8
+        ) {
+          boldRidersStatus.className =
+            "rider-status";
+
+          boldRidersStatus.textContent =
+            "";
+
+          return;
+        }
+
+        if (
+          value.length === 8
+        ) {
+          validateBoldRider();
+        }
+      }
+    );
+
+    /*
+     * STAY CONNECTED
+     *
+     * Placeholder:
+     * instagram
+     *
+     * Saat fokus:
+     * otomatis menjadi @
+     *
+     * Saat mengetik:
+     * @username
+     */
+    stayConnectedInput.addEventListener(
+      "focus",
+      function() {
+        if (
+          !stayConnectedInput.value.trim()
+        ) {
+          stayConnectedInput.value =
+            "@";
+        }
+
+        setTimeout(
+          function() {
+            stayConnectedInput.setSelectionRange(
+              stayConnectedInput.value.length,
+              stayConnectedInput.value.length
+            );
+          },
+          0
+        );
+      }
+    );
+
+    stayConnectedInput.addEventListener(
+      "input",
+      function() {
+        let value =
+          String(
+            stayConnectedInput.value || ""
+          );
+
+        /*
+         * Hanya satu @ di awal.
+         */
+        value =
+          value.replace(
+            /^@+/,
+            ""
+          );
+
+        value =
+          "@" +
+          value;
+
+        stayConnectedInput.value =
+          value;
+      }
+    );
+
+    /*
+     * SUBMIT
+     */
+    registrationForm.addEventListener(
+      "submit",
+      async function(event) {
+        event.preventDefault();
+
+        await submitRegistration();
+      }
+    );
+
+    /*
+     * WHATSAPP HELP
+     */
+    whatsappButton.addEventListener(
+      "click",
+      openWhatsAppHelp
+    );
+
+    /*
+     * INITIAL STATE
+     */
+    updateAccessFields();
+
+  </script>
 
 </body>
 </html>
