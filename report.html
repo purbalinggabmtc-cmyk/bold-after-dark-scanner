@@ -192,6 +192,21 @@
       white-space: pre-wrap;
     }
 
+    /* NAVIGATION ERROR */
+
+    .navigation-error {
+      display: none;
+      margin-bottom: 18px;
+      padding: 12px 15px;
+      background: rgba(224, 0, 0, 0.08);
+      border: 1px solid rgba(224, 0, 0, 0.35);
+      border-left: 4px solid var(--red);
+      border-radius: 9px;
+      color: #ff9a9a;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
     /* STATISTICS */
 
     .stats {
@@ -536,7 +551,8 @@
 
       .toolbar,
       .footer,
-      .error {
+      .error,
+      .navigation-error {
         display: none !important;
       }
 
@@ -735,6 +751,11 @@
     </div>
 
     <div
+      id="navigationError"
+      class="navigation-error"
+    ></div>
+
+    <div
       id="errorBox"
       class="error"
     ></div>
@@ -908,24 +929,11 @@
   </div>
 
   <script>
-    /*
-      ============================================================
-      CONFIGURATION
-      ============================================================
+    "use strict";
 
-      Report TIDAK lagi menyimpan alamat Home/Admin secara langsung.
-
-      Sebelum berpindah halaman:
-      1. report.html mengambil navigation.html
-      2. membaca konfigurasi navigasi
-      3. mencari key tujuan
-      4. baru melakukan window.location.href
-
-      Jadi alamat halaman bisa diubah dari satu tempat.
-    */
-
-    const NAVIGATION_REFERENCE_URL =
-      "https://boldafterdark.my.id/navigation.html";
+    /* =========================================================
+       SUPABASE CONFIGURATION
+       ========================================================= */
 
     const SUPABASE_URL =
       "https://yrvnmmascklkuzpjkwxn.supabase.co";
@@ -937,15 +945,36 @@
       SUPABASE_URL +
       "/functions/v1/dynamic-service";
 
+
+    /* =========================================================
+       NAVIGATION CONFIGURATION
+       =========================================================
+
+       Report TIDAK lagi membaca navigation.html.
+
+       Sekarang konfigurasi dibaca dari:
+
+       /config/navigation.js
+
+       URL absolut digunakan agar tidak terpengaruh
+       oleh lokasi folder report.html.
+
+       ========================================================= */
+
+    const NAVIGATION_SCRIPT_URL =
+      "https://boldafterdark.my.id/config/navigation.js";
+
+
     let allRows = [];
 
     let filteredRows = [];
 
-    /*
-      ============================================================
-      DOM
-      ============================================================
-    */
+    let navigationConfig = null;
+
+
+    /* =========================================================
+       ELEMENTS
+       ========================================================= */
 
     const searchInput =
       document.getElementById("searchInput");
@@ -974,6 +1003,9 @@
     const errorBox =
       document.getElementById("errorBox");
 
+    const navigationError =
+      document.getElementById("navigationError");
+
     const loading =
       document.getElementById("loading");
 
@@ -986,11 +1018,395 @@
     const tableBody =
       document.getElementById("tableBody");
 
-    /*
-      ============================================================
-      HTML ESCAPE
-      ============================================================
-    */
+
+    /* =========================================================
+       NAVIGATION — LOAD navigation.js
+       ========================================================= */
+
+    async function loadNavigationConfig() {
+
+      try {
+
+        navigationError.style.display =
+          "none";
+
+        /*
+         * Kita ambil file navigation.js sebagai text.
+         * Dengan cara ini report tidak bergantung pada
+         * apakah NAVIGATION dibuat dengan const atau
+         * window.NAVIGATION.
+         */
+
+        const response =
+          await fetch(
+            NAVIGATION_SCRIPT_URL +
+            "?t=" +
+            Date.now(),
+            {
+              method: "GET",
+              cache: "no-store",
+              headers: {
+                "Accept":
+                  "application/javascript,text/javascript,*/*"
+              }
+            }
+          );
+
+        if (!response.ok) {
+
+          throw new Error(
+            "navigation.js HTTP " +
+            response.status
+          );
+
+        }
+
+        const source =
+          await response.text();
+
+        if (!source.trim()) {
+
+          throw new Error(
+            "navigation.js kosong."
+          );
+
+        }
+
+        /*
+         * Jika navigation.js sudah menggunakan
+         * window.NAVIGATION, coba ambil langsung.
+         */
+
+        if (
+          window.NAVIGATION &&
+          typeof window.NAVIGATION === "object"
+        ) {
+
+          navigationConfig =
+            window.NAVIGATION;
+
+          validateNavigationConfig(
+            navigationConfig
+          );
+
+          return navigationConfig;
+
+        }
+
+        /*
+         * Kompatibilitas dengan file lama:
+
+           const NAVIGATION = Object.freeze({
+             home: "...",
+             admin: "...",
+             report: "...",
+             scanner: "...",
+             registration: "..."
+           });
+
+         * Kita ekstrak isi object tersebut.
+         */
+
+        const match =
+          source.match(
+            /(?:const|let|var)\s+NAVIGATION\s*=\s*Object\.freeze\s*\(\s*(\{[\s\S]*?\})\s*\)\s*;?/m
+          );
+
+        if (!match) {
+
+          throw new Error(
+            "NAVIGATION tidak ditemukan di navigation.js."
+          );
+
+        }
+
+        const objectText =
+          match[1];
+
+        /*
+         * Konfigurasi navigation.js kita menggunakan
+         * string URL sederhana. Untuk keamanan,
+         * parsing dilakukan terhadap properti yang
+         * memang kita butuhkan.
+         */
+
+        const config = {};
+
+        const pages = [
+          "home",
+          "admin",
+          "report",
+          "scanner",
+          "registration"
+        ];
+
+        pages.forEach(
+          function(page) {
+
+            const propertyRegex =
+              new RegExp(
+                "(?:^|[,\\n])\\s*" +
+                page.replace(
+                  /[.*+?^${}()|[\]\\]/g,
+                  "\\$&"
+                ) +
+                "\\s*:\\s*[\"']([^\"']+)[\"']",
+                "m"
+              );
+
+            const propertyMatch =
+              objectText.match(
+                propertyRegex
+              );
+
+            if (propertyMatch) {
+
+              config[page] =
+                propertyMatch[1];
+
+            }
+
+          }
+        );
+
+        validateNavigationConfig(
+          config
+        );
+
+        navigationConfig =
+          config;
+
+        return navigationConfig;
+
+      } catch (error) {
+
+        console.error(
+          "NAVIGATION LOAD ERROR:",
+          error
+        );
+
+        navigationConfig =
+          null;
+
+        navigationError.textContent =
+          "Gagal membaca /config/navigation.js. " +
+          (
+            error &&
+            error.message
+              ? error.message
+              : "Konfigurasi navigasi tidak valid."
+          );
+
+        navigationError.style.display =
+          "block";
+
+        return null;
+
+      }
+
+    }
+
+
+    /* =========================================================
+       NAVIGATION — VALIDATION
+       ========================================================= */
+
+    function validateNavigationConfig(
+      config
+    ) {
+
+      if (
+        !config ||
+        typeof config !== "object"
+      ) {
+
+        throw new Error(
+          "Format NAVIGATION tidak valid."
+        );
+
+      }
+
+      const requiredPages = [
+        "home",
+        "admin",
+        "report",
+        "scanner"
+      ];
+
+      requiredPages.forEach(
+        function(page) {
+
+          if (
+            typeof config[page] !== "string" ||
+            !config[page].trim()
+          ) {
+
+            throw new Error(
+              "URL '" +
+              page +
+              "' tidak tersedia."
+            );
+
+          }
+
+        }
+      );
+
+      requiredPages.forEach(
+        function(page) {
+
+          let url;
+
+          try {
+
+            url =
+              new URL(
+                config[page]
+              );
+
+          } catch (error) {
+
+            throw new Error(
+              "URL '" +
+              page +
+              "' tidak valid."
+            );
+
+          }
+
+          if (
+            url.protocol !== "https:" &&
+            url.protocol !== "http:"
+          ) {
+
+            throw new Error(
+              "Protocol URL '" +
+              page +
+              "' tidak valid."
+            );
+
+          }
+
+        }
+      );
+
+    }
+
+
+    /* =========================================================
+       NAVIGATION — GO TO PAGE
+       ========================================================= */
+
+    async function navigateTo(
+      pageName
+    ) {
+
+      /*
+       * Setiap klik selalu membaca ulang
+       * navigation.js terlebih dahulu.
+
+       * Jadi perubahan URL di navigation.js
+       * langsung digunakan tanpa mengubah
+       * report.html.
+       */
+
+      const config =
+        await loadNavigationConfig();
+
+      if (!config) {
+
+        alert(
+          "Navigasi gagal. " +
+          "NAVIGATION tidak dapat dibaca dari /config/navigation.js."
+        );
+
+        return;
+
+      }
+
+      const target =
+        config[pageName];
+
+      if (
+        typeof target !== "string" ||
+        !target.trim()
+      ) {
+
+        alert(
+          "URL halaman '" +
+          pageName +
+          "' tidak tersedia."
+        );
+
+        return;
+
+      }
+
+      window.location.href =
+        target;
+
+    }
+
+
+    /* =========================================================
+       NAVIGATION BUTTONS
+       ========================================================= */
+
+    homeButton.addEventListener(
+      "click",
+      async function(event) {
+
+        event.preventDefault();
+
+        homeButton.disabled =
+          true;
+
+        try {
+
+          await navigateTo(
+            "home"
+          );
+
+        } finally {
+
+          homeButton.disabled =
+            false;
+
+        }
+
+      }
+    );
+
+
+    adminButton.addEventListener(
+      "click",
+      async function(event) {
+
+        event.preventDefault();
+
+        adminButton.disabled =
+          true;
+
+        try {
+
+          await navigateTo(
+            "admin"
+          );
+
+        } finally {
+
+          adminButton.disabled =
+            false;
+
+        }
+
+      }
+    );
+
+
+    /* =========================================================
+       HTML ESCAPE
+       ========================================================= */
 
     function escapeHtml(value) {
 
@@ -1022,11 +1438,10 @@
 
     }
 
-    /*
-      ============================================================
-      NORMALIZE
-      ============================================================
-    */
+
+    /* =========================================================
+       STATUS NORMALIZATION
+       ========================================================= */
 
     function normalizeStatus(value) {
 
@@ -1068,6 +1483,11 @@
 
     }
 
+
+    /* =========================================================
+       ACCESS NORMALIZATION
+       ========================================================= */
+
     function normalizeAccess(value) {
 
       return String(
@@ -1078,16 +1498,17 @@
 
     }
 
-    /*
-      ============================================================
-      DATE
-      ============================================================
-    */
+
+    /* =========================================================
+       DATE FORMAT
+       ========================================================= */
 
     function formatDate(value) {
 
       if (!value) {
+
         return "-";
+
       }
 
       const date =
@@ -1113,11 +1534,10 @@
 
     }
 
-    /*
-      ============================================================
-      ERROR
-      ============================================================
-    */
+
+    /* =========================================================
+       ERROR
+       ========================================================= */
 
     function showError(message) {
 
@@ -1130,6 +1550,7 @@
 
     }
 
+
     function hideError() {
 
       errorBox.textContent =
@@ -1140,252 +1561,10 @@
 
     }
 
-    /*
-      ============================================================
-      NAVIGATION REFERENCE SYSTEM
-      ============================================================
 
-      Fungsi ini adalah bagian penting dari sistem baru.
-
-      Contoh:
-        navigateByReference("home")
-        navigateByReference("admin")
-
-      Tidak ada URL Home/Admin yang ditulis langsung di sini.
-
-      report.html membaca navigation.html terlebih dahulu.
-    */
-
-    async function loadNavigationReference() {
-
-      const response =
-        await fetch(
-          NAVIGATION_REFERENCE_URL +
-          "?t=" +
-          Date.now(),
-          {
-            method: "GET",
-            cache: "no-store",
-            headers: {
-              "Accept": "text/html"
-            }
-          }
-        );
-
-      if (!response.ok) {
-
-        throw new Error(
-          "Gagal membaca halaman referensi navigasi. HTTP " +
-          response.status
-        );
-
-      }
-
-      const html =
-        await response.text();
-
-      if (!html) {
-
-        throw new Error(
-          "Halaman referensi navigasi kosong."
-        );
-
-      }
-
-      const parser =
-        new DOMParser();
-
-      const documentReference =
-        parser.parseFromString(
-          html,
-          "text/html"
-        );
-
-      const configElement =
-        documentReference.getElementById(
-          "navigation-config"
-        );
-
-      if (!configElement) {
-
-        throw new Error(
-          "navigation.html tidak memiliki #navigation-config."
-        );
-
-      }
-
-      const rawConfig =
-        configElement.textContent.trim();
-
-      if (!rawConfig) {
-
-        throw new Error(
-          "Konfigurasi navigasi kosong."
-        );
-
-      }
-
-      let config;
-
-      try {
-
-        config =
-          JSON.parse(
-            rawConfig
-          );
-
-      } catch (error) {
-
-        throw new Error(
-          "Konfigurasi navigasi bukan JSON yang valid."
-        );
-
-      }
-
-      return config;
-
-    }
-
-    async function navigateByReference(key) {
-
-      hideError();
-
-      const button =
-        key === "home"
-          ? homeButton
-          : key === "admin"
-            ? adminButton
-            : null;
-
-      if (button) {
-
-        button.disabled =
-          true;
-
-        button.dataset.originalText =
-          button.textContent;
-
-        button.textContent =
-          "LOADING...";
-
-      }
-
-      try {
-
-        /*
-          STEP 1
-          Baca halaman referensi.
-        */
-
-        const navigation =
-          await loadNavigationReference();
-
-        /*
-          STEP 2
-          Ambil alamat berdasarkan key.
-        */
-
-        const target =
-          navigation &&
-          navigation[key];
-
-        /*
-          STEP 3
-          Validasi alamat.
-        */
-
-        if (
-          typeof target !== "string" ||
-          !target.trim()
-        ) {
-
-          throw new Error(
-            'Tujuan navigasi "' +
-            key +
-            '" tidak ditemukan di navigation.html.'
-          );
-
-        }
-
-        /*
-          Hanya izinkan HTTP/HTTPS.
-        */
-
-        let targetUrl;
-
-        try {
-
-          targetUrl =
-            new URL(
-              target,
-              window.location.origin
-            );
-
-        } catch (error) {
-
-          throw new Error(
-            'URL tujuan "' +
-            key +
-            '" tidak valid.'
-          );
-
-        }
-
-        if (
-          targetUrl.protocol !== "http:" &&
-          targetUrl.protocol !== "https:"
-        ) {
-
-          throw new Error(
-            'Protocol tujuan "' +
-            key +
-            '" tidak diizinkan.'
-          );
-
-        }
-
-        /*
-          STEP 4
-          Baru eksekusi navigasi.
-        */
-
-        window.location.href =
-          targetUrl.href;
-
-      } catch (error) {
-
-        console.error(
-          "NAVIGATION REFERENCE ERROR:",
-          error
-        );
-
-        showError(
-          error &&
-          error.message
-            ? error.message
-            : "Tidak dapat membaca referensi navigasi."
-        );
-
-        if (button) {
-
-          button.disabled =
-            false;
-
-          button.textContent =
-            button.dataset.originalText ||
-            key.toUpperCase();
-
-        }
-
-      }
-
-    }
-
-    /*
-      ============================================================
-      LOAD REPORT
-      ============================================================
-    */
+    /* =========================================================
+       LOAD REPORT
+       ========================================================= */
 
     async function loadReport() {
 
@@ -1451,7 +1630,8 @@
           raw
         );
 
-        let data = null;
+        let data =
+          null;
 
         try {
 
@@ -1549,11 +1729,10 @@
 
     }
 
-    /*
-      ============================================================
-      FILTER
-      ============================================================
-    */
+
+    /* =========================================================
+       FILTER
+       ========================================================= */
 
     function applyFilters() {
 
@@ -1654,11 +1833,10 @@
 
     }
 
-    /*
-      ============================================================
-      STATISTICS
-      ============================================================
-    */
+
+    /* =========================================================
+       STATISTICS
+       ========================================================= */
 
     function updateStatistics(rows) {
 
@@ -1752,11 +1930,10 @@
 
     }
 
-    /*
-      ============================================================
-      BADGES
-      ============================================================
-    */
+
+    /* =========================================================
+       ACCESS BADGE
+       ========================================================= */
 
     function accessBadge(access) {
 
@@ -1793,6 +1970,11 @@
       );
 
     }
+
+
+    /* =========================================================
+       STATUS BADGE
+       ========================================================= */
 
     function statusBadge(status) {
 
@@ -1847,11 +2029,10 @@
 
     }
 
-    /*
-      ============================================================
-      TABLE
-      ============================================================
-    */
+
+    /* =========================================================
+       RENDER TABLE
+       ========================================================= */
 
     function renderTable(rows) {
 
@@ -1984,11 +2165,10 @@
 
     }
 
-    /*
-      ============================================================
-      CSV
-      ============================================================
-    */
+
+    /* =========================================================
+       CSV ESCAPE
+       ========================================================= */
 
     function csvEscape(value) {
 
@@ -2009,6 +2189,11 @@
       );
 
     }
+
+
+    /* =========================================================
+       DOWNLOAD CSV
+       ========================================================= */
 
     function downloadCsv() {
 
@@ -2116,11 +2301,10 @@
 
     }
 
-    /*
-      ============================================================
-      PRINT
-      ============================================================
-    */
+
+    /* =========================================================
+       PRINT
+       ========================================================= */
 
     function printReport() {
 
@@ -2135,33 +2319,10 @@
 
     }
 
-    /*
-      ============================================================
-      BUTTON EVENTS
-      ============================================================
-    */
 
-    homeButton.addEventListener(
-      "click",
-      function() {
-
-        navigateByReference(
-          "home"
-        );
-
-      }
-    );
-
-    adminButton.addEventListener(
-      "click",
-      function() {
-
-        navigateByReference(
-          "admin"
-        );
-
-      }
-    );
+    /* =========================================================
+       EVENTS
+       ========================================================= */
 
     refreshButton.addEventListener(
       "click",
@@ -2193,15 +2354,25 @@
       applyFilters
     );
 
-    /*
-      ============================================================
-      INITIAL LOAD
-      ============================================================
-    */
+
+    /* =========================================================
+       PAGE LOAD
+       ========================================================= */
 
     window.addEventListener(
       "load",
-      loadReport
+      async function() {
+
+        /*
+         * Navigasi dimuat terlebih dahulu.
+         * Report kemudian mengambil data.
+         */
+
+        await loadNavigationConfig();
+
+        await loadReport();
+
+      }
     );
 
   </script>
