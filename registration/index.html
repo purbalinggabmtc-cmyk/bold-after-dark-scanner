@@ -57,6 +57,14 @@
     }
 
     .brand span {
+      display: inline;
+    }
+
+    .brand-white {
+      color: #ffffff;
+    }
+
+    .brand-red {
       color: var(--red);
     }
 
@@ -487,7 +495,9 @@
 
     <div class="header">
       <div class="brand">
-        BOLD <span>AFTER DARK</span>
+        <span class="brand-white">BOLD</span>
+        <span class="brand-red">AFTER</span>
+        <span class="brand-white">DARK</span>
       </div>
 
       <div class="subtitle">
@@ -1039,6 +1049,74 @@ function showMessage(type, message) {
     const VIP_OPTIONS_URL =
       "https://boldafterdark.my.id/config/vip-options.html";
 
+    /*
+     * FALLBACK VIP OPTIONS
+     *
+     * Ini adalah daftar VIP yang sudah digunakan
+     * pada versi registration sebelumnya.
+     * File /config/vip-options.html tetap menjadi
+     * sumber utama sehingga daftar dapat diubah
+     * tanpa mengubah registration/index.html.
+     */
+    const DEFAULT_VIP_PACKAGES = Object.freeze([
+      {
+        id: "VIP TABLE - 1 PAX",
+        name: "VIP TABLE - 1 PAX",
+        price: "",
+        description: "",
+        benefits: ""
+      },
+      {
+        id: "VIP TABLE — 2 PAX",
+        name: "VIP TABLE — 2 PAX",
+        price: "",
+        description: "",
+        benefits: ""
+      },
+      {
+        id: "VIP TABLE — 3 PAX",
+        name: "VIP TABLE — 3 PAX",
+        price: "",
+        description: "",
+        benefits: ""
+      },
+      {
+        id: "VIP TABLE — 4 PAX",
+        name: "VIP TABLE — 4 PAX",
+        price: "",
+        description: "",
+        benefits: ""
+      },
+      {
+        id: "VIP TABLE — 5 PAX",
+        name: "VIP TABLE — 5 PAX",
+        price: "",
+        description: "",
+        benefits: ""
+      },
+      {
+        id: "VIP TABLE — 6 PAX",
+        name: "VIP TABLE — 6 PAX",
+        price: "",
+        description: "",
+        benefits: ""
+      },
+      {
+        id: "VIP TABLE — 7 PAX",
+        name: "VIP TABLE — 7 PAX",
+        price: "",
+        description: "",
+        benefits: ""
+      },
+      {
+        id: "VIP TABLE — 8 PAX",
+        name: "VIP TABLE — 8 PAX",
+        price: "",
+        description: "",
+        benefits: ""
+      }
+    ]);
+
     let vipPackages = [];
     let vipOptionsLoaded = false;
     let vipOptionsLoading = null;
@@ -1318,8 +1396,16 @@ function showMessage(type, message) {
           );
 
           if (!vipPackages.length) {
-            throw new Error(
-              "Semua pilihan VIP kosong."
+            vipPackages = DEFAULT_VIP_PACKAGES.map(
+              function(pkg) {
+                return {
+                  id: pkg.id,
+                  name: pkg.name,
+                  price: pkg.price,
+                  description: pkg.description,
+                  benefits: pkg.benefits
+                };
+              }
             );
           }
 
@@ -1336,28 +1422,39 @@ function showMessage(type, message) {
           return true;
 
         } catch (error) {
-          console.error(
-            "VIP OPTIONS LOAD ERROR:",
+          console.warn(
+            "VIP OPTIONS LOAD ERROR — menggunakan daftar VIP bawaan:",
             error
           );
 
-          vipPackages = [];
-          vipOptionsLoaded = false;
-
-          vipPackageSelect.innerHTML =
-            '<option value="">Paket VIP tidak tersedia</option>';
-
-          vipOptionError.textContent =
-            "Opsi VIP tidak dapat dimuat. Silakan coba lagi.";
-
-          vipOptionError.classList.add(
-            "visible"
+          /*
+           * Jangan membuat visitor gagal hanya karena
+           * file konfigurasi terpisah belum tersedia.
+           */
+          vipPackages = DEFAULT_VIP_PACKAGES.map(
+            function(pkg) {
+              return {
+                id: pkg.id,
+                name: pkg.name,
+                price: pkg.price,
+                description: pkg.description,
+                benefits: pkg.benefits
+              };
+            }
           );
 
+          populateVipDropdown(
+            vipPackages
+          );
+
+          vipOptionsLoaded = true;
+          vipOptionError.classList.remove(
+            "visible"
+          );
           vipOptionsContainer.style.display =
             "block";
 
-          return false;
+          return true;
 
         } finally {
           vipOptionsLoading =
