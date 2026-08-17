@@ -352,6 +352,18 @@
       font-weight: 700;
     }
 
+    .btn-save-qr {
+      width: 100%;
+      margin-top: 12px;
+      background: #ffffff;
+      color: #111111;
+      border: 1px solid #cccccc;
+    }
+
+    .btn-save-qr:hover {
+      background: #eeeeee;
+    }
+
     .footer {
       text-align: center;
       color: #555;
@@ -844,6 +856,14 @@
             <div class="qr-caption">
               Tunjukkan QR Code ini saat check-in.
             </div>
+
+            <button
+              id="saveQrButton"
+              class="btn-save-qr"
+              type="button"
+            >
+              SIMPAN QR + TICKET ID (JPG)
+            </button>
           </div>
 
         </div>
@@ -962,6 +982,12 @@
 
     const qrImage =
       document.getElementById("qrImage");
+
+    const saveQrButton =
+      document.getElementById("saveQrButton");
+
+    let currentTicketId = "";
+    let currentQrUrl = "";
 
     let boldRiderIsValid = false;
     let boldRiderValidatedId = "";
@@ -2118,6 +2144,238 @@ function showMessage(type, message) {
       }
     }
 
+    async function saveQrAsJpg() {
+      const ticketId =
+        String(
+          currentTicketId ||
+          resultPassId.textContent ||
+          "TICKET"
+        ).trim();
+
+      const qrUrl =
+        String(
+          currentQrUrl ||
+          qrImage.currentSrc ||
+          qrImage.src ||
+          ""
+        ).trim();
+
+      if (!ticketId) {
+        showMessage(
+          "error",
+          "Ticket ID tidak tersedia."
+        );
+        return;
+      }
+
+      if (!qrUrl) {
+        showMessage(
+          "error",
+          "QR Code belum tersedia."
+        );
+        return;
+      }
+
+      saveQrButton.disabled = true;
+      saveQrButton.textContent =
+        "MENYIAPKAN JPG...";
+
+      try {
+        const qr =
+          await loadImageForCanvas(qrUrl);
+
+        const qrSize = 700;
+        const padding = 60;
+        const headerHeight = 150;
+        const footerHeight = 120;
+        const canvasWidth =
+          qrSize + padding * 2;
+        const canvasHeight =
+          headerHeight +
+          qrSize +
+          footerHeight +
+          padding * 2;
+
+        const canvas =
+          document.createElement("canvas");
+
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+
+        const ctx =
+          canvas.getContext("2d");
+
+        if (!ctx) {
+          throw new Error(
+            "Browser tidak mendukung pembuatan JPG."
+          );
+        }
+
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(
+          0,
+          0,
+          canvasWidth,
+          canvasHeight
+        );
+
+        ctx.fillStyle = "#111111";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        ctx.font =
+          "900 38px Arial, Helvetica, sans-serif";
+        ctx.fillText(
+          "BOLD AFTER DARK",
+          canvasWidth / 2,
+          58
+        );
+
+        ctx.font =
+          "700 20px Arial, Helvetica, sans-serif";
+        ctx.fillStyle = "#666666";
+        ctx.fillText(
+          "TICKET ID",
+          canvasWidth / 2,
+          105
+        );
+
+        ctx.font =
+          "900 34px Arial, Helvetica, sans-serif";
+        ctx.fillStyle = "#111111";
+        ctx.fillText(
+          ticketId,
+          canvasWidth / 2,
+          140
+        );
+
+        const imageX =
+          (canvasWidth - qrSize) / 2;
+        const imageY =
+          headerHeight + padding;
+
+        ctx.drawImage(
+          qr,
+          imageX,
+          imageY,
+          qrSize,
+          qrSize
+        );
+
+        ctx.font =
+          "700 18px Arial, Helvetica, sans-serif";
+        ctx.fillStyle = "#444444";
+        ctx.fillText(
+          "Tunjukkan QR Code ini saat check-in.",
+          canvasWidth / 2,
+          canvasHeight - 55
+        );
+
+        const blob =
+          await new Promise(function(resolve, reject) {
+            canvas.toBlob(
+              function(result) {
+                if (result) {
+                  resolve(result);
+                } else {
+                  reject(
+                    new Error(
+                      "Gagal membuat file JPG."
+                    )
+                  );
+                }
+              },
+              "image/jpeg",
+              0.95
+            );
+          });
+
+        const url =
+          URL.createObjectURL(blob);
+
+        const link =
+          document.createElement("a");
+
+        link.href = url;
+        link.download =
+          "BOLD-AFTER-DARK-" +
+          sanitizeFileName(ticketId) +
+          ".jpg";
+
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        setTimeout(
+          function() {
+            URL.revokeObjectURL(url);
+          },
+          1000
+        );
+
+        showMessage(
+          "success",
+          "QR Code dan Ticket ID berhasil disimpan sebagai JPG."
+        );
+
+      } catch (error) {
+        console.error(
+          "SAVE QR JPG ERROR:",
+          error
+        );
+
+        showMessage(
+          "error",
+          "QR tidak dapat disimpan sebagai JPG. Silakan coba lagi."
+        );
+      } finally {
+        saveQrButton.disabled = false;
+        saveQrButton.textContent =
+          "SIMPAN QR + TICKET ID (JPG)";
+      }
+    }
+
+    function loadImageForCanvas(url) {
+      return new Promise(
+        function(resolve, reject) {
+          const image =
+            new Image();
+
+          image.crossOrigin = "anonymous";
+
+          image.onload =
+            function() {
+              resolve(image);
+            };
+
+          image.onerror =
+            function() {
+              reject(
+                new Error(
+                  "QR image tidak dapat dibaca oleh browser."
+                )
+              );
+            };
+
+          image.src = url;
+        }
+      );
+    }
+
+    function sanitizeFileName(value) {
+      return String(
+        value || "TICKET"
+      )
+        .replace(
+          /[^a-zA-Z0-9_-]+/g,
+          "-"
+        )
+        .replace(
+          /^-+|-+$/g,
+          ""
+        ) || "TICKET";
+    }
+
     function showRegistrationResult(data) {
       resultBox.classList.add(
         "show"
@@ -2125,6 +2383,12 @@ function showMessage(type, message) {
 
       resultPassId.textContent =
         data.passId || "-";
+
+      currentTicketId =
+        String(
+          data.passId ||
+          ""
+        ).trim();
 
       resultName.textContent =
         data.name || "-";
@@ -2182,6 +2446,8 @@ function showMessage(type, message) {
         String(
           data.qrCodeUrl || ""
         ).trim();
+
+      currentQrUrl = qrUrl;
 
       if (qrUrl) {
         qrImage.src =
@@ -2494,6 +2760,14 @@ function showMessage(type, message) {
     whatsappButton.addEventListener(
       "click",
       openWhatsAppHelp
+    );
+
+    /*
+     * SAVE QR + TICKET ID
+     */
+    saveQrButton.addEventListener(
+      "click",
+      saveQrAsJpg
     );
 
     /*
