@@ -6,6 +6,11 @@
 
   <title>BOLD AFTER DARK — REPORT</title>
 
+  <!-- =========================================================
+       NAVIGATION CONFIG
+       ========================================================= -->
+  <script src="/config/navigation.js"></script>
+
   <style>
     * {
       box-sizing: border-box;
@@ -62,7 +67,9 @@
       margin: 0 auto;
     }
 
-    /* HEADER */
+    /* =========================================================
+       HEADER
+       ========================================================= */
 
     .header {
       text-align: center;
@@ -100,7 +107,9 @@
       border-radius: 5px;
     }
 
-    /* TOOLBAR */
+    /* =========================================================
+       TOOLBAR
+       ========================================================= */
 
     .toolbar {
       display: flex;
@@ -176,7 +185,9 @@
       background: var(--red-soft);
     }
 
-    /* ERROR */
+    /* =========================================================
+       ERROR
+       ========================================================= */
 
     .error {
       display: none;
@@ -192,22 +203,9 @@
       white-space: pre-wrap;
     }
 
-    /* NAVIGATION ERROR */
-
-    .navigation-error {
-      display: none;
-      margin-bottom: 18px;
-      padding: 12px 15px;
-      background: rgba(224, 0, 0, 0.08);
-      border: 1px solid rgba(224, 0, 0, 0.35);
-      border-left: 4px solid var(--red);
-      border-radius: 9px;
-      color: #ff9a9a;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    /* STATISTICS */
+    /* =========================================================
+       STATISTICS
+       ========================================================= */
 
     .stats {
       display: grid;
@@ -250,7 +248,9 @@
       font-weight: 900;
     }
 
-    /* TABLE */
+    /* =========================================================
+       TABLE
+       ========================================================= */
 
     .table-card {
       background: var(--black-card);
@@ -317,7 +317,9 @@
       background: #181818;
     }
 
-    /* USED */
+    /* =========================================================
+       USED
+       ========================================================= */
 
     tr.used-row td {
       background: rgba(224, 0, 0, 0.08);
@@ -334,7 +336,9 @@
       border-left: 4px solid var(--red);
     }
 
-    /* UNUSED */
+    /* =========================================================
+       UNUSED
+       ========================================================= */
 
     tr.unused-row td {
       background: #111;
@@ -345,7 +349,9 @@
       background: #181818;
     }
 
-    /* STATUS */
+    /* =========================================================
+       STATUS
+       ========================================================= */
 
     .status {
       display: inline-block;
@@ -381,7 +387,9 @@
       border: 1px solid #444;
     }
 
-    /* ACCESS */
+    /* =========================================================
+       ACCESS
+       ========================================================= */
 
     .access {
       display: inline-block;
@@ -410,7 +418,9 @@
       border: 1px solid #777;
     }
 
-    /* STATES */
+    /* =========================================================
+       STATES
+       ========================================================= */
 
     .loading,
     .empty {
@@ -455,7 +465,9 @@
       display: none;
     }
 
-    /* RESPONSIVE */
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
 
     @media (max-width: 1100px) {
       .stats {
@@ -509,7 +521,9 @@
       }
     }
 
-    /* PRINT */
+    /* =========================================================
+       PRINT
+       ========================================================= */
 
     @media print {
       @page {
@@ -551,8 +565,7 @@
 
       .toolbar,
       .footer,
-      .error,
-      .navigation-error {
+      .error {
         display: none !important;
       }
 
@@ -750,109 +763,47 @@
 
     </div>
 
-    <div
-      id="navigationError"
-      class="navigation-error"
-    ></div>
-
-    <div
-      id="errorBox"
-      class="error"
-    ></div>
+    <div id="errorBox" class="error"></div>
 
     <div class="stats">
 
       <div class="stat">
-        <div class="stat-label">
-          TOTAL
-        </div>
-
-        <div
-          id="totalCount"
-          class="stat-value"
-        >
-          0
-        </div>
+        <div class="stat-label">TOTAL</div>
+        <div id="totalCount" class="stat-value">0</div>
       </div>
 
       <div class="stat">
-        <div class="stat-label">
-          FREE
-        </div>
-
-        <div
-          id="freeCount"
-          class="stat-value"
-        >
-          0
-        </div>
+        <div class="stat-label">FREE</div>
+        <div id="freeCount" class="stat-value">0</div>
       </div>
 
       <div class="stat">
-        <div class="stat-label">
-          VIP
-        </div>
-
-        <div
-          id="vipCount"
-          class="stat-value"
-        >
-          0
-        </div>
+        <div class="stat-label">VIP</div>
+        <div id="vipCount" class="stat-value">0</div>
       </div>
 
       <div class="stat">
-        <div class="stat-label">
-          BOLD RIDERS
-        </div>
-
-        <div
-          id="boldRidersCount"
-          class="stat-value"
-        >
-          0
-        </div>
+        <div class="stat-label">BOLD RIDERS</div>
+        <div id="boldRidersCount" class="stat-value">0</div>
       </div>
 
       <div class="stat">
-        <div class="stat-label">
-          USED
-        </div>
-
-        <div
-          id="usedCount"
-          class="stat-value"
-        >
-          0
-        </div>
+        <div class="stat-label">USED</div>
+        <div id="usedCount" class="stat-value">0</div>
       </div>
 
       <div class="stat">
-        <div class="stat-label">
-          UNUSED
-        </div>
-
-        <div
-          id="unusedCount"
-          class="stat-value"
-        >
-          0
-        </div>
+        <div class="stat-label">UNUSED</div>
+        <div id="unusedCount" class="stat-value">0</div>
       </div>
 
     </div>
 
     <div class="print-only">
-
-      <strong>
-        BOLD AFTER DARK — AUDIENCE REPORT
-      </strong>
-
+      <strong>BOLD AFTER DARK — AUDIENCE REPORT</strong>
       <br>
-
       Dicetak:
       <span id="printDate"></span>
-
     </div>
 
     <div class="table-card">
@@ -950,270 +901,21 @@
        NAVIGATION CONFIGURATION
        =========================================================
 
-       Report TIDAK lagi membaca navigation.html.
-
-       Sekarang konfigurasi dibaca dari:
-
+       Sumber navigasi:
        /config/navigation.js
 
-       URL absolut digunakan agar tidak terpengaruh
-       oleh lokasi folder report.html.
+       navigation.js WAJIB menghasilkan:
 
+       window.BOLD_AFTER_DARK_NAVIGATION
+
+       Tidak ada fetch navigation.html.
+       Tidak ada fetch /config/navigation.js dari JavaScript.
        ========================================================= */
 
-    const NAVIGATION_SCRIPT_URL =
-      "https://boldafterdark.my.id/config/navigation.js";
+    function getNavigationConfig() {
 
-
-    let allRows = [];
-
-    let filteredRows = [];
-
-    let navigationConfig = null;
-
-
-    /* =========================================================
-       ELEMENTS
-       ========================================================= */
-
-    const searchInput =
-      document.getElementById("searchInput");
-
-    const accessFilter =
-      document.getElementById("accessFilter");
-
-    const statusFilter =
-      document.getElementById("statusFilter");
-
-    const refreshButton =
-      document.getElementById("refreshButton");
-
-    const printButton =
-      document.getElementById("printButton");
-
-    const csvButton =
-      document.getElementById("csvButton");
-
-    const homeButton =
-      document.getElementById("homeButton");
-
-    const adminButton =
-      document.getElementById("adminButton");
-
-    const errorBox =
-      document.getElementById("errorBox");
-
-    const navigationError =
-      document.getElementById("navigationError");
-
-    const loading =
-      document.getElementById("loading");
-
-    const empty =
-      document.getElementById("empty");
-
-    const tableWrapper =
-      document.getElementById("tableWrapper");
-
-    const tableBody =
-      document.getElementById("tableBody");
-
-
-    /* =========================================================
-       NAVIGATION — LOAD navigation.js
-       ========================================================= */
-
-    async function loadNavigationConfig() {
-
-      try {
-
-        navigationError.style.display =
-          "none";
-
-        /*
-         * Kita ambil file navigation.js sebagai text.
-         * Dengan cara ini report tidak bergantung pada
-         * apakah NAVIGATION dibuat dengan const atau
-         * window.NAVIGATION.
-         */
-
-        const response =
-          await fetch(
-            NAVIGATION_SCRIPT_URL +
-            "?t=" +
-            Date.now(),
-            {
-              method: "GET",
-              cache: "no-store",
-              headers: {
-                "Accept":
-                  "application/javascript,text/javascript,*/*"
-              }
-            }
-          );
-
-        if (!response.ok) {
-
-          throw new Error(
-            "navigation.js HTTP " +
-            response.status
-          );
-
-        }
-
-        const source =
-          await response.text();
-
-        if (!source.trim()) {
-
-          throw new Error(
-            "navigation.js kosong."
-          );
-
-        }
-
-        /*
-         * Jika navigation.js sudah menggunakan
-         * window.NAVIGATION, coba ambil langsung.
-         */
-
-        if (
-          window.NAVIGATION &&
-          typeof window.NAVIGATION === "object"
-        ) {
-
-          navigationConfig =
-            window.NAVIGATION;
-
-          validateNavigationConfig(
-            navigationConfig
-          );
-
-          return navigationConfig;
-
-        }
-
-        /*
-         * Kompatibilitas dengan file lama:
-
-           const NAVIGATION = Object.freeze({
-             home: "...",
-             admin: "...",
-             report: "...",
-             scanner: "...",
-             registration: "..."
-           });
-
-         * Kita ekstrak isi object tersebut.
-         */
-
-        const match =
-          source.match(
-            /(?:const|let|var)\s+NAVIGATION\s*=\s*Object\.freeze\s*\(\s*(\{[\s\S]*?\})\s*\)\s*;?/m
-          );
-
-        if (!match) {
-
-          throw new Error(
-            "NAVIGATION tidak ditemukan di navigation.js."
-          );
-
-        }
-
-        const objectText =
-          match[1];
-
-        /*
-         * Konfigurasi navigation.js kita menggunakan
-         * string URL sederhana. Untuk keamanan,
-         * parsing dilakukan terhadap properti yang
-         * memang kita butuhkan.
-         */
-
-        const config = {};
-
-        const pages = [
-          "home",
-          "admin",
-          "report",
-          "scanner",
-          "registration"
-        ];
-
-        pages.forEach(
-          function(page) {
-
-            const propertyRegex =
-              new RegExp(
-                "(?:^|[,\\n])\\s*" +
-                page.replace(
-                  /[.*+?^${}()|[\]\\]/g,
-                  "\\$&"
-                ) +
-                "\\s*:\\s*[\"']([^\"']+)[\"']",
-                "m"
-              );
-
-            const propertyMatch =
-              objectText.match(
-                propertyRegex
-              );
-
-            if (propertyMatch) {
-
-              config[page] =
-                propertyMatch[1];
-
-            }
-
-          }
-        );
-
-        validateNavigationConfig(
-          config
-        );
-
-        navigationConfig =
-          config;
-
-        return navigationConfig;
-
-      } catch (error) {
-
-        console.error(
-          "NAVIGATION LOAD ERROR:",
-          error
-        );
-
-        navigationConfig =
-          null;
-
-        navigationError.textContent =
-          "Gagal membaca /config/navigation.js. " +
-          (
-            error &&
-            error.message
-              ? error.message
-              : "Konfigurasi navigasi tidak valid."
-          );
-
-        navigationError.style.display =
-          "block";
-
-        return null;
-
-      }
-
-    }
-
-
-    /* =========================================================
-       NAVIGATION — VALIDATION
-       ========================================================= */
-
-    function validateNavigationConfig(
-      config
-    ) {
+      const config =
+        window.BOLD_AFTER_DARK_NAVIGATION;
 
       if (
         !config ||
@@ -1221,7 +923,7 @@
       ) {
 
         throw new Error(
-          "Format NAVIGATION tidak valid."
+          "NAVIGATION tidak ditemukan. Pastikan /config/navigation.js berhasil dimuat dan menggunakan window.BOLD_AFTER_DARK_NAVIGATION."
         );
 
       }
@@ -1242,18 +944,12 @@
           ) {
 
             throw new Error(
-              "URL '" +
+              "Alamat halaman '" +
               page +
-              "' tidak tersedia."
+              "' tidak tersedia di navigation.js."
             );
 
           }
-
-        }
-      );
-
-      requiredPages.forEach(
-        function(page) {
 
           let url;
 
@@ -1261,13 +957,14 @@
 
             url =
               new URL(
-                config[page]
+                config[page],
+                window.location.origin
               );
 
           } catch (error) {
 
             throw new Error(
-              "URL '" +
+              "Alamat halaman '" +
               page +
               "' tidak valid."
             );
@@ -1290,118 +987,88 @@
         }
       );
 
-    }
-
-
-    /* =========================================================
-       NAVIGATION — GO TO PAGE
-       ========================================================= */
-
-    async function navigateTo(
-      pageName
-    ) {
-
-      /*
-       * Setiap klik selalu membaca ulang
-       * navigation.js terlebih dahulu.
-
-       * Jadi perubahan URL di navigation.js
-       * langsung digunakan tanpa mengubah
-       * report.html.
-       */
-
-      const config =
-        await loadNavigationConfig();
-
-      if (!config) {
-
-        alert(
-          "Navigasi gagal. " +
-          "NAVIGATION tidak dapat dibaca dari /config/navigation.js."
-        );
-
-        return;
-
-      }
-
-      const target =
-        config[pageName];
-
-      if (
-        typeof target !== "string" ||
-        !target.trim()
-      ) {
-
-        alert(
-          "URL halaman '" +
-          pageName +
-          "' tidak tersedia."
-        );
-
-        return;
-
-      }
-
-      window.location.href =
-        target;
+      return config;
 
     }
 
 
     /* =========================================================
-       NAVIGATION BUTTONS
+       STATE
        ========================================================= */
 
-    homeButton.addEventListener(
-      "click",
-      async function(event) {
+    let allRows = [];
 
-        event.preventDefault();
-
-        homeButton.disabled =
-          true;
-
-        try {
-
-          await navigateTo(
-            "home"
-          );
-
-        } finally {
-
-          homeButton.disabled =
-            false;
-
-        }
-
-      }
-    );
+    let filteredRows = [];
 
 
-    adminButton.addEventListener(
-      "click",
-      async function(event) {
+    /* =========================================================
+       ELEMENTS
+       ========================================================= */
 
-        event.preventDefault();
+    const searchInput =
+      document.getElementById(
+        "searchInput"
+      );
 
-        adminButton.disabled =
-          true;
+    const accessFilter =
+      document.getElementById(
+        "accessFilter"
+      );
 
-        try {
+    const statusFilter =
+      document.getElementById(
+        "statusFilter"
+      );
 
-          await navigateTo(
-            "admin"
-          );
+    const refreshButton =
+      document.getElementById(
+        "refreshButton"
+      );
 
-        } finally {
+    const printButton =
+      document.getElementById(
+        "printButton"
+      );
 
-          adminButton.disabled =
-            false;
+    const csvButton =
+      document.getElementById(
+        "csvButton"
+      );
 
-        }
+    const homeButton =
+      document.getElementById(
+        "homeButton"
+      );
 
-      }
-    );
+    const adminButton =
+      document.getElementById(
+        "adminButton"
+      );
+
+    const errorBox =
+      document.getElementById(
+        "errorBox"
+      );
+
+    const loading =
+      document.getElementById(
+        "loading"
+      );
+
+    const empty =
+      document.getElementById(
+        "empty"
+      );
+
+    const tableWrapper =
+      document.getElementById(
+        "tableWrapper"
+      );
+
+    const tableBody =
+      document.getElementById(
+        "tableBody"
+      );
 
 
     /* =========================================================
@@ -1440,7 +1107,7 @@
 
 
     /* =========================================================
-       STATUS NORMALIZATION
+       STATUS
        ========================================================= */
 
     function normalizeStatus(value) {
@@ -1485,7 +1152,7 @@
 
 
     /* =========================================================
-       ACCESS NORMALIZATION
+       ACCESS
        ========================================================= */
 
     function normalizeAccess(value) {
@@ -1500,15 +1167,13 @@
 
 
     /* =========================================================
-       DATE FORMAT
+       DATE
        ========================================================= */
 
     function formatDate(value) {
 
       if (!value) {
-
         return "-";
-
       }
 
       const date =
@@ -1630,8 +1295,7 @@
           raw
         );
 
-        let data =
-          null;
+        let data = null;
 
         try {
 
@@ -2167,7 +1831,7 @@
 
 
     /* =========================================================
-       CSV ESCAPE
+       CSV
        ========================================================= */
 
     function csvEscape(value) {
@@ -2190,10 +1854,6 @@
 
     }
 
-
-    /* =========================================================
-       DOWNLOAD CSV
-       ========================================================= */
 
     function downloadCsv() {
 
@@ -2321,7 +1981,86 @@
 
 
     /* =========================================================
-       EVENTS
+       NAVIGATION
+       ========================================================= */
+
+    function navigateTo(pageName) {
+
+      try {
+
+        const navigation =
+          getNavigationConfig();
+
+        const target =
+          navigation[pageName];
+
+        if (
+          typeof target !== "string" ||
+          !target.trim()
+        ) {
+
+          throw new Error(
+            "Alamat halaman '" +
+            pageName +
+            "' tidak tersedia."
+          );
+
+        }
+
+        window.location.href =
+          target;
+
+      } catch (error) {
+
+        console.error(
+          "NAVIGATION ERROR:",
+          error
+        );
+
+        alert(
+          "Navigasi gagal.\n\n" +
+          error.message
+        );
+
+      }
+
+    }
+
+
+    /* =========================================================
+       HOME
+       ========================================================= */
+
+    homeButton.addEventListener(
+      "click",
+      function() {
+
+        navigateTo(
+          "home"
+        );
+
+      }
+    );
+
+
+    /* =========================================================
+       ADMIN
+       ========================================================= */
+
+    adminButton.addEventListener(
+      "click",
+      function() {
+
+        navigateTo(
+          "admin"
+        );
+
+      }
+    );
+
+
+    /* =========================================================
+       OTHER EVENTS
        ========================================================= */
 
     refreshButton.addEventListener(
@@ -2361,16 +2100,42 @@
 
     window.addEventListener(
       "load",
-      async function() {
+      function() {
 
         /*
-         * Navigasi dimuat terlebih dahulu.
-         * Report kemudian mengambil data.
+         * Penting:
+         *
+         * Tidak melakukan fetch navigation.js.
+         * Tidak melakukan fetch navigation.html.
+         *
+         * navigation.js sudah dimuat oleh:
+         *
+         * <script src="/config/navigation.js"></script>
+         *
+         * sehingga report langsung memakai:
+         *
+         * window.BOLD_AFTER_DARK_NAVIGATION
          */
 
-        await loadNavigationConfig();
+        try {
 
-        await loadReport();
+          getNavigationConfig();
+
+        } catch (error) {
+
+          console.error(
+            "NAVIGATION CONFIG ERROR:",
+            error
+          );
+
+          showError(
+            "Gagal membaca /config/navigation.js.\n\n" +
+            error.message
+          );
+
+        }
+
+        loadReport();
 
       }
     );
