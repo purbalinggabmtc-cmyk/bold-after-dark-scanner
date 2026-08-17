@@ -1148,105 +1148,225 @@
        CENTRAL NAVIGATION
        ============================================================ */
 
+    /*
+     * navigation.js adalah satu-satunya sumber alamat halaman.
+     * File tersebut menggunakan:
+     *
+     *   const NAVIGATION = Object.freeze({...});
+     *
+     * Karena NAVIGATION dibuat sebagai const global, cara paling stabil
+     * adalah memuat file tersebut sebagai classic script terlebih dahulu,
+     * lalu membaca NAVIGATION dari global lexical environment.
+     *
+     * Tidak ada URL halaman yang ditulis ulang di tombol Home/Report.
+     */
+
     const NAVIGATION_JS_URL =
       "/config/navigation.js";
 
     let navigationConfig = null;
 
-    async function loadNavigationConfig() {
+    let navigationScriptPromise = null;
+
+
+    function getNavigationFromGlobal() {
+
+      /* Format utama: const NAVIGATION = Object.freeze({...}); */
       try {
-        const response = await fetch(
-          NAVIGATION_JS_URL + "?t=" + Date.now(),
-          {
-            method: "GET",
-            cache: "no-store",
-            headers: {
-              "Accept": "text/javascript, application/javascript, */*"
-            }
-          }
+        if (
+          typeof NAVIGATION !== "undefined" &&
+          NAVIGATION &&
+          typeof NAVIGATION === "object"
+        ) {
+          return NAVIGATION;
+        }
+      } catch (error) {
+        console.warn(
+          "GLOBAL NAVIGATION CHECK ERROR:",
+          error
         );
+      }
 
-        if (!response.ok) {
-          throw new Error(
-            "HTTP " + response.status
-          );
-        }
+      /* Dukungan tambahan untuk versi window.NAVIGATION */
+      if (
+        window.NAVIGATION &&
+        typeof window.NAVIGATION === "object"
+      ) {
+        return window.NAVIGATION;
+      }
 
-        const source = await response.text();
+      /* Dukungan tambahan untuk nama konfigurasi alternatif */
+      if (
+        window.BOLD_AFTER_DARK_NAVIGATION &&
+        typeof window.BOLD_AFTER_DARK_NAVIGATION === "object"
+      ) {
+        return window.BOLD_AFTER_DARK_NAVIGATION;
+      }
 
-        /*
-         * navigation.js saat ini menggunakan:
-         *
-         * const NAVIGATION = Object.freeze({...});
-         *
-         * const tersebut tidak menjadi window.NAVIGATION.
-         * Karena itu admin membaca file referensi secara langsung
-         * dan mengambil object NAVIGATION dari source tersebut.
-         * Tidak perlu mengubah fungsi admin lainnya.
-         */
-        const match = source.match(
-          /(?:const|let|var)\s+NAVIGATION\s*=\s*Object\.freeze\(\s*(\{[\s\S]*?\})\s*\)\s*;?/
+      return null;
+
+    }
+
+
+    function validateNavigationConfig(config) {
+
+      if (
+        !config ||
+        typeof config !== "object"
+      ) {
+        throw new Error(
+          "NAVIGATION tidak ditemukan."
         );
+      }
 
-        let config = null;
+      const requiredPages = [
+        "home",
+        "admin",
+        "report",
+        "scanner"
+      ];
 
-        if (match && match[1]) {
-          config = Function(
-            "\"use strict\"; return (" +
-            match[1] +
-            ");"
-          )();
-        } else {
-          /* Dukungan jika navigation.js nanti memakai window.NAVIGATION */
-          const windowMatch = source.match(
-            /window\.NAVIGATION\s*=\s*(\{[\s\S]*?\})\s*;?/
-          );
+      requiredPages.forEach(
+        function(page) {
 
-          if (windowMatch && windowMatch[1]) {
-            config = Function(
-              "\"use strict\"; return (" +
-              windowMatch[1] +
-              ");"
-            )();
-          }
-        }
-
-        if (!config || typeof config !== "object") {
-          throw new Error(
-            "NAVIGATION tidak ditemukan."
-          );
-        }
-
-        const requiredPages = [
-          "home",
-          "admin",
-          "report",
-          "scanner"
-        ];
-
-        requiredPages.forEach(function(page) {
           if (
             typeof config[page] !== "string" ||
             !config[page].trim()
           ) {
             throw new Error(
-              "URL '" + page + "' tidak tersedia."
+              "URL '" +
+              page +
+              "' tidak tersedia di navigation.js."
             );
           }
 
-          const url = new URL(config[page]);
+          let url;
+
+          try {
+            url = new URL(
+              config[page],
+              window.location.origin
+            );
+          } catch (error) {
+            throw new Error(
+              "URL '" +
+              page +
+              "' tidak valid."
+            );
+          }
 
           if (
             url.protocol !== "https:" &&
             url.protocol !== "http:"
           ) {
             throw new Error(
-              "URL '" + page + "' tidak valid."
+              "URL '" +
+              page +
+              "' tidak valid."
             );
           }
-        });
 
-        navigationConfig = config;
+        }
+      );
+
+      return true;
+
+    }
+
+
+    async function loadNavigationConfig() {
+
+      /*
+       * Jika navigation.js sudah tersedia sebagai global, gunakan langsung.
+       */
+
+      const existingConfig =
+        getNavigationFromGlobal();
+
+      if (existingConfig) {
+
+        validateNavigationConfig(
+          existingConfig
+        );
+
+        navigationConfig =
+          existingConfig;
+
+        console.log(
+          "NAVIGATION CONFIG LOADED:",
+          navigationConfig
+        );
+
+        return navigationConfig;
+
+      }
+
+      /*
+       * Fallback: muat /config/navigation.js sebagai classic script.
+       * Ini menangani kasus ketika admin.html dibuka sebelum navigation.js
+       * pernah dimuat pada halaman tersebut.
+       */
+
+      if (!navigationScriptPromise) {
+
+        navigationScriptPromise =
+          new Promise(
+            function(resolve, reject) {
+
+              const script =
+                document.createElement(
+                  "script"
+                );
+
+              script.src =
+                NAVIGATION_JS_URL +
+                "?t=" +
+                Date.now();
+
+              script.async = false;
+
+              script.onload =
+                function() {
+                  resolve();
+                };
+
+              script.onerror =
+                function() {
+                  reject(
+                    new Error(
+                      "File /config/navigation.js tidak dapat dimuat."
+                    )
+                  );
+                };
+
+              document.head.appendChild(
+                script
+              );
+
+            }
+          );
+
+      }
+
+      try {
+
+        await navigationScriptPromise;
+
+        const loadedConfig =
+          getNavigationFromGlobal();
+
+        if (!loadedConfig) {
+          throw new Error(
+            "NAVIGATION tidak ditemukan."
+          );
+        }
+
+        validateNavigationConfig(
+          loadedConfig
+        );
+
+        navigationConfig =
+          loadedConfig;
 
         console.log(
           "NAVIGATION CONFIG LOADED:",
@@ -1256,6 +1376,7 @@
         return navigationConfig;
 
       } catch (error) {
+
         console.error(
           "NAVIGATION LOAD ERROR:",
           error
@@ -1263,19 +1384,34 @@
 
         navigationConfig = null;
 
+        navigationScriptPromise = null;
+
         throw new Error(
           "Navigasi gagal. " +
-          (error && error.message
-            ? error.message
-            : "Pastikan /config/navigation.js tersedia.")
+          (
+            error &&
+            error.message
+              ? error.message
+              : "Pastikan /config/navigation.js tersedia dan valid."
+          )
         );
+
       }
+
     }
 
-    async function navigateTo(pageName) {
-      const config = await loadNavigationConfig();
 
-      const target = config[pageName];
+    async function navigateTo(pageName) {
+
+      /*
+       * Selalu baca/validasi konfigurasi terlebih dahulu sebelum redirect.
+       */
+
+      const config =
+        await loadNavigationConfig();
+
+      const target =
+        config[pageName];
 
       if (
         typeof target !== "string" ||
@@ -1288,8 +1424,24 @@
         );
       }
 
-      window.location.assign(target);
+      const destination =
+        new URL(
+          target,
+          window.location.origin
+        ).href;
+
+      console.log(
+        "NAVIGATE:",
+        pageName,
+        destination
+      );
+
+      window.location.assign(
+        destination
+      );
+
     }
+
 
     /* ============================================================
        HOME BUTTON
@@ -1298,31 +1450,49 @@
     homeButton.addEventListener(
       "click",
       async function() {
+
         const originalText =
           homeButton.textContent;
 
-        homeButton.disabled = true;
-        homeButton.textContent = "LOADING...";
+        homeButton.disabled =
+          true;
+
+        homeButton.textContent =
+          "LOADING...";
+
+        clearDashboardError();
 
         try {
-          await navigateTo("home");
+
+          await navigateTo(
+            "home"
+          );
+
         } catch (error) {
+
           console.error(
             "HOME NAVIGATION ERROR:",
             error
           );
 
           showDashboardError(
-            error && error.message
+            error &&
+            error.message
               ? error.message
               : "Navigasi gagal."
           );
 
-          homeButton.disabled = false;
-          homeButton.textContent = originalText;
+          homeButton.disabled =
+            false;
+
+          homeButton.textContent =
+            originalText;
+
         }
+
       }
     );
+
 
     /* ============================================================
        REPORT BUTTON
@@ -1331,31 +1501,49 @@
     reportButton.addEventListener(
       "click",
       async function() {
+
         const originalText =
           reportButton.textContent;
 
-        reportButton.disabled = true;
-        reportButton.textContent = "LOADING...";
+        reportButton.disabled =
+          true;
+
+        reportButton.textContent =
+          "LOADING...";
+
+        clearDashboardError();
 
         try {
-          await navigateTo("report");
+
+          await navigateTo(
+            "report"
+          );
+
         } catch (error) {
+
           console.error(
             "REPORT NAVIGATION ERROR:",
             error
           );
 
           showDashboardError(
-            error && error.message
+            error &&
+            error.message
               ? error.message
               : "Navigasi gagal."
           );
 
-          reportButton.disabled = false;
-          reportButton.textContent = originalText;
+          reportButton.disabled =
+            false;
+
+          reportButton.textContent =
+            originalText;
+
         }
+
       }
     );
+
 
     /* ============================================================
        LOGOUT
