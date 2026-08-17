@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>BOLD AFTER DARK — REPORT</title>
 
   <!-- =========================================================
-       NAVIGATION CONFIG
+       NAVIGATION CONFIGURATION
        ========================================================= -->
+
   <script src="/config/navigation.js"></script>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -28,6 +35,7 @@
     body {
       margin: 0;
       min-height: 100vh;
+
       background:
         radial-gradient(
           circle at top,
@@ -36,8 +44,14 @@
           #050505 72%,
           #000000 100%
         );
+
       color: var(--white);
-      font-family: Arial, Helvetica, sans-serif;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
       padding: 24px;
     }
 
@@ -126,11 +140,15 @@
     .toolbar select {
       flex: 1;
       min-width: 190px;
+
       padding: 13px 14px;
+
       background: #171717;
       color: var(--white);
+
       border: 1px solid #3a3a3a;
       border-radius: 8px;
+
       outline: none;
     }
 
@@ -141,7 +159,9 @@
     .toolbar input:focus,
     .toolbar select:focus {
       border-color: var(--red);
-      box-shadow: 0 0 0 2px rgba(224, 0, 0, 0.12);
+
+      box-shadow:
+        0 0 0 2px rgba(224, 0, 0, 0.12);
     }
 
     .toolbar select {
@@ -150,9 +170,13 @@
 
     .btn {
       padding: 13px 18px;
+
       border-radius: 8px;
+
       font-weight: 800;
+
       border: none;
+
       white-space: nowrap;
     }
 
@@ -191,15 +215,27 @@
 
     .error {
       display: none;
+
       margin-bottom: 18px;
+
       padding: 14px 16px;
+
       background: rgba(224, 0, 0, 0.1);
-      border: 1px solid rgba(224, 0, 0, 0.45);
+
+      border:
+        1px solid
+        rgba(224, 0, 0, 0.45);
+
       border-left: 4px solid var(--red);
+
       border-radius: 9px;
+
       color: #ff9a9a;
+
       font-size: 13px;
+
       line-height: 1.5;
+
       white-space: pre-wrap;
     }
 
@@ -209,42 +245,64 @@
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+
+      grid-template-columns:
+        repeat(6, minmax(0, 1fr));
+
       gap: 12px;
+
       margin-bottom: 20px;
     }
 
     .stat {
       position: relative;
+
       overflow: hidden;
+
       background: var(--black-card);
-      border: 1px solid #303030;
+
+      border:
+        1px solid
+        #303030;
+
       border-radius: 13px;
+
       padding: 18px;
+
       text-align: center;
     }
 
     .stat::after {
       content: "";
+
       position: absolute;
+
       left: 0;
       right: 0;
       bottom: 0;
+
       height: 2px;
+
       background: var(--red);
     }
 
     .stat-label {
       color: #999;
+
       font-size: 11px;
+
       font-weight: 800;
+
       letter-spacing: 1.5px;
+
       margin-bottom: 8px;
     }
 
     .stat-value {
       color: var(--white);
+
       font-size: 30px;
+
       font-weight: 900;
     }
 
@@ -254,63 +312,99 @@
 
     .table-card {
       background: var(--black-card);
-      border: 1px solid #303030;
+
+      border:
+        1px solid
+        #303030;
+
       border-radius: 14px;
+
       overflow: hidden;
     }
 
     .table-header {
       display: flex;
+
       justify-content: space-between;
+
       align-items: center;
+
       gap: 15px;
+
       padding: 16px 18px;
-      border-bottom: 1px solid #2d2d2d;
+
+      border-bottom:
+        1px solid
+        #2d2d2d;
     }
 
     .table-title {
       font-size: 15px;
+
       font-weight: 900;
+
       letter-spacing: 1px;
     }
 
     .table-subtitle {
       color: #777;
+
       font-size: 11px;
     }
 
     .table-wrapper {
       width: 100%;
+
       overflow-x: auto;
     }
 
     table {
       width: 100%;
+
       min-width: 1200px;
+
       border-collapse: collapse;
     }
 
     th {
       background: #191919;
+
       color: #aaa;
+
       font-size: 10px;
+
       text-align: left;
+
       padding: 13px 10px;
-      border-bottom: 1px solid #3b3b3b;
+
+      border-bottom:
+        1px solid
+        #3b3b3b;
+
       white-space: nowrap;
+
       letter-spacing: 1px;
     }
 
     td {
       padding: 13px 10px;
-      border-bottom: 1px solid #242424;
+
+      border-bottom:
+        1px solid
+        #242424;
+
       font-size: 13px;
+
       color: #ddd;
+
       vertical-align: middle;
     }
 
     tbody tr {
-      transition: background 0.15s ease;
+      transition:
+        background
+        0.15s
+        ease;
     }
 
     tbody tr:hover td {
@@ -322,18 +416,29 @@
        ========================================================= */
 
     tr.used-row td {
-      background: rgba(224, 0, 0, 0.08);
+      background:
+        rgba(224, 0, 0, 0.08);
+
       color: #f5caca;
-      border-top: 1px solid rgba(224, 0, 0, 0.35);
-      border-bottom: 1px solid rgba(224, 0, 0, 0.35);
+
+      border-top:
+        1px solid
+        rgba(224, 0, 0, 0.35);
+
+      border-bottom:
+        1px solid
+        rgba(224, 0, 0, 0.35);
     }
 
     tr.used-row:hover td {
-      background: rgba(224, 0, 0, 0.15);
+      background:
+        rgba(224, 0, 0, 0.15);
     }
 
     tr.used-row td:first-child {
-      border-left: 4px solid var(--red);
+      border-left:
+        4px solid
+        var(--red);
     }
 
     /* =========================================================
@@ -355,36 +460,61 @@
 
     .status {
       display: inline-block;
+
       padding: 5px 9px;
+
       border-radius: 999px;
+
       font-size: 10px;
+
       font-weight: 900;
+
       letter-spacing: 0.6px;
+
       white-space: nowrap;
     }
 
     .status.used {
-      background: rgba(224, 0, 0, 0.14);
+      background:
+        rgba(224, 0, 0, 0.14);
+
       color: #ff7777;
-      border: 1px solid rgba(224, 0, 0, 0.5);
+
+      border:
+        1px solid
+        rgba(224, 0, 0, 0.5);
     }
 
     .status.unused {
-      background: rgba(255, 255, 255, 0.07);
+      background:
+        rgba(255, 255, 255, 0.07);
+
       color: #fff;
-      border: 1px solid #555;
+
+      border:
+        1px solid
+        #555;
     }
 
     .status.cancelled {
-      background: rgba(255, 255, 255, 0.06);
+      background:
+        rgba(255, 255, 255, 0.06);
+
       color: #aaa;
-      border: 1px solid #444;
+
+      border:
+        1px solid
+        #444;
     }
 
     .status.unknown {
       background: #202020;
+
       color: #888;
-      border: 1px solid #444;
+
+      border:
+        1px solid
+        #444;
     }
 
     /* =========================================================
@@ -393,29 +523,48 @@
 
     .access {
       display: inline-block;
+
       padding: 5px 9px;
+
       border-radius: 999px;
+
       font-size: 10px;
+
       font-weight: 900;
+
       letter-spacing: 0.5px;
     }
 
     .access.free {
-      background: rgba(255, 255, 255, 0.07);
+      background:
+        rgba(255, 255, 255, 0.07);
+
       color: #fff;
-      border: 1px solid #555;
+
+      border:
+        1px solid
+        #555;
     }
 
     .access.vip {
-      background: rgba(224, 0, 0, 0.13);
+      background:
+        rgba(224, 0, 0, 0.13);
+
       color: #ff7777;
-      border: 1px solid rgba(224, 0, 0, 0.45);
+
+      border:
+        1px solid
+        rgba(224, 0, 0, 0.45);
     }
 
     .access.bold {
       background: #171717;
+
       color: #fff;
-      border: 1px solid #777;
+
+      border:
+        1px solid
+        #777;
     }
 
     /* =========================================================
@@ -425,7 +574,9 @@
     .loading,
     .empty {
       padding: 45px 20px;
+
       text-align: center;
+
       color: #777;
     }
 
@@ -435,15 +586,30 @@
 
     .loading::before {
       content: "";
+
       display: inline-block;
+
       width: 15px;
       height: 15px;
+
       margin-right: 8px;
+
       vertical-align: -2px;
-      border: 2px solid #555;
-      border-top-color: var(--red);
+
+      border:
+        2px solid
+        #555;
+
+      border-top-color:
+        var(--red);
+
       border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+
+      animation:
+        spin
+        0.8s
+        linear
+        infinite;
     }
 
     @keyframes spin {
@@ -454,10 +620,15 @@
 
     .footer {
       text-align: center;
+
       margin-top: 20px;
+
       color: #555;
+
       font-size: 10px;
+
       font-weight: 700;
+
       letter-spacing: 2px;
     }
 
@@ -470,12 +641,16 @@
        ========================================================= */
 
     @media (max-width: 1100px) {
+
       .stats {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns:
+          repeat(3, minmax(0, 1fr));
       }
+
     }
 
     @media (max-width: 650px) {
+
       body {
         padding: 12px;
       }
@@ -491,7 +666,8 @@
       }
 
       .stats {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
       }
 
       .stat-value {
@@ -511,14 +687,18 @@
 
       .table-header {
         align-items: flex-start;
+
         flex-direction: column;
       }
+
     }
 
     @media (max-width: 380px) {
+
       .stats {
         grid-template-columns: 1fr;
       }
+
     }
 
     /* =========================================================
@@ -526,6 +706,7 @@
        ========================================================= */
 
     @media print {
+
       @page {
         size: landscape;
         margin: 10mm;
@@ -534,6 +715,7 @@
       body {
         background: #fff !important;
         color: #000 !important;
+
         padding: 0;
       }
 
@@ -543,6 +725,7 @@
 
       .header {
         color: #000;
+
         margin-bottom: 12px;
       }
 
@@ -570,14 +753,21 @@
       }
 
       .stats {
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns:
+          repeat(6, 1fr);
+
         gap: 6px;
+
         margin-bottom: 12px;
       }
 
       .stat {
-        border: 1px solid #aaa;
+        border:
+          1px solid
+          #aaa;
+
         background: #fff;
+
         padding: 8px;
       }
 
@@ -591,11 +781,15 @@
 
       .stat-value {
         color: #000;
+
         font-size: 18px;
       }
 
       .table-card {
-        border: 1px solid #999;
+        border:
+          1px solid
+          #999;
+
         background: #fff;
       }
 
@@ -615,25 +809,42 @@
       th {
         background: #eee !important;
         color: #000 !important;
-        border-bottom: 1px solid #999;
+
+        border-bottom:
+          1px solid
+          #999;
+
         font-size: 8px;
       }
 
       td {
         color: #000 !important;
-        border-bottom: 1px solid #ddd;
+
+        border-bottom:
+          1px solid
+          #ddd;
+
         font-size: 7.5px;
       }
 
       tr.used-row td {
         background: #ffe0e0 !important;
+
         color: #8b0000 !important;
-        border-top: 1px solid #d00000 !important;
-        border-bottom: 1px solid #d00000 !important;
+
+        border-top:
+          1px solid
+          #d00000 !important;
+
+        border-bottom:
+          1px solid
+          #d00000 !important;
       }
 
       tr.used-row td:first-child {
-        border-left: 4px solid #d00000 !important;
+        border-left:
+          4px solid
+          #d00000 !important;
       }
 
       tr.unused-row td {
@@ -647,47 +858,75 @@
 
       .status.used {
         background: #ffe0e0 !important;
+
         color: #b00000 !important;
-        border: 1px solid #d00000 !important;
+
+        border:
+          1px solid
+          #d00000 !important;
       }
 
       .status.unused {
         background: #eee !important;
+
         color: #333 !important;
-        border: 1px solid #777 !important;
+
+        border:
+          1px solid
+          #777 !important;
       }
 
       .status.cancelled,
       .status.unknown {
         background: #eee !important;
+
         color: #555 !important;
-        border: 1px solid #999 !important;
+
+        border:
+          1px solid
+          #999 !important;
       }
 
       .access {
         background: #fff !important;
+
         color: #000 !important;
-        border: 1px solid #888 !important;
+
+        border:
+          1px solid
+          #888 !important;
       }
 
       .print-only {
         display: block;
+
         margin-bottom: 10px;
+
         color: #333;
+
         font-size: 9px;
       }
+
     }
+
   </style>
+
 </head>
 
 <body>
 
   <div class="container">
 
+    <!-- =======================================================
+         HEADER
+         ======================================================= -->
+
     <div class="header">
 
       <div class="brand">
-        BOLD <span class="after">AFTER</span> <span class="dark">DARK</span>
+        BOLD
+        <span class="after">AFTER</span>
+        <span class="dark">DARK</span>
       </div>
 
       <div class="subtitle">
@@ -697,6 +936,10 @@
       <div class="header-line"></div>
 
     </div>
+
+    <!-- =======================================================
+         TOOLBAR
+         ======================================================= -->
 
     <div class="toolbar">
 
@@ -708,17 +951,43 @@
       >
 
       <select id="accessFilter">
-        <option value="">ALL ACCESS</option>
-        <option value="FREE">FREE</option>
-        <option value="VIP">VIP</option>
-        <option value="BOLD RIDERS">BOLD RIDERS</option>
+
+        <option value="">
+          ALL ACCESS
+        </option>
+
+        <option value="FREE">
+          FREE
+        </option>
+
+        <option value="VIP">
+          VIP
+        </option>
+
+        <option value="BOLD RIDERS">
+          BOLD RIDERS
+        </option>
+
       </select>
 
       <select id="statusFilter">
-        <option value="">ALL STATUS</option>
-        <option value="UNUSED">UNUSED</option>
-        <option value="USED">USED</option>
-        <option value="CANCELLED">CANCELLED</option>
+
+        <option value="">
+          ALL STATUS
+        </option>
+
+        <option value="UNUSED">
+          UNUSED
+        </option>
+
+        <option value="USED">
+          USED
+        </option>
+
+        <option value="CANCELLED">
+          CANCELLED
+        </option>
+
       </select>
 
       <button
@@ -763,48 +1032,133 @@
 
     </div>
 
-    <div id="errorBox" class="error"></div>
+    <!-- =======================================================
+         ERROR
+         ======================================================= -->
+
+    <div
+      id="errorBox"
+      class="error"
+    ></div>
+
+    <!-- =======================================================
+         STATISTICS
+         ======================================================= -->
 
     <div class="stats">
 
       <div class="stat">
-        <div class="stat-label">TOTAL</div>
-        <div id="totalCount" class="stat-value">0</div>
+
+        <div class="stat-label">
+          TOTAL
+        </div>
+
+        <div
+          id="totalCount"
+          class="stat-value"
+        >
+          0
+        </div>
+
       </div>
 
       <div class="stat">
-        <div class="stat-label">FREE</div>
-        <div id="freeCount" class="stat-value">0</div>
+
+        <div class="stat-label">
+          FREE
+        </div>
+
+        <div
+          id="freeCount"
+          class="stat-value"
+        >
+          0
+        </div>
+
       </div>
 
       <div class="stat">
-        <div class="stat-label">VIP</div>
-        <div id="vipCount" class="stat-value">0</div>
+
+        <div class="stat-label">
+          VIP
+        </div>
+
+        <div
+          id="vipCount"
+          class="stat-value"
+        >
+          0
+        </div>
+
       </div>
 
       <div class="stat">
-        <div class="stat-label">BOLD RIDERS</div>
-        <div id="boldRidersCount" class="stat-value">0</div>
+
+        <div class="stat-label">
+          BOLD RIDERS
+        </div>
+
+        <div
+          id="boldRidersCount"
+          class="stat-value"
+        >
+          0
+        </div>
+
       </div>
 
       <div class="stat">
-        <div class="stat-label">USED</div>
-        <div id="usedCount" class="stat-value">0</div>
+
+        <div class="stat-label">
+          USED
+        </div>
+
+        <div
+          id="usedCount"
+          class="stat-value"
+        >
+          0
+        </div>
+
       </div>
 
       <div class="stat">
-        <div class="stat-label">UNUSED</div>
-        <div id="unusedCount" class="stat-value">0</div>
+
+        <div class="stat-label">
+          UNUSED
+        </div>
+
+        <div
+          id="unusedCount"
+          class="stat-value"
+        >
+          0
+        </div>
+
       </div>
 
     </div>
+
+    <!-- =======================================================
+         PRINT HEADER
+         ======================================================= -->
 
     <div class="print-only">
-      <strong>BOLD AFTER DARK — AUDIENCE REPORT</strong>
+
+      <strong>
+        BOLD AFTER DARK — AUDIENCE REPORT
+      </strong>
+
       <br>
+
       Dicetak:
       <span id="printDate"></span>
+
     </div>
+
+    <!-- =======================================================
+         TABLE
+         ======================================================= -->
 
     <div class="table-card">
 
@@ -850,17 +1204,29 @@
           <thead>
 
             <tr>
+
               <th>#</th>
+
               <th>NAMA</th>
+
               <th>WHATSAPP</th>
+
               <th>PASS ID</th>
+
               <th>ACCESS</th>
+
               <th>TABLE PACKAGE</th>
+
               <th>COMMUNITY</th>
+
               <th>STATUS</th>
+
               <th>REGISTERED</th>
+
               <th>CHECK-IN</th>
+
               <th>CHECKED BY</th>
+
             </tr>
 
           </thead>
@@ -873,6 +1239,10 @@
 
     </div>
 
+    <!-- =======================================================
+         FOOTER
+         ======================================================= -->
+
     <div class="footer">
       BOLD AFTER DARK • AUDIENCE REPORT
     </div>
@@ -880,6 +1250,7 @@
   </div>
 
   <script>
+
     "use strict";
 
     /* =========================================================
@@ -898,96 +1269,103 @@
 
 
     /* =========================================================
-       NAVIGATION CONFIGURATION
+       NAVIGATION
        =========================================================
 
-       Sumber navigasi:
-       /config/navigation.js
+       report.html TIDAK membaca navigation.js dengan fetch().
 
-       navigation.js WAJIB menghasilkan:
+       navigation.js dimuat langsung oleh <script> di <head>.
 
-       window.BOLD_AFTER_DARK_NAVIGATION
+       navigation.js harus membuat:
 
-       Tidak ada fetch navigation.html.
-       Tidak ada fetch /config/navigation.js dari JavaScript.
+       window.NAVIGATION = {
+         home: "...",
+         admin: "...",
+         report: "...",
+         scanner: "...",
+         registration: "..."
+       };
+
+       Dengan cara ini:
+       - tidak ada HTTP 404 fetch navigation
+       - tidak ada parsing JavaScript sebagai HTML
+       - URL tetap terpusat di /config/navigation.js
        ========================================================= */
 
-    function getNavigationConfig() {
-
-      const config =
-        window.BOLD_AFTER_DARK_NAVIGATION;
+    function getNavigation() {
 
       if (
-        !config ||
-        typeof config !== "object"
+        !window.NAVIGATION ||
+        typeof window.NAVIGATION !== "object"
       ) {
 
         throw new Error(
-          "NAVIGATION tidak ditemukan. Pastikan /config/navigation.js berhasil dimuat dan menggunakan window.BOLD_AFTER_DARK_NAVIGATION."
+          "NAVIGATION tidak ditemukan. Pastikan /config/navigation.js berhasil dimuat."
         );
 
       }
 
-      const requiredPages = [
-        "home",
-        "admin",
-        "report",
-        "scanner"
-      ];
+      return window.NAVIGATION;
 
-      requiredPages.forEach(
-        function(page) {
+    }
 
-          if (
-            typeof config[page] !== "string" ||
-            !config[page].trim()
-          ) {
 
-            throw new Error(
-              "Alamat halaman '" +
-              page +
-              "' tidak tersedia di navigation.js."
-            );
+    function navigateTo(pageName) {
 
-          }
+      try {
 
-          let url;
+        const navigation =
+          getNavigation();
 
-          try {
+        const target =
+          navigation[pageName];
 
-            url =
-              new URL(
-                config[page],
-                window.location.origin
-              );
+        if (
+          typeof target !== "string" ||
+          !target.trim()
+        ) {
 
-          } catch (error) {
-
-            throw new Error(
-              "Alamat halaman '" +
-              page +
-              "' tidak valid."
-            );
-
-          }
-
-          if (
-            url.protocol !== "https:" &&
-            url.protocol !== "http:"
-          ) {
-
-            throw new Error(
-              "Protocol URL '" +
-              page +
-              "' tidak valid."
-            );
-
-          }
+          throw new Error(
+            "Alamat halaman '" +
+            pageName +
+            "' tidak tersedia."
+          );
 
         }
-      );
 
-      return config;
+        const url =
+          new URL(
+            target,
+            window.location.origin
+          );
+
+        if (
+          url.protocol !== "https:" &&
+          url.protocol !== "http:"
+        ) {
+
+          throw new Error(
+            "Protocol URL navigasi tidak valid."
+          );
+
+        }
+
+        window.location.href =
+          url.href;
+
+      } catch (error) {
+
+        console.error(
+          "NAVIGATION ERROR:",
+          error
+        );
+
+        alert(
+          "Navigasi gagal.\n\n" +
+          error.message
+        );
+
+      }
 
     }
 
@@ -1072,7 +1450,7 @@
 
 
     /* =========================================================
-       HTML ESCAPE
+       ESCAPE HTML
        ========================================================= */
 
     function escapeHtml(value) {
@@ -1107,7 +1485,7 @@
 
 
     /* =========================================================
-       STATUS
+       NORMALIZE STATUS
        ========================================================= */
 
     function normalizeStatus(value) {
@@ -1152,7 +1530,7 @@
 
 
     /* =========================================================
-       ACCESS
+       NORMALIZE ACCESS
        ========================================================= */
 
     function normalizeAccess(value) {
@@ -1167,7 +1545,7 @@
 
 
     /* =========================================================
-       DATE
+       FORMAT DATE
        ========================================================= */
 
     function formatDate(value) {
@@ -1201,7 +1579,7 @@
 
 
     /* =========================================================
-       ERROR
+       SHOW ERROR
        ========================================================= */
 
     function showError(message) {
@@ -1269,6 +1647,7 @@
               method: "GET",
 
               headers: {
+
                 "Accept":
                   "application/json",
 
@@ -1278,6 +1657,7 @@
                 "Authorization":
                   "Bearer " +
                   SUPABASE_PUBLISHABLE_KEY
+
               }
             }
           );
@@ -1319,9 +1699,9 @@
             data.message
               ? data.message
               : (
-                  "Gagal mengambil laporan. HTTP " +
-                  response.status
-                )
+                "Gagal mengambil laporan. HTTP " +
+                response.status
+              )
           );
 
         }
@@ -1395,7 +1775,7 @@
 
 
     /* =========================================================
-       FILTER
+       APPLY FILTERS
        ========================================================= */
 
     function applyFilters() {
@@ -1499,7 +1879,7 @@
 
 
     /* =========================================================
-       STATISTICS
+       UPDATE STATISTICS
        ========================================================= */
 
     function updateStatistics(rows) {
@@ -1759,6 +2139,7 @@
           }
 
           tr.innerHTML = `
+
             <td>
               ${escapeHtml(index + 1)}
             </td>
@@ -1803,13 +2184,17 @@
 
             <td>
               ${escapeHtml(
-                formatDate(row.created_at)
+                formatDate(
+                  row.created_at
+                )
               )}
             </td>
 
             <td>
               ${escapeHtml(
-                formatDate(row.checked_in_at)
+                formatDate(
+                  row.checked_in_at
+                )
               )}
             </td>
 
@@ -1818,6 +2203,7 @@
                 row.checked_in_by || "-"
               )}
             </td>
+
           `;
 
           tableBody.appendChild(
@@ -1831,7 +2217,7 @@
 
 
     /* =========================================================
-       CSV
+       CSV ESCAPE
        ========================================================= */
 
     function csvEscape(value) {
@@ -1855,6 +2241,10 @@
     }
 
 
+    /* =========================================================
+       DOWNLOAD CSV
+       ========================================================= */
+
     function downloadCsv() {
 
       if (
@@ -1871,6 +2261,7 @@
       }
 
       const headers = [
+
         "No",
         "Nama",
         "WhatsApp",
@@ -1883,18 +2274,22 @@
         "Registered At",
         "Check In At",
         "Checked By"
+
       ];
 
       const lines = [
+
         headers
           .map(csvEscape)
           .join(",")
+
       ];
 
       filteredRows.forEach(
         function(row, index) {
 
           lines.push(
+
             [
               index + 1,
               row.name,
@@ -1913,6 +2308,7 @@
             ]
               .map(csvEscape)
               .join(",")
+
           );
 
         }
@@ -1981,59 +2377,14 @@
 
 
     /* =========================================================
-       NAVIGATION
-       ========================================================= */
-
-    function navigateTo(pageName) {
-
-      try {
-
-        const navigation =
-          getNavigationConfig();
-
-        const target =
-          navigation[pageName];
-
-        if (
-          typeof target !== "string" ||
-          !target.trim()
-        ) {
-
-          throw new Error(
-            "Alamat halaman '" +
-            pageName +
-            "' tidak tersedia."
-          );
-
-        }
-
-        window.location.href =
-          target;
-
-      } catch (error) {
-
-        console.error(
-          "NAVIGATION ERROR:",
-          error
-        );
-
-        alert(
-          "Navigasi gagal.\n\n" +
-          error.message
-        );
-
-      }
-
-    }
-
-
-    /* =========================================================
-       HOME
+       NAVIGATION BUTTONS
        ========================================================= */
 
     homeButton.addEventListener(
       "click",
-      function() {
+      function(event) {
+
+        event.preventDefault();
 
         navigateTo(
           "home"
@@ -2043,13 +2394,11 @@
     );
 
 
-    /* =========================================================
-       ADMIN
-       ========================================================= */
-
     adminButton.addEventListener(
       "click",
-      function() {
+      function(event) {
+
+        event.preventDefault();
 
         navigateTo(
           "admin"
@@ -2068,25 +2417,30 @@
       loadReport
     );
 
+
     printButton.addEventListener(
       "click",
       printReport
     );
+
 
     csvButton.addEventListener(
       "click",
       downloadCsv
     );
 
+
     searchInput.addEventListener(
       "input",
       applyFilters
     );
 
+
     accessFilter.addEventListener(
       "change",
       applyFilters
     );
+
 
     statusFilter.addEventListener(
       "change",
@@ -2103,37 +2457,15 @@
       function() {
 
         /*
-         * Penting:
-         *
-         * Tidak melakukan fetch navigation.js.
-         * Tidak melakukan fetch navigation.html.
+         * Tidak melakukan fetch ke navigation.js.
          *
          * navigation.js sudah dimuat oleh:
          *
          * <script src="/config/navigation.js"></script>
          *
-         * sehingga report langsung memakai:
-         *
-         * window.BOLD_AFTER_DARK_NAVIGATION
+         * sehingga report langsung membaca
+         * window.NAVIGATION.
          */
-
-        try {
-
-          getNavigationConfig();
-
-        } catch (error) {
-
-          console.error(
-            "NAVIGATION CONFIG ERROR:",
-            error
-          );
-
-          showError(
-            "Gagal membaca /config/navigation.js.\n\n" +
-            error.message
-          );
-
-        }
 
         loadReport();
 
