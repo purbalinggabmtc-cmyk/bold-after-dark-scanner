@@ -11,9 +11,26 @@
 
   <title>BOLD AFTER DARK — REPORT</title>
 
-  <!-- =========================================================
-       NAVIGATION CONFIGURATION
-       ========================================================= -->
+  <!--
+    ============================================================
+    NAVIGATION CONFIG
+    ============================================================
+
+    File:
+    /config/navigation.js
+
+    Isi navigation.js saat ini:
+
+    const NAVIGATION = Object.freeze({
+      home: "https://boldafterdark.my.id/index.html",
+      admin: "https://boldafterdark.my.id/admin.html",
+      report: "https://boldafterdark.my.id/report.html",
+      scanner: "https://boldafterdark.my.id/scanner.html",
+      registration: "https://boldafterdark.my.id/registration/index.html"
+    });
+
+    report.html membaca konfigurasi tersebut.
+  -->
 
   <script src="/config/navigation.js"></script>
 
@@ -97,6 +114,10 @@
       color: #ffffff;
     }
 
+    .brand .bold {
+      color: #ffffff;
+    }
+
     .brand .after {
       color: #e00000;
     }
@@ -129,10 +150,15 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
+
       margin-bottom: 18px;
+
       padding: 15px;
+
       background: rgba(17, 17, 17, 0.95);
+
       border: 1px solid #2d2d2d;
+
       border-radius: 13px;
     }
 
@@ -144,9 +170,11 @@
       padding: 13px 14px;
 
       background: #171717;
+
       color: var(--white);
 
       border: 1px solid #3a3a3a;
+
       border-radius: 8px;
 
       outline: none;
@@ -191,7 +219,9 @@
 
     .btn-dark {
       background: #222;
+
       color: var(--white);
+
       border: 1px solid #444;
     }
 
@@ -201,7 +231,9 @@
 
     .btn-outline-red {
       background: transparent;
+
       color: var(--white);
+
       border: 1px solid var(--red);
     }
 
@@ -220,13 +252,16 @@
 
       padding: 14px 16px;
 
-      background: rgba(224, 0, 0, 0.1);
+      background:
+        rgba(224, 0, 0, 0.1);
 
       border:
         1px solid
         rgba(224, 0, 0, 0.45);
 
-      border-left: 4px solid var(--red);
+      border-left:
+        4px solid
+        var(--red);
 
       border-radius: 9px;
 
@@ -259,7 +294,8 @@
 
       overflow: hidden;
 
-      background: var(--black-card);
+      background:
+        var(--black-card);
 
       border:
         1px solid
@@ -283,7 +319,8 @@
 
       height: 2px;
 
-      background: var(--red);
+      background:
+        var(--red);
     }
 
     .stat-label {
@@ -311,7 +348,8 @@
        ========================================================= */
 
     .table-card {
-      background: var(--black-card);
+      background:
+        var(--black-card);
 
       border:
         1px solid
@@ -402,9 +440,7 @@
 
     tbody tr {
       transition:
-        background
-        0.15s
-        ease;
+        background 0.15s ease;
     }
 
     tbody tr:hover td {
@@ -606,10 +642,7 @@
       border-radius: 50%;
 
       animation:
-        spin
-        0.8s
-        linear
-        infinite;
+        spin 0.8s linear infinite;
     }
 
     @keyframes spin {
@@ -657,11 +690,13 @@
 
       .brand {
         font-size: 23px;
+
         letter-spacing: 2.5px;
       }
 
       .subtitle {
         font-size: 10px;
+
         letter-spacing: 2.5px;
       }
 
@@ -682,6 +717,7 @@
       .toolbar select,
       .toolbar .btn {
         width: 100%;
+
         flex: none;
       }
 
@@ -714,6 +750,7 @@
 
       body {
         background: #fff !important;
+
         color: #000 !important;
 
         padding: 0;
@@ -733,6 +770,7 @@
         color: #000;
       }
 
+      .brand .bold,
       .brand .after,
       .brand .dark {
         color: #000;
@@ -803,11 +841,13 @@
 
       table {
         min-width: 0;
+
         width: 100%;
       }
 
       th {
         background: #eee !important;
+
         color: #000 !important;
 
         border-bottom:
@@ -849,6 +889,7 @@
 
       tr.unused-row td {
         background: #fff !important;
+
         color: #000 !important;
       }
 
@@ -924,9 +965,19 @@
     <div class="header">
 
       <div class="brand">
-        BOLD
-        <span class="after">AFTER</span>
-        <span class="dark">DARK</span>
+
+        <span class="bold">
+          BOLD
+        </span>
+
+        <span class="after">
+          AFTER
+        </span>
+
+        <span class="dark">
+          DARK
+        </span>
+
       </div>
 
       <div class="subtitle">
@@ -936,6 +987,7 @@
       <div class="header-line"></div>
 
     </div>
+
 
     <!-- =======================================================
          TOOLBAR
@@ -970,6 +1022,7 @@
 
       </select>
 
+
       <select id="statusFilter">
 
         <option value="">
@@ -990,6 +1043,7 @@
 
       </select>
 
+
       <button
         type="button"
         class="btn btn-red"
@@ -997,6 +1051,7 @@
       >
         REFRESH
       </button>
+
 
       <button
         type="button"
@@ -1006,6 +1061,7 @@
         PRINT REPORT
       </button>
 
+
       <button
         type="button"
         class="btn btn-dark"
@@ -1014,6 +1070,7 @@
         DOWNLOAD CSV
       </button>
 
+
       <button
         type="button"
         class="btn btn-outline-red"
@@ -1021,6 +1078,7 @@
       >
         HOME
       </button>
+
 
       <button
         type="button"
@@ -1032,6 +1090,7 @@
 
     </div>
 
+
     <!-- =======================================================
          ERROR
          ======================================================= -->
@@ -1040,6 +1099,7 @@
       id="errorBox"
       class="error"
     ></div>
+
 
     <!-- =======================================================
          STATISTICS
@@ -1062,6 +1122,7 @@
 
       </div>
 
+
       <div class="stat">
 
         <div class="stat-label">
@@ -1076,6 +1137,7 @@
         </div>
 
       </div>
+
 
       <div class="stat">
 
@@ -1092,6 +1154,7 @@
 
       </div>
 
+
       <div class="stat">
 
         <div class="stat-label">
@@ -1107,6 +1170,7 @@
 
       </div>
 
+
       <div class="stat">
 
         <div class="stat-label">
@@ -1121,6 +1185,7 @@
         </div>
 
       </div>
+
 
       <div class="stat">
 
@@ -1139,8 +1204,9 @@
 
     </div>
 
+
     <!-- =======================================================
-         PRINT HEADER
+         PRINT INFORMATION
          ======================================================= -->
 
     <div class="print-only">
@@ -1155,6 +1221,7 @@
       <span id="printDate"></span>
 
     </div>
+
 
     <!-- =======================================================
          TABLE
@@ -1178,12 +1245,14 @@
 
       </div>
 
+
       <div
         id="loading"
         class="loading"
       >
         Memuat data audience...
       </div>
+
 
       <div
         id="empty"
@@ -1192,6 +1261,7 @@
       >
         Tidak ada data audience.
       </div>
+
 
       <div
         id="tableWrapper"
@@ -1205,27 +1275,49 @@
 
             <tr>
 
-              <th>#</th>
+              <th>
+                #
+              </th>
 
-              <th>NAMA</th>
+              <th>
+                NAMA
+              </th>
 
-              <th>WHATSAPP</th>
+              <th>
+                WHATSAPP
+              </th>
 
-              <th>PASS ID</th>
+              <th>
+                PASS ID
+              </th>
 
-              <th>ACCESS</th>
+              <th>
+                ACCESS
+              </th>
 
-              <th>TABLE PACKAGE</th>
+              <th>
+                TABLE PACKAGE
+              </th>
 
-              <th>COMMUNITY</th>
+              <th>
+                COMMUNITY
+              </th>
 
-              <th>STATUS</th>
+              <th>
+                STATUS
+              </th>
 
-              <th>REGISTERED</th>
+              <th>
+                REGISTERED
+              </th>
 
-              <th>CHECK-IN</th>
+              <th>
+                CHECK-IN
+              </th>
 
-              <th>CHECKED BY</th>
+              <th>
+                CHECKED BY
+              </th>
 
             </tr>
 
@@ -1239,6 +1331,7 @@
 
     </div>
 
+
     <!-- =======================================================
          FOOTER
          ======================================================= -->
@@ -1249,125 +1342,27 @@
 
   </div>
 
+
   <script>
 
     "use strict";
 
+
     /* =========================================================
-       SUPABASE CONFIGURATION
+       SUPABASE
        ========================================================= */
 
     const SUPABASE_URL =
       "https://yrvnmmascklkuzpjkwxn.supabase.co";
 
+
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_YGi3tPBuF9tW4KKnLJ5dDQ_AcBZ19WH";
+
 
     const API_URL =
       SUPABASE_URL +
       "/functions/v1/dynamic-service";
-
-
-    /* =========================================================
-       NAVIGATION
-       =========================================================
-
-       report.html TIDAK membaca navigation.js dengan fetch().
-
-       navigation.js dimuat langsung oleh <script> di <head>.
-
-       navigation.js harus membuat:
-
-       window.NAVIGATION = {
-         home: "...",
-         admin: "...",
-         report: "...",
-         scanner: "...",
-         registration: "..."
-       };
-
-       Dengan cara ini:
-       - tidak ada HTTP 404 fetch navigation
-       - tidak ada parsing JavaScript sebagai HTML
-       - URL tetap terpusat di /config/navigation.js
-       ========================================================= */
-
-    function getNavigation() {
-
-      if (
-        !window.NAVIGATION ||
-        typeof window.NAVIGATION !== "object"
-      ) {
-
-        throw new Error(
-          "NAVIGATION tidak ditemukan. Pastikan /config/navigation.js berhasil dimuat."
-        );
-
-      }
-
-      return window.NAVIGATION;
-
-    }
-
-
-    function navigateTo(pageName) {
-
-      try {
-
-        const navigation =
-          getNavigation();
-
-        const target =
-          navigation[pageName];
-
-        if (
-          typeof target !== "string" ||
-          !target.trim()
-        ) {
-
-          throw new Error(
-            "Alamat halaman '" +
-            pageName +
-            "' tidak tersedia."
-          );
-
-        }
-
-        const url =
-          new URL(
-            target,
-            window.location.origin
-          );
-
-        if (
-          url.protocol !== "https:" &&
-          url.protocol !== "http:"
-        ) {
-
-          throw new Error(
-            "Protocol URL navigasi tidak valid."
-          );
-
-        }
-
-        window.location.href =
-          url.href;
-
-      } catch (error) {
-
-        console.error(
-          "NAVIGATION ERROR:",
-          error
-        );
-
-        alert(
-          "Navigasi gagal.\n\n" +
-          error.message
-        );
-
-      }
-
-    }
 
 
     /* =========================================================
@@ -1388,60 +1383,72 @@
         "searchInput"
       );
 
+
     const accessFilter =
       document.getElementById(
         "accessFilter"
       );
+
 
     const statusFilter =
       document.getElementById(
         "statusFilter"
       );
 
+
     const refreshButton =
       document.getElementById(
         "refreshButton"
       );
+
 
     const printButton =
       document.getElementById(
         "printButton"
       );
 
+
     const csvButton =
       document.getElementById(
         "csvButton"
       );
+
 
     const homeButton =
       document.getElementById(
         "homeButton"
       );
 
+
     const adminButton =
       document.getElementById(
         "adminButton"
       );
+
 
     const errorBox =
       document.getElementById(
         "errorBox"
       );
 
+
     const loading =
       document.getElementById(
         "loading"
       );
+
 
     const empty =
       document.getElementById(
         "empty"
       );
 
+
     const tableWrapper =
       document.getElementById(
         "tableWrapper"
       );
+
 
     const tableBody =
       document.getElementById(
@@ -1450,934 +1457,195 @@
 
 
     /* =========================================================
-       ESCAPE HTML
+       NAVIGATION
+       =========================================================
+
+       Penting:
+
+       navigation.js menggunakan:
+
+       const NAVIGATION = Object.freeze({...});
+
+       Karena itu kita tidak mengharuskan:
+
+       window.NAVIGATION
+
+       Yang kita lakukan adalah mengambil global lexical
+       variable NAVIGATION yang dibuat oleh navigation.js.
+
+       Kita juga menyediakan fallback absolut supaya tombol
+       tetap dapat bekerja bila browser tidak mengenali
+       konfigurasi tersebut.
+
+       Fallback hanya digunakan untuk navigasi.
        ========================================================= */
 
-    function escapeHtml(value) {
+    const FALLBACK_NAVIGATION = Object.freeze({
 
-      return String(
-        value == null
-          ? ""
-          : value
-      )
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-        .replace(
-          /</g,
-          "&lt;"
-        )
-        .replace(
-          />/g,
-          "&gt;"
-        )
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-        .replace(
-          /'/g,
-          "&#039;"
-        );
+      home:
+        "https://boldafterdark.my.id/index.html",
 
-    }
+      admin:
+        "https://boldafterdark.my.id/admin.html",
+
+      report:
+        "https://boldafterdark.my.id/report.html",
+
+      scanner:
+        "https://boldafterdark.my.id/scanner.html",
+
+      registration:
+        "https://boldafterdark.my.id/registration/index.html"
+
+    });
 
 
-    /* =========================================================
-       NORMALIZE STATUS
-       ========================================================= */
-
-    function normalizeStatus(value) {
-
-      const status =
-        String(
-          value || ""
-        )
-          .trim()
-          .toUpperCase();
-
-      if (
-        status === "USED" ||
-        status === "CHECKED_IN" ||
-        status === "CHECKED-IN"
-      ) {
-
-        return "USED";
-
-      }
-
-      if (
-        status === "UNUSED"
-      ) {
-
-        return "UNUSED";
-
-      }
-
-      if (
-        status === "CANCELLED" ||
-        status === "CANCELED"
-      ) {
-
-        return "CANCELLED";
-
-      }
-
-      return status;
-
-    }
-
-
-    /* =========================================================
-       NORMALIZE ACCESS
-       ========================================================= */
-
-    function normalizeAccess(value) {
-
-      return String(
-        value || ""
-      )
-        .trim()
-        .toUpperCase();
-
-    }
-
-
-    /* =========================================================
-       FORMAT DATE
-       ========================================================= */
-
-    function formatDate(value) {
-
-      if (!value) {
-        return "-";
-      }
-
-      const date =
-        new Date(value);
-
-      if (
-        Number.isNaN(
-          date.getTime()
-        )
-      ) {
-
-        return String(value);
-
-      }
-
-      return date.toLocaleString(
-        "id-ID",
-        {
-          dateStyle: "short",
-          timeStyle: "medium"
-        }
-      );
-
-    }
-
-
-    /* =========================================================
-       SHOW ERROR
-       ========================================================= */
-
-    function showError(message) {
-
-      errorBox.textContent =
-        message ||
-        "Terjadi kesalahan.";
-
-      errorBox.style.display =
-        "block";
-
-    }
-
-
-    function hideError() {
-
-      errorBox.textContent =
-        "";
-
-      errorBox.style.display =
-        "none";
-
-    }
-
-
-    /* =========================================================
-       LOAD REPORT
-       ========================================================= */
-
-    async function loadReport() {
-
-      hideError();
-
-      loading.style.display =
-        "block";
-
-      empty.style.display =
-        "none";
-
-      tableWrapper.style.display =
-        "none";
-
-      refreshButton.disabled =
-        true;
-
-      refreshButton.textContent =
-        "LOADING...";
+    function getNavigation() {
 
       try {
 
-        const params =
-          new URLSearchParams();
-
-        params.set(
-          "action",
-          "report"
-        );
-
-        const response =
-          await fetch(
-            API_URL +
-            "?" +
-            params.toString(),
-            {
-              method: "GET",
-
-              headers: {
-
-                "Accept":
-                  "application/json",
-
-                "apikey":
-                  SUPABASE_PUBLISHABLE_KEY,
-
-                "Authorization":
-                  "Bearer " +
-                  SUPABASE_PUBLISHABLE_KEY
-
-              }
-            }
-          );
-
-        const raw =
-          await response.text();
-
-        console.log(
-          "REPORT HTTP STATUS:",
-          response.status
-        );
-
-        console.log(
-          "REPORT RAW RESPONSE:",
-          raw
-        );
-
-        let data = null;
-
-        try {
-
-          data =
-            raw
-              ? JSON.parse(raw)
-              : null;
-
-        } catch (parseError) {
-
-          throw new Error(
-            "Server mengembalikan response JSON yang tidak valid."
-          );
-
-        }
-
-        if (!response.ok) {
-
-          throw new Error(
-            data &&
-            data.message
-              ? data.message
-              : (
-                "Gagal mengambil laporan. HTTP " +
-                response.status
-              )
-          );
-
-        }
-
         if (
-          data &&
-          data.success === false
+          typeof NAVIGATION !== "undefined" &&
+          NAVIGATION &&
+          typeof NAVIGATION === "object"
         ) {
 
-          throw new Error(
-            data.message ||
-            data.detail ||
-            "Data laporan ditolak server."
-          );
+          return NAVIGATION;
 
         }
-
-        allRows =
-          data &&
-          Array.isArray(
-            data.registrations
-          )
-            ? data.registrations
-            : [];
-
-        applyFilters();
 
       } catch (error) {
 
-        console.error(
-          "REPORT ERROR:",
+        console.warn(
+          "NAVIGATION tidak dapat dibaca:",
           error
         );
 
-        allRows = [];
-
-        filteredRows = [];
-
-        updateStatistics([]);
-
-        tableBody.innerHTML =
-          "";
-
-        loading.style.display =
-          "none";
-
-        tableWrapper.style.display =
-          "none";
-
-        empty.style.display =
-          "block";
-
-        showError(
-          error &&
-          error.message
-            ? error.message
-            : "Tidak dapat mengambil laporan."
-        );
-
-      } finally {
-
-        refreshButton.disabled =
-          false;
-
-        refreshButton.textContent =
-          "REFRESH";
-
       }
 
-    }
-
-
-    /* =========================================================
-       APPLY FILTERS
-       ========================================================= */
-
-    function applyFilters() {
-
-      const search =
-        searchInput.value
-          .trim()
-          .toLowerCase();
-
-      const access =
-        normalizeAccess(
-          accessFilter.value
-        );
-
-      const selectedStatus =
-        normalizeStatus(
-          statusFilter.value
-        );
-
-      filteredRows =
-        allRows.filter(
-          function(row) {
-
-            const rowAccess =
-              normalizeAccess(
-                row.access_type
-              );
-
-            const rowStatus =
-              normalizeStatus(
-                row.pass_status
-              );
-
-            if (
-              access &&
-              rowAccess !== access
-            ) {
-
-              return false;
-
-            }
-
-            if (
-              selectedStatus &&
-              rowStatus !== selectedStatus
-            ) {
-
-              return false;
-
-            }
-
-            if (search) {
-
-              const haystack =
-                [
-                  row.name,
-                  row.whatsapp,
-                  row.pass_id,
-                  row.community,
-                  row.table_package,
-                  row.access_type,
-                  row.pass_status
-                ]
-                  .map(
-                    function(value) {
-
-                      return String(
-                        value || ""
-                      ).toLowerCase();
-
-                    }
-                  )
-                  .join(" ");
-
-              if (
-                !haystack.includes(
-                  search
-                )
-              ) {
-
-                return false;
-
-              }
-
-            }
-
-            return true;
-
-          }
-        );
-
-      updateStatistics(
-        filteredRows
+      console.warn(
+        "NAVIGATION tidak ditemukan. " +
+        "Menggunakan fallback navigation."
       );
 
-      renderTable(
-        filteredRows
-      );
+      return FALLBACK_NAVIGATION;
 
     }
 
 
-    /* =========================================================
-       UPDATE STATISTICS
-       ========================================================= */
+    function getNavigationUrl(
+      pageName
+    ) {
 
-    function updateStatistics(rows) {
-
-      const total =
-        rows.length;
-
-      const free =
-        rows.filter(
-          function(row) {
-
-            return normalizeAccess(
-              row.access_type
-            ) === "FREE";
-
-          }
-        ).length;
-
-      const vip =
-        rows.filter(
-          function(row) {
-
-            return normalizeAccess(
-              row.access_type
-            ) === "VIP";
-
-          }
-        ).length;
-
-      const boldRiders =
-        rows.filter(
-          function(row) {
-
-            return normalizeAccess(
-              row.access_type
-            ) === "BOLD RIDERS";
-
-          }
-        ).length;
-
-      const used =
-        rows.filter(
-          function(row) {
-
-            return normalizeStatus(
-              row.pass_status
-            ) === "USED";
-
-          }
-        ).length;
-
-      const unused =
-        rows.filter(
-          function(row) {
-
-            return normalizeStatus(
-              row.pass_status
-            ) === "UNUSED";
-
-          }
-        ).length;
-
-      document.getElementById(
-        "totalCount"
-      ).textContent =
-        total;
-
-      document.getElementById(
-        "freeCount"
-      ).textContent =
-        free;
-
-      document.getElementById(
-        "vipCount"
-      ).textContent =
-        vip;
-
-      document.getElementById(
-        "boldRidersCount"
-      ).textContent =
-        boldRiders;
-
-      document.getElementById(
-        "usedCount"
-      ).textContent =
-        used;
-
-      document.getElementById(
-        "unusedCount"
-      ).textContent =
-        unused;
-
-    }
+      const navigation =
+        getNavigation();
 
 
-    /* =========================================================
-       ACCESS BADGE
-       ========================================================= */
+      const target =
+        navigation &&
+        navigation[pageName];
 
-    function accessBadge(access) {
-
-      const value =
-        normalizeAccess(access);
-
-      let className =
-        "free";
 
       if (
-        value === "VIP"
+        typeof target === "string" &&
+        target.trim()
       ) {
 
-        className =
-          "vip";
+        try {
 
-      } else if (
-        value === "BOLD RIDERS"
-      ) {
-
-        className =
-          "bold";
-
-      }
-
-      return (
-        '<span class="access ' +
-        className +
-        '">' +
-        escapeHtml(
-          value || "FREE"
-        ) +
-        "</span>"
-      );
-
-    }
-
-
-    /* =========================================================
-       STATUS BADGE
-       ========================================================= */
-
-    function statusBadge(status) {
-
-      const value =
-        normalizeStatus(status);
-
-      let className =
-        "unknown";
-
-      let label =
-        value || "-";
-
-      if (
-        value === "USED"
-      ) {
-
-        className =
-          "used";
-
-        label =
-          "USED";
-
-      } else if (
-        value === "UNUSED"
-      ) {
-
-        className =
-          "unused";
-
-        label =
-          "UNUSED";
-
-      } else if (
-        value === "CANCELLED"
-      ) {
-
-        className =
-          "cancelled";
-
-        label =
-          "CANCELLED";
-
-      }
-
-      return (
-        '<span class="status ' +
-        className +
-        '">' +
-        escapeHtml(label) +
-        "</span>"
-      );
-
-    }
-
-
-    /* =========================================================
-       RENDER TABLE
-       ========================================================= */
-
-    function renderTable(rows) {
-
-      loading.style.display =
-        "none";
-
-      tableBody.innerHTML =
-        "";
-
-      if (
-        !rows ||
-        rows.length === 0
-      ) {
-
-        tableWrapper.style.display =
-          "none";
-
-        empty.style.display =
-          "block";
-
-        return;
-
-      }
-
-      empty.style.display =
-        "none";
-
-      tableWrapper.style.display =
-        "block";
-
-      rows.forEach(
-        function(row, index) {
-
-          const tr =
-            document.createElement(
-              "tr"
-            );
-
-          const status =
-            normalizeStatus(
-              row.pass_status
+          const url =
+            new URL(
+              target
             );
 
           if (
-            status === "USED"
+            url.protocol === "https:" ||
+            url.protocol === "http:"
           ) {
 
-            tr.classList.add(
-              "used-row"
-            );
-
-          } else if (
-            status === "UNUSED"
-          ) {
-
-            tr.classList.add(
-              "unused-row"
-            );
+            return url.href;
 
           }
 
-          tr.innerHTML = `
+        } catch (error) {
 
-            <td>
-              ${escapeHtml(index + 1)}
-            </td>
-
-            <td>
-              <strong>
-                ${escapeHtml(row.name)}
-              </strong>
-            </td>
-
-            <td>
-              ${escapeHtml(row.whatsapp)}
-            </td>
-
-            <td>
-              <strong>
-                ${escapeHtml(row.pass_id)}
-              </strong>
-            </td>
-
-            <td>
-              ${accessBadge(row.access_type)}
-            </td>
-
-            <td>
-              ${escapeHtml(
-                row.table_package || "-"
-              )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-                row.community || "-"
-              )}
-            </td>
-
-            <td>
-              ${statusBadge(
-                row.pass_status
-              )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-                formatDate(
-                  row.created_at
-                )
-              )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-                formatDate(
-                  row.checked_in_at
-                )
-              )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-                row.checked_in_by || "-"
-              )}
-            </td>
-
-          `;
-
-          tableBody.appendChild(
-            tr
+          console.warn(
+            "URL navigasi tidak valid:",
+            pageName,
+            target
           );
 
         }
-      );
 
-    }
-
-
-    /* =========================================================
-       CSV ESCAPE
-       ========================================================= */
-
-    function csvEscape(value) {
-
-      const text =
-        String(
-          value == null
-            ? ""
-            : value
-        );
-
-      return (
-        '"' +
-        text.replace(
-          /"/g,
-          '""'
-        ) +
-        '"'
-      );
-
-    }
+      }
 
 
-    /* =========================================================
-       DOWNLOAD CSV
-       ========================================================= */
+      const fallback =
+        FALLBACK_NAVIGATION[
+          pageName
+        ];
 
-    function downloadCsv() {
 
       if (
-        !filteredRows ||
-        filteredRows.length === 0
+        typeof fallback === "string" &&
+        fallback.trim()
       ) {
 
-        alert(
-          "Tidak ada data untuk di-download."
+        return fallback;
+
+      }
+
+
+      return null;
+
+    }
+
+
+    async function navigateTo(
+      pageName
+    ) {
+
+      const target =
+        getNavigationUrl(
+          pageName
+        );
+
+
+      if (!target) {
+
+        showError(
+          "Navigasi gagal.\n" +
+          "Alamat halaman '" +
+          pageName +
+          "' tidak tersedia."
         );
 
         return;
 
       }
 
-      const headers = [
 
-        "No",
-        "Nama",
-        "WhatsApp",
-        "Pass ID",
-        "Access",
-        "Table Package",
-        "Community",
-        "Stay Connected",
-        "Status",
-        "Registered At",
-        "Check In At",
-        "Checked By"
-
-      ];
-
-      const lines = [
-
-        headers
-          .map(csvEscape)
-          .join(",")
-
-      ];
-
-      filteredRows.forEach(
-        function(row, index) {
-
-          lines.push(
-
-            [
-              index + 1,
-              row.name,
-              row.whatsapp,
-              row.pass_id,
-              row.access_type,
-              row.table_package,
-              row.community,
-              row.stay_connected,
-              normalizeStatus(
-                row.pass_status
-              ),
-              row.created_at,
-              row.checked_in_at,
-              row.checked_in_by
-            ]
-              .map(csvEscape)
-              .join(",")
-
-          );
-
-        }
+      console.log(
+        "REPORT NAVIGATION:",
+        pageName,
+        "→",
+        target
       );
 
-      const csv =
-        "\uFEFF" +
-        lines.join("\r\n");
 
-      const blob =
-        new Blob(
-          [csv],
-          {
-            type:
-              "text/csv;charset=utf-8;"
-          }
-        );
-
-      const url =
-        URL.createObjectURL(
-          blob
-        );
-
-      const link =
-        document.createElement(
-          "a"
-        );
-
-      link.href =
-        url;
-
-      link.download =
-        "bold-after-dark-audience-report.csv";
-
-      document.body.appendChild(
-        link
+      window.location.assign(
+        target
       );
-
-      link.click();
-
-      link.remove();
-
-      URL.revokeObjectURL(
-        url
-      );
-
-    }
-
-
-    /* =========================================================
-       PRINT
-       ========================================================= */
-
-    function printReport() {
-
-      document.getElementById(
-        "printDate"
-      ).textContent =
-        new Date().toLocaleString(
-          "id-ID"
-        );
-
-      window.print();
 
     }
 
 
     /* =========================================================
        NAVIGATION BUTTONS
+       =========================================================
+
+       Listener dipasang langsung dan tidak bergantung
+       pada loadReport().
        ========================================================= */
 
     homeButton.addEventListener(
@@ -2409,7 +1677,1157 @@
 
 
     /* =========================================================
-       OTHER EVENTS
+       HTML ESCAPE
+       ========================================================= */
+
+    function escapeHtml(
+      value
+    ) {
+
+      return String(
+        value == null
+          ? ""
+          : value
+      )
+
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+
+        .replace(
+          /</g,
+          "&lt;"
+        )
+
+        .replace(
+          />/g,
+          "&gt;"
+        )
+
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+
+    /* =========================================================
+       STATUS NORMALIZATION
+       ========================================================= */
+
+    function normalizeStatus(
+      value
+    ) {
+
+      const status =
+        String(
+          value || ""
+        )
+          .trim()
+          .toUpperCase();
+
+
+      if (
+        status === "USED" ||
+        status === "CHECKED_IN" ||
+        status === "CHECKED-IN"
+      ) {
+
+        return "USED";
+
+      }
+
+
+      if (
+        status === "UNUSED"
+      ) {
+
+        return "UNUSED";
+
+      }
+
+
+      if (
+        status === "CANCELLED" ||
+        status === "CANCELED"
+      ) {
+
+        return "CANCELLED";
+
+      }
+
+
+      return status;
+
+    }
+
+
+    /* =========================================================
+       ACCESS NORMALIZATION
+       ========================================================= */
+
+    function normalizeAccess(
+      value
+    ) {
+
+      return String(
+        value || ""
+      )
+        .trim()
+        .toUpperCase();
+
+    }
+
+
+    /* =========================================================
+       DATE
+       ========================================================= */
+
+    function formatDate(
+      value
+    ) {
+
+      if (!value) {
+
+        return "-";
+
+      }
+
+
+      const date =
+        new Date(
+          value
+        );
+
+
+      if (
+        Number.isNaN(
+          date.getTime()
+        )
+      ) {
+
+        return String(
+          value
+        );
+
+      }
+
+
+      return date.toLocaleString(
+        "id-ID",
+        {
+          dateStyle:
+            "short",
+
+          timeStyle:
+            "medium"
+        }
+      );
+
+    }
+
+
+    /* =========================================================
+       ERROR
+       ========================================================= */
+
+    function showError(
+      message
+    ) {
+
+      errorBox.textContent =
+        message ||
+        "Terjadi kesalahan.";
+
+      errorBox.style.display =
+        "block";
+
+    }
+
+
+    function hideError() {
+
+      errorBox.textContent =
+        "";
+
+      errorBox.style.display =
+        "none";
+
+    }
+
+
+    /* =========================================================
+       LOAD REPORT
+       ========================================================= */
+
+    async function loadReport() {
+
+      hideError();
+
+
+      loading.style.display =
+        "block";
+
+
+      empty.style.display =
+        "none";
+
+
+      tableWrapper.style.display =
+        "none";
+
+
+      refreshButton.disabled =
+        true;
+
+
+      refreshButton.textContent =
+        "LOADING...";
+
+
+      try {
+
+        const params =
+          new URLSearchParams();
+
+
+        params.set(
+          "action",
+          "report"
+        );
+
+
+        const response =
+          await fetch(
+            API_URL +
+            "?" +
+            params.toString(),
+            {
+
+              method:
+                "GET",
+
+              headers: {
+
+                "Accept":
+                  "application/json",
+
+                "apikey":
+                  SUPABASE_PUBLISHABLE_KEY,
+
+                "Authorization":
+                  "Bearer " +
+                  SUPABASE_PUBLISHABLE_KEY
+
+              }
+
+            }
+          );
+
+
+        const raw =
+          await response.text();
+
+
+        console.log(
+          "REPORT HTTP STATUS:",
+          response.status
+        );
+
+
+        console.log(
+          "REPORT RAW RESPONSE:",
+          raw
+        );
+
+
+        let data =
+          null;
+
+
+        try {
+
+          data =
+            raw
+              ? JSON.parse(
+                  raw
+                )
+              : null;
+
+        } catch (parseError) {
+
+          throw new Error(
+            "Server mengembalikan response JSON yang tidak valid."
+          );
+
+        }
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            data &&
+            data.message
+              ? data.message
+              :
+                "Gagal mengambil laporan. HTTP " +
+                response.status
+          );
+
+        }
+
+
+        if (
+          data &&
+          data.success === false
+        ) {
+
+          throw new Error(
+            data.message ||
+            data.detail ||
+            "Data laporan ditolak server."
+          );
+
+        }
+
+
+        allRows =
+          data &&
+          Array.isArray(
+            data.registrations
+          )
+            ? data.registrations
+            : [];
+
+
+        applyFilters();
+
+      } catch (error) {
+
+        console.error(
+          "REPORT ERROR:",
+          error
+        );
+
+
+        allRows =
+          [];
+
+
+        filteredRows =
+          [];
+
+
+        updateStatistics(
+          []
+        );
+
+
+        tableBody.innerHTML =
+          "";
+
+
+        loading.style.display =
+          "none";
+
+
+        tableWrapper.style.display =
+          "none";
+
+
+        empty.style.display =
+          "block";
+
+
+        showError(
+          error &&
+          error.message
+            ? error.message
+            : "Tidak dapat mengambil laporan."
+        );
+
+      } finally {
+
+        refreshButton.disabled =
+          false;
+
+
+        refreshButton.textContent =
+          "REFRESH";
+
+      }
+
+    }
+
+
+    /* =========================================================
+       FILTER
+       ========================================================= */
+
+    function applyFilters() {
+
+      const search =
+        searchInput.value
+          .trim()
+          .toLowerCase();
+
+
+      const access =
+        normalizeAccess(
+          accessFilter.value
+        );
+
+
+      const selectedStatus =
+        normalizeStatus(
+          statusFilter.value
+        );
+
+
+      filteredRows =
+        allRows.filter(
+          function(row) {
+
+            const rowAccess =
+              normalizeAccess(
+                row.access_type
+              );
+
+
+            const rowStatus =
+              normalizeStatus(
+                row.pass_status
+              );
+
+
+            if (
+              access &&
+              rowAccess !== access
+            ) {
+
+              return false;
+
+            }
+
+
+            if (
+              selectedStatus &&
+              rowStatus !== selectedStatus
+            ) {
+
+              return false;
+
+            }
+
+
+            if (search) {
+
+              const haystack =
+                [
+
+                  row.name,
+
+                  row.whatsapp,
+
+                  row.pass_id,
+
+                  row.community,
+
+                  row.table_package,
+
+                  row.access_type,
+
+                  row.pass_status
+
+                ]
+
+                  .map(
+                    function(value) {
+
+                      return String(
+                        value || ""
+                      ).toLowerCase();
+
+                    }
+                  )
+
+                  .join(
+                    " "
+                  );
+
+
+              if (
+                !haystack.includes(
+                  search
+                )
+              ) {
+
+                return false;
+
+              }
+
+            }
+
+
+            return true;
+
+          }
+        );
+
+
+      updateStatistics(
+        filteredRows
+      );
+
+
+      renderTable(
+        filteredRows
+      );
+
+    }
+
+
+    /* =========================================================
+       STATISTICS
+       ========================================================= */
+
+    function updateStatistics(
+      rows
+    ) {
+
+      const total =
+        rows.length;
+
+
+      const free =
+        rows.filter(
+          function(row) {
+
+            return (
+              normalizeAccess(
+                row.access_type
+              ) === "FREE"
+            );
+
+          }
+        ).length;
+
+
+      const vip =
+        rows.filter(
+          function(row) {
+
+            return (
+              normalizeAccess(
+                row.access_type
+              ) === "VIP"
+            );
+
+          }
+        ).length;
+
+
+      const boldRiders =
+        rows.filter(
+          function(row) {
+
+            return (
+              normalizeAccess(
+                row.access_type
+              ) === "BOLD RIDERS"
+            );
+
+          }
+        ).length;
+
+
+      const used =
+        rows.filter(
+          function(row) {
+
+            return (
+              normalizeStatus(
+                row.pass_status
+              ) === "USED"
+            );
+
+          }
+        ).length;
+
+
+      const unused =
+        rows.filter(
+          function(row) {
+
+            return (
+              normalizeStatus(
+                row.pass_status
+              ) === "UNUSED"
+            );
+
+          }
+        ).length;
+
+
+      document.getElementById(
+        "totalCount"
+      ).textContent =
+        total;
+
+
+      document.getElementById(
+        "freeCount"
+      ).textContent =
+        free;
+
+
+      document.getElementById(
+        "vipCount"
+      ).textContent =
+        vip;
+
+
+      document.getElementById(
+        "boldRidersCount"
+      ).textContent =
+        boldRiders;
+
+
+      document.getElementById(
+        "usedCount"
+      ).textContent =
+        used;
+
+
+      document.getElementById(
+        "unusedCount"
+      ).textContent =
+        unused;
+
+    }
+
+
+    /* =========================================================
+       ACCESS BADGE
+       ========================================================= */
+
+    function accessBadge(
+      access
+    ) {
+
+      const value =
+        normalizeAccess(
+          access
+        );
+
+
+      let className =
+        "free";
+
+
+      if (
+        value === "VIP"
+      ) {
+
+        className =
+          "vip";
+
+      }
+
+
+      else if (
+        value === "BOLD RIDERS"
+      ) {
+
+        className =
+          "bold";
+
+      }
+
+
+      return (
+        '<span class="access ' +
+        className +
+        '">' +
+        escapeHtml(
+          value ||
+          "FREE"
+        ) +
+        "</span>"
+      );
+
+    }
+
+
+    /* =========================================================
+       STATUS BADGE
+       ========================================================= */
+
+    function statusBadge(
+      status
+    ) {
+
+      const value =
+        normalizeStatus(
+          status
+        );
+
+
+      let className =
+        "unknown";
+
+
+      let label =
+        value ||
+        "-";
+
+
+      if (
+        value === "USED"
+      ) {
+
+        className =
+          "used";
+
+        label =
+          "USED";
+
+      }
+
+
+      else if (
+        value === "UNUSED"
+      ) {
+
+        className =
+          "unused";
+
+        label =
+          "UNUSED";
+
+      }
+
+
+      else if (
+        value === "CANCELLED"
+      ) {
+
+        className =
+          "cancelled";
+
+        label =
+          "CANCELLED";
+
+      }
+
+
+      return (
+        '<span class="status ' +
+        className +
+        '">' +
+        escapeHtml(
+          label
+        ) +
+        "</span>"
+      );
+
+    }
+
+
+    /* =========================================================
+       TABLE
+       ========================================================= */
+
+    function renderTable(
+      rows
+    ) {
+
+      loading.style.display =
+        "none";
+
+
+      tableBody.innerHTML =
+        "";
+
+
+      if (
+        !rows ||
+        rows.length === 0
+      ) {
+
+        tableWrapper.style.display =
+          "none";
+
+
+        empty.style.display =
+          "block";
+
+
+        return;
+
+      }
+
+
+      empty.style.display =
+        "none";
+
+
+      tableWrapper.style.display =
+        "block";
+
+
+      rows.forEach(
+        function(row, index) {
+
+          const tr =
+            document.createElement(
+              "tr"
+            );
+
+
+          const status =
+            normalizeStatus(
+              row.pass_status
+            );
+
+
+          if (
+            status === "USED"
+          ) {
+
+            tr.classList.add(
+              "used-row"
+            );
+
+          }
+
+
+          else if (
+            status === "UNUSED"
+          ) {
+
+            tr.classList.add(
+              "unused-row"
+            );
+
+          }
+
+
+          tr.innerHTML = `
+
+            <td>
+              ${escapeHtml(
+                index + 1
+              )}
+            </td>
+
+            <td>
+              <strong>
+                ${escapeHtml(
+                  row.name
+                )}
+              </strong>
+            </td>
+
+            <td>
+              ${escapeHtml(
+                row.whatsapp
+              )}
+            </td>
+
+            <td>
+              <strong>
+                ${escapeHtml(
+                  row.pass_id
+                )}
+              </strong>
+            </td>
+
+            <td>
+              ${accessBadge(
+                row.access_type
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                row.table_package ||
+                "-"
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                row.community ||
+                "-"
+              )}
+            </td>
+
+            <td>
+              ${statusBadge(
+                row.pass_status
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                formatDate(
+                  row.created_at
+                )
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                formatDate(
+                  row.checked_in_at
+                )
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                row.checked_in_by ||
+                "-"
+              )}
+            </td>
+
+          `;
+
+
+          tableBody.appendChild(
+            tr
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================================================
+       CSV ESCAPE
+       ========================================================= */
+
+    function csvEscape(
+      value
+    ) {
+
+      const text =
+        String(
+          value == null
+            ? ""
+            : value
+        );
+
+
+      return (
+        '"' +
+        text.replace(
+          /"/g,
+          '""'
+        ) +
+        '"'
+      );
+
+    }
+
+
+    /* =========================================================
+       DOWNLOAD CSV
+       ========================================================= */
+
+    function downloadCsv() {
+
+      if (
+        !filteredRows ||
+        filteredRows.length === 0
+      ) {
+
+        alert(
+          "Tidak ada data untuk di-download."
+        );
+
+
+        return;
+
+      }
+
+
+      const headers = [
+
+        "No",
+
+        "Nama",
+
+        "WhatsApp",
+
+        "Pass ID",
+
+        "Access",
+
+        "Table Package",
+
+        "Community",
+
+        "Stay Connected",
+
+        "Status",
+
+        "Registered At",
+
+        "Check In At",
+
+        "Checked By"
+
+      ];
+
+
+      const lines = [
+
+        headers
+          .map(
+            csvEscape
+          )
+          .join(
+            ","
+          )
+
+      ];
+
+
+      filteredRows.forEach(
+        function(row, index) {
+
+          lines.push(
+
+            [
+
+              index + 1,
+
+              row.name,
+
+              row.whatsapp,
+
+              row.pass_id,
+
+              row.access_type,
+
+              row.table_package,
+
+              row.community,
+
+              row.stay_connected,
+
+              normalizeStatus(
+                row.pass_status
+              ),
+
+              row.created_at,
+
+              row.checked_in_at,
+
+              row.checked_in_by
+
+            ]
+
+              .map(
+                csvEscape
+              )
+
+              .join(
+                ","
+              )
+
+          );
+
+        }
+      );
+
+
+      const csv =
+        "\uFEFF" +
+        lines.join(
+          "\r\n"
+        );
+
+
+      const blob =
+        new Blob(
+          [csv],
+          {
+            type:
+              "text/csv;charset=utf-8;"
+          }
+        );
+
+
+      const url =
+        URL.createObjectURL(
+          blob
+        );
+
+
+      const link =
+        document.createElement(
+          "a"
+        );
+
+
+      link.href =
+        url;
+
+
+      link.download =
+        "bold-after-dark-audience-report.csv";
+
+
+      document.body.appendChild(
+        link
+      );
+
+
+      link.click();
+
+
+      link.remove();
+
+
+      URL.revokeObjectURL(
+        url
+      );
+
+    }
+
+
+    /* =========================================================
+       PRINT
+       ========================================================= */
+
+    function printReport() {
+
+      document.getElementById(
+        "printDate"
+      ).textContent =
+        new Date().toLocaleString(
+          "id-ID"
+        );
+
+
+      window.print();
+
+    }
+
+
+    /* =========================================================
+       EVENT LISTENERS
        ========================================================= */
 
     refreshButton.addEventListener(
@@ -2450,22 +2868,17 @@
 
     /* =========================================================
        PAGE LOAD
+       =========================================================
+
+       Navigation TIDAK dipanggil di sini.
+
+       Jadi load report tidak akan gagal hanya karena
+       navigation.js bermasalah.
        ========================================================= */
 
     window.addEventListener(
       "load",
       function() {
-
-        /*
-         * Tidak melakukan fetch ke navigation.js.
-         *
-         * navigation.js sudah dimuat oleh:
-         *
-         * <script src="/config/navigation.js"></script>
-         *
-         * sehingga report langsung membaca
-         * window.NAVIGATION.
-         */
 
         loadReport();
 
