@@ -382,7 +382,77 @@
       }
     }
 
-    @media (max-width: 600px) {
+        /* =========================================================
+       VIP DROPDOWN
+       ========================================================= */
+
+    .vip-options-container {
+      margin-top: 14px;
+      padding: 12px;
+      background: #151515;
+      border: 1px solid #333;
+      border-radius: 10px;
+    }
+
+    .vip-options-label {
+      display: block;
+      margin-bottom: 7px;
+      color: #aaa;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .vip-options-select {
+      width: 100%;
+      padding: 12px 13px;
+      background: #1c1c1c;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .vip-options-select:focus {
+      border-color: #e00000;
+      box-shadow: 0 0 0 2px rgba(224, 0, 0, 0.12);
+    }
+
+    .vip-option-detail {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 12px;
+      background: #101010;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: #ddd;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .vip-option-detail.visible {
+      display: block;
+    }
+
+    .vip-option-detail strong {
+      color: #fff;
+    }
+
+    .vip-option-error {
+      display: none;
+      margin-top: 8px;
+      color: #ff8b8b;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .vip-option-error.visible {
+      display: block;
+    }
+
+@media (max-width: 600px) {
       body {
         padding: 12px;
       }
@@ -471,8 +541,34 @@
         <!-- VIP OPTIONS -->
         <div
           id="vipOptionsContainer"
-          class="hidden"
-        ></div>
+          class="vip-options-container hidden"
+        >
+          <label
+            for="vipPackageSelect"
+            class="vip-options-label"
+          >
+            VIP PACKAGE
+          </label>
+
+          <select
+            id="vipPackageSelect"
+            class="vip-options-select"
+          >
+            <option value="">
+              Pilih paket VIP...
+            </option>
+          </select>
+
+          <div
+            id="vipOptionDetail"
+            class="vip-option-detail"
+          ></div>
+
+          <div
+            id="vipOptionError"
+            class="vip-option-error"
+          ></div>
+        </div>
 
         <!-- BOLD RIDERS ID -->
         <div
@@ -782,6 +878,15 @@
     const accessTypeInput =
       document.getElementById("accessType");
 
+    const vipPackageSelect =
+      document.getElementById("vipPackageSelect");
+
+    const vipOptionDetail =
+      document.getElementById("vipOptionDetail");
+
+    const vipOptionError =
+      document.getElementById("vipOptionError");
+
     const vipOptionsContainer =
       document.getElementById("vipOptionsContainer");
 
@@ -853,7 +958,50 @@
     let boldRiderOwnerName = "";
     let validationRequestNumber = 0;
 
-    function showMessage(type, message) {
+
+    function escapeHtml(value) {
+      return String(
+        value == null
+          ? ""
+          : value
+      )
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function getSelectedVipPackage() {
+      const selected = vipPackageSelect.value;
+
+      if (!selected) {
+        return "";
+      }
+
+      const option =
+        vipPackageSelect.options[
+          vipPackageSelect.selectedIndex
+        ];
+
+      const index =
+        Number(option.dataset.index);
+
+      const pkg =
+        vipPackages[index];
+
+      if (!pkg) {
+        return selected;
+      }
+
+      return String(
+        pkg.name ||
+        pkg.title ||
+        selected
+      );
+    }
+
+function showMessage(type, message) {
       messageBox.className =
         "message show " + type;
 
@@ -891,11 +1039,12 @@
     const VIP_OPTIONS_URL =
       "https://boldafterdark.my.id/config/vip-options.html";
 
+    let vipPackages = [];
     let vipOptionsLoaded = false;
     let vipOptionsLoading = null;
 
     async function loadVipOptions() {
-      if (vipOptionsLoaded) {
+      if (vipOptionsLoaded && vipPackages.length) {
         return true;
       }
 
@@ -904,21 +1053,29 @@
       }
 
       vipOptionsLoading = (async function() {
+        vipOptionsContainer.style.display = "none";
+
+        vipOptionError.classList.remove("visible");
+        vipOptionDetail.classList.remove("visible");
+        vipOptionDetail.innerHTML = "";
+
+        vipPackageSelect.innerHTML =
+          '<option value="">Memuat paket VIP...</option>';
+
         try {
-          const response =
-            await fetch(
-              VIP_OPTIONS_URL +
+          const response = await fetch(
+            VIP_OPTIONS_URL +
               "?t=" +
               Date.now(),
-              {
-                method: "GET",
-                cache: "no-store",
-                credentials: "same-origin",
-                headers: {
-                  "Accept": "text/html"
-                }
+            {
+              method: "GET",
+              cache: "no-store",
+              credentials: "same-origin",
+              headers: {
+                "Accept": "text/html"
               }
-            );
+            }
+          );
 
           if (!response.ok) {
             throw new Error(
@@ -930,68 +1087,252 @@
           const html =
             await response.text();
 
+          if (!html.trim()) {
+            throw new Error(
+              "vip-options.html kosong."
+            );
+          }
+
           const parser =
             new DOMParser();
 
-          const externalDocument =
+          const doc =
             parser.parseFromString(
               html,
               "text/html"
             );
 
-          const externalStyles =
-            externalDocument.querySelectorAll(
-              "style"
+          /*
+           * FORMAT 1
+           * JSON:
+           *
+           * <script id="vip-options-config" type="application/json">
+           * [
+           *   {
+           *     "id": "...",
+           *     "name": "...",
+           *     "price": "...",
+           *     "description": "...",
+           *     "benefits": [...]
+           *   }
+           * ]
+           * </script>
+           */
+          const configElement =
+            doc.getElementById(
+              "vip-options-config"
             );
 
-          externalStyles.forEach(
-            function(styleElement) {
-              const styleId =
-                "vip-options-external-style";
+          if (configElement) {
+            const raw =
+              configElement.textContent.trim();
 
-              if (!document.getElementById(styleId)) {
-                const style =
-                  document.createElement("style");
+            if (raw) {
+              try {
+                const config =
+                  JSON.parse(raw);
 
-                style.id = styleId;
-                style.textContent =
-                  styleElement.textContent || "";
+                if (Array.isArray(config)) {
+                  vipPackages =
+                    config.map(
+                      function(pkg, index) {
+                        const item =
+                          pkg &&
+                          typeof pkg === "object"
+                            ? pkg
+                            : {
+                                name:
+                                  String(pkg)
+                              };
 
-                document.head.appendChild(style);
+                        return {
+                          id:
+                            String(
+                              item.id ||
+                              item.value ||
+                              item.name ||
+                              index
+                            ),
+
+                          name:
+                            String(
+                              item.name ||
+                              item.title ||
+                              item.label ||
+                              ("VIP Package " +
+                                (index + 1))
+                            ),
+
+                          price:
+                            item.price
+                              ? String(
+                                  item.price
+                                )
+                              : "",
+
+                          description:
+                            item.description ||
+                            item.details ||
+                            "",
+
+                          benefits:
+                            Array.isArray(
+                              item.benefits
+                            )
+                              ? item.benefits.join(
+                                  ", "
+                                )
+                              : String(
+                                  item.benefits ||
+                                  ""
+                                )
+                        };
+                      }
+                    );
+
+                  if (
+                    vipPackages.length
+                  ) {
+                    populateVipDropdown(
+                      vipPackages
+                    );
+
+                    vipOptionsLoaded =
+                      true;
+
+                    vipOptionsContainer.style.display =
+                      "block";
+
+                    return true;
+                  }
+                }
+              } catch (jsonError) {
+                console.warn(
+                  "JSON VIP config tidak digunakan:",
+                  jsonError
+                );
               }
             }
-          );
-
-          const externalBody =
-            externalDocument.body;
-
-          if (!externalBody) {
-            throw new Error(
-              "Isi VIP options tidak ditemukan."
-            );
           }
 
-          vipOptionsContainer.innerHTML =
-            externalBody.innerHTML;
-
+          /*
+           * FORMAT 2
+           * Format lama:
+           *
+           * input[name="vipOption"]
+           *
+           * Kita baca langsung dari HTML
+           * sehingga vip-options.html lama
+           * tetap kompatibel.
+           */
           const vipInputs =
-            vipOptionsContainer.querySelectorAll(
+            doc.querySelectorAll(
               'input[name="vipOption"]'
             );
 
           if (!vipInputs.length) {
             throw new Error(
-              "Pilihan VIP tidak ditemukan di vip-options.html."
+              "Tidak ditemukan konfigurasi JSON maupun input[name=\"vipOption\"] di vip-options.html."
             );
           }
 
+          vipPackages = [];
+
           vipInputs.forEach(
-            function(input) {
-              input.required = true;
+            function(input, index) {
+              const value =
+                String(
+                  input.value || ""
+                ).trim();
+
+              if (!value) {
+                return;
+              }
+
+              let labelText = "";
+
+              const id =
+                input.id;
+
+              if (id) {
+                const label =
+                  doc.querySelector(
+                    'label[for="' +
+                      CSS.escape(id) +
+                      '"]'
+                  );
+
+                if (label) {
+                  labelText =
+                    label.textContent
+                      .replace(
+                        /\s+/g,
+                        " "
+                      )
+                      .trim();
+                }
+              }
+
+              if (!labelText) {
+                const parent =
+                  input.closest(
+                    "label"
+                  );
+
+                if (parent) {
+                  labelText =
+                    parent.textContent
+                      .replace(
+                        /\s+/g,
+                        " "
+                      )
+                      .trim();
+                }
+              }
+
+              if (!labelText) {
+                labelText =
+                  value;
+              }
+
+              /*
+               * Hapus teks yang terlalu berlebihan
+               * dari label bila ada.
+               */
+              labelText =
+                labelText
+                  .replace(
+                    /\s+/g,
+                    " "
+                  )
+                  .trim();
+
+              vipPackages.push({
+                id: value,
+                name: labelText,
+                price: "",
+                description: "",
+                benefits: ""
+              });
             }
           );
 
-          vipOptionsLoaded = true;
+          if (!vipPackages.length) {
+            throw new Error(
+              "Semua pilihan VIP kosong."
+            );
+          }
+
+          populateVipDropdown(
+            vipPackages
+          );
+
+          vipOptionsLoaded =
+            true;
+
+          vipOptionsContainer.style.display =
+            "block";
+
           return true;
 
         } catch (error) {
@@ -1000,45 +1341,96 @@
             error
           );
 
-          vipOptionsContainer.innerHTML =
-            '<div class="access-info" style="border-color:#e00000;color:#ff8b8b;">' +
-            'Opsi VIP tidak dapat dimuat. Silakan coba lagi.' +
-            '</div>';
-
+          vipPackages = [];
           vipOptionsLoaded = false;
+
+          vipPackageSelect.innerHTML =
+            '<option value="">Paket VIP tidak tersedia</option>';
+
+          vipOptionError.textContent =
+            "Opsi VIP tidak dapat dimuat. Silakan coba lagi.";
+
+          vipOptionError.classList.add(
+            "visible"
+          );
+
+          vipOptionsContainer.style.display =
+            "block";
+
           return false;
 
         } finally {
-          vipOptionsLoading = null;
+          vipOptionsLoading =
+            null;
         }
       })();
 
       return vipOptionsLoading;
     }
 
-    function getSelectedVipOption() {
-      const selected =
-        vipOptionsContainer.querySelector(
-          'input[name="vipOption"]:checked'
-        );
+    function populateVipDropdown(
+      packages
+    ) {
+      vipPackageSelect.innerHTML =
+        '<option value="">Pilih paket VIP...</option>';
 
-      return selected
-        ? String(selected.value || "").trim()
-        : "";
+      packages.forEach(
+        function(pkg, index) {
+          const option =
+            document.createElement(
+              "option"
+            );
+
+          option.value =
+            String(
+              pkg.id ||
+              pkg.name ||
+              index
+            );
+
+          option.textContent =
+            String(
+              pkg.name ||
+              ("VIP Package " +
+                (index + 1))
+            ) +
+            (
+              pkg.price
+                ? " — " +
+                  String(
+                    pkg.price
+                  )
+                : ""
+            );
+
+          option.dataset.index =
+            String(index);
+
+          vipPackageSelect.appendChild(
+            option
+          );
+        }
+      );
+
+      vipOptionsContainer.style.display =
+        "block";
+    }
+
+    function getSelectedVipOption() {
+      return getSelectedVipPackage();
     }
 
     function clearVipSelection() {
-      const vipInputs =
-        vipOptionsContainer.querySelectorAll(
-          'input[name="vipOption"]'
-        );
-
-      vipInputs.forEach(
-        function(input) {
-          input.checked = false;
-        }
+      vipPackageSelect.value = "";
+      vipOptionDetail.classList.remove(
+        "visible"
+      );
+      vipOptionDetail.innerHTML = "";
+      vipOptionError.classList.remove(
+        "visible"
       );
     }
+
 
     function updateAccessFields() {
       const access =
@@ -1072,6 +1464,7 @@
         );
 
         clearVipSelection();
+        vipOptionsLoaded = false;
       }
 
       /*
@@ -1354,7 +1747,7 @@
         whatsappInput.value.trim();
 
       const tablePackage =
-        getSelectedVipOption();
+        getSelectedVipPackage();
 
       const community =
         communityInput.value.trim();
@@ -1478,14 +1871,7 @@
             "Silakan pilih salah satu opsi VIP."
           );
 
-          const firstVipInput =
-            vipOptionsContainer.querySelector(
-              'input[name="vipOption"]'
-            );
-
-          if (firstVipInput) {
-            firstVipInput.focus();
-          }
+          vipPackageSelect.focus();
 
           return;
         }
