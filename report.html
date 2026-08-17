@@ -11,28 +11,11 @@
 
   <title>BOLD AFTER DARK — REPORT</title>
 
-  <!--
-    ============================================================
-    NAVIGATION CONFIG
-    ============================================================
+  <!-- =========================================================
+       NAVIGATION CONFIG
+       ========================================================= -->
 
-    File:
-    /config/navigation.js
-
-    Isi navigation.js saat ini:
-
-    const NAVIGATION = Object.freeze({
-      home: "https://boldafterdark.my.id/index.html",
-      admin: "https://boldafterdark.my.id/admin.html",
-      report: "https://boldafterdark.my.id/report.html",
-      scanner: "https://boldafterdark.my.id/scanner.html",
-      registration: "https://boldafterdark.my.id/registration/index.html"
-    });
-
-    report.html membaca konfigurasi tersebut.
-  -->
-
-  <script src="/config/navigation.js"></script>
+  <script src="https://boldafterdark.my.id/config/navigation.js"></script>
 
   <style>
 
@@ -152,12 +135,13 @@
       gap: 10px;
 
       margin-bottom: 18px;
-
       padding: 15px;
 
       background: rgba(17, 17, 17, 0.95);
 
-      border: 1px solid #2d2d2d;
+      border:
+        1px solid
+        #2d2d2d;
 
       border-radius: 13px;
     }
@@ -165,15 +149,17 @@
     .toolbar input,
     .toolbar select {
       flex: 1;
+
       min-width: 190px;
 
       padding: 13px 14px;
 
       background: #171717;
-
       color: var(--white);
 
-      border: 1px solid #3a3a3a;
+      border:
+        1px solid
+        #3a3a3a;
 
       border-radius: 8px;
 
@@ -189,7 +175,8 @@
       border-color: var(--red);
 
       box-shadow:
-        0 0 0 2px rgba(224, 0, 0, 0.12);
+        0 0 0 2px
+        rgba(224, 0, 0, 0.12);
     }
 
     .toolbar select {
@@ -219,10 +206,11 @@
 
     .btn-dark {
       background: #222;
-
       color: var(--white);
 
-      border: 1px solid #444;
+      border:
+        1px solid
+        #444;
     }
 
     .btn-dark:hover {
@@ -231,10 +219,11 @@
 
     .btn-outline-red {
       background: transparent;
-
       color: var(--white);
 
-      border: 1px solid var(--red);
+      border:
+        1px solid
+        var(--red);
     }
 
     .btn-outline-red:hover {
@@ -275,6 +264,37 @@
     }
 
     /* =========================================================
+       NAVIGATION ERROR
+       ========================================================= */
+
+    .navigation-error {
+      display: none;
+
+      margin-bottom: 18px;
+
+      padding: 12px 15px;
+
+      background:
+        rgba(224, 0, 0, 0.1);
+
+      border:
+        1px solid
+        rgba(224, 0, 0, 0.4);
+
+      border-left:
+        4px solid
+        var(--red);
+
+      border-radius: 9px;
+
+      color: #ff9a9a;
+
+      font-size: 13px;
+
+      line-height: 1.5;
+    }
+
+    /* =========================================================
        STATISTICS
        ========================================================= */
 
@@ -282,7 +302,10 @@
       display: grid;
 
       grid-template-columns:
-        repeat(6, minmax(0, 1fr));
+        repeat(
+          6,
+          minmax(0, 1fr)
+        );
 
       gap: 12px;
 
@@ -363,13 +386,15 @@
     .table-header {
       display: flex;
 
-      justify-content: space-between;
+      justify-content:
+        space-between;
 
       align-items: center;
 
       gap: 15px;
 
-      padding: 16px 18px;
+      padding:
+        16px 18px;
 
       border-bottom:
         1px solid
@@ -401,7 +426,8 @@
 
       min-width: 1200px;
 
-      border-collapse: collapse;
+      border-collapse:
+        collapse;
     }
 
     th {
@@ -413,7 +439,8 @@
 
       text-align: left;
 
-      padding: 13px 10px;
+      padding:
+        13px 10px;
 
       border-bottom:
         1px solid
@@ -425,7 +452,8 @@
     }
 
     td {
-      padding: 13px 10px;
+      padding:
+        13px 10px;
 
       border-bottom:
         1px solid
@@ -440,7 +468,8 @@
 
     tbody tr {
       transition:
-        background 0.15s ease;
+        background
+        0.15s ease;
     }
 
     tbody tr:hover td {
@@ -497,9 +526,11 @@
     .status {
       display: inline-block;
 
-      padding: 5px 9px;
+      padding:
+        5px 9px;
 
-      border-radius: 999px;
+      border-radius:
+        999px;
 
       font-size: 10px;
 
@@ -560,9 +591,11 @@
     .access {
       display: inline-block;
 
-      padding: 5px 9px;
+      padding:
+        5px 9px;
 
-      border-radius: 999px;
+      border-radius:
+        999px;
 
       font-size: 10px;
 
@@ -609,7 +642,8 @@
 
     .loading,
     .empty {
-      padding: 45px 20px;
+      padding:
+        45px 20px;
 
       text-align: center;
 
@@ -642,12 +676,16 @@
       border-radius: 50%;
 
       animation:
-        spin 0.8s linear infinite;
+        spin
+        0.8s
+        linear
+        infinite;
     }
 
     @keyframes spin {
       to {
-        transform: rotate(360deg);
+        transform:
+          rotate(360deg);
       }
     }
 
@@ -677,7 +715,10 @@
 
       .stats {
         grid-template-columns:
-          repeat(3, minmax(0, 1fr));
+          repeat(
+            3,
+            minmax(0, 1fr)
+          );
       }
 
     }
@@ -690,19 +731,20 @@
 
       .brand {
         font-size: 23px;
-
         letter-spacing: 2.5px;
       }
 
       .subtitle {
         font-size: 10px;
-
         letter-spacing: 2.5px;
       }
 
       .stats {
         grid-template-columns:
-          repeat(2, minmax(0, 1fr));
+          repeat(
+            2,
+            minmax(0, 1fr)
+          );
       }
 
       .stat-value {
@@ -717,13 +759,11 @@
       .toolbar select,
       .toolbar .btn {
         width: 100%;
-
         flex: none;
       }
 
       .table-header {
         align-items: flex-start;
-
         flex-direction: column;
       }
 
@@ -750,9 +790,7 @@
 
       body {
         background: #fff !important;
-
         color: #000 !important;
-
         padding: 0;
       }
 
@@ -762,7 +800,6 @@
 
       .header {
         color: #000;
-
         margin-bottom: 12px;
       }
 
@@ -786,13 +823,17 @@
 
       .toolbar,
       .footer,
-      .error {
+      .error,
+      .navigation-error {
         display: none !important;
       }
 
       .stats {
         grid-template-columns:
-          repeat(6, 1fr);
+          repeat(
+            6,
+            1fr
+          );
 
         gap: 6px;
 
@@ -841,13 +882,11 @@
 
       table {
         min-width: 0;
-
         width: 100%;
       }
 
       th {
         background: #eee !important;
-
         color: #000 !important;
 
         border-bottom:
@@ -868,9 +907,11 @@
       }
 
       tr.used-row td {
-        background: #ffe0e0 !important;
+        background:
+          #ffe0e0 !important;
 
-        color: #8b0000 !important;
+        color:
+          #8b0000 !important;
 
         border-top:
           1px solid
@@ -889,7 +930,6 @@
 
       tr.unused-row td {
         background: #fff !important;
-
         color: #000 !important;
       }
 
@@ -898,9 +938,11 @@
       }
 
       .status.used {
-        background: #ffe0e0 !important;
+        background:
+          #ffe0e0 !important;
 
-        color: #b00000 !important;
+        color:
+          #b00000 !important;
 
         border:
           1px solid
@@ -908,9 +950,11 @@
       }
 
       .status.unused {
-        background: #eee !important;
+        background:
+          #eee !important;
 
-        color: #333 !important;
+        color:
+          #333 !important;
 
         border:
           1px solid
@@ -919,9 +963,11 @@
 
       .status.cancelled,
       .status.unknown {
-        background: #eee !important;
+        background:
+          #eee !important;
 
-        color: #555 !important;
+        color:
+          #555 !important;
 
         border:
           1px solid
@@ -929,9 +975,11 @@
       }
 
       .access {
-        background: #fff !important;
+        background:
+          #fff !important;
 
-        color: #000 !important;
+        color:
+          #000 !important;
 
         border:
           1px solid
@@ -965,19 +1013,9 @@
     <div class="header">
 
       <div class="brand">
-
-        <span class="bold">
-          BOLD
-        </span>
-
-        <span class="after">
-          AFTER
-        </span>
-
-        <span class="dark">
-          DARK
-        </span>
-
+        <span class="bold">BOLD</span>
+        <span class="after"> AFTER</span>
+        <span class="dark"> DARK</span>
       </div>
 
       <div class="subtitle">
@@ -1092,7 +1130,17 @@
 
 
     <!-- =======================================================
-         ERROR
+         NAVIGATION ERROR
+         ======================================================= -->
+
+    <div
+      id="navigationError"
+      class="navigation-error"
+    ></div>
+
+
+    <!-- =======================================================
+         API ERROR
          ======================================================= -->
 
     <div
@@ -1206,7 +1254,7 @@
 
 
     <!-- =======================================================
-         PRINT INFORMATION
+         PRINT INFO
          ======================================================= -->
 
     <div class="print-only">
@@ -1275,49 +1323,27 @@
 
             <tr>
 
-              <th>
-                #
-              </th>
+              <th>#</th>
 
-              <th>
-                NAMA
-              </th>
+              <th>NAMA</th>
 
-              <th>
-                WHATSAPP
-              </th>
+              <th>WHATSAPP</th>
 
-              <th>
-                PASS ID
-              </th>
+              <th>PASS ID</th>
 
-              <th>
-                ACCESS
-              </th>
+              <th>ACCESS</th>
 
-              <th>
-                TABLE PACKAGE
-              </th>
+              <th>TABLE PACKAGE</th>
 
-              <th>
-                COMMUNITY
-              </th>
+              <th>COMMUNITY</th>
 
-              <th>
-                STATUS
-              </th>
+              <th>STATUS</th>
 
-              <th>
-                REGISTERED
-              </th>
+              <th>REGISTERED</th>
 
-              <th>
-                CHECK-IN
-              </th>
+              <th>CHECK-IN</th>
 
-              <th>
-                CHECKED BY
-              </th>
+              <th>CHECKED BY</th>
 
             </tr>
 
@@ -1343,6 +1369,10 @@
   </div>
 
 
+  <!-- =========================================================
+       JAVASCRIPT
+       ========================================================= -->
+
   <script>
 
     "use strict";
@@ -1355,14 +1385,238 @@
     const SUPABASE_URL =
       "https://yrvnmmascklkuzpjkwxn.supabase.co";
 
-
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_YGi3tPBuF9tW4KKnLJ5dDQ_AcBZ19WH";
-
 
     const API_URL =
       SUPABASE_URL +
       "/functions/v1/dynamic-service";
+
+
+    /* =========================================================
+       NAVIGATION
+       ========================================================= */
+
+    function getNavigationConfig() {
+
+      /*
+       * navigation.js sekarang menggunakan:
+       *
+       * const NAVIGATION = Object.freeze({
+       *   home: "...",
+       *   admin: "...",
+       *   report: "...",
+       *   scanner: "...",
+       *   registration: "..."
+       * });
+       *
+       * Kita juga mendukung window.BOLD_AFTER_DARK_NAVIGATION
+       * apabila nanti format navigation.js dikembangkan.
+       */
+
+      if (
+        typeof window.BOLD_AFTER_DARK_NAVIGATION === "object" &&
+        window.BOLD_AFTER_DARK_NAVIGATION !== null
+      ) {
+
+        return window.BOLD_AFTER_DARK_NAVIGATION;
+
+      }
+
+
+      if (
+        typeof NAVIGATION !== "undefined" &&
+        NAVIGATION &&
+        typeof NAVIGATION === "object"
+      ) {
+
+        return NAVIGATION;
+
+      }
+
+
+      return null;
+
+    }
+
+
+    function validateNavigation(
+      navigation
+    ) {
+
+      if (
+        !navigation ||
+        typeof navigation !== "object"
+      ) {
+
+        throw new Error(
+          "NAVIGATION tidak ditemukan."
+        );
+
+      }
+
+
+      const requiredPages = [
+        "home",
+        "admin",
+        "report",
+        "scanner",
+        "registration"
+      ];
+
+
+      requiredPages.forEach(
+        function(page) {
+
+          if (
+            typeof navigation[page] !== "string" ||
+            !navigation[page].trim()
+          ) {
+
+            throw new Error(
+              "Alamat '" +
+              page +
+              "' tidak tersedia di navigation.js."
+            );
+
+          }
+
+
+          let parsed;
+
+          try {
+
+            parsed =
+              new URL(
+                navigation[page]
+              );
+
+          } catch (error) {
+
+            throw new Error(
+              "URL '" +
+              page +
+              "' di navigation.js tidak valid."
+            );
+
+          }
+
+
+          if (
+            parsed.protocol !== "https:" &&
+            parsed.protocol !== "http:"
+          ) {
+
+            throw new Error(
+              "Protocol URL '" +
+              page +
+              "' tidak valid."
+            );
+
+          }
+
+        }
+      );
+
+
+      return true;
+
+    }
+
+
+    function navigateTo(
+      pageName
+    ) {
+
+      try {
+
+        const navigation =
+          getNavigationConfig();
+
+
+        validateNavigation(
+          navigation
+        );
+
+
+        const target =
+          navigation[pageName];
+
+
+        if (
+          typeof target !== "string" ||
+          !target.trim()
+        ) {
+
+          throw new Error(
+            "Alamat halaman '" +
+            pageName +
+            "' tidak tersedia."
+          );
+
+        }
+
+
+        window.location.assign(
+          target
+        );
+
+      } catch (error) {
+
+        console.error(
+          "NAVIGATION ERROR:",
+          error
+        );
+
+
+        showNavigationError(
+          error &&
+          error.message
+            ? error.message
+            : "Navigasi gagal."
+        );
+
+      }
+
+    }
+
+
+    function showNavigationError(
+      message
+    ) {
+
+      const box =
+        document.getElementById(
+          "navigationError"
+        );
+
+
+      box.textContent =
+        "Navigasi gagal. " +
+        message;
+
+
+      box.style.display =
+        "block";
+
+    }
+
+
+    function clearNavigationError() {
+
+      const box =
+        document.getElementById(
+          "navigationError"
+        );
+
+
+      box.textContent =
+        "";
+
+      box.style.display =
+        "none";
+
+    }
 
 
     /* =========================================================
@@ -1383,72 +1637,60 @@
         "searchInput"
       );
 
-
     const accessFilter =
       document.getElementById(
         "accessFilter"
       );
-
 
     const statusFilter =
       document.getElementById(
         "statusFilter"
       );
 
-
     const refreshButton =
       document.getElementById(
         "refreshButton"
       );
-
 
     const printButton =
       document.getElementById(
         "printButton"
       );
 
-
     const csvButton =
       document.getElementById(
         "csvButton"
       );
-
 
     const homeButton =
       document.getElementById(
         "homeButton"
       );
 
-
     const adminButton =
       document.getElementById(
         "adminButton"
       );
-
 
     const errorBox =
       document.getElementById(
         "errorBox"
       );
 
-
     const loading =
       document.getElementById(
         "loading"
       );
-
 
     const empty =
       document.getElementById(
         "empty"
       );
 
-
     const tableWrapper =
       document.getElementById(
         "tableWrapper"
       );
-
 
     const tableBody =
       document.getElementById(
@@ -1457,227 +1699,7 @@
 
 
     /* =========================================================
-       NAVIGATION
-       =========================================================
-
-       Penting:
-
-       navigation.js menggunakan:
-
-       const NAVIGATION = Object.freeze({...});
-
-       Karena itu kita tidak mengharuskan:
-
-       window.NAVIGATION
-
-       Yang kita lakukan adalah mengambil global lexical
-       variable NAVIGATION yang dibuat oleh navigation.js.
-
-       Kita juga menyediakan fallback absolut supaya tombol
-       tetap dapat bekerja bila browser tidak mengenali
-       konfigurasi tersebut.
-
-       Fallback hanya digunakan untuk navigasi.
-       ========================================================= */
-
-    const FALLBACK_NAVIGATION = Object.freeze({
-
-      home:
-        "https://boldafterdark.my.id/index.html",
-
-      admin:
-        "https://boldafterdark.my.id/admin.html",
-
-      report:
-        "https://boldafterdark.my.id/report.html",
-
-      scanner:
-        "https://boldafterdark.my.id/scanner.html",
-
-      registration:
-        "https://boldafterdark.my.id/registration/index.html"
-
-    });
-
-
-    function getNavigation() {
-
-      try {
-
-        if (
-          typeof NAVIGATION !== "undefined" &&
-          NAVIGATION &&
-          typeof NAVIGATION === "object"
-        ) {
-
-          return NAVIGATION;
-
-        }
-
-      } catch (error) {
-
-        console.warn(
-          "NAVIGATION tidak dapat dibaca:",
-          error
-        );
-
-      }
-
-      console.warn(
-        "NAVIGATION tidak ditemukan. " +
-        "Menggunakan fallback navigation."
-      );
-
-      return FALLBACK_NAVIGATION;
-
-    }
-
-
-    function getNavigationUrl(
-      pageName
-    ) {
-
-      const navigation =
-        getNavigation();
-
-
-      const target =
-        navigation &&
-        navigation[pageName];
-
-
-      if (
-        typeof target === "string" &&
-        target.trim()
-      ) {
-
-        try {
-
-          const url =
-            new URL(
-              target
-            );
-
-          if (
-            url.protocol === "https:" ||
-            url.protocol === "http:"
-          ) {
-
-            return url.href;
-
-          }
-
-        } catch (error) {
-
-          console.warn(
-            "URL navigasi tidak valid:",
-            pageName,
-            target
-          );
-
-        }
-
-      }
-
-
-      const fallback =
-        FALLBACK_NAVIGATION[
-          pageName
-        ];
-
-
-      if (
-        typeof fallback === "string" &&
-        fallback.trim()
-      ) {
-
-        return fallback;
-
-      }
-
-
-      return null;
-
-    }
-
-
-    async function navigateTo(
-      pageName
-    ) {
-
-      const target =
-        getNavigationUrl(
-          pageName
-        );
-
-
-      if (!target) {
-
-        showError(
-          "Navigasi gagal.\n" +
-          "Alamat halaman '" +
-          pageName +
-          "' tidak tersedia."
-        );
-
-        return;
-
-      }
-
-
-      console.log(
-        "REPORT NAVIGATION:",
-        pageName,
-        "→",
-        target
-      );
-
-
-      window.location.assign(
-        target
-      );
-
-    }
-
-
-    /* =========================================================
-       NAVIGATION BUTTONS
-       =========================================================
-
-       Listener dipasang langsung dan tidak bergantung
-       pada loadReport().
-       ========================================================= */
-
-    homeButton.addEventListener(
-      "click",
-      function(event) {
-
-        event.preventDefault();
-
-        navigateTo(
-          "home"
-        );
-
-      }
-    );
-
-
-    adminButton.addEventListener(
-      "click",
-      function(event) {
-
-        event.preventDefault();
-
-        navigateTo(
-          "admin"
-        );
-
-      }
-    );
-
-
-    /* =========================================================
-       HTML ESCAPE
+       ESCAPE HTML
        ========================================================= */
 
     function escapeHtml(
@@ -1689,27 +1711,22 @@
           ? ""
           : value
       )
-
         .replace(
           /&/g,
           "&amp;"
         )
-
         .replace(
           /</g,
           "&lt;"
         )
-
         .replace(
           />/g,
           "&gt;"
         )
-
         .replace(
           /"/g,
           "&quot;"
         )
-
         .replace(
           /'/g,
           "&#039;"
@@ -1719,7 +1736,7 @@
 
 
     /* =========================================================
-       STATUS NORMALIZATION
+       STATUS
        ========================================================= */
 
     function normalizeStatus(
@@ -1770,7 +1787,7 @@
 
 
     /* =========================================================
-       ACCESS NORMALIZATION
+       ACCESS
        ========================================================= */
 
     function normalizeAccess(
@@ -1795,16 +1812,12 @@
     ) {
 
       if (!value) {
-
         return "-";
-
       }
 
 
       const date =
-        new Date(
-          value
-        );
+        new Date(value);
 
 
       if (
@@ -1813,9 +1826,7 @@
         )
       ) {
 
-        return String(
-          value
-        );
+        return String(value);
 
       }
 
@@ -1823,11 +1834,8 @@
       return date.toLocaleString(
         "id-ID",
         {
-          dateStyle:
-            "short",
-
-          timeStyle:
-            "medium"
+          dateStyle: "short",
+          timeStyle: "medium"
         }
       );
 
@@ -1846,6 +1854,7 @@
         message ||
         "Terjadi kesalahan.";
 
+
       errorBox.style.display =
         "block";
 
@@ -1856,6 +1865,7 @@
 
       errorBox.textContent =
         "";
+
 
       errorBox.style.display =
         "none";
@@ -1870,6 +1880,8 @@
     async function loadReport() {
 
       hideError();
+
+      clearNavigationError();
 
 
       loading.style.display =
@@ -1910,12 +1922,11 @@
             "?" +
             params.toString(),
             {
+              method: "GET",
 
-              method:
-                "GET",
+              cache: "no-store",
 
               headers: {
-
                 "Accept":
                   "application/json",
 
@@ -1925,9 +1936,7 @@
                 "Authorization":
                   "Bearer " +
                   SUPABASE_PUBLISHABLE_KEY
-
               }
-
             }
           );
 
@@ -1948,17 +1957,14 @@
         );
 
 
-        let data =
-          null;
+        let data = null;
 
 
         try {
 
           data =
             raw
-              ? JSON.parse(
-                  raw
-                )
+              ? JSON.parse(raw)
               : null;
 
         } catch (parseError) {
@@ -1976,9 +1982,10 @@
             data &&
             data.message
               ? data.message
-              :
+              : (
                 "Gagal mengambil laporan. HTTP " +
                 response.status
+              )
           );
 
         }
@@ -2017,17 +2024,12 @@
         );
 
 
-        allRows =
-          [];
+        allRows = [];
+
+        filteredRows = [];
 
 
-        filteredRows =
-          [];
-
-
-        updateStatistics(
-          []
-        );
+        updateStatistics([]);
 
 
         tableBody.innerHTML =
@@ -2131,23 +2133,14 @@
 
               const haystack =
                 [
-
                   row.name,
-
                   row.whatsapp,
-
                   row.pass_id,
-
                   row.community,
-
                   row.table_package,
-
                   row.access_type,
-
                   row.pass_status
-
                 ]
-
                   .map(
                     function(value) {
 
@@ -2157,10 +2150,7 @@
 
                     }
                   )
-
-                  .join(
-                    " "
-                  );
+                  .join(" ");
 
 
               if (
@@ -2210,11 +2200,9 @@
         rows.filter(
           function(row) {
 
-            return (
-              normalizeAccess(
-                row.access_type
-              ) === "FREE"
-            );
+            return normalizeAccess(
+              row.access_type
+            ) === "FREE";
 
           }
         ).length;
@@ -2224,11 +2212,9 @@
         rows.filter(
           function(row) {
 
-            return (
-              normalizeAccess(
-                row.access_type
-              ) === "VIP"
-            );
+            return normalizeAccess(
+              row.access_type
+            ) === "VIP";
 
           }
         ).length;
@@ -2238,11 +2224,9 @@
         rows.filter(
           function(row) {
 
-            return (
-              normalizeAccess(
-                row.access_type
-              ) === "BOLD RIDERS"
-            );
+            return normalizeAccess(
+              row.access_type
+            ) === "BOLD RIDERS";
 
           }
         ).length;
@@ -2252,11 +2236,9 @@
         rows.filter(
           function(row) {
 
-            return (
-              normalizeStatus(
-                row.pass_status
-              ) === "USED"
-            );
+            return normalizeStatus(
+              row.pass_status
+            ) === "USED";
 
           }
         ).length;
@@ -2266,11 +2248,9 @@
         rows.filter(
           function(row) {
 
-            return (
-              normalizeStatus(
-                row.pass_status
-              ) === "UNUSED"
-            );
+            return normalizeStatus(
+              row.pass_status
+            ) === "UNUSED";
 
           }
         ).length;
@@ -2339,10 +2319,7 @@
         className =
           "vip";
 
-      }
-
-
-      else if (
+      } else if (
         value === "BOLD RIDERS"
       ) {
 
@@ -2357,8 +2334,7 @@
         className +
         '">' +
         escapeHtml(
-          value ||
-          "FREE"
+          value || "FREE"
         ) +
         "</span>"
       );
@@ -2385,8 +2361,7 @@
 
 
       let label =
-        value ||
-        "-";
+        value || "-";
 
 
       if (
@@ -2399,10 +2374,7 @@
         label =
           "USED";
 
-      }
-
-
-      else if (
+      } else if (
         value === "UNUSED"
       ) {
 
@@ -2412,10 +2384,7 @@
         label =
           "UNUSED";
 
-      }
-
-
-      else if (
+      } else if (
         value === "CANCELLED"
       ) {
 
@@ -2442,7 +2411,7 @@
 
 
     /* =========================================================
-       TABLE
+       RENDER TABLE
        ========================================================= */
 
     function renderTable(
@@ -2506,10 +2475,7 @@
               "used-row"
             );
 
-          }
-
-
-          else if (
+          } else if (
             status === "UNUSED"
           ) {
 
@@ -2520,86 +2486,72 @@
           }
 
 
-          tr.innerHTML = `
+          tr.innerHTML =
+            `
+              <td>
+                ${escapeHtml(index + 1)}
+              </td>
 
-            <td>
-              ${escapeHtml(
-                index + 1
-              )}
-            </td>
+              <td>
+                <strong>
+                  ${escapeHtml(row.name)}
+                </strong>
+              </td>
 
-            <td>
-              <strong>
+              <td>
+                ${escapeHtml(row.whatsapp)}
+              </td>
+
+              <td>
+                <strong>
+                  ${escapeHtml(row.pass_id)}
+                </strong>
+              </td>
+
+              <td>
+                ${accessBadge(row.access_type)}
+              </td>
+
+              <td>
                 ${escapeHtml(
-                  row.name
+                  row.table_package || "-"
                 )}
-              </strong>
-            </td>
+              </td>
 
-            <td>
-              ${escapeHtml(
-                row.whatsapp
-              )}
-            </td>
-
-            <td>
-              <strong>
+              <td>
                 ${escapeHtml(
-                  row.pass_id
+                  row.community || "-"
                 )}
-              </strong>
-            </td>
+              </td>
 
-            <td>
-              ${accessBadge(
-                row.access_type
-              )}
-            </td>
+              <td>
+                ${statusBadge(
+                  row.pass_status
+                )}
+              </td>
 
-            <td>
-              ${escapeHtml(
-                row.table_package ||
-                "-"
-              )}
-            </td>
+              <td>
+                ${escapeHtml(
+                  formatDate(
+                    row.created_at
+                  )
+                )}
+              </td>
 
-            <td>
-              ${escapeHtml(
-                row.community ||
-                "-"
-              )}
-            </td>
+              <td>
+                ${escapeHtml(
+                  formatDate(
+                    row.checked_in_at
+                  )
+                )}
+              </td>
 
-            <td>
-              ${statusBadge(
-                row.pass_status
-              )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-                formatDate(
-                  row.created_at
-                )
-              )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-                formatDate(
-                  row.checked_in_at
-                )
-              )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-                row.checked_in_by ||
-                "-"
-              )}
-            </td>
-
-          `;
+              <td>
+                ${escapeHtml(
+                  row.checked_in_by || "-"
+                )}
+              </td>
+            `;
 
 
           tableBody.appendChild(
@@ -2613,7 +2565,7 @@
 
 
     /* =========================================================
-       CSV ESCAPE
+       CSV
        ========================================================= */
 
     function csvEscape(
@@ -2640,10 +2592,6 @@
     }
 
 
-    /* =========================================================
-       DOWNLOAD CSV
-       ========================================================= */
-
     function downloadCsv() {
 
       if (
@@ -2662,44 +2610,27 @@
 
 
       const headers = [
-
         "No",
-
         "Nama",
-
         "WhatsApp",
-
         "Pass ID",
-
         "Access",
-
         "Table Package",
-
         "Community",
-
         "Stay Connected",
-
         "Status",
-
         "Registered At",
-
         "Check In At",
-
         "Checked By"
-
       ];
 
 
       const lines = [
-
         headers
           .map(
             csvEscape
           )
-          .join(
-            ","
-          )
-
+          .join(",")
       ];
 
 
@@ -2707,45 +2638,26 @@
         function(row, index) {
 
           lines.push(
-
             [
-
               index + 1,
-
               row.name,
-
               row.whatsapp,
-
               row.pass_id,
-
               row.access_type,
-
               row.table_package,
-
               row.community,
-
               row.stay_connected,
-
               normalizeStatus(
                 row.pass_status
               ),
-
               row.created_at,
-
               row.checked_in_at,
-
               row.checked_in_by
-
             ]
-
               .map(
                 csvEscape
               )
-
-              .join(
-                ","
-              )
-
+              .join(",")
           );
 
         }
@@ -2827,58 +2739,151 @@
 
 
     /* =========================================================
-       EVENT LISTENERS
+       NAVIGATION BUTTONS
+       ========================================================= */
+
+    homeButton.addEventListener(
+      "click",
+      function(event) {
+
+        event.preventDefault();
+
+        navigateTo(
+          "home"
+        );
+
+      }
+    );
+
+
+    adminButton.addEventListener(
+      "click",
+      function(event) {
+
+        event.preventDefault();
+
+        navigateTo(
+          "admin"
+        );
+
+      }
+    );
+
+
+    /* =========================================================
+       OTHER BUTTONS
        ========================================================= */
 
     refreshButton.addEventListener(
       "click",
-      loadReport
+      function() {
+
+        loadReport();
+
+      }
     );
 
 
     printButton.addEventListener(
       "click",
-      printReport
+      function() {
+
+        printReport();
+
+      }
     );
 
 
     csvButton.addEventListener(
       "click",
-      downloadCsv
+      function() {
+
+        downloadCsv();
+
+      }
     );
 
 
+    /* =========================================================
+       FILTER EVENTS
+       ========================================================= */
+
     searchInput.addEventListener(
       "input",
-      applyFilters
+      function() {
+
+        applyFilters();
+
+      }
     );
 
 
     accessFilter.addEventListener(
       "change",
-      applyFilters
+      function() {
+
+        applyFilters();
+
+      }
     );
 
 
     statusFilter.addEventListener(
       "change",
-      applyFilters
+      function() {
+
+        applyFilters();
+
+      }
     );
 
 
     /* =========================================================
        PAGE LOAD
-       =========================================================
-
-       Navigation TIDAK dipanggil di sini.
-
-       Jadi load report tidak akan gagal hanya karena
-       navigation.js bermasalah.
        ========================================================= */
 
     window.addEventListener(
       "load",
       function() {
+
+        /*
+         * Validasi navigation.js hanya sekali.
+         *
+         * Tidak melakukan fetch.
+         * Tidak menampilkan isi JavaScript
+         * ke halaman.
+         */
+
+        try {
+
+          const navigation =
+            getNavigationConfig();
+
+
+          validateNavigation(
+            navigation
+          );
+
+
+          clearNavigationError();
+
+        } catch (error) {
+
+          console.error(
+            "NAVIGATION CONFIG ERROR:",
+            error
+          );
+
+
+          showNavigationError(
+            error &&
+            error.message
+              ? error.message
+              : "NAVIGATION tidak ditemukan."
+          );
+
+        }
+
 
         loadReport();
 
