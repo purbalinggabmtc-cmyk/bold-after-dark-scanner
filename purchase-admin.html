@@ -1380,6 +1380,9 @@
               .filter(Boolean)
           : [];
 
+      const lineBreak =
+        String.fromCharCode(10);
+
       return [
         "Halo " +
           (
@@ -1404,13 +1407,13 @@
         "",
         "Nomor Undian:",
         numbers.length
-          ? numbers.join("\n")
+          ? numbers.join(lineBreak)
           : "-",
         "",
         "Simpan pesan ini sebagai bukti nomor undian Anda.",
         "",
         "Terima kasih."
-      ].join("\n");
+      ].join(lineBreak);
     }
 
 
