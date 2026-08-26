@@ -970,6 +970,15 @@
             >
               SUBMIT BUKTI PEMBAYARAN
             </button>
+
+            <button
+              id="confirmViaWhatsappButton"
+              class="btn-whatsapp hidden"
+              type="button"
+              style="margin-top:10px;"
+            >
+              KONFIRMASI VIA WHATSAPP
+            </button>
           </div>
         </div>
       </div>
@@ -1174,6 +1183,13 @@
     const WHATSAPP_NUMBER =
       "6282324854187";
 
+    /*
+     * Admin penerima konfirmasi pembayaran.
+     * Format internasional Indonesia: 62 + nomor tanpa angka 0 di depan.
+     */
+    const PAYMENT_ADMIN_WHATSAPP =
+      "6282324854187";
+
     const MESRAN_UNIT_PRICE =
       20000;
 
@@ -1281,6 +1297,9 @@
 
     const submitLookupPaymentProofButton =
       document.getElementById("submitLookupPaymentProof");
+
+    const confirmViaWhatsappButton =
+      document.getElementById("confirmViaWhatsappButton");
 
     const accessTypeInput =
       document.getElementById("accessType");
@@ -1696,6 +1715,10 @@ const submitButton =
         return;
       }
 
+      confirmViaWhatsappButton.classList.add(
+        "hidden"
+      );
+
       lookupPurchaseButton.disabled =
         true;
 
@@ -1813,6 +1836,10 @@ const submitButton =
           "hidden"
         );
 
+        confirmViaWhatsappButton.classList.add(
+          "hidden"
+        );
+
         showMessage(
           "error",
           error &&
@@ -1828,6 +1855,82 @@ const submitButton =
         lookupPurchaseButton.textContent =
           "CEK ID PEMBELIAN";
       }
+    }
+
+
+    function isMobileDevice() {
+      return /Android|iPhone|iPad|iPod|Mobile/i.test(
+        navigator.userAgent || ""
+      );
+    }
+
+
+    function buildPaymentConfirmationMessage() {
+      const purchaseId =
+        lookupResultPurchaseId.textContent.trim();
+
+      const buyerName =
+        lookupResultName.textContent.trim();
+
+      const quantity =
+        lookupResultQuantity.textContent.trim();
+
+      const total =
+        lookupResultTotal.textContent.trim();
+
+      const paymentMethod =
+        lookupResultPaymentMethod.textContent.trim();
+
+      return [
+        "Halo Admin BOLD AFTER DARK,",
+        "",
+        "Saya sudah mengirim bukti pembayaran.",
+        "",
+        "ID Pembelian: " + purchaseId,
+        "Nama: " + buyerName,
+        "Jumlah: " + quantity,
+        "Total: " + total,
+        "Metode: " + paymentMethod,
+        "",
+        "Mohon dilakukan verifikasi."
+      ].join("\n");
+    }
+
+
+    function buildWhatsAppConfirmationUrl() {
+      const message =
+        buildPaymentConfirmationMessage();
+
+      const encodedMessage =
+        encodeURIComponent(message);
+
+      if (isMobileDevice()) {
+        return (
+          "https://wa.me/" +
+          PAYMENT_ADMIN_WHATSAPP +
+          "?text=" +
+          encodedMessage
+        );
+      }
+
+      return (
+        "https://web.whatsapp.com/send?phone=" +
+        PAYMENT_ADMIN_WHATSAPP +
+        "&text=" +
+        encodedMessage
+      );
+    }
+
+
+    function openPaymentConfirmationWhatsApp() {
+      const url =
+        buildWhatsAppConfirmationUrl();
+
+      window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer"
+      );
     }
 
 
@@ -1968,11 +2071,15 @@ const submitButton =
 
         showMessage(
           "success",
-          "Bukti pembayaran berhasil dikirim dan menunggu verifikasi admin."
+          "Bukti pembayaran berhasil dikirim. Silakan konfirmasi ke admin melalui WhatsApp."
         );
 
         lookupPaymentProofInput.value =
           "";
+
+        confirmViaWhatsappButton.classList.remove(
+          "hidden"
+        );
 
       } catch (error) {
         console.error(
@@ -3435,6 +3542,12 @@ boldRidersId:
     savePurchaseDetailButton.addEventListener(
       "click",
       savePurchaseDetailAsJpg
+    );
+
+
+    confirmViaWhatsappButton.addEventListener(
+      "click",
+      openPaymentConfirmationWhatsApp
     );
 
 
