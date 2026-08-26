@@ -368,6 +368,27 @@
       box-shadow: 0 0 18px rgba(255, 0, 0, 0.28);
     }
 
+
+    .whatsapp-link-button {
+      display: block;
+      width: 100%;
+      min-height: 48px;
+      padding: 13px 18px;
+      margin-top: 10px;
+      border-radius: 9px;
+      background: #128c4a;
+      color: #ffffff;
+      text-decoration: none;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 22px;
+    }
+
+    .whatsapp-link-button:hover {
+      background: #16a557;
+    }
+
     .footer {
       text-align: center;
       color: #555;
@@ -971,14 +992,15 @@
               SUBMIT BUKTI PEMBAYARAN
             </button>
 
-            <button
+            <a
               id="confirmViaWhatsappButton"
-              class="btn-whatsapp hidden"
-              type="button"
-              style="margin-top:10px;"
+              class="whatsapp-link-button hidden"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               KONFIRMASI VIA WHATSAPP
-            </button>
+            </a>
           </div>
         </div>
       </div>
@@ -1968,37 +1990,21 @@ const submitButton =
           PAYMENT_ADMIN_WHATSAPP
         ) +
         "&text=" +
-        encodedMessage +
-        "&type=phone_number&app_absent=0"
+        encodedMessage
       );
     }
 
 
-    function openPaymentConfirmationWhatsApp() {
+    function preparePaymentConfirmationWhatsAppLink() {
       const url =
         buildWhatsAppConfirmationUrl();
 
-      /*
-       * Karena fungsi ini dipanggil langsung dari klik user,
-       * membuka tab baru tidak dianggap popup otomatis oleh
-       * browser pada kondisi normal.
-       */
-      const newWindow =
-        window.open(
-          url,
-          "_blank",
-          "noopener,noreferrer"
-        );
+      confirmViaWhatsappButton.href =
+        url;
 
-      /*
-       * Fallback bila browser memblokir tab baru:
-       * lanjutkan di tab yang sama.
-       */
-      if (!newWindow) {
-        window.location.assign(
-          url
-        );
-      }
+      confirmViaWhatsappButton.classList.remove(
+        "hidden"
+      );
     }
 
 
@@ -2145,9 +2151,7 @@ const submitButton =
         lookupPaymentProofInput.value =
           "";
 
-        confirmViaWhatsappButton.classList.remove(
-          "hidden"
-        );
+        preparePaymentConfirmationWhatsAppLink();
 
       } catch (error) {
         console.error(
@@ -3610,12 +3614,6 @@ boldRidersId:
     savePurchaseDetailButton.addEventListener(
       "click",
       savePurchaseDetailAsJpg
-    );
-
-
-    confirmViaWhatsappButton.addEventListener(
-      "click",
-      openPaymentConfirmationWhatsApp
     );
 
 
