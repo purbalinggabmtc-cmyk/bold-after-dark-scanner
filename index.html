@@ -104,17 +104,6 @@
       transform: scale(0.98);
     }
 
-    .btn-registration {
-      background: #ffffff;
-      color: #000000;
-      border: 1px solid #ffffff;
-    }
-
-    .btn-registration:hover {
-      background: #eeeeee;
-      border-color: #eeeeee;
-    }
-
     .btn-scanner {
       background: var(--red);
       color: #ffffff;
@@ -135,14 +124,6 @@
     .btn-admin:hover {
       background: #eeeeee;
       border-color: #eeeeee;
-    }
-
-    .copy-status {
-      min-height: 18px;
-      margin-top: 14px;
-      color: #55e68b;
-      font-size: 12px;
-      font-weight: 700;
     }
 
     .footer {
@@ -192,14 +173,6 @@
       <div class="button-list">
 
         <button
-          id="copyLinkButton"
-          class="btn-registration"
-          type="button"
-        >
-          COPY LINK FORM REGISTRATION
-        </button>
-
-        <button
           id="scannerButton"
           class="btn-scanner"
           type="button"
@@ -216,11 +189,6 @@
         </button>
 
       </div>
-
-      <div
-        id="copyStatus"
-        class="copy-status"
-      ></div>
 
     </div>
 
@@ -239,18 +207,12 @@
      * HOME:
      * /
      *
-     * REGISTRATION:
-     * /registration/
-     *
      * SCANNER:
      * /scanner.html
      *
      * ADMIN:
      * /admin.html
      */
-
-    const REGISTRATION_URL =
-      "https://boldafterdark.my.id/registration/";
 
     const SCANNER_URL =
       "https://boldafterdark.my.id/scanner.html";
@@ -259,90 +221,11 @@
       "https://boldafterdark.my.id/admin.html";
 
 
-    const copyLinkButton =
-      document.getElementById("copyLinkButton");
-
     const scannerButton =
       document.getElementById("scannerButton");
 
     const adminButton =
       document.getElementById("adminButton");
-
-    const copyStatus =
-      document.getElementById("copyStatus");
-
-
-    async function copyRegistrationLink() {
-
-      copyStatus.textContent = "";
-
-      try {
-
-        if (
-          navigator.clipboard &&
-          window.isSecureContext
-        ) {
-
-          await navigator.clipboard.writeText(
-            REGISTRATION_URL
-          );
-
-        } else {
-
-          const textarea =
-            document.createElement("textarea");
-
-          textarea.value =
-            REGISTRATION_URL;
-
-          textarea.style.position =
-            "fixed";
-
-          textarea.style.left =
-            "-9999px";
-
-          document.body.appendChild(
-            textarea
-          );
-
-          textarea.focus();
-          textarea.select();
-
-          const success =
-            document.execCommand("copy");
-
-          document.body.removeChild(
-            textarea
-          );
-
-          if (!success) {
-            throw new Error(
-              "Copy gagal."
-            );
-          }
-        }
-
-        copyStatus.textContent =
-          "Link Form Registration berhasil disalin.";
-
-        setTimeout(
-          function() {
-            copyStatus.textContent = "";
-          },
-          2500
-        );
-
-      } catch (error) {
-
-        console.error(
-          "COPY LINK ERROR:",
-          error
-        );
-
-        copyStatus.textContent =
-          "Tidak dapat menyalin link.";
-      }
-    }
 
 
     function openScanner() {
@@ -359,12 +242,6 @@
         ADMIN_URL;
 
     }
-
-
-    copyLinkButton.addEventListener(
-      "click",
-      copyRegistrationLink
-    );
 
 
     scannerButton.addEventListener(
