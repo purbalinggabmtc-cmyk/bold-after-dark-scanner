@@ -1859,8 +1859,46 @@ const submitButton =
 
 
     function isMobileDevice() {
-      return /Android|iPhone|iPad|iPod|Mobile/i.test(
-        navigator.userAgent || ""
+      /*
+       * Prioritas pertama: User-Agent Client Hints
+       * bila browser mendukungnya.
+       */
+      if (
+        navigator.userAgentData &&
+        typeof navigator.userAgentData.mobile === "boolean"
+      ) {
+        return navigator.userAgentData.mobile;
+      }
+
+      /*
+       * Fallback untuk browser yang belum mendukung
+       * navigator.userAgentData.
+       */
+      const userAgent =
+        String(
+          navigator.userAgent || ""
+        );
+
+      const mobileByUserAgent =
+        /Android|iPhone|iPod|Mobile|IEMobile|Opera Mini/i.test(
+          userAgent
+        );
+
+      /*
+       * iPad modern kadang melaporkan diri sebagai Mac.
+       * maxTouchPoints membantu membedakan iPad dari Mac desktop.
+       */
+      const isIPadLike =
+        /Macintosh/i.test(
+          userAgent
+        ) &&
+        Number(
+          navigator.maxTouchPoints || 0
+        ) > 1;
+
+      return (
+        mobileByUserAgent ||
+        isIPadLike
       );
     }
 
@@ -1905,6 +1943,11 @@ const submitButton =
         encodeURIComponent(message);
 
       if (isMobileDevice()) {
+        /*
+         * Mobile:
+         * wa.me membiarkan OS/browser meneruskan ke aplikasi
+         * WhatsApp apabila tersedia.
+         */
         return (
           "https://wa.me/" +
           PAYMENT_ADMIN_WHATSAPP +
@@ -1913,11 +1956,20 @@ const submitButton =
         );
       }
 
+      /*
+       * Desktop:
+       * gunakan domain WhatsApp Web secara eksplisit.
+       * Tidak memakai whatsapp:// atau api.whatsapp.com
+       * agar browser diarahkan ke versi web.
+       */
       return (
         "https://web.whatsapp.com/send?phone=" +
-        PAYMENT_ADMIN_WHATSAPP +
+        encodeURIComponent(
+          PAYMENT_ADMIN_WHATSAPP
+        ) +
         "&text=" +
-        encodedMessage
+        encodedMessage +
+        "&type=phone_number&app_absent=0"
       );
     }
 
@@ -1926,11 +1978,27 @@ const submitButton =
       const url =
         buildWhatsAppConfirmationUrl();
 
-      window.open(
-        url,
-        "_blank",
-        "noopener,noreferrer"
-      );
+      /*
+       * Karena fungsi ini dipanggil langsung dari klik user,
+       * membuka tab baru tidak dianggap popup otomatis oleh
+       * browser pada kondisi normal.
+       */
+      const newWindow =
+        window.open(
+          url,
+          "_blank",
+          "noopener,noreferrer"
+        );
+
+      /*
+       * Fallback bila browser memblokir tab baru:
+       * lanjutkan di tab yang sama.
+       */
+      if (!newWindow) {
+        window.location.assign(
+          url
+        );
+      }
     }
 
 
