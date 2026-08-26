@@ -992,22 +992,27 @@
               SUBMIT BUKTI PEMBAYARAN
             </button>
 
-            <a
-              id="confirmViaWhatsappButton"
-              class="whatsapp-link-button hidden"
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              KONFIRMASI VIA WHATSAPP
-            </a>
-
             <div
-              id="whatsappHelpText"
-              class="field-help hidden"
-              style="margin-top:8px;"
+              id="whatsappConfirmationBox"
+              class="hidden"
+              style="margin-top:10px;"
             >
-              Di komputer, link ini akan diteruskan ke WhatsApp Web. Di ponsel, link akan diteruskan ke WhatsApp.
+              <a
+                id="confirmViaWhatsappLink"
+                class="whatsapp-link-button"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                KONFIRMASI VIA WHATSAPP
+              </a>
+
+              <div
+                class="field-help"
+                style="margin-top:8px;"
+              >
+                Link WhatsApp ini baru dibuat setelah bukti pembayaran berhasil diunggah.
+              </div>
             </div>
           </div>
         </div>
@@ -1328,11 +1333,11 @@
     const submitLookupPaymentProofButton =
       document.getElementById("submitLookupPaymentProof");
 
-    const confirmViaWhatsappButton =
-      document.getElementById("confirmViaWhatsappButton");
+    const whatsappConfirmationBox =
+      document.getElementById("whatsappConfirmationBox");
 
-    const whatsappHelpText =
-      document.getElementById("whatsappHelpText");
+    const confirmViaWhatsappLink =
+      document.getElementById("confirmViaWhatsappLink");
 
     const accessTypeInput =
       document.getElementById("accessType");
@@ -1748,11 +1753,7 @@ const submitButton =
         return;
       }
 
-      confirmViaWhatsappButton.classList.add(
-        "hidden"
-      );
-
-      whatsappHelpText.classList.add(
+      whatsappConfirmationBox.classList.add(
         "hidden"
       );
 
@@ -1873,11 +1874,7 @@ const submitButton =
           "hidden"
         );
 
-        confirmViaWhatsappButton.classList.add(
-          "hidden"
-        );
-
-        whatsappHelpText.classList.add(
+        whatsappConfirmationBox.classList.add(
           "hidden"
         );
 
@@ -1945,17 +1942,10 @@ const submitButton =
 
 
     function preparePaymentConfirmationWhatsAppLink() {
-      const url =
+      confirmViaWhatsappLink.href =
         buildWhatsAppConfirmationUrl();
 
-      confirmViaWhatsappButton.href =
-        url;
-
-      confirmViaWhatsappButton.classList.remove(
-        "hidden"
-      );
-
-      whatsappHelpText.classList.remove(
+      whatsappConfirmationBox.classList.remove(
         "hidden"
       );
     }
@@ -2148,11 +2138,7 @@ const submitButton =
         "hidden"
       );
 
-      confirmViaWhatsappButton.classList.add(
-        "hidden"
-      );
-
-      whatsappHelpText.classList.add(
+      whatsappConfirmationBox.classList.add(
         "hidden"
       );
 
