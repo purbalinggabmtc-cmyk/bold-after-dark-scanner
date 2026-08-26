@@ -829,24 +829,7 @@
               -
             </div>
           </div>
-
-          <div class="field">
-            <label for="paymentProof">
-              Bukti Pembayaran <span class="required">*</span>
-            </label>
-
-            <input
-              id="paymentProof"
-              name="paymentProof"
-              type="file"
-              accept=".jpg,.jpeg,.png,.webp,.pdf,image/jpeg,image/png,image/webp,application/pdf"
-            >
-
-            <div class="field-help">
-              Upload JPG, PNG, WEBP, atau PDF. Maksimal 5 MB.
-            </div>
-          </div>
-        </div>
+</div>
 
 
         <div
@@ -882,6 +865,115 @@
         </button>
 
       </div>
+
+
+      <div class="button-row">
+        <button
+          id="openPaymentUploadButton"
+          class="btn-whatsapp"
+          type="button"
+        >
+          UPLOAD BUKTI PEMBAYARAN
+        </button>
+      </div>
+
+      <div
+        id="paymentLookupBox"
+        class="result"
+      >
+        <div class="success-card">
+          <div class="section-title">
+            UPLOAD BUKTI PEMBAYARAN
+          </div>
+
+          <div class="field">
+            <label for="lookupPurchaseId">
+              ID Pembelian <span class="required">*</span>
+            </label>
+
+            <input
+              id="lookupPurchaseId"
+              type="text"
+              inputmode="numeric"
+              maxlength="4"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="Masukkan 4 digit ID pembelian"
+            >
+          </div>
+
+          <button
+            id="lookupPurchaseButton"
+            class="btn-primary"
+            type="button"
+          >
+            CEK ID PEMBELIAN
+          </button>
+
+          <div
+            id="lookupPurchaseDetails"
+            class="hidden"
+            style="margin-top:16px;"
+          >
+            <div class="result-grid">
+              <div class="result-item">
+                <div class="result-label">ID Pembelian</div>
+                <div id="lookupResultPurchaseId" class="result-value">-</div>
+              </div>
+
+              <div class="result-item">
+                <div class="result-label">Nama</div>
+                <div id="lookupResultName" class="result-value">-</div>
+              </div>
+
+              <div class="result-item">
+                <div class="result-label">Jumlah</div>
+                <div id="lookupResultQuantity" class="result-value">-</div>
+              </div>
+
+              <div class="result-item">
+                <div class="result-label">Total</div>
+                <div id="lookupResultTotal" class="result-value">-</div>
+              </div>
+
+              <div class="result-item">
+                <div class="result-label">Metode</div>
+                <div id="lookupResultPaymentMethod" class="result-value">-</div>
+              </div>
+
+              <div class="result-item">
+                <div class="result-label">Tujuan Pembayaran</div>
+                <div id="lookupResultPaymentAccount" class="result-value">-</div>
+              </div>
+            </div>
+
+            <div class="field" style="margin-top:16px;">
+              <label for="lookupPaymentProof">
+                Bukti Pembayaran <span class="required">*</span>
+              </label>
+
+              <input
+                id="lookupPaymentProof"
+                type="file"
+                accept=".jpg,.jpeg,.png,.webp,.pdf,image/jpeg,image/png,image/webp,application/pdf"
+              >
+
+              <div class="field-help">
+                Upload JPG, PNG, WEBP, atau PDF. Maksimal 5 MB.
+              </div>
+            </div>
+
+            <button
+              id="submitLookupPaymentProof"
+              class="btn-primary"
+              type="button"
+            >
+              SUBMIT BUKTI PEMBAYARAN
+            </button>
+          </div>
+        </div>
+      </div>
+
 
       <!-- RESULT -->
       <div
@@ -985,30 +1077,51 @@
 
           </div>
 
-
-
           <div
-            id="purchaseResultBox"
+            id="purchaseDetailResultBox"
             class="purchase-result hidden"
           >
             <div class="purchase-result-label">
-              ID PEMBELIAN MESRAN
+              DETAIL PEMBELIAN MESRAN
             </div>
 
-            <div
-              id="resultPurchaseId"
-              class="purchase-result-value"
+            <div class="result-grid" style="margin-top:10px;">
+              <div class="result-item">
+                <div class="result-label">ID Pembelian</div>
+                <div id="resultPurchaseId" class="result-value">-</div>
+              </div>
+
+              <div class="result-item">
+                <div class="result-label">Jumlah</div>
+                <div id="resultPurchaseQuantity" class="result-value">-</div>
+              </div>
+
+              <div class="result-item">
+                <div class="result-label">Total</div>
+                <div id="resultPurchaseTotal" class="result-value">-</div>
+              </div>
+
+              <div class="result-item">
+                <div class="result-label">Metode</div>
+                <div id="resultPurchaseMethod" class="result-value">-</div>
+              </div>
+
+              <div class="result-item">
+                <div class="result-label">Tujuan Pembayaran</div>
+                <div id="resultPurchaseAccount" class="result-value">-</div>
+              </div>
+            </div>
+
+            <button
+              id="savePurchaseDetailButton"
+              class="btn-save-qr"
+              type="button"
+              style="margin-top:14px;"
             >
-              -
-            </div>
-
-            <div class="field-help">
-              Bukti pembayaran sudah dikirim dan menunggu verifikasi admin. Tiket undian dibuat setelah pembayaran disetujui.
-            </div>
+              SIMPAN DETAIL PEMBELIAN (JPG)
+            </button>
           </div>
-
-
-          <div
+<div
             id="qrBox"
             class="qr-box hidden"
           >
@@ -1027,7 +1140,7 @@
               class="btn-save-qr"
               type="button"
             >
-              SIMPAN QR + TICKET ID (JPG)
+              SIMPAN TIKET MASUK (JPG)
             </button>
           </div>
 
@@ -1109,14 +1222,65 @@
     const selectedPaymentOwner =
       document.getElementById("selectedPaymentOwner");
 
-    const paymentProofInput =
-      document.getElementById("paymentProof");
-
-    const purchaseResultBox =
-      document.getElementById("purchaseResultBox");
+    const purchaseDetailResultBox =
+      document.getElementById("purchaseDetailResultBox");
 
     const resultPurchaseId =
       document.getElementById("resultPurchaseId");
+
+    const resultPurchaseQuantity =
+      document.getElementById("resultPurchaseQuantity");
+
+    const resultPurchaseTotal =
+      document.getElementById("resultPurchaseTotal");
+
+    const resultPurchaseMethod =
+      document.getElementById("resultPurchaseMethod");
+
+    const resultPurchaseAccount =
+      document.getElementById("resultPurchaseAccount");
+
+    const savePurchaseDetailButton =
+      document.getElementById("savePurchaseDetailButton");
+
+    const openPaymentUploadButton =
+      document.getElementById("openPaymentUploadButton");
+
+    const paymentLookupBox =
+      document.getElementById("paymentLookupBox");
+
+    const lookupPurchaseIdInput =
+      document.getElementById("lookupPurchaseId");
+
+    const lookupPurchaseButton =
+      document.getElementById("lookupPurchaseButton");
+
+    const lookupPurchaseDetails =
+      document.getElementById("lookupPurchaseDetails");
+
+    const lookupResultPurchaseId =
+      document.getElementById("lookupResultPurchaseId");
+
+    const lookupResultName =
+      document.getElementById("lookupResultName");
+
+    const lookupResultQuantity =
+      document.getElementById("lookupResultQuantity");
+
+    const lookupResultTotal =
+      document.getElementById("lookupResultTotal");
+
+    const lookupResultPaymentMethod =
+      document.getElementById("lookupResultPaymentMethod");
+
+    const lookupResultPaymentAccount =
+      document.getElementById("lookupResultPaymentAccount");
+
+    const lookupPaymentProofInput =
+      document.getElementById("lookupPaymentProof");
+
+    const submitLookupPaymentProofButton =
+      document.getElementById("submitLookupPaymentProof");
 
     const accessTypeInput =
       document.getElementById("accessType");
@@ -1295,9 +1459,6 @@ const submitButton =
         paymentMethodInput.required =
           true;
 
-        paymentProofInput.required =
-          true;
-
         updateRaffleTotal();
       } else {
         rafflePurchaseBox.classList.add(
@@ -1310,9 +1471,6 @@ const submitButton =
         paymentMethodInput.required =
           false;
 
-        paymentProofInput.required =
-          false;
-
         raffleQuantityInput.value =
           "1";
 
@@ -1321,8 +1479,8 @@ const submitButton =
 
         updatePaymentAccount();
 
-        paymentProofInput.value =
-          "";
+    paymentLookupBox.style.display =
+      "none";
 
         updateRaffleTotal();
       }
@@ -1403,62 +1561,10 @@ const submitButton =
         };
       }
 
-      const file =
-        paymentProofInput.files &&
-        paymentProofInput.files.length
-          ? paymentProofInput.files[0]
-          : null;
-
-      if (!file) {
-        return {
-          ok: false,
-          message:
-            "Silakan upload bukti pembayaran Mesran.",
-          element:
-            paymentProofInput
-        };
-      }
-
-      if (
-        file.size <= 0 ||
-        file.size >
-          MAX_PAYMENT_PROOF_SIZE
-      ) {
-        return {
-          ok: false,
-          message:
-            "Ukuran bukti pembayaran maksimal 5 MB.",
-          element:
-            paymentProofInput
-        };
-      }
-
-      const allowedTypes = [
-        "image/jpeg",
-        "image/png",
-        "image/webp",
-        "application/pdf"
-      ];
-
-      if (
-        !allowedTypes.includes(
-          file.type
-        )
-      ) {
-        return {
-          ok: false,
-          message:
-            "Bukti pembayaran harus JPG, PNG, WEBP, atau PDF.",
-          element:
-            paymentProofInput
-        };
-      }
-
       return {
         ok: true,
         quantity,
-        paymentMethod,
-        file
+        paymentMethod
       };
     }
 
@@ -1493,19 +1599,21 @@ const submitButton =
                 registrationPassId:
                   registrationData.passId,
                 quantity:
-                  raffleData.quantity
+                  raffleData.quantity,
+                paymentMethod:
+                  raffleData.paymentMethod
               })
           }
         );
 
-      const createRaw =
+      const raw =
         await createResponse.text();
 
-      let createData;
+      let data;
 
       try {
-        createData =
-          JSON.parse(createRaw);
+        data =
+          JSON.parse(raw);
       } catch {
         throw new Error(
           "Registrasi berhasil, tetapi server pembelian mengembalikan response yang tidak valid."
@@ -1514,118 +1622,428 @@ const submitButton =
 
       if (
         !createResponse.ok ||
-        !createData ||
-        createData.success !== true
+        !data ||
+        data.success !== true
       ) {
         throw new Error(
-          createData &&
+          data &&
           (
-            createData.message ||
-            createData.detail
+            data.message ||
+            data.detail
           )
             ? (
-                createData.message ||
-                createData.detail
+                data.message ||
+                data.detail
               )
             : "Registrasi berhasil, tetapi ID pembelian Mesran gagal dibuat."
         );
       }
 
+      return {
+        purchaseId:
+          String(
+            data.purchase &&
+            data.purchase.purchaseId
+              ? data.purchase.purchaseId
+              : ""
+          ).trim(),
+        quantity:
+          Number(
+            data.purchase &&
+            data.purchase.quantity
+              ? data.purchase.quantity
+              : raffleData.quantity
+          ),
+        totalAmount:
+          Number(
+            data.purchase &&
+            data.purchase.totalAmount
+              ? data.purchase.totalAmount
+              : raffleData.quantity *
+                MESRAN_UNIT_PRICE
+          ),
+        paymentMethod:
+          String(
+            data.purchase &&
+            data.purchase.paymentMethod
+              ? data.purchase.paymentMethod
+              : raffleData.paymentMethod
+          ),
+        paymentAccount:
+          data.paymentAccount || null
+      };
+    }
+
+
+    async function lookupPurchase() {
+      hideMessage();
+
       const purchaseId =
         String(
-          createData.purchase &&
-          createData.purchase.purchaseId
-            ? createData.purchase.purchaseId
-            : ""
-        ).trim();
+          lookupPurchaseIdInput.value || ""
+        )
+          .replace(/\D/g, "")
+          .slice(0, 4);
 
-      if (!purchaseId) {
-        throw new Error(
-          "Registrasi berhasil, tetapi ID pembelian Mesran tidak tersedia."
+      lookupPurchaseIdInput.value =
+        purchaseId;
+
+      if (purchaseId.length !== 4) {
+        showMessage(
+          "error",
+          "ID pembelian harus 4 digit."
         );
+        return;
       }
 
-      const formData =
-        new FormData();
+      lookupPurchaseButton.disabled =
+        true;
 
-      formData.append(
-        "purchaseId",
-        purchaseId
-      );
-
-      formData.append(
-        "paymentMethod",
-        raffleData.paymentMethod
-      );
-
-      formData.append(
-        "proof",
-        raffleData.file
-      );
-
-      const proofResponse =
-        await fetch(
-          PURCHASE_SERVICE_URL +
-          "?action=submitPaymentProof",
-          {
-            method: "POST",
-            headers: {
-              "Accept":
-                "application/json",
-              "apikey":
-                SUPABASE_PUBLISHABLE_KEY,
-              "Authorization":
-                "Bearer " +
-                SUPABASE_PUBLISHABLE_KEY
-            },
-            body:
-              formData
-          }
-        );
-
-      const proofRaw =
-        await proofResponse.text();
-
-      let proofData;
+      lookupPurchaseButton.textContent =
+        "MEMERIKSA...";
 
       try {
-        proofData =
-          JSON.parse(proofRaw);
-      } catch {
-        throw new Error(
-          "ID pembelian berhasil dibuat, tetapi server upload bukti pembayaran mengembalikan response tidak valid. Simpan ID pembelian: " +
-          purchaseId
+        const response =
+          await fetch(
+            PURCHASE_SERVICE_URL +
+            "?action=getPurchase&purchaseId=" +
+            encodeURIComponent(purchaseId),
+            {
+              method: "GET",
+              headers: {
+                "Accept": "application/json",
+                "apikey":
+                  SUPABASE_PUBLISHABLE_KEY,
+                "Authorization":
+                  "Bearer " +
+                  SUPABASE_PUBLISHABLE_KEY
+              }
+            }
+          );
+
+        const raw =
+          await response.text();
+
+        let data;
+
+        try {
+          data =
+            JSON.parse(raw);
+        } catch {
+          throw new Error(
+            "Server mengembalikan response yang tidak valid."
+          );
+        }
+
+        if (
+          !response.ok ||
+          !data ||
+          data.success !== true
+        ) {
+          throw new Error(
+            data &&
+            (
+              data.message ||
+              data.detail
+            )
+              ? (
+                  data.message ||
+                  data.detail
+                )
+              : "ID pembelian tidak ditemukan."
+          );
+        }
+
+        const purchase =
+          data.purchase || {};
+
+        lookupResultPurchaseId.textContent =
+          purchase.purchaseId || "-";
+
+        lookupResultName.textContent =
+          purchase.buyerName || "-";
+
+        lookupResultQuantity.textContent =
+          (purchase.quantity || 0) +
+          " botol";
+
+        lookupResultTotal.textContent =
+          formatRupiah(
+            Number(
+              purchase.totalAmount || 0
+            )
+          );
+
+        lookupResultPaymentMethod.textContent =
+          purchase.paymentAccount &&
+          purchase.paymentAccount.label
+            ? purchase.paymentAccount.label
+            : (
+                purchase.paymentMethod ||
+                "-"
+              );
+
+        const account =
+          purchase.paymentAccount;
+
+        lookupResultPaymentAccount.textContent =
+          account
+            ? (
+                account.number +
+                (
+                  account.owner
+                    ? " • a.n " +
+                      account.owner
+                    : ""
+                )
+              )
+            : "-";
+
+        lookupPurchaseDetails.classList.remove(
+          "hidden"
         );
+
+      } catch (error) {
+        console.error(
+          "LOOKUP PURCHASE ERROR:",
+          error
+        );
+
+        lookupPurchaseDetails.classList.add(
+          "hidden"
+        );
+
+        showMessage(
+          "error",
+          error &&
+          error.message
+            ? error.message
+            : "ID pembelian tidak ditemukan."
+        );
+
+      } finally {
+        lookupPurchaseButton.disabled =
+          false;
+
+        lookupPurchaseButton.textContent =
+          "CEK ID PEMBELIAN";
+      }
+    }
+
+
+    async function submitLookupPaymentProof() {
+      hideMessage();
+
+      const purchaseId =
+        lookupResultPurchaseId.textContent.trim();
+
+      const file =
+        lookupPaymentProofInput.files &&
+        lookupPaymentProofInput.files.length
+          ? lookupPaymentProofInput.files[0]
+          : null;
+
+      if (
+        !purchaseId ||
+        purchaseId === "-"
+      ) {
+        showMessage(
+          "error",
+          "Silakan cek ID pembelian terlebih dahulu."
+        );
+        return;
+      }
+
+      if (!file) {
+        showMessage(
+          "error",
+          "Silakan upload bukti pembayaran."
+        );
+        return;
       }
 
       if (
-        !proofResponse.ok ||
-        !proofData ||
-        proofData.success !== true
+        file.size <= 0 ||
+        file.size >
+          MAX_PAYMENT_PROOF_SIZE
       ) {
-        throw new Error(
-          (
-            proofData &&
-            (
-              proofData.message ||
-              proofData.detail
-            )
-              ? (
-                  proofData.message ||
-                  proofData.detail
-                )
-              : "Upload bukti pembayaran gagal."
-          ) +
-          " ID pembelian: " +
-          purchaseId
+        showMessage(
+          "error",
+          "Ukuran file maksimal 5 MB."
         );
+        return;
       }
 
-      return {
-        purchaseId,
-        paymentStatus:
-          "PENDING"
-      };
+      const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp",
+        "application/pdf"
+      ];
+
+      if (
+        !allowedTypes.includes(
+          file.type
+        )
+      ) {
+        showMessage(
+          "error",
+          "Format file harus JPG, PNG, WEBP, atau PDF."
+        );
+        return;
+      }
+
+      submitLookupPaymentProofButton.disabled =
+        true;
+
+      submitLookupPaymentProofButton.textContent =
+        "MENGIRIM...";
+
+      try {
+        const formData =
+          new FormData();
+
+        formData.append(
+          "purchaseId",
+          purchaseId
+        );
+
+        formData.append(
+          "proof",
+          file
+        );
+
+        const response =
+          await fetch(
+            PURCHASE_SERVICE_URL +
+            "?action=submitPaymentProof",
+            {
+              method: "POST",
+              headers: {
+                "Accept":
+                  "application/json",
+                "apikey":
+                  SUPABASE_PUBLISHABLE_KEY,
+                "Authorization":
+                  "Bearer " +
+                  SUPABASE_PUBLISHABLE_KEY
+              },
+              body:
+                formData
+            }
+          );
+
+        const raw =
+          await response.text();
+
+        let data;
+
+        try {
+          data =
+            JSON.parse(raw);
+        } catch {
+          throw new Error(
+            "Server mengembalikan response yang tidak valid."
+          );
+        }
+
+        if (
+          !response.ok ||
+          !data ||
+          data.success !== true
+        ) {
+          throw new Error(
+            data &&
+            (
+              data.message ||
+              data.detail
+            )
+              ? (
+                  data.message ||
+                  data.detail
+                )
+              : "Upload bukti pembayaran gagal."
+          );
+        }
+
+        showMessage(
+          "success",
+          "Bukti pembayaran berhasil dikirim dan menunggu verifikasi admin."
+        );
+
+        lookupPaymentProofInput.value =
+          "";
+
+      } catch (error) {
+        console.error(
+          "SUBMIT PAYMENT PROOF ERROR:",
+          error
+        );
+
+        showMessage(
+          "error",
+          error &&
+          error.message
+            ? error.message
+            : "Upload bukti pembayaran gagal."
+        );
+
+      } finally {
+        submitLookupPaymentProofButton.disabled =
+          false;
+
+        submitLookupPaymentProofButton.textContent =
+          "SUBMIT BUKTI PEMBAYARAN";
+      }
+    }
+
+
+    function resetRegistrationForm() {
+      registrationForm.reset();
+
+      resultBox.classList.remove(
+        "show"
+      );
+
+      paymentLookupBox.classList.remove(
+        "show"
+      );
+
+      paymentLookupBox.style.display =
+        "none";
+
+      lookupPurchaseDetails.classList.add(
+        "hidden"
+      );
+
+      purchaseDetailResultBox.classList.add(
+        "hidden"
+      );
+
+      resultRiderIdItem.classList.add(
+        "hidden"
+      );
+
+      resultRiderNameItem.classList.add(
+        "hidden"
+      );
+
+      qrBox.classList.add(
+        "hidden"
+      );
+
+      currentTicketId = "";
+      currentQrUrl = "";
+
+      updateAccessFields();
+      updateRafflePurchaseFields();
+      updateRaffleTotal();
+      updatePaymentAccount();
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
     }
 
 
@@ -2207,7 +2625,7 @@ boldRidersId:
         showMessage(
           "success",
           mesranPurchase
-            ? "Registration berhasil. Bukti pembayaran Mesran sudah dikirim dan menunggu verifikasi admin."
+            ? "Registration berhasil. Simpan detail pembelian Anda untuk proses pembayaran."
             : "Registration berhasil."
         );
 
@@ -2409,7 +2827,12 @@ boldRidersId:
 
         showMessage(
           "success",
-          "QR Code dan Ticket ID berhasil disimpan sebagai JPG."
+          "Tiket masuk berhasil disimpan sebagai JPG."
+        );
+
+        setTimeout(
+          resetRegistrationForm,
+          300
         );
 
       } catch (error) {
@@ -2425,9 +2848,203 @@ boldRidersId:
       } finally {
         saveQrButton.disabled = false;
         saveQrButton.textContent =
-          "SIMPAN QR + TICKET ID (JPG)";
+          "SIMPAN TIKET MASUK (JPG)";
       }
     }
+
+    async function savePurchaseDetailAsJpg() {
+      const purchaseId =
+        resultPurchaseId.textContent.trim();
+
+      if (
+        !purchaseId ||
+        purchaseId === "-"
+      ) {
+        showMessage(
+          "error",
+          "ID pembelian tidak tersedia."
+        );
+        return;
+      }
+
+      savePurchaseDetailButton.disabled =
+        true;
+
+      savePurchaseDetailButton.textContent =
+        "MENYIAPKAN JPG...";
+
+      try {
+        const canvas =
+          document.createElement("canvas");
+
+        canvas.width = 1000;
+        canvas.height = 1100;
+
+        const ctx =
+          canvas.getContext("2d");
+
+        if (!ctx) {
+          throw new Error(
+            "Browser tidak mendukung pembuatan JPG."
+          );
+        }
+
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#111111";
+        ctx.font =
+          "900 44px Arial, Helvetica, sans-serif";
+
+        ctx.fillText(
+          "BOLD AFTER DARK",
+          canvas.width / 2,
+          85
+        );
+
+        ctx.font =
+          "700 24px Arial, Helvetica, sans-serif";
+        ctx.fillStyle = "#666666";
+
+        ctx.fillText(
+          "DETAIL PEMBELIAN MESRAN",
+          canvas.width / 2,
+          135
+        );
+
+        const rows = [
+          ["ID PEMBELIAN", resultPurchaseId.textContent],
+          ["NAMA", resultName.textContent],
+          ["WHATSAPP", resultWhatsapp.textContent],
+          ["JUMLAH", resultPurchaseQuantity.textContent],
+          ["TOTAL", resultPurchaseTotal.textContent],
+          ["METODE", resultPurchaseMethod.textContent],
+          ["TUJUAN PEMBAYARAN", resultPurchaseAccount.textContent]
+        ];
+
+        let y = 225;
+
+        rows.forEach(
+          function(row) {
+            ctx.textAlign = "left";
+
+            ctx.fillStyle = "#777777";
+            ctx.font =
+              "700 20px Arial, Helvetica, sans-serif";
+
+            ctx.fillText(
+              row[0],
+              90,
+              y
+            );
+
+            ctx.fillStyle = "#111111";
+            ctx.font =
+              "900 28px Arial, Helvetica, sans-serif";
+
+            ctx.fillText(
+              String(row[1] || "-"),
+              90,
+              y + 38
+            );
+
+            y += 115;
+          }
+        );
+
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#555555";
+        ctx.font =
+          "700 20px Arial, Helvetica, sans-serif";
+
+        ctx.fillText(
+          "Simpan ID Pembelian untuk upload bukti pembayaran.",
+          canvas.width / 2,
+          canvas.height - 80
+        );
+
+        const blob =
+          await new Promise(
+            function(resolve, reject) {
+              canvas.toBlob(
+                function(result) {
+                  if (result) {
+                    resolve(result);
+                  } else {
+                    reject(
+                      new Error(
+                        "Gagal membuat file JPG."
+                      )
+                    );
+                  }
+                },
+                "image/jpeg",
+                0.95
+              );
+            }
+          );
+
+        const url =
+          URL.createObjectURL(blob);
+
+        const link =
+          document.createElement("a");
+
+        link.href = url;
+        link.download =
+          "BOLD-AFTER-DARK-PEMBELIAN-" +
+          sanitizeFileName(
+            purchaseId
+          ) +
+          ".jpg";
+
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        setTimeout(
+          function() {
+            URL.revokeObjectURL(url);
+          },
+          1000
+        );
+
+        showMessage(
+          "success",
+          "Detail pembelian berhasil disimpan sebagai JPG."
+        );
+
+        setTimeout(
+          resetRegistrationForm,
+          300
+        );
+
+      } catch (error) {
+        console.error(
+          "SAVE PURCHASE DETAIL ERROR:",
+          error
+        );
+
+        showMessage(
+          "error",
+          "Detail pembelian tidak dapat disimpan."
+        );
+
+      } finally {
+        savePurchaseDetailButton.disabled =
+          false;
+
+        savePurchaseDetailButton.textContent =
+          "SIMPAN DETAIL PEMBELIAN (JPG)";
+      }
+    }
+
 
     function loadImageForCanvas(url) {
       return new Promise(
@@ -2541,14 +3158,60 @@ boldRidersId:
         resultPurchaseId.textContent =
           mesranPurchase.purchaseId;
 
-        purchaseResultBox.classList.remove(
+        resultPurchaseQuantity.textContent =
+          mesranPurchase.quantity +
+          " botol";
+
+        resultPurchaseTotal.textContent =
+          formatRupiah(
+            mesranPurchase.totalAmount
+          );
+
+        resultPurchaseMethod.textContent =
+          mesranPurchase.paymentAccount &&
+          mesranPurchase.paymentAccount.label
+            ? mesranPurchase.paymentAccount.label
+            : (
+                mesranPurchase.paymentMethod ||
+                "-"
+              );
+
+        const account =
+          mesranPurchase.paymentAccount;
+
+        resultPurchaseAccount.textContent =
+          account
+            ? (
+                account.number +
+                (
+                  account.owner
+                    ? " • a.n " +
+                      account.owner
+                    : ""
+                )
+              )
+            : "-";
+
+        purchaseDetailResultBox.classList.remove(
           "hidden"
         );
       } else {
         resultPurchaseId.textContent =
           "-";
 
-        purchaseResultBox.classList.add(
+        resultPurchaseQuantity.textContent =
+          "-";
+
+        resultPurchaseTotal.textContent =
+          "-";
+
+        resultPurchaseMethod.textContent =
+          "-";
+
+        resultPurchaseAccount.textContent =
+          "-";
+
+        purchaseDetailResultBox.classList.add(
           "hidden"
         );
       }
@@ -2560,7 +3223,10 @@ boldRidersId:
 
       currentQrUrl = qrUrl;
 
-      if (qrUrl) {
+      if (
+        qrUrl &&
+        !mesranPurchase
+      ) {
         qrImage.src =
           qrUrl;
 
@@ -2717,6 +3383,60 @@ boldRidersId:
       "click",
       openWhatsAppHelp
     );
+
+
+    openPaymentUploadButton.addEventListener(
+      "click",
+      function() {
+        paymentLookupBox.style.display =
+          "block";
+
+        paymentLookupBox.classList.add(
+          "show"
+        );
+
+        paymentLookupBox.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      }
+    );
+
+
+    lookupPurchaseButton.addEventListener(
+      "click",
+      lookupPurchase
+    );
+
+
+    lookupPurchaseIdInput.addEventListener(
+      "input",
+      function() {
+        lookupPurchaseIdInput.value =
+          String(
+            lookupPurchaseIdInput.value || ""
+          )
+            .replace(/\D/g, "")
+            .slice(0, 4);
+
+        lookupPurchaseDetails.classList.add(
+          "hidden"
+        );
+      }
+    );
+
+
+    submitLookupPaymentProofButton.addEventListener(
+      "click",
+      submitLookupPaymentProof
+    );
+
+
+    savePurchaseDetailButton.addEventListener(
+      "click",
+      savePurchaseDetailAsJpg
+    );
+
 
     /*
      * SAVE QR + TICKET ID
