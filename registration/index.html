@@ -559,42 +559,7 @@
             required
           >
         </div>
-
-        <!-- COMMUNITY -->
-        <div class="field">
-          <label for="community">
-            Community
-          </label>
-
-          <input
-            id="community"
-            name="community"
-            type="text"
-            autocomplete="organization"
-          >
-        </div>
-
-        <!-- STAY CONNECTED -->
-        <div class="field">
-          <label for="stayConnected">
-            Stay Connected
-          </label>
-
-          <input
-            id="stayConnected"
-            name="stayConnected"
-            type="text"
-            placeholder="instagram"
-            autocomplete="off"
-            spellcheck="false"
-          >
-
-          <div class="field-help">
-            Instagram / social media
-          </div>
-        </div>
-
-        <div
+<div
           id="loadingBox"
           class="loading"
         >
@@ -803,14 +768,7 @@
 
     const boldRidersStatus =
       document.getElementById("boldRidersStatus");
-
-    const communityInput =
-      document.getElementById("community");
-
-    const stayConnectedInput =
-      document.getElementById("stayConnected");
-
-    const submitButton =
+const submitButton =
       document.getElementById("submitButton");
 
     const whatsappButton =
@@ -1201,14 +1159,7 @@ function showMessage(type, message) {
 
       const whatsapp =
         whatsappInput.value.trim();
-
-      const community =
-        communityInput.value.trim();
-
-      const stayConnected =
-        stayConnectedInput.value.trim();
-
-      const boldRidersId =
+const boldRidersId =
         String(
           boldRidersIdInput.value || ""
         )
@@ -1311,12 +1262,7 @@ function showMessage(type, message) {
         whatsapp,
 
         accessType,
-
-        community,
-
-        stayConnected,
-
-        boldRidersId:
+boldRidersId:
           accessType === "BOLD RIDERS"
             ? boldRidersId
             : ""
@@ -1850,66 +1796,6 @@ function showMessage(type, message) {
         ) {
           validateBoldRider();
         }
-      }
-    );
-
-    /*
-     * STAY CONNECTED
-     *
-     * Placeholder:
-     * instagram
-     *
-     * Saat fokus:
-     * otomatis menjadi @
-     *
-     * Saat mengetik:
-     * @username
-     */
-    stayConnectedInput.addEventListener(
-      "focus",
-      function() {
-        if (
-          !stayConnectedInput.value.trim()
-        ) {
-          stayConnectedInput.value =
-            "@";
-        }
-
-        setTimeout(
-          function() {
-            stayConnectedInput.setSelectionRange(
-              stayConnectedInput.value.length,
-              stayConnectedInput.value.length
-            );
-          },
-          0
-        );
-      }
-    );
-
-    stayConnectedInput.addEventListener(
-      "input",
-      function() {
-        let value =
-          String(
-            stayConnectedInput.value || ""
-          );
-
-        /*
-         * Hanya satu @ di awal.
-         */
-        value =
-          value.replace(
-            /^@+/,
-            ""
-          );
-
-        value =
-          "@" +
-          value;
-
-        stayConnectedInput.value =
-          value;
       }
     );
 
