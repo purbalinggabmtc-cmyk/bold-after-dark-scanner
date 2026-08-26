@@ -482,16 +482,10 @@
       border: 1px solid rgba(224, 180, 0, 0.3);
     }
 
-    .badge-free {
+    .badge-reguler {
       background: rgba(100, 100, 100, 0.18);
       color: #cccccc;
       border: 1px solid #444444;
-    }
-
-    .badge-vip {
-      background: rgba(224, 0, 0, 0.12);
-      color: #ff7777;
-      border: 1px solid rgba(224, 0, 0, 0.35);
     }
 
     .badge-bold {
@@ -772,13 +766,13 @@
         </div>
 
         <div class="stat-card">
-          <div class="stat-label">FREE</div>
-          <div id="freeCount" class="stat-value">0</div>
+          <div class="stat-label">REGULER</div>
+          <div id="regulerCount" class="stat-value">0</div>
         </div>
 
         <div class="stat-card">
-          <div class="stat-label">VIP</div>
-          <div id="vipCount" class="stat-value">0</div>
+          <div class="stat-label">BOLD RIDERS</div>
+          <div id="boldRidersCount" class="stat-value">0</div>
         </div>
 
       </div>
@@ -814,8 +808,7 @@
             class="filter-select"
           >
             <option value="ALL">ALL ACCESS</option>
-            <option value="FREE">FREE</option>
-            <option value="VIP">VIP</option>
+            <option value="REGULER">REGULER</option>
             <option value="BOLD RIDERS">BOLD RIDERS</option>
           </select>
 
@@ -906,7 +899,6 @@
                 <th>WhatsApp</th>
                 <th>Pass ID</th>
                 <th>Access</th>
-                <th>Table</th>
                 <th>Status</th>
                 <th>Registered</th>
                 <th>Check-In</th>
@@ -919,7 +911,7 @@
 
               <tr>
                 <td
-                  colspan="9"
+                  colspan="8"
                   class="table-message"
                 >
                   Loading registrations...
@@ -1763,7 +1755,7 @@
       tableBody.innerHTML =
         `
           <tr>
-            <td colspan="9" class="table-message">
+            <td colspan="8" class="table-message">
               Loading registrations...
             </td>
           </tr>
@@ -1887,7 +1879,7 @@
       const remaining =
         total - checkedIn;
 
-      const free =
+      const reguler =
         registrations.filter(
           function(row) {
 
@@ -1895,13 +1887,13 @@
               String(
                 row.access_type || ""
               ).toUpperCase() ===
-              "FREE"
+              "REGULER"
             );
 
           }
         ).length;
 
-      const vip =
+      const boldRiders =
         registrations.filter(
           function(row) {
 
@@ -1909,7 +1901,7 @@
               String(
                 row.access_type || ""
               ).toUpperCase() ===
-              "VIP"
+              "BOLD RIDERS"
             );
 
           }
@@ -1931,14 +1923,14 @@
         remaining;
 
       document.getElementById(
-        "freeCount"
+        "regulerCount"
       ).textContent =
-        free;
+        reguler;
 
       document.getElementById(
-        "vipCount"
+        "boldRidersCount"
       ).textContent =
-        vip;
+        boldRiders;
 
     }
 
@@ -2099,16 +2091,6 @@
 
                 <td>
                   ${accessBadge(row.access_type)}
-                </td>
-
-                <td>
-                  ${
-                    row.table_package
-                      ? escapeHtml(
-                          row.table_package
-                        )
-                      : '<span class="muted">—</span>'
-                  }
                 </td>
 
                 <td>
@@ -2544,18 +2526,6 @@
         ).toUpperCase();
 
       if (
-        value === "VIP"
-      ) {
-
-        return `
-          <span class="badge badge-vip">
-            VIP
-          </span>
-        `;
-
-      }
-
-      if (
         value === "BOLD RIDERS"
       ) {
 
@@ -2567,10 +2537,22 @@
 
       }
 
+      if (
+        value === "REGULER"
+      ) {
+
+        return `
+          <span class="badge badge-reguler">
+            REGULER
+          </span>
+        `;
+
+      }
+
       return `
-        <span class="badge badge-free">
+        <span class="badge badge-reguler">
           ${escapeHtml(
-            value || "FREE"
+            value || "—"
           )}
         </span>
       `;
