@@ -303,7 +303,7 @@
 
       grid-template-columns:
         repeat(
-          6,
+          5,
           minmax(0, 1fr)
         );
 
@@ -604,7 +604,7 @@
       letter-spacing: 0.5px;
     }
 
-    .access.free {
+    .access.reguler {
       background:
         rgba(255, 255, 255, 0.07);
 
@@ -613,17 +613,6 @@
       border:
         1px solid
         #555;
-    }
-
-    .access.vip {
-      background:
-        rgba(224, 0, 0, 0.13);
-
-      color: #ff7777;
-
-      border:
-        1px solid
-        rgba(224, 0, 0, 0.45);
     }
 
     .access.bold {
@@ -831,7 +820,7 @@
       .stats {
         grid-template-columns:
           repeat(
-            6,
+            5,
             1fr
           );
 
@@ -1046,12 +1035,8 @@
           ALL ACCESS
         </option>
 
-        <option value="FREE">
-          FREE
-        </option>
-
-        <option value="VIP">
-          VIP
+        <option value="REGULER">
+          REGULER
         </option>
 
         <option value="BOLD RIDERS">
@@ -1174,27 +1159,11 @@
       <div class="stat">
 
         <div class="stat-label">
-          FREE
+          REGULER
         </div>
 
         <div
-          id="freeCount"
-          class="stat-value"
-        >
-          0
-        </div>
-
-      </div>
-
-
-      <div class="stat">
-
-        <div class="stat-label">
-          VIP
-        </div>
-
-        <div
-          id="vipCount"
+          id="regulerCount"
           class="stat-value"
         >
           0
@@ -1332,8 +1301,6 @@
               <th>PASS ID</th>
 
               <th>ACCESS</th>
-
-              <th>TABLE PACKAGE</th>
 
               <th>COMMUNITY</th>
 
@@ -2137,7 +2104,6 @@
                   row.whatsapp,
                   row.pass_id,
                   row.community,
-                  row.table_package,
                   row.access_type,
                   row.pass_status
                 ]
@@ -2196,25 +2162,13 @@
         rows.length;
 
 
-      const free =
+      const reguler =
         rows.filter(
           function(row) {
 
             return normalizeAccess(
               row.access_type
-            ) === "FREE";
-
-          }
-        ).length;
-
-
-      const vip =
-        rows.filter(
-          function(row) {
-
-            return normalizeAccess(
-              row.access_type
-            ) === "VIP";
+            ) === "REGULER";
 
           }
         ).length;
@@ -2263,15 +2217,9 @@
 
 
       document.getElementById(
-        "freeCount"
+        "regulerCount"
       ).textContent =
-        free;
-
-
-      document.getElementById(
-        "vipCount"
-      ).textContent =
-        vip;
+        reguler;
 
 
       document.getElementById(
@@ -2309,17 +2257,9 @@
 
 
       let className =
-        "free";
-
+        "reguler";
 
       if (
-        value === "VIP"
-      ) {
-
-        className =
-          "vip";
-
-      } else if (
         value === "BOLD RIDERS"
       ) {
 
@@ -2334,7 +2274,7 @@
         className +
         '">' +
         escapeHtml(
-          value || "FREE"
+          value || "-"
         ) +
         "</span>"
       );
@@ -2514,12 +2454,6 @@
 
               <td>
                 ${escapeHtml(
-                  row.table_package || "-"
-                )}
-              </td>
-
-              <td>
-                ${escapeHtml(
                   row.community || "-"
                 )}
               </td>
@@ -2615,7 +2549,6 @@
         "WhatsApp",
         "Pass ID",
         "Access",
-        "Table Package",
         "Community",
         "Stay Connected",
         "Status",
@@ -2644,7 +2577,6 @@
               row.whatsapp,
               row.pass_id,
               row.access_type,
-              row.table_package,
               row.community,
               row.stay_connected,
               normalizeStatus(
