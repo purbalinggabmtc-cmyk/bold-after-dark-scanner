@@ -406,6 +406,159 @@
       }
     }
 
+
+    /* =========================================================
+       TIKET UNDIAN / PEMBELIAN MESRAN
+       ========================================================= */
+
+    .raffle-option {
+      margin: 6px 0 16px;
+      padding: 14px;
+      border: 1px solid #3a3a3a;
+      border-radius: 10px;
+      background: #151515;
+    }
+
+    .raffle-checkbox-label {
+      display: flex !important;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 0 !important;
+      cursor: pointer;
+      line-height: 1.45;
+    }
+
+    .raffle-checkbox-label input {
+      width: 18px;
+      height: 18px;
+      min-height: 18px;
+      padding: 0;
+      margin: 1px 0 0;
+      flex: 0 0 auto;
+      accent-color: var(--red);
+    }
+
+    .raffle-checkbox-text {
+      font-size: 13px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .raffle-box {
+      margin: 0 0 18px;
+      padding: 16px;
+      border: 1px solid #444444;
+      border-radius: 12px;
+      background: #111111;
+    }
+
+    .raffle-title {
+      margin-bottom: 5px;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+    }
+
+    .raffle-subtitle {
+      margin-bottom: 16px;
+      color: #888888;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .price-summary {
+      margin: 12px 0 16px;
+      padding: 13px;
+      border: 1px solid #333333;
+      border-radius: 9px;
+      background: #181818;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 8px;
+      color: #cccccc;
+      font-size: 12px;
+    }
+
+    .price-row:last-child {
+      margin-bottom: 0;
+      padding-top: 9px;
+      border-top: 1px solid #333333;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .payment-title {
+      margin: 18px 0 10px;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.7px;
+    }
+
+    .payment-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+      margin-bottom: 16px;
+    }
+
+    .payment-item {
+      padding: 11px 12px;
+      border: 1px solid #333333;
+      border-radius: 9px;
+      background: #181818;
+    }
+
+    .payment-label {
+      margin-bottom: 5px;
+      color: #888888;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+    }
+
+    .payment-number {
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 900;
+      word-break: break-word;
+    }
+
+    .purchase-result {
+      margin-top: 12px;
+      padding: 13px;
+      border: 1px solid #765f00;
+      border-radius: 9px;
+      background: #1d1900;
+    }
+
+    .purchase-result-label {
+      color: #b9a12d;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+
+    .purchase-result-value {
+      color: #f0d44d;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      word-break: break-word;
+    }
+
+    @media (max-width: 600px) {
+      .payment-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 600px) {
       body {
         padding: 12px;
@@ -559,7 +712,144 @@
             required
           >
         </div>
-<div
+
+        <!-- TIKET UNDIAN -->
+        <div class="raffle-option">
+          <label
+            for="wantRaffleTicket"
+            class="raffle-checkbox-label"
+          >
+            <input
+              id="wantRaffleTicket"
+              name="wantRaffleTicket"
+              type="checkbox"
+            >
+
+            <span class="raffle-checkbox-text">
+              Saya ingin mendapatkan tiket undian
+            </span>
+          </label>
+
+          <div class="field-help">
+            1 botol Mesran Rp20.000. Setelah pembayaran disetujui, setiap 1 botol mendapatkan 1 tiket undian sekali pakai.
+          </div>
+        </div>
+
+        <div
+          id="rafflePurchaseBox"
+          class="raffle-box hidden"
+        >
+          <div class="raffle-title">
+            PEMBELIAN MESRAN
+          </div>
+
+          <div class="raffle-subtitle">
+            Tentukan jumlah botol, lakukan pembayaran sesuai total, lalu upload bukti pembayaran.
+          </div>
+
+          <div class="field">
+            <label for="raffleQuantity">
+              Jumlah Botol <span class="required">*</span>
+            </label>
+
+            <input
+              id="raffleQuantity"
+              name="raffleQuantity"
+              type="number"
+              min="1"
+              max="100"
+              step="1"
+              value="1"
+            >
+          </div>
+
+          <div class="price-summary">
+            <div class="price-row">
+              <span>Harga per botol</span>
+              <strong>Rp20.000</strong>
+            </div>
+
+            <div class="price-row">
+              <span>Jumlah</span>
+              <strong id="raffleQuantityText">1 botol</strong>
+            </div>
+
+            <div class="price-row">
+              <span>Total Pembayaran</span>
+              <strong id="raffleTotalText">Rp20.000</strong>
+            </div>
+          </div>
+
+          <div class="payment-title">
+            PAYMENT GATEWAY
+          </div>
+
+          <div class="field">
+            <label for="paymentMethod">
+              Pilih Metode Pembayaran <span class="required">*</span>
+            </label>
+
+            <select
+              id="paymentMethod"
+              name="paymentMethod"
+            >
+              <option value="">
+                Pilih bank / e-wallet
+              </option>
+
+              <option value="EWALLET">DANA / GoPay / ShopeePay</option>
+              <option value="BCA">BCA</option>
+              <option value="BRI">BRI</option>
+              <option value="SEABANK">SeaBank</option>
+            </select>
+          </div>
+
+          <div
+            id="selectedPaymentAccount"
+            class="payment-item hidden"
+          >
+            <div
+              id="selectedPaymentLabel"
+              class="payment-label"
+            >
+              -
+            </div>
+
+            <div
+              id="selectedPaymentNumber"
+              class="payment-number"
+            >
+              -
+            </div>
+
+            <div
+              id="selectedPaymentOwner"
+              class="field-help hidden"
+            >
+              -
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="paymentProof">
+              Bukti Pembayaran <span class="required">*</span>
+            </label>
+
+            <input
+              id="paymentProof"
+              name="paymentProof"
+              type="file"
+              accept=".jpg,.jpeg,.png,.webp,.pdf,image/jpeg,image/png,image/webp,application/pdf"
+            >
+
+            <div class="field-help">
+              Upload JPG, PNG, WEBP, atau PDF. Maksimal 5 MB.
+            </div>
+          </div>
+        </div>
+
+
+        <div
           id="loadingBox"
           class="loading"
         >
@@ -695,6 +985,29 @@
 
           </div>
 
+
+
+          <div
+            id="purchaseResultBox"
+            class="purchase-result hidden"
+          >
+            <div class="purchase-result-label">
+              ID PEMBELIAN MESRAN
+            </div>
+
+            <div
+              id="resultPurchaseId"
+              class="purchase-result-value"
+            >
+              -
+            </div>
+
+            <div class="field-help">
+              Bukti pembayaran sudah dikirim dan menunggu verifikasi admin. Tiket undian dibuat setelah pembayaran disetujui.
+            </div>
+          </div>
+
+
           <div
             id="qrBox"
             class="qr-box hidden"
@@ -739,11 +1052,20 @@
     const BOLD_RIDER_VALIDATION_URL =
       "https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/validate-bold-rider";
 
+    const PURCHASE_SERVICE_URL =
+      "https://yrvnmmascklkuzpjkwxn.supabase.co/functions/v1/purchase-service";
+
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_YGi3tPBuF9tW4KKnLJ5dDQ_AcBZ19WH";
 
     const WHATSAPP_NUMBER =
       "6282324854187";
+
+    const MESRAN_UNIT_PRICE =
+      20000;
+
+    const MAX_PAYMENT_PROOF_SIZE =
+      5 * 1024 * 1024;
 
     const registrationForm =
       document.getElementById("registrationForm");
@@ -756,6 +1078,45 @@
 
     const whatsappInput =
       document.getElementById("whatsapp");
+
+    const wantRaffleTicketInput =
+      document.getElementById("wantRaffleTicket");
+
+    const rafflePurchaseBox =
+      document.getElementById("rafflePurchaseBox");
+
+    const raffleQuantityInput =
+      document.getElementById("raffleQuantity");
+
+    const raffleQuantityText =
+      document.getElementById("raffleQuantityText");
+
+    const raffleTotalText =
+      document.getElementById("raffleTotalText");
+
+    const paymentMethodInput =
+      document.getElementById("paymentMethod");
+
+    const selectedPaymentAccount =
+      document.getElementById("selectedPaymentAccount");
+
+    const selectedPaymentLabel =
+      document.getElementById("selectedPaymentLabel");
+
+    const selectedPaymentNumber =
+      document.getElementById("selectedPaymentNumber");
+
+    const selectedPaymentOwner =
+      document.getElementById("selectedPaymentOwner");
+
+    const paymentProofInput =
+      document.getElementById("paymentProof");
+
+    const purchaseResultBox =
+      document.getElementById("purchaseResultBox");
+
+    const resultPurchaseId =
+      document.getElementById("resultPurchaseId");
 
     const accessTypeInput =
       document.getElementById("accessType");
@@ -838,7 +1199,437 @@ const submitButton =
         .replace(/'/g, "&#039;");
     }
 
-function showMessage(type, message) {
+
+
+    function formatRupiah(value) {
+      return new Intl.NumberFormat(
+        "id-ID",
+        {
+          style: "currency",
+          currency: "IDR",
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        }
+      ).format(value);
+    }
+
+
+    const PAYMENT_ACCOUNTS = {
+      EWALLET: {
+        label: "DANA / GoPay / ShopeePay",
+        number: "089670149802",
+        owner: ""
+      },
+      BCA: {
+        label: "BCA",
+        number: "0970708995",
+        owner: "a.n Gatot Setiawan"
+      },
+      BRI: {
+        label: "BRI",
+        number: "683701037120537",
+        owner: "a.n Gatot Setiawan"
+      },
+      SEABANK: {
+        label: "SeaBank",
+        number: "901862783670",
+        owner: "a.n Gatot Setiawan"
+      }
+    };
+
+
+    function updatePaymentAccount() {
+      const method =
+        String(paymentMethodInput.value || "").trim();
+
+      const account =
+        PAYMENT_ACCOUNTS[method];
+
+      if (!account) {
+        selectedPaymentLabel.textContent = "-";
+        selectedPaymentNumber.textContent = "-";
+        selectedPaymentOwner.textContent = "-";
+        selectedPaymentOwner.classList.add("hidden");
+        selectedPaymentAccount.classList.add("hidden");
+        return;
+      }
+
+      selectedPaymentLabel.textContent =
+        account.label;
+
+      selectedPaymentNumber.textContent =
+        account.number;
+
+      if (account.owner) {
+        selectedPaymentOwner.textContent =
+          account.owner;
+
+        selectedPaymentOwner.classList.remove(
+          "hidden"
+        );
+      } else {
+        selectedPaymentOwner.textContent =
+          "-";
+
+        selectedPaymentOwner.classList.add(
+          "hidden"
+        );
+      }
+
+      selectedPaymentAccount.classList.remove("hidden");
+    }
+
+
+    function updateRafflePurchaseFields() {
+      const enabled =
+        wantRaffleTicketInput.checked;
+
+      if (enabled) {
+        rafflePurchaseBox.classList.remove(
+          "hidden"
+        );
+
+        raffleQuantityInput.required =
+          true;
+
+        paymentMethodInput.required =
+          true;
+
+        paymentProofInput.required =
+          true;
+
+        updateRaffleTotal();
+      } else {
+        rafflePurchaseBox.classList.add(
+          "hidden"
+        );
+
+        raffleQuantityInput.required =
+          false;
+
+        paymentMethodInput.required =
+          false;
+
+        paymentProofInput.required =
+          false;
+
+        raffleQuantityInput.value =
+          "1";
+
+        paymentMethodInput.value =
+          "";
+
+        updatePaymentAccount();
+
+        paymentProofInput.value =
+          "";
+
+        updateRaffleTotal();
+      }
+    }
+
+
+    function updateRaffleTotal() {
+      let quantity =
+        Number(
+          raffleQuantityInput.value
+        );
+
+      if (
+        !Number.isInteger(quantity) ||
+        quantity < 1
+      ) {
+        quantity = 1;
+      }
+
+      if (quantity > 100) {
+        quantity = 100;
+      }
+
+      raffleQuantityText.textContent =
+        quantity + " botol";
+
+      raffleTotalText.textContent =
+        formatRupiah(
+          quantity *
+          MESRAN_UNIT_PRICE
+        );
+    }
+
+
+    function validateRafflePurchase() {
+      if (
+        !wantRaffleTicketInput.checked
+      ) {
+        return {
+          ok: true,
+          quantity: 0,
+          paymentMethod: "",
+          file: null
+        };
+      }
+
+      const quantity =
+        Number(
+          raffleQuantityInput.value
+        );
+
+      if (
+        !Number.isInteger(quantity) ||
+        quantity < 1 ||
+        quantity > 100
+      ) {
+        return {
+          ok: false,
+          message:
+            "Jumlah pembelian Mesran harus 1 sampai 100 botol.",
+          element:
+            raffleQuantityInput
+        };
+      }
+
+      const paymentMethod =
+        String(
+          paymentMethodInput.value || ""
+        ).trim();
+
+      if (!paymentMethod) {
+        return {
+          ok: false,
+          message:
+            "Silakan pilih metode pembayaran Mesran.",
+          element:
+            paymentMethodInput
+        };
+      }
+
+      const file =
+        paymentProofInput.files &&
+        paymentProofInput.files.length
+          ? paymentProofInput.files[0]
+          : null;
+
+      if (!file) {
+        return {
+          ok: false,
+          message:
+            "Silakan upload bukti pembayaran Mesran.",
+          element:
+            paymentProofInput
+        };
+      }
+
+      if (
+        file.size <= 0 ||
+        file.size >
+          MAX_PAYMENT_PROOF_SIZE
+      ) {
+        return {
+          ok: false,
+          message:
+            "Ukuran bukti pembayaran maksimal 5 MB.",
+          element:
+            paymentProofInput
+        };
+      }
+
+      const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp",
+        "application/pdf"
+      ];
+
+      if (
+        !allowedTypes.includes(
+          file.type
+        )
+      ) {
+        return {
+          ok: false,
+          message:
+            "Bukti pembayaran harus JPG, PNG, WEBP, atau PDF.",
+          element:
+            paymentProofInput
+        };
+      }
+
+      return {
+        ok: true,
+        quantity,
+        paymentMethod,
+        file
+      };
+    }
+
+
+    async function createMesranPurchase(
+      registrationData,
+      raffleData
+    ) {
+      const createResponse =
+        await fetch(
+          PURCHASE_SERVICE_URL +
+          "?action=createPurchase",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":
+                "application/json",
+              "Accept":
+                "application/json",
+              "apikey":
+                SUPABASE_PUBLISHABLE_KEY,
+              "Authorization":
+                "Bearer " +
+                SUPABASE_PUBLISHABLE_KEY
+            },
+            body:
+              JSON.stringify({
+                buyerName:
+                  registrationData.name,
+                whatsapp:
+                  registrationData.whatsapp,
+                registrationPassId:
+                  registrationData.passId,
+                quantity:
+                  raffleData.quantity
+              })
+          }
+        );
+
+      const createRaw =
+        await createResponse.text();
+
+      let createData;
+
+      try {
+        createData =
+          JSON.parse(createRaw);
+      } catch {
+        throw new Error(
+          "Registrasi berhasil, tetapi server pembelian mengembalikan response yang tidak valid."
+        );
+      }
+
+      if (
+        !createResponse.ok ||
+        !createData ||
+        createData.success !== true
+      ) {
+        throw new Error(
+          createData &&
+          (
+            createData.message ||
+            createData.detail
+          )
+            ? (
+                createData.message ||
+                createData.detail
+              )
+            : "Registrasi berhasil, tetapi ID pembelian Mesran gagal dibuat."
+        );
+      }
+
+      const purchaseId =
+        String(
+          createData.purchase &&
+          createData.purchase.purchaseId
+            ? createData.purchase.purchaseId
+            : ""
+        ).trim();
+
+      if (!purchaseId) {
+        throw new Error(
+          "Registrasi berhasil, tetapi ID pembelian Mesran tidak tersedia."
+        );
+      }
+
+      const formData =
+        new FormData();
+
+      formData.append(
+        "purchaseId",
+        purchaseId
+      );
+
+      formData.append(
+        "paymentMethod",
+        raffleData.paymentMethod
+      );
+
+      formData.append(
+        "proof",
+        raffleData.file
+      );
+
+      const proofResponse =
+        await fetch(
+          PURCHASE_SERVICE_URL +
+          "?action=submitPaymentProof",
+          {
+            method: "POST",
+            headers: {
+              "Accept":
+                "application/json",
+              "apikey":
+                SUPABASE_PUBLISHABLE_KEY,
+              "Authorization":
+                "Bearer " +
+                SUPABASE_PUBLISHABLE_KEY
+            },
+            body:
+              formData
+          }
+        );
+
+      const proofRaw =
+        await proofResponse.text();
+
+      let proofData;
+
+      try {
+        proofData =
+          JSON.parse(proofRaw);
+      } catch {
+        throw new Error(
+          "ID pembelian berhasil dibuat, tetapi server upload bukti pembayaran mengembalikan response tidak valid. Simpan ID pembelian: " +
+          purchaseId
+        );
+      }
+
+      if (
+        !proofResponse.ok ||
+        !proofData ||
+        proofData.success !== true
+      ) {
+        throw new Error(
+          (
+            proofData &&
+            (
+              proofData.message ||
+              proofData.detail
+            )
+              ? (
+                  proofData.message ||
+                  proofData.detail
+                )
+              : "Upload bukti pembayaran gagal."
+          ) +
+          " ID pembelian: " +
+          purchaseId
+        );
+      }
+
+      return {
+        purchaseId,
+        paymentStatus:
+          "PENDING"
+      };
+    }
+
+
+    function showMessage(type, message) {
       messageBox.className =
         "message show " + type;
 
@@ -1254,6 +2045,30 @@ const boldRidersId =
       }
 
       /*
+       * TIKET UNDIAN / PEMBELIAN MESRAN
+       */
+      const raffleData =
+        validateRafflePurchase();
+
+      if (!raffleData.ok) {
+        showMessage(
+          "error",
+          raffleData.message
+        );
+
+        if (
+          raffleData.element &&
+          typeof raffleData.element.focus ===
+            "function"
+        ) {
+          raffleData.element.focus();
+        }
+
+        return;
+      }
+
+
+      /*
        * BODY
        */
       const body = {
@@ -1351,13 +2166,49 @@ boldRidersId:
           );
         }
 
+        let mesranPurchase = null;
+
+        if (
+          wantRaffleTicketInput.checked
+        ) {
+          try {
+            mesranPurchase =
+              await createMesranPurchase(
+                data,
+                raffleData
+              );
+          } catch (purchaseError) {
+            console.error(
+              "MESRAN PURCHASE ERROR:",
+              purchaseError
+            );
+
+            showRegistrationResult(
+              data
+            );
+
+            showMessage(
+              "error",
+              purchaseError &&
+              purchaseError.message
+                ? purchaseError.message
+                : "Registrasi berhasil, tetapi proses pembelian Mesran gagal."
+            );
+
+            return;
+          }
+        }
+
         showRegistrationResult(
-          data
+          data,
+          mesranPurchase
         );
 
         showMessage(
           "success",
-          "Registration berhasil."
+          mesranPurchase
+            ? "Registration berhasil. Bukti pembayaran Mesran sudah dikirim dan menunggu verifikasi admin."
+            : "Registration berhasil."
         );
 
       } catch (error) {
@@ -1619,7 +2470,7 @@ boldRidersId:
         ) || "TICKET";
     }
 
-    function showRegistrationResult(data) {
+    function showRegistrationResult(data, mesranPurchase = null) {
       resultBox.classList.add(
         "show"
       );
@@ -1682,6 +2533,26 @@ boldRidersId:
         );
       }
 
+
+      if (
+        mesranPurchase &&
+        mesranPurchase.purchaseId
+      ) {
+        resultPurchaseId.textContent =
+          mesranPurchase.purchaseId;
+
+        purchaseResultBox.classList.remove(
+          "hidden"
+        );
+      } else {
+        resultPurchaseId.textContent =
+          "-";
+
+        purchaseResultBox.classList.add(
+          "hidden"
+        );
+      }
+
       const qrUrl =
         String(
           data.qrCodeUrl || ""
@@ -1738,6 +2609,9 @@ boldRidersId:
       "change",
       function() {
         updateAccessFields();
+    updateRafflePurchaseFields();
+    updateRaffleTotal();
+    updatePaymentAccount();
         hideMessage();
       }
     );
@@ -1798,6 +2672,31 @@ boldRidersId:
         }
       }
     );
+
+
+    /*
+     * TIKET UNDIAN
+     */
+    wantRaffleTicketInput.addEventListener(
+      "change",
+      function() {
+        updateRafflePurchaseFields();
+        hideMessage();
+      }
+    );
+
+
+    raffleQuantityInput.addEventListener(
+      "input",
+      updateRaffleTotal
+    );
+
+
+    paymentMethodInput.addEventListener(
+      "change",
+      updatePaymentAccount
+    );
+
 
     /*
      * SUBMIT
