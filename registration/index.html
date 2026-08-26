@@ -406,77 +406,7 @@
       }
     }
 
-        /* =========================================================
-       VIP DROPDOWN
-       ========================================================= */
-
-    .vip-options-container {
-      margin-top: 14px;
-      padding: 12px;
-      background: #151515;
-      border: 1px solid #333;
-      border-radius: 10px;
-    }
-
-    .vip-options-label {
-      display: block;
-      margin-bottom: 7px;
-      color: #aaa;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
-    .vip-options-select {
-      width: 100%;
-      padding: 12px 13px;
-      background: #1c1c1c;
-      color: #fff;
-      border: 1px solid #444;
-      border-radius: 8px;
-      outline: none;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .vip-options-select:focus {
-      border-color: #e00000;
-      box-shadow: 0 0 0 2px rgba(224, 0, 0, 0.12);
-    }
-
-    .vip-option-detail {
-      display: none;
-      margin-top: 10px;
-      padding: 10px 12px;
-      background: #101010;
-      border: 1px solid #333;
-      border-radius: 8px;
-      color: #ddd;
-      font-size: 12px;
-      line-height: 1.55;
-    }
-
-    .vip-option-detail.visible {
-      display: block;
-    }
-
-    .vip-option-detail strong {
-      color: #fff;
-    }
-
-    .vip-option-error {
-      display: none;
-      margin-top: 8px;
-      color: #ff8b8b;
-      font-size: 11px;
-      line-height: 1.4;
-    }
-
-    .vip-option-error.visible {
-      display: block;
-    }
-
-@media (max-width: 600px) {
+    @media (max-width: 600px) {
       body {
         padding: 12px;
         background-attachment: scroll;
@@ -548,12 +478,8 @@
               Pilih Access
             </option>
 
-            <option value="FREE">
-              FREE
-            </option>
-
-            <option value="VIP">
-              VIP
+            <option value="REGULER">
+              REGULER
             </option>
 
             <option value="BOLD RIDERS">
@@ -562,40 +488,8 @@
           </select>
 
           <div class="access-info">
-            Pilih BOLD RIDERS jika Anda memiliki ID BOLD RIDERS yang terdaftar.
+            Pilih REGULER untuk akses umum, atau BOLD RIDERS jika Anda memiliki ID BOLD RIDERS yang terdaftar.
           </div>
-        </div>
-
-        <!-- VIP OPTIONS -->
-        <div
-          id="vipOptionsContainer"
-          class="vip-options-container hidden"
-        >
-          <label
-            for="vipPackageSelect"
-            class="vip-options-label"
-          >
-            VIP PACKAGE
-          </label>
-
-          <select
-            id="vipPackageSelect"
-            class="vip-options-select"
-          >
-            <option value="">
-              Pilih paket VIP...
-            </option>
-          </select>
-
-          <div
-            id="vipOptionDetail"
-            class="vip-option-detail"
-          ></div>
-
-          <div
-            id="vipOptionError"
-            class="vip-option-error"
-          ></div>
         </div>
 
         <!-- BOLD RIDERS ID -->
@@ -802,19 +696,6 @@
               </div>
             </div>
 
-            <div class="result-item">
-              <div class="result-label">
-                Table Package
-              </div>
-
-              <div
-                id="resultTable"
-                class="result-value"
-              >
-                -
-              </div>
-            </div>
-
             <div
               id="resultRiderIdItem"
               class="result-item hidden"
@@ -914,18 +795,6 @@
     const accessTypeInput =
       document.getElementById("accessType");
 
-    const vipPackageSelect =
-      document.getElementById("vipPackageSelect");
-
-    const vipOptionDetail =
-      document.getElementById("vipOptionDetail");
-
-    const vipOptionError =
-      document.getElementById("vipOptionError");
-
-    const vipOptionsContainer =
-      document.getElementById("vipOptionsContainer");
-
     const boldRidersField =
       document.getElementById("boldRidersField");
 
@@ -967,9 +836,6 @@
 
     const resultAccess =
       document.getElementById("resultAccess");
-
-    const resultTable =
-      document.getElementById("resultTable");
 
     const resultRiderIdItem =
       document.getElementById("resultRiderIdItem");
@@ -1014,35 +880,6 @@
         .replace(/'/g, "&#039;");
     }
 
-    function getSelectedVipPackage() {
-      const selected = vipPackageSelect.value;
-
-      if (!selected) {
-        return "";
-      }
-
-      const option =
-        vipPackageSelect.options[
-          vipPackageSelect.selectedIndex
-        ];
-
-      const index =
-        Number(option.dataset.index);
-
-      const pkg =
-        vipPackages[index];
-
-      if (!pkg) {
-        return selected;
-      }
-
-      return String(
-        pkg.name ||
-        pkg.title ||
-        selected
-      );
-    }
-
 function showMessage(type, message) {
       messageBox.className =
         "message show " + type;
@@ -1078,489 +915,6 @@ function showMessage(type, message) {
       nameHelp.classList.add("hidden");
     }
 
-    const VIP_OPTIONS_URL =
-      "https://boldafterdark.my.id/config/vip-options.html";
-
-    /*
-     * FALLBACK VIP OPTIONS
-     *
-     * Ini adalah daftar VIP yang sudah digunakan
-     * pada versi registration sebelumnya.
-     * File /config/vip-options.html tetap menjadi
-     * sumber utama sehingga daftar dapat diubah
-     * tanpa mengubah registration/index.html.
-     */
-    const DEFAULT_VIP_PACKAGES = Object.freeze([
-      {
-        id: "VIP TABLE - 1 PAX",
-        name: "VIP TABLE - 1 PAX",
-        price: "",
-        description: "",
-        benefits: ""
-      },
-      {
-        id: "VIP TABLE — 2 PAX",
-        name: "VIP TABLE — 2 PAX",
-        price: "",
-        description: "",
-        benefits: ""
-      },
-      {
-        id: "VIP TABLE — 3 PAX",
-        name: "VIP TABLE — 3 PAX",
-        price: "",
-        description: "",
-        benefits: ""
-      },
-      {
-        id: "VIP TABLE — 4 PAX",
-        name: "VIP TABLE — 4 PAX",
-        price: "",
-        description: "",
-        benefits: ""
-      },
-      {
-        id: "VIP TABLE — 5 PAX",
-        name: "VIP TABLE — 5 PAX",
-        price: "",
-        description: "",
-        benefits: ""
-      },
-      {
-        id: "VIP TABLE — 6 PAX",
-        name: "VIP TABLE — 6 PAX",
-        price: "",
-        description: "",
-        benefits: ""
-      },
-      {
-        id: "VIP TABLE — 7 PAX",
-        name: "VIP TABLE — 7 PAX",
-        price: "",
-        description: "",
-        benefits: ""
-      },
-      {
-        id: "VIP TABLE — 8 PAX",
-        name: "VIP TABLE — 8 PAX",
-        price: "",
-        description: "",
-        benefits: ""
-      }
-    ]);
-
-    let vipPackages = [];
-    let vipOptionsLoaded = false;
-    let vipOptionsLoading = null;
-
-    async function loadVipOptions() {
-      if (vipOptionsLoaded && vipPackages.length) {
-        return true;
-      }
-
-      if (vipOptionsLoading) {
-        return vipOptionsLoading;
-      }
-
-      vipOptionsLoading = (async function() {
-        vipOptionsContainer.style.display = "none";
-
-        vipOptionError.classList.remove("visible");
-        vipOptionDetail.classList.remove("visible");
-        vipOptionDetail.innerHTML = "";
-
-        vipPackageSelect.innerHTML =
-          '<option value="">Memuat paket VIP...</option>';
-
-        try {
-          const response = await fetch(
-            VIP_OPTIONS_URL +
-              "?t=" +
-              Date.now(),
-            {
-              method: "GET",
-              cache: "no-store",
-              credentials: "omit",
-              headers: {
-                "Accept": "text/html"
-              }
-            }
-          );
-
-          if (!response.ok) {
-            throw new Error(
-              "VIP options HTTP " +
-              response.status
-            );
-          }
-
-          const html =
-            await response.text();
-
-          if (!html.trim()) {
-            throw new Error(
-              "vip-options.html kosong."
-            );
-          }
-
-          const parser =
-            new DOMParser();
-
-          const doc =
-            parser.parseFromString(
-              html,
-              "text/html"
-            );
-
-          /*
-           * FORMAT 1
-           * JSON:
-           *
-           * contoh elemen konfigurasi JSON: <script id="vip-options-config" type="application/json">
-           * [
-           *   {
-           *     "id": "...",
-           *     "name": "...",
-           *     "price": "...",
-           *     "description": "...",
-           *     "benefits": [...]
-           *   }
-           * ]
-           * [script configuration ditutup di file sumber, bukan ditulis sebagai tag literal di komentar]
-           */
-          const configElement =
-            doc.getElementById(
-              "vip-options-config"
-            );
-
-          if (configElement) {
-            const raw =
-              configElement.textContent.trim();
-
-            if (raw) {
-              try {
-                const config =
-                  JSON.parse(raw);
-
-                if (Array.isArray(config)) {
-                  vipPackages =
-                    config.map(
-                      function(pkg, index) {
-                        const item =
-                          pkg &&
-                          typeof pkg === "object"
-                            ? pkg
-                            : {
-                                name:
-                                  String(pkg)
-                              };
-
-                        return {
-                          id:
-                            String(
-                              item.id ||
-                              item.value ||
-                              item.name ||
-                              index
-                            ),
-
-                          name:
-                            String(
-                              item.name ||
-                              item.title ||
-                              item.label ||
-                              ("VIP Package " +
-                                (index + 1))
-                            ),
-
-                          price:
-                            item.price
-                              ? String(
-                                  item.price
-                                )
-                              : "",
-
-                          description:
-                            item.description ||
-                            item.details ||
-                            "",
-
-                          benefits:
-                            Array.isArray(
-                              item.benefits
-                            )
-                              ? item.benefits.join(
-                                  ", "
-                                )
-                              : String(
-                                  item.benefits ||
-                                  ""
-                                )
-                        };
-                      }
-                    );
-
-                  if (
-                    vipPackages.length
-                  ) {
-                    populateVipDropdown(
-                      vipPackages
-                    );
-
-                    vipOptionsLoaded =
-                      true;
-
-                    vipOptionsContainer.style.display =
-                      "block";
-
-                    return true;
-                  }
-                }
-              } catch (jsonError) {
-                console.warn(
-                  "JSON VIP config tidak digunakan:",
-                  jsonError
-                );
-              }
-            }
-          }
-
-          /*
-           * FORMAT 2
-           * Format lama:
-           *
-           * input[name="vipOption"]
-           *
-           * Kita baca langsung dari HTML
-           * sehingga vip-options.html lama
-           * tetap kompatibel.
-           */
-          const vipInputs =
-            doc.querySelectorAll(
-              'input[name="vipOption"]'
-            );
-
-          if (!vipInputs.length) {
-            throw new Error(
-              "Tidak ditemukan konfigurasi JSON maupun input[name=\"vipOption\"] di vip-options.html."
-            );
-          }
-
-          vipPackages = [];
-
-          vipInputs.forEach(
-            function(input, index) {
-              const value =
-                String(
-                  input.value || ""
-                ).trim();
-
-              if (!value) {
-                return;
-              }
-
-              let labelText = "";
-
-              const id =
-                input.id;
-
-              if (id) {
-                const label =
-                  doc.querySelector(
-                    'label[for="' +
-                      CSS.escape(id) +
-                      '"]'
-                  );
-
-                if (label) {
-                  labelText =
-                    label.textContent
-                      .replace(
-                        /\s+/g,
-                        " "
-                      )
-                      .trim();
-                }
-              }
-
-              if (!labelText) {
-                const parent =
-                  input.closest(
-                    "label"
-                  );
-
-                if (parent) {
-                  labelText =
-                    parent.textContent
-                      .replace(
-                        /\s+/g,
-                        " "
-                      )
-                      .trim();
-                }
-              }
-
-              if (!labelText) {
-                labelText =
-                  value;
-              }
-
-              /*
-               * Hapus teks yang terlalu berlebihan
-               * dari label bila ada.
-               */
-              labelText =
-                labelText
-                  .replace(
-                    /\s+/g,
-                    " "
-                  )
-                  .trim();
-
-              vipPackages.push({
-                id: value,
-                name: labelText,
-                price: "",
-                description: "",
-                benefits: ""
-              });
-            }
-          );
-
-          if (!vipPackages.length) {
-            vipPackages = DEFAULT_VIP_PACKAGES.map(
-              function(pkg) {
-                return {
-                  id: pkg.id,
-                  name: pkg.name,
-                  price: pkg.price,
-                  description: pkg.description,
-                  benefits: pkg.benefits
-                };
-              }
-            );
-          }
-
-          populateVipDropdown(
-            vipPackages
-          );
-
-          vipOptionsLoaded =
-            true;
-
-          vipOptionsContainer.style.display =
-            "block";
-
-          return true;
-
-        } catch (error) {
-          console.warn(
-            "VIP OPTIONS LOAD ERROR — menggunakan daftar VIP bawaan:",
-            error
-          );
-
-          /*
-           * Jangan membuat visitor gagal hanya karena
-           * file konfigurasi terpisah belum tersedia.
-           */
-          vipPackages = DEFAULT_VIP_PACKAGES.map(
-            function(pkg) {
-              return {
-                id: pkg.id,
-                name: pkg.name,
-                price: pkg.price,
-                description: pkg.description,
-                benefits: pkg.benefits
-              };
-            }
-          );
-
-          populateVipDropdown(
-            vipPackages
-          );
-
-          vipOptionsLoaded = true;
-          vipOptionError.classList.remove(
-            "visible"
-          );
-          vipOptionsContainer.style.display =
-            "block";
-
-          return true;
-
-        } finally {
-          vipOptionsLoading =
-            null;
-        }
-      })();
-
-      return vipOptionsLoading;
-    }
-
-    function populateVipDropdown(
-      packages
-    ) {
-      vipPackageSelect.innerHTML =
-        '<option value="">Pilih paket VIP...</option>';
-
-      packages.forEach(
-        function(pkg, index) {
-          const option =
-            document.createElement(
-              "option"
-            );
-
-          option.value =
-            String(
-              pkg.id ||
-              pkg.name ||
-              index
-            );
-
-          option.textContent =
-            String(
-              pkg.name ||
-              ("VIP Package " +
-                (index + 1))
-            ) +
-            (
-              pkg.price
-                ? " — " +
-                  String(
-                    pkg.price
-                  )
-                : ""
-            );
-
-          option.dataset.index =
-            String(index);
-
-          vipPackageSelect.appendChild(
-            option
-          );
-        }
-      );
-
-      vipOptionsContainer.style.display =
-        "block";
-    }
-
-    function getSelectedVipOption() {
-      return getSelectedVipPackage();
-    }
-
-    function clearVipSelection() {
-      vipPackageSelect.value = "";
-      vipOptionDetail.classList.remove(
-        "visible"
-      );
-      vipOptionDetail.innerHTML = "";
-      vipOptionError.classList.remove(
-        "visible"
-      );
-    }
-
-
     function updateAccessFields() {
       const access =
         String(
@@ -1569,36 +923,9 @@ function showMessage(type, message) {
           .trim()
           .toUpperCase();
 
-      const isVip =
-        access === "VIP";
-
       const isBoldRider =
         access === "BOLD RIDERS";
 
-      /*
-       * VIP OPTIONS
-       *
-       * Opsi VIP dibaca dari file terpisah:
-       * /config/vip-options.html
-       */
-      if (isVip) {
-        vipOptionsContainer.classList.remove(
-          "hidden"
-        );
-
-        loadVipOptions();
-      } else {
-        vipOptionsContainer.classList.add(
-          "hidden"
-        );
-
-        clearVipSelection();
-        vipOptionsLoaded = false;
-      }
-
-      /*
-       * BOLD RIDERS
-       */
       if (isBoldRider) {
         boldRidersField.classList.remove(
           "hidden"
@@ -1875,9 +1202,6 @@ function showMessage(type, message) {
       const whatsapp =
         whatsappInput.value.trim();
 
-      const tablePackage =
-        getSelectedVipPackage();
-
       const community =
         communityInput.value.trim();
 
@@ -1979,34 +1303,6 @@ function showMessage(type, message) {
       }
 
       /*
-       * VIP OPTIONS
-       */
-      if (accessType === "VIP") {
-        const vipLoaded =
-          await loadVipOptions();
-
-        if (!vipLoaded) {
-          showMessage(
-            "error",
-            "Opsi VIP belum dapat dimuat. Silakan coba lagi."
-          );
-
-          return;
-        }
-
-        if (!tablePackage) {
-          showMessage(
-            "error",
-            "Silakan pilih salah satu opsi VIP."
-          );
-
-          vipPackageSelect.focus();
-
-          return;
-        }
-      }
-
-      /*
        * BODY
        */
       const body = {
@@ -2016,10 +1312,7 @@ function showMessage(type, message) {
 
         accessType,
 
-        tablePackage:
-          accessType === "VIP"
-            ? tablePackage
-            : "",
+        tablePackage: "",
 
         community,
 
@@ -2405,9 +1698,6 @@ function showMessage(type, message) {
       resultAccess.textContent =
         data.accessType || "-";
 
-      resultTable.textContent =
-        data.tablePackage || "-";
-
       const riderId =
         String(
           data.boldRidersId || ""
@@ -2505,129 +1795,6 @@ function showMessage(type, message) {
       function() {
         updateAccessFields();
         hideMessage();
-      }
-    );
-
-    /*
-     * VIP PACKAGE DROPDOWN
-     */
-    vipPackageSelect.addEventListener(
-      "change",
-      function() {
-        const selectedIndex =
-          vipPackageSelect.selectedIndex;
-
-        vipOptionError.classList.remove(
-          "visible"
-        );
-
-        if (
-          selectedIndex < 1 ||
-          !vipPackageSelect.value
-        ) {
-          vipOptionDetail.classList.remove(
-            "visible"
-          );
-
-          vipOptionDetail.innerHTML =
-            "";
-
-          return;
-        }
-
-        const option =
-          vipPackageSelect.options[
-            selectedIndex
-          ];
-
-        const index =
-          Number(
-            option.dataset.index
-          );
-
-        const pkg =
-          vipPackages[index];
-
-        if (!pkg) {
-          vipOptionDetail.classList.remove(
-            "visible"
-          );
-
-          vipOptionDetail.innerHTML =
-            "";
-
-          return;
-        }
-
-        const name =
-          String(
-            pkg.name ||
-            pkg.title ||
-            "VIP Package"
-          );
-
-        const price =
-          String(
-            pkg.price ||
-            ""
-          ).trim();
-
-        const description =
-          String(
-            pkg.description ||
-            pkg.details ||
-            ""
-          ).trim();
-
-        const benefits =
-          Array.isArray(
-            pkg.benefits
-          )
-            ? pkg.benefits.join(
-                ", "
-              )
-            : String(
-                pkg.benefits ||
-                ""
-              ).trim();
-
-        let html =
-          "<strong>" +
-          escapeHtml(
-            name
-          ) +
-          "</strong>";
-
-        if (price) {
-          html +=
-            "<br><strong>Harga:</strong> " +
-            escapeHtml(
-              price
-            );
-        }
-
-        if (description) {
-          html +=
-            "<br><strong>Info:</strong> " +
-            escapeHtml(
-              description
-            );
-        }
-
-        if (benefits) {
-          html +=
-            "<br><strong>Benefit:</strong> " +
-            escapeHtml(
-              benefits
-            );
-        }
-
-        vipOptionDetail.innerHTML =
-          html;
-
-        vipOptionDetail.classList.add(
-          "visible"
-        );
       }
     );
 
