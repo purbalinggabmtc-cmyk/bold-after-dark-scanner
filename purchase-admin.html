@@ -579,6 +579,70 @@
       </div>
 
 
+      <div class="card">
+        <div class="section-title">
+          PRODUCT SETTINGS
+        </div>
+
+        <div
+          id="productSettingsMessage"
+          class="message"
+        ></div>
+
+        <div class="detail-grid">
+          <div class="field">
+            <label for="productNameInput">
+              Nama Produk
+            </label>
+
+            <input
+              id="productNameInput"
+              type="text"
+              placeholder="Contoh: MESRAN"
+            >
+          </div>
+
+          <div class="field">
+            <label for="unitPriceInput">
+              Harga per Satuan
+            </label>
+
+            <input
+              id="unitPriceInput"
+              type="number"
+              min="1"
+              step="1"
+              placeholder="Contoh: 20000"
+            >
+          </div>
+
+          <div class="field">
+            <label for="unitNameInput">
+              Satuan
+            </label>
+
+            <input
+              id="unitNameInput"
+              type="text"
+              placeholder="Contoh: botol"
+            >
+          </div>
+        </div>
+
+        <button
+          id="saveProductSettingsButton"
+          class="btn btn-red"
+          type="button"
+        >
+          SIMPAN PERUBAHAN PRODUK
+        </button>
+
+        <div class="field-help">
+          Perubahan akan dipakai untuk transaksi baru. Transaksi lama tetap menggunakan nama, harga, dan satuan saat transaksi dibuat.
+        </div>
+      </div>
+
+
       <div class="stats">
 
         <div class="stat">
@@ -825,6 +889,21 @@
 
     const rejectedCount =
       document.getElementById("rejectedCount");
+
+    const productSettingsMessage =
+      document.getElementById("productSettingsMessage");
+
+    const productNameInput =
+      document.getElementById("productNameInput");
+
+    const unitPriceInput =
+      document.getElementById("unitPriceInput");
+
+    const unitNameInput =
+      document.getElementById("unitNameInput");
+
+    const saveProductSettingsButton =
+      document.getElementById("saveProductSettingsButton");
 
     const reviewModal =
       document.getElementById("reviewModal");
@@ -1183,6 +1262,275 @@
             );
           }
         );
+    }
+
+
+    async function loadProductSettings() {
+      hideMessage(
+        productSettingsMessage
+      );
+
+      try {
+        const response =
+          await fetch(
+            PURCHASE_SERVICE_URL +
+            "?action=getProductSettings",
+            {
+              method: "GET",
+              cache: "no-store",
+              headers: {
+                "Accept":
+                  "application/json",
+                "apikey":
+                  SUPABASE_PUBLISHABLE_KEY,
+                "Authorization":
+                  "Bearer " +
+                  SUPABASE_PUBLISHABLE_KEY
+              }
+            }
+          );
+
+        const raw =
+          await response.text();
+
+        let data;
+
+        try {
+          data =
+            JSON.parse(raw);
+        } catch {
+          throw new Error(
+            "Response konfigurasi produk tidak valid."
+          );
+        }
+
+        if (
+          !response.ok ||
+          !data ||
+          data.success !== true ||
+          !data.product
+        ) {
+          throw new Error(
+            data &&
+            (
+              data.message ||
+              data.detail
+            )
+              ? (
+                  data.message ||
+                  data.detail
+                )
+              : "Gagal membaca konfigurasi produk."
+          );
+        }
+
+        productNameInput.value =
+          String(
+            data.product.productName || ""
+          );
+
+        unitPriceInput.value =
+          String(
+            data.product.unitPrice || ""
+          );
+
+        unitNameInput.value =
+          String(
+            data.product.unitName || ""
+          );
+
+      } catch (error) {
+        console.error(
+          "LOAD PRODUCT SETTINGS ERROR:",
+          error
+        );
+
+        showMessage(
+          productSettingsMessage,
+          "error",
+          error &&
+          error.message
+            ? error.message
+            : "Tidak dapat memuat konfigurasi produk."
+        );
+      }
+    }
+
+
+    async function saveProductSettings() {
+      hideMessage(
+        productSettingsMessage
+      );
+
+      const productName =
+        productNameInput.value.trim();
+
+      const unitName =
+        unitNameInput.value.trim();
+
+      const unitPrice =
+        Number(
+          unitPriceInput.value
+        );
+
+      if (!productName) {
+        showMessage(
+          productSettingsMessage,
+          "error",
+          "Nama produk wajib diisi."
+        );
+
+        productNameInput.focus();
+        return;
+      }
+
+      if (
+        !Number.isInteger(
+          unitPrice
+        ) ||
+        unitPrice <= 0
+      ) {
+        showMessage(
+          productSettingsMessage,
+          "error",
+          "Harga produk harus berupa bilangan bulat lebih dari 0."
+        );
+
+        unitPriceInput.focus();
+        return;
+      }
+
+      if (!unitName) {
+        showMessage(
+          productSettingsMessage,
+          "error",
+          "Satuan produk wajib diisi."
+        );
+
+        unitNameInput.focus();
+        return;
+      }
+
+      saveProductSettingsButton.disabled =
+        true;
+
+      saveProductSettingsButton.textContent =
+        "MENYIMPAN...";
+
+      try {
+        const response =
+          await fetch(
+            PURCHASE_SERVICE_URL +
+            "?action=adminUpdateProductSettings",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type":
+                  "application/json",
+                "Accept":
+                  "application/json",
+                "apikey":
+                  SUPABASE_PUBLISHABLE_KEY,
+                "Authorization":
+                  "Bearer " +
+                  SUPABASE_PUBLISHABLE_KEY,
+                "x-admin-secret":
+                  adminSecret
+              },
+              body:
+                JSON.stringify({
+                  productName,
+                  unitPrice,
+                  unitName
+                })
+            }
+          );
+
+        const raw =
+          await response.text();
+
+        let data;
+
+        try {
+          data =
+            JSON.parse(raw);
+        } catch {
+          throw new Error(
+            "Server mengembalikan response tidak valid."
+          );
+        }
+
+        if (
+          !response.ok ||
+          !data ||
+          data.success !== true
+        ) {
+          throw new Error(
+            data &&
+            (
+              data.message ||
+              data.detail
+            )
+              ? (
+                  data.message ||
+                  data.detail
+                )
+              : "Gagal menyimpan konfigurasi produk."
+          );
+        }
+
+        productNameInput.value =
+          String(
+            data.product &&
+            data.product.productName
+              ? data.product.productName
+              : productName
+          );
+
+        unitPriceInput.value =
+          String(
+            data.product &&
+            data.product.unitPrice
+              ? data.product.unitPrice
+              : unitPrice
+          );
+
+        unitNameInput.value =
+          String(
+            data.product &&
+            data.product.unitName
+              ? data.product.unitName
+              : unitName
+          );
+
+        showMessage(
+          productSettingsMessage,
+          "success",
+          "Konfigurasi produk berhasil diperbarui."
+        );
+
+      } catch (error) {
+        console.error(
+          "SAVE PRODUCT SETTINGS ERROR:",
+          error
+        );
+
+        showMessage(
+          productSettingsMessage,
+          "error",
+          error &&
+          error.message
+            ? error.message
+            : "Konfigurasi produk gagal disimpan."
+        );
+
+      } finally {
+        saveProductSettingsButton.disabled =
+          false;
+
+        saveProductSettingsButton.textContent =
+          "SIMPAN PERUBAHAN PRODUK";
+      }
     }
 
 
@@ -1939,6 +2287,8 @@
         updateStatistics();
         renderTable();
 
+        await loadProductSettings();
+
       } catch (error) {
         sessionStorage.removeItem(
           "bad_purchase_admin_secret"
@@ -2008,6 +2358,12 @@
           enterDashboard();
         }
       }
+    );
+
+
+    saveProductSettingsButton.addEventListener(
+      "click",
+      saveProductSettings
     );
 
 
