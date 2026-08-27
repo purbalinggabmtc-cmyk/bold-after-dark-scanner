@@ -373,6 +373,60 @@
       margin: 0 auto;
     }
 
+    .combined-purchase-details {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #d7d7d7;
+      color: #111111;
+      text-align: left;
+    }
+
+    .combined-purchase-title {
+      margin-bottom: 12px;
+      color: #111111;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .combined-purchase-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .combined-purchase-item {
+      padding: 10px 11px;
+      border: 1px solid #dddddd;
+      border-radius: 8px;
+      background: #f7f7f7;
+    }
+
+    .combined-purchase-label {
+      margin-bottom: 4px;
+      color: #777777;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .combined-purchase-value {
+      color: #111111;
+      font-size: 12px;
+      font-weight: 900;
+      word-break: break-word;
+    }
+
+    @media (max-width: 600px) {
+      .combined-purchase-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
     .qr-caption {
       margin-top: 8px;
       color: #111;
@@ -1097,7 +1151,10 @@
 
           <div class="ticket">
 
-            <div class="ticket-label">
+            <div
+              id="resultTicketLabel"
+              class="ticket-label"
+            >
               TICKET ID
             </div>
 
@@ -1199,57 +1256,89 @@
               Tunjukkan QR Code ini saat check-in.
             </div>
 
+            <div
+              id="purchaseDetailResultBox"
+              class="combined-purchase-details hidden"
+            >
+              <div
+                id="purchaseDetailTitle"
+                class="combined-purchase-title"
+              >
+                DETAIL PEMBELIAN PRODUK
+              </div>
+
+              <div class="combined-purchase-grid">
+                <div class="combined-purchase-item">
+                  <div class="combined-purchase-label">
+                    Produk
+                  </div>
+                  <div
+                    id="resultPurchaseProduct"
+                    class="combined-purchase-value"
+                  >
+                    -
+                  </div>
+                </div>
+
+                <div class="combined-purchase-item">
+                  <div class="combined-purchase-label">
+                    Jumlah
+                  </div>
+                  <div
+                    id="resultPurchaseQuantity"
+                    class="combined-purchase-value"
+                  >
+                    -
+                  </div>
+                </div>
+
+                <div class="combined-purchase-item">
+                  <div class="combined-purchase-label">
+                    Total
+                  </div>
+                  <div
+                    id="resultPurchaseTotal"
+                    class="combined-purchase-value"
+                  >
+                    -
+                  </div>
+                </div>
+
+                <div class="combined-purchase-item">
+                  <div class="combined-purchase-label">
+                    Metode
+                  </div>
+                  <div
+                    id="resultPurchaseMethod"
+                    class="combined-purchase-value"
+                  >
+                    -
+                  </div>
+                </div>
+
+                <div
+                  class="combined-purchase-item"
+                  style="grid-column:1 / -1;"
+                >
+                  <div class="combined-purchase-label">
+                    Tujuan Pembayaran
+                  </div>
+                  <div
+                    id="resultPurchaseAccount"
+                    class="combined-purchase-value"
+                  >
+                    -
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <button
               id="saveQrButton"
               class="btn-save-qr"
               type="button"
             >
               SIMPAN TIKET MASUK (JPG)
-            </button>
-          </div>
-
-          <div
-            id="purchaseDetailResultBox"
-            class="purchase-result hidden"
-          >
-            <div class="purchase-result-label">
-              <span id="purchaseDetailTitle">DETAIL PEMBELIAN PRODUK</span>
-            </div>
-
-            <div class="result-grid" style="margin-top:10px;">
-              <div class="result-item">
-                <div class="result-label">ID Pembelian / Ticket ID</div>
-                <div id="resultPurchaseId" class="result-value">-</div>
-              </div>
-
-              <div class="result-item">
-                <div class="result-label">Jumlah</div>
-                <div id="resultPurchaseQuantity" class="result-value">-</div>
-              </div>
-
-              <div class="result-item">
-                <div class="result-label">Total</div>
-                <div id="resultPurchaseTotal" class="result-value">-</div>
-              </div>
-
-              <div class="result-item">
-                <div class="result-label">Metode</div>
-                <div id="resultPurchaseMethod" class="result-value">-</div>
-              </div>
-
-              <div class="result-item">
-                <div class="result-label">Tujuan Pembayaran</div>
-                <div id="resultPurchaseAccount" class="result-value">-</div>
-              </div>
-            </div>
-
-            <button
-              id="savePurchaseDetailButton"
-              class="btn-save-qr"
-              type="button"
-              style="margin-top:14px;"
-            >
-              SIMPAN DETAIL PEMBELIAN (JPG)
             </button>
           </div>
 
@@ -1366,8 +1455,11 @@
     const purchaseDetailResultBox =
       document.getElementById("purchaseDetailResultBox");
 
-    const resultPurchaseId =
-      document.getElementById("resultPurchaseId");
+    const resultTicketLabel =
+      document.getElementById("resultTicketLabel");
+
+    const resultPurchaseProduct =
+      document.getElementById("resultPurchaseProduct");
 
     const resultPurchaseQuantity =
       document.getElementById("resultPurchaseQuantity");
@@ -1380,9 +1472,6 @@
 
     const resultPurchaseAccount =
       document.getElementById("resultPurchaseAccount");
-
-    const savePurchaseDetailButton =
-      document.getElementById("savePurchaseDetailButton");
 
     const openPaymentUploadButton =
       document.getElementById("openPaymentUploadButton");
@@ -1501,8 +1590,6 @@ const submitButton =
     let currentQrUrl = "";
 
     let currentHasMesranPurchase = false;
-    let ticketSavedForCurrentResult = false;
-    let purchaseDetailSavedForCurrentResult = false;
 
     let boldRiderIsValid = false;
     let boldRiderValidatedId = "";
@@ -2514,12 +2601,6 @@ const submitButton =
       currentHasMesranPurchase =
         false;
 
-      ticketSavedForCurrentResult =
-        false;
-
-      purchaseDetailSavedForCurrentResult =
-        false;
-
       updateAccessFields();
       updateRafflePurchaseFields();
       updateRaffleTotal();
@@ -3141,30 +3222,6 @@ boldRidersId:
       }
     }
 
-    function maybeResetRegistrationAfterSaving() {
-      if (currentHasMesranPurchase) {
-        if (
-          ticketSavedForCurrentResult &&
-          purchaseDetailSavedForCurrentResult
-        ) {
-          setTimeout(
-            resetRegistrationForm,
-            500
-          );
-        }
-
-        return;
-      }
-
-      if (ticketSavedForCurrentResult) {
-        setTimeout(
-          resetRegistrationForm,
-          500
-        );
-      }
-    }
-
-
     async function saveQrAsJpg() {
       const ticketId =
         String(
@@ -3197,34 +3254,38 @@ boldRidersId:
         return;
       }
 
-      saveQrButton.disabled = true;
+      saveQrButton.disabled =
+        true;
+
       saveQrButton.textContent =
         "MENYIAPKAN JPG...";
 
       try {
         const qr =
-          await loadImageForCanvas(qrUrl);
+          await loadImageForCanvas(
+            qrUrl
+          );
 
-        const qrSize = 700;
-        const padding = 60;
-        const headerHeight = 150;
-        const footerHeight = 120;
-        const canvasWidth =
-          qrSize + padding * 2;
-        const canvasHeight =
-          headerHeight +
-          qrSize +
-          footerHeight +
-          padding * 2;
+        const hasPurchase =
+          currentHasMesranPurchase;
 
         const canvas =
-          document.createElement("canvas");
+          document.createElement(
+            "canvas"
+          );
 
-        canvas.width = canvasWidth;
-        canvas.height = canvasHeight;
+        canvas.width =
+          1000;
+
+        canvas.height =
+          hasPurchase
+            ? 1550
+            : 1120;
 
         const ctx =
-          canvas.getContext("2d");
+          canvas.getContext(
+            "2d"
+          );
 
         if (!ctx) {
           throw new Error(
@@ -3232,132 +3293,276 @@ boldRidersId:
           );
         }
 
-        ctx.fillStyle = "#ffffff";
+        ctx.fillStyle =
+          "#ffffff";
+
         ctx.fillRect(
           0,
           0,
-          canvasWidth,
-          canvasHeight
+          canvas.width,
+          canvas.height
         );
 
-        ctx.fillStyle = "#111111";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
+        ctx.textAlign =
+          "center";
+
+        ctx.textBaseline =
+          "middle";
+
+        ctx.fillStyle =
+          "#111111";
 
         ctx.font =
-          "900 38px Arial, Helvetica, sans-serif";
+          "900 44px Arial, Helvetica, sans-serif";
+
         ctx.fillText(
           "BOLD AFTER DARK",
-          canvasWidth / 2,
-          58
+          canvas.width / 2,
+          70
         );
+
+        ctx.fillStyle =
+          "#666666";
 
         ctx.font =
           "700 20px Arial, Helvetica, sans-serif";
-        ctx.fillStyle = "#666666";
+
         ctx.fillText(
-          "TICKET ID",
-          canvasWidth / 2,
-          105
+          hasPurchase
+            ? "TICKET ID / ID PEMBELIAN"
+            : "TICKET ID",
+          canvas.width / 2,
+          120
         );
+
+        ctx.fillStyle =
+          "#111111";
 
         ctx.font =
-          "900 34px Arial, Helvetica, sans-serif";
-        ctx.fillStyle = "#111111";
+          "900 38px Arial, Helvetica, sans-serif";
+
         ctx.fillText(
           ticketId,
-          canvasWidth / 2,
-          140
+          canvas.width / 2,
+          165
         );
 
-        const imageX =
-          (canvasWidth - qrSize) / 2;
-        const imageY =
-          headerHeight + padding;
+        const qrSize =
+          660;
+
+        const qrX =
+          (
+            canvas.width -
+            qrSize
+          ) / 2;
+
+        const qrY =
+          225;
 
         ctx.drawImage(
           qr,
-          imageX,
-          imageY,
+          qrX,
+          qrY,
           qrSize,
           qrSize
         );
 
+        ctx.fillStyle =
+          "#444444";
+
         ctx.font =
           "700 18px Arial, Helvetica, sans-serif";
-        ctx.fillStyle = "#444444";
+
         ctx.fillText(
           "Tunjukkan QR Code ini saat check-in.",
-          canvasWidth / 2,
-          canvasHeight - 55
+          canvas.width / 2,
+          925
         );
 
+        if (hasPurchase) {
+          ctx.fillStyle =
+            "#111111";
+
+          ctx.font =
+            "900 24px Arial, Helvetica, sans-serif";
+
+          ctx.fillText(
+            "DETAIL PEMBELIAN",
+            canvas.width / 2,
+            990
+          );
+
+          const rows = [
+            [
+              "PRODUK",
+              resultPurchaseProduct.textContent
+            ],
+            [
+              "JUMLAH",
+              resultPurchaseQuantity.textContent
+            ],
+            [
+              "TOTAL",
+              resultPurchaseTotal.textContent
+            ],
+            [
+              "METODE",
+              resultPurchaseMethod.textContent
+            ],
+            [
+              "TUJUAN PEMBAYARAN",
+              resultPurchaseAccount.textContent
+            ]
+          ];
+
+          let y =
+            1050;
+
+          rows.forEach(
+            function(row) {
+              ctx.textAlign =
+                "left";
+
+              ctx.fillStyle =
+                "#777777";
+
+              ctx.font =
+                "700 17px Arial, Helvetica, sans-serif";
+
+              ctx.fillText(
+                row[0],
+                100,
+                y
+              );
+
+              ctx.fillStyle =
+                "#111111";
+
+              ctx.font =
+                "900 23px Arial, Helvetica, sans-serif";
+
+              ctx.fillText(
+                String(
+                  row[1] || "-"
+                ),
+                100,
+                y + 34
+              );
+
+              y +=
+                90;
+            }
+          );
+
+          ctx.textAlign =
+            "center";
+
+          ctx.fillStyle =
+            "#555555";
+
+          ctx.font =
+            "700 17px Arial, Helvetica, sans-serif";
+
+          ctx.fillText(
+            "Gunakan Ticket ID di atas untuk upload bukti pembayaran.",
+            canvas.width / 2,
+            canvas.height - 55
+          );
+        }
+
         const blob =
-          await new Promise(function(resolve, reject) {
-            canvas.toBlob(
-              function(result) {
-                if (result) {
-                  resolve(result);
-                } else {
-                  reject(
-                    new Error(
-                      "Gagal membuat file JPG."
-                    )
-                  );
-                }
-              },
-              "image/jpeg",
-              0.95
-            );
-          });
+          await new Promise(
+            function(
+              resolve,
+              reject
+            ) {
+              canvas.toBlob(
+                function(result) {
+                  if (result) {
+                    resolve(
+                      result
+                    );
+                  } else {
+                    reject(
+                      new Error(
+                        "Gagal membuat file JPG."
+                      )
+                    );
+                  }
+                },
+                "image/jpeg",
+                0.95
+              );
+            }
+          );
 
         const url =
-          URL.createObjectURL(blob);
+          URL.createObjectURL(
+            blob
+          );
 
         const link =
-          document.createElement("a");
+          document.createElement(
+            "a"
+          );
 
-        link.href = url;
+        link.href =
+          url;
+
         link.download =
           "BOLD-AFTER-DARK-" +
-          sanitizeFileName(ticketId) +
+          sanitizeFileName(
+            ticketId
+          ) +
           ".jpg";
 
-        document.body.appendChild(link);
+        document.body.appendChild(
+          link
+        );
+
         link.click();
         link.remove();
 
         setTimeout(
           function() {
-            URL.revokeObjectURL(url);
+            URL.revokeObjectURL(
+              url
+            );
           },
           1000
         );
 
         showMessage(
           "success",
-          "Tiket masuk berhasil disimpan sebagai JPG."
+          hasPurchase
+            ? "Tiket masuk dan detail pembelian berhasil disimpan sebagai satu JPG."
+            : "Tiket masuk berhasil disimpan sebagai JPG."
         );
 
-        ticketSavedForCurrentResult =
-          true;
-
-        maybeResetRegistrationAfterSaving();
+        setTimeout(
+          resetRegistrationForm,
+          500
+        );
 
       } catch (error) {
         console.error(
-          "SAVE QR JPG ERROR:",
+          "SAVE TICKET JPG ERROR:",
           error
         );
 
         showMessage(
           "error",
-          "QR tidak dapat disimpan sebagai JPG. Silakan coba lagi."
+          "Tiket tidak dapat disimpan sebagai JPG. Silakan coba lagi."
         );
+
       } finally {
-        saveQrButton.disabled = false;
+        saveQrButton.disabled =
+          false;
+
         saveQrButton.textContent =
-          "SIMPAN TIKET MASUK (JPG)";
+          currentHasMesranPurchase
+            ? "SIMPAN TIKET + DETAIL PEMBELIAN (JPG)"
+            : "SIMPAN TIKET MASUK (JPG)";
       }
     }
 
@@ -3558,200 +3763,6 @@ boldRidersId:
     }
 
 
-    async function savePurchaseDetailAsJpg() {
-      const purchaseId =
-        resultPurchaseId.textContent.trim();
-
-      if (
-        !purchaseId ||
-        purchaseId === "-"
-      ) {
-        showMessage(
-          "error",
-          "ID pembelian tidak tersedia."
-        );
-        return;
-      }
-
-      savePurchaseDetailButton.disabled =
-        true;
-
-      savePurchaseDetailButton.textContent =
-        "MENYIAPKAN JPG...";
-
-      try {
-        const canvas =
-          document.createElement("canvas");
-
-        canvas.width = 1000;
-        canvas.height = 1100;
-
-        const ctx =
-          canvas.getContext("2d");
-
-        if (!ctx) {
-          throw new Error(
-            "Browser tidak mendukung pembuatan JPG."
-          );
-        }
-
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(
-          0,
-          0,
-          canvas.width,
-          canvas.height
-        );
-
-        ctx.textAlign = "center";
-        ctx.fillStyle = "#111111";
-        ctx.font =
-          "900 44px Arial, Helvetica, sans-serif";
-
-        ctx.fillText(
-          "BOLD AFTER DARK",
-          canvas.width / 2,
-          85
-        );
-
-        ctx.font =
-          "700 24px Arial, Helvetica, sans-serif";
-        ctx.fillStyle = "#666666";
-
-        ctx.fillText(
-          "DETAIL PEMBELIAN " + ACTIVE_PRODUCT_NAME.toUpperCase(),
-          canvas.width / 2,
-          135
-        );
-
-        const rows = [
-          ["ID PEMBELIAN", resultPurchaseId.textContent],
-          ["NAMA", resultName.textContent],
-          ["WHATSAPP", resultWhatsapp.textContent],
-          ["JUMLAH", resultPurchaseQuantity.textContent],
-          ["TOTAL", resultPurchaseTotal.textContent],
-          ["METODE", resultPurchaseMethod.textContent],
-          ["TUJUAN PEMBAYARAN", resultPurchaseAccount.textContent]
-        ];
-
-        let y = 225;
-
-        rows.forEach(
-          function(row) {
-            ctx.textAlign = "left";
-
-            ctx.fillStyle = "#777777";
-            ctx.font =
-              "700 20px Arial, Helvetica, sans-serif";
-
-            ctx.fillText(
-              row[0],
-              90,
-              y
-            );
-
-            ctx.fillStyle = "#111111";
-            ctx.font =
-              "900 28px Arial, Helvetica, sans-serif";
-
-            ctx.fillText(
-              String(row[1] || "-"),
-              90,
-              y + 38
-            );
-
-            y += 115;
-          }
-        );
-
-        ctx.textAlign = "center";
-        ctx.fillStyle = "#555555";
-        ctx.font =
-          "700 20px Arial, Helvetica, sans-serif";
-
-        ctx.fillText(
-          "Simpan ID Pembelian / Ticket ID untuk upload bukti pembayaran.",
-          canvas.width / 2,
-          canvas.height - 80
-        );
-
-        const blob =
-          await new Promise(
-            function(resolve, reject) {
-              canvas.toBlob(
-                function(result) {
-                  if (result) {
-                    resolve(result);
-                  } else {
-                    reject(
-                      new Error(
-                        "Gagal membuat file JPG."
-                      )
-                    );
-                  }
-                },
-                "image/jpeg",
-                0.95
-              );
-            }
-          );
-
-        const url =
-          URL.createObjectURL(blob);
-
-        const link =
-          document.createElement("a");
-
-        link.href = url;
-        link.download =
-          "BOLD-AFTER-DARK-" + sanitizeFileName(ACTIVE_PRODUCT_NAME) + "-PEMBELIAN-" +
-          sanitizeFileName(
-            purchaseId
-          ) +
-          ".jpg";
-
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-
-        setTimeout(
-          function() {
-            URL.revokeObjectURL(url);
-          },
-          1000
-        );
-
-        showMessage(
-          "success",
-          "Detail pembelian berhasil disimpan sebagai JPG."
-        );
-
-        purchaseDetailSavedForCurrentResult =
-          true;
-
-        maybeResetRegistrationAfterSaving();
-
-      } catch (error) {
-        console.error(
-          "SAVE PURCHASE DETAIL ERROR:",
-          error
-        );
-
-        showMessage(
-          "error",
-          "Detail pembelian tidak dapat disimpan."
-        );
-
-      } finally {
-        savePurchaseDetailButton.disabled =
-          false;
-
-        savePurchaseDetailButton.textContent =
-          "SIMPAN DETAIL PEMBELIAN (JPG)";
-      }
-    }
-
-
     function loadImageForCanvas(url) {
       return new Promise(
         function(resolve, reject) {
@@ -3803,12 +3814,6 @@ boldRidersId:
           mesranPurchase &&
           mesranPurchase.purchaseId
         );
-
-      ticketSavedForCurrentResult =
-        false;
-
-      purchaseDetailSavedForCurrentResult =
-        false;
 
       resultPassId.textContent =
         data.passId || "-";
@@ -3873,8 +3878,12 @@ boldRidersId:
         mesranPurchase &&
         mesranPurchase.purchaseId
       ) {
-        resultPurchaseId.textContent =
-          mesranPurchase.purchaseId;
+        resultTicketLabel.textContent =
+          "TICKET ID / ID PEMBELIAN";
+
+        resultPurchaseProduct.textContent =
+          mesranPurchase.productName ||
+          ACTIVE_PRODUCT_NAME;
 
         resultPurchaseQuantity.textContent =
           mesranPurchase.quantity +
@@ -3918,7 +3927,10 @@ boldRidersId:
           "hidden"
         );
       } else {
-        resultPurchaseId.textContent =
+        resultTicketLabel.textContent =
+          "TICKET ID";
+
+        resultPurchaseProduct.textContent =
           "-";
 
         resultPurchaseQuantity.textContent =
@@ -3952,6 +3964,11 @@ boldRidersId:
         qrBox.classList.remove(
           "hidden"
         );
+
+        saveQrButton.textContent =
+          currentHasMesranPurchase
+            ? "SIMPAN TIKET + DETAIL PEMBELIAN (JPG)"
+            : "SIMPAN TIKET MASUK (JPG)";
       } else {
         qrImage.removeAttribute(
           "src"
@@ -4161,12 +4178,6 @@ boldRidersId:
     submitLookupPaymentProofButton.addEventListener(
       "click",
       submitLookupPaymentProof
-    );
-
-
-    savePurchaseDetailButton.addEventListener(
-      "click",
-      savePurchaseDetailAsJpg
     );
 
 
