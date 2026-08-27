@@ -909,7 +909,7 @@
 
           <div class="field">
             <label for="lookupPurchaseId">
-              ID Pembelian <span class="required">*</span>
+              ID Pembelian / Ticket ID <span class="required">*</span>
             </label>
 
             <input
@@ -965,7 +965,7 @@
 
             <div class="result-grid">
               <div class="result-item">
-                <div class="result-label">ID Pembelian</div>
+                <div class="result-label">ID Pembelian / Ticket ID</div>
                 <div id="lookupResultPurchaseId" class="result-value">-</div>
               </div>
 
@@ -1181,7 +1181,7 @@
 
             <div class="result-grid" style="margin-top:10px;">
               <div class="result-item">
-                <div class="result-label">ID Pembelian</div>
+                <div class="result-label">ID Pembelian / Ticket ID</div>
                 <div id="resultPurchaseId" class="result-value">-</div>
               </div>
 
@@ -1923,7 +1923,7 @@ const submitButton =
             data.purchase &&
             data.purchase.purchaseId
               ? data.purchase.purchaseId
-              : ""
+              : registrationData.passId
           ).trim(),
         quantity:
           Number(
@@ -1981,16 +1981,22 @@ const submitButton =
         String(
           lookupPurchaseIdInput.value || ""
         )
-          .replace(/\D/g, "")
-          .slice(0, 4);
+          .trim()
+          .toUpperCase()
+          .replace(/[^A-Z0-9-]/g, "")
+          .slice(0, 12);
 
       lookupPurchaseIdInput.value =
         purchaseId;
 
-      if (purchaseId.length !== 4) {
+      if (
+        !/^BAD26-[A-Z0-9]{6}$/.test(
+          purchaseId
+        )
+      ) {
         showMessage(
           "error",
-          "ID pembelian harus 4 digit."
+          "ID Pembelian harus menggunakan Ticket ID dengan format BAD26-XXXXXX."
         );
         return;
       }
@@ -2224,7 +2230,7 @@ const submitButton =
         "",
         "Saya sudah mengirim bukti pembayaran.",
         "",
-        "ID Pembelian: " + purchaseId,
+        "ID Pembelian / Ticket ID: " + purchaseId,
         "Nama: " + buyerName,
         "Jumlah: " + quantity,
         "Total: " + total,
@@ -3405,7 +3411,7 @@ boldRidersId:
           "700 22px Arial, Helvetica, sans-serif";
 
         ctx.fillText(
-          "ID Pembelian: " + purchaseId,
+          "ID Pembelian / Ticket ID: " + purchaseId,
           canvas.width / 2,
           190
         );
@@ -3627,7 +3633,7 @@ boldRidersId:
           "700 20px Arial, Helvetica, sans-serif";
 
         ctx.fillText(
-          "Simpan ID Pembelian untuk upload bukti pembayaran.",
+          "Simpan ID Pembelian / Ticket ID untuk upload bukti pembayaran.",
           canvas.width / 2,
           canvas.height - 80
         );
@@ -4105,8 +4111,9 @@ boldRidersId:
           String(
             lookupPurchaseIdInput.value || ""
           )
-            .replace(/\D/g, "")
-            .slice(0, 4);
+            .toUpperCase()
+            .replace(/[^A-Z0-9-]/g, "")
+            .slice(0, 12);
 
         lookupPurchaseDetails.classList.add(
           "hidden"
