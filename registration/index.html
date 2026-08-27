@@ -3885,13 +3885,16 @@ boldRidersId:
           mesranPurchase.productName ||
           ACTIVE_PRODUCT_NAME;
 
+        /*
+         * Untuk hasil yang langsung tampil setelah REGISTER NOW,
+         * gunakan satuan produk aktif yang sudah dimuat dari
+         * product_settings. Ini menjaga tampilan konsisten dengan
+         * harga/nama produk yang dilihat user pada form.
+         */
         resultPurchaseQuantity.textContent =
           mesranPurchase.quantity +
           " " +
-          (
-            mesranPurchase.unitName ||
-            ACTIVE_PRODUCT_UNIT_NAME
-          );
+          ACTIVE_PRODUCT_UNIT_NAME;
 
         resultPurchaseTotal.textContent =
           formatRupiah(
