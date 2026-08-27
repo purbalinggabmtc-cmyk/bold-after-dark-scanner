@@ -1109,7 +1109,8 @@
             </td>
 
             <td>
-              ${escapeHtml(row.quantity)} botol
+              ${escapeHtml(row.quantity)}
+              ${escapeHtml(row.unitName || "unit")}
             </td>
 
             <td>
@@ -1403,7 +1404,16 @@
             purchase.quantity ||
             0
           ) +
-          " botol Mesran",
+          " " +
+          (
+            purchase.unitName ||
+            "unit"
+          ) +
+          " " +
+          (
+            purchase.productName ||
+            "Produk"
+          ),
         "",
         "Nomor Undian:",
         numbers.length
@@ -1523,7 +1533,11 @@
           currentPurchase.quantity ||
           0
         ) +
-        " botol";
+        " " +
+        (
+          currentPurchase.unitName ||
+          "unit"
+        );
 
       modalTotal.textContent =
         formatRupiah(
