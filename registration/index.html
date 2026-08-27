@@ -429,7 +429,7 @@
 
 
     /* =========================================================
-       TIKET UNDIAN / PEMBELIAN MESRAN
+       TIKET UNDIAN / <span id="purchaseSectionTitle">PEMBELIAN PRODUK</span>
        ========================================================= */
 
     .raffle-option {
@@ -752,7 +752,7 @@
           </label>
 
           <div class="field-help">
-            1 botol Mesran Rp20.000. Setelah pembayaran disetujui, setiap 1 botol mendapatkan 1 tiket undian sekali pakai.
+            <span id="raffleProductInfo">Memuat informasi produk...</span>
           </div>
         </div>
 
@@ -761,16 +761,16 @@
           class="raffle-box hidden"
         >
           <div class="raffle-title">
-            PEMBELIAN MESRAN
+            <span id="purchaseSectionTitle">PEMBELIAN PRODUK</span>
           </div>
 
           <div class="raffle-subtitle">
-            Tentukan jumlah botol, lakukan pembayaran sesuai total, lalu upload bukti pembayaran.
+            Tentukan jumlah pembelian dan metode pembayaran. Bukti pembayaran diunggah setelah registrasi.
           </div>
 
           <div class="field">
             <label for="raffleQuantity">
-              Jumlah Botol <span class="required">*</span>
+              <span id="raffleQuantityLabel">Jumlah</span> <span class="required">*</span>
             </label>
 
             <input
@@ -786,13 +786,13 @@
 
           <div class="price-summary">
             <div class="price-row">
-              <span>Harga per botol</span>
-              <strong>Rp20.000</strong>
+              <span id="raffleUnitPriceLabel">Harga per unit</span>
+              <strong id="raffleUnitPriceText">-</strong>
             </div>
 
             <div class="price-row">
               <span>Jumlah</span>
-              <strong id="raffleQuantityText">1 botol</strong>
+              <strong id="raffleQuantityText">1 unit</strong>
             </div>
 
             <div class="price-row">
@@ -1176,7 +1176,7 @@
             class="purchase-result hidden"
           >
             <div class="purchase-result-label">
-              DETAIL PEMBELIAN MESRAN
+              DETAIL <span id="purchaseSectionTitle">PEMBELIAN PRODUK</span>
             </div>
 
             <div class="result-grid" style="margin-top:10px;">
@@ -1254,8 +1254,14 @@
     const PAYMENT_ADMIN_WHATSAPP =
       "6282324854187";
 
-    const MESRAN_UNIT_PRICE =
-      20000;
+    let ACTIVE_PRODUCT_NAME =
+      "Produk";
+
+    let ACTIVE_PRODUCT_UNIT_PRICE =
+      0;
+
+    let ACTIVE_PRODUCT_UNIT_NAME =
+      "unit";
 
     const MAX_PAYMENT_PROOF_SIZE =
       5 * 1024 * 1024;
@@ -1277,6 +1283,24 @@
 
     const rafflePurchaseBox =
       document.getElementById("rafflePurchaseBox");
+
+    const purchaseSectionTitle =
+      document.getElementById("purchaseSectionTitle");
+
+    const raffleProductInfo =
+      document.getElementById("raffleProductInfo");
+
+    const raffleQuantityLabel =
+      document.getElementById("raffleQuantityLabel");
+
+    const raffleUnitPriceLabel =
+      document.getElementById("raffleUnitPriceLabel");
+
+    const raffleUnitPriceText =
+      document.getElementById("raffleUnitPriceText");
+
+    const purchaseDetailTitle =
+      document.getElementById("purchaseDetailTitle");
 
     const raffleQuantityInput =
       document.getElementById("raffleQuantity");
@@ -1477,6 +1501,148 @@ const submitButton =
     }
 
 
+    async function loadProductSettings() {
+      try {
+        const response =
+          await fetch(
+            PURCHASE_SERVICE_URL +
+            "?action=getProductSettings",
+            {
+              method: "GET",
+              cache: "no-store",
+              headers: {
+                "Accept":
+                  "application/json",
+                "apikey":
+                  SUPABASE_PUBLISHABLE_KEY,
+                "Authorization":
+                  "Bearer " +
+                  SUPABASE_PUBLISHABLE_KEY
+              }
+            }
+          );
+
+        const raw =
+          await response.text();
+
+        let data;
+
+        try {
+          data =
+            JSON.parse(raw);
+        } catch {
+          throw new Error(
+            "Response konfigurasi produk tidak valid."
+          );
+        }
+
+        if (
+          !response.ok ||
+          !data ||
+          data.success !== true ||
+          !data.product
+        ) {
+          throw new Error(
+            data &&
+            (
+              data.message ||
+              data.detail
+            )
+              ? (
+                  data.message ||
+                  data.detail
+                )
+              : "Konfigurasi produk tidak tersedia."
+          );
+        }
+
+        ACTIVE_PRODUCT_NAME =
+          String(
+            data.product.productName || ""
+          ).trim() || "Produk";
+
+        ACTIVE_PRODUCT_UNIT_PRICE =
+          Number(
+            data.product.unitPrice || 0
+          );
+
+        ACTIVE_PRODUCT_UNIT_NAME =
+          String(
+            data.product.unitName || ""
+          ).trim() || "unit";
+
+        if (
+          !Number.isInteger(
+            ACTIVE_PRODUCT_UNIT_PRICE
+          ) ||
+          ACTIVE_PRODUCT_UNIT_PRICE <= 0
+        ) {
+          throw new Error(
+            "Harga produk aktif tidak valid."
+          );
+        }
+
+        applyProductSettingsToUi();
+
+      } catch (error) {
+        console.error(
+          "LOAD PRODUCT SETTINGS ERROR:",
+          error
+        );
+
+        showMessage(
+          "error",
+          error &&
+          error.message
+            ? error.message
+            : "Tidak dapat memuat konfigurasi produk."
+        );
+
+        wantRaffleTicketInput.disabled =
+          true;
+      }
+    }
+
+
+    function applyProductSettingsToUi() {
+      purchaseSectionTitle.textContent =
+        "PEMBELIAN " +
+        ACTIVE_PRODUCT_NAME.toUpperCase();
+
+      raffleProductInfo.textContent =
+        "1 " +
+        ACTIVE_PRODUCT_UNIT_NAME +
+        " " +
+        ACTIVE_PRODUCT_NAME +
+        " " +
+        formatRupiah(
+          ACTIVE_PRODUCT_UNIT_PRICE
+        ) +
+        ". Setelah pembayaran disetujui, setiap 1 " +
+        ACTIVE_PRODUCT_UNIT_NAME +
+        " mendapatkan 1 tiket undian sekali pakai.";
+
+      raffleQuantityLabel.textContent =
+        "Jumlah " +
+        ACTIVE_PRODUCT_UNIT_NAME;
+
+      raffleUnitPriceLabel.textContent =
+        "Harga per " +
+        ACTIVE_PRODUCT_UNIT_NAME;
+
+      raffleUnitPriceText.textContent =
+        formatRupiah(
+          ACTIVE_PRODUCT_UNIT_PRICE
+        );
+
+      purchaseDetailTitle.textContent =
+        "DETAIL PEMBELIAN " +
+        ACTIVE_PRODUCT_NAME.toUpperCase();
+
+      updateRaffleTotal();
+    }
+
+
     const PAYMENT_ACCOUNTS = {
       EWALLET: {
         label: "DANA / GoPay / ShopeePay",
@@ -1604,12 +1770,14 @@ const submitButton =
       }
 
       raffleQuantityText.textContent =
-        quantity + " botol";
+        quantity +
+        " " +
+        ACTIVE_PRODUCT_UNIT_NAME;
 
       raffleTotalText.textContent =
         formatRupiah(
           quantity *
-          MESRAN_UNIT_PRICE
+          ACTIVE_PRODUCT_UNIT_PRICE
         );
     }
 
@@ -1639,7 +1807,7 @@ const submitButton =
         return {
           ok: false,
           message:
-            "Jumlah pembelian Mesran harus 1 sampai 100 botol.",
+            "Jumlah pembelian " + ACTIVE_PRODUCT_NAME + " harus 1 sampai 100 " + ACTIVE_PRODUCT_UNIT_NAME + ".",
           element:
             raffleQuantityInput
         };
@@ -1654,7 +1822,7 @@ const submitButton =
         return {
           ok: false,
           message:
-            "Silakan pilih metode pembayaran Mesran.",
+            "Silakan pilih metode pembayaran " + ACTIVE_PRODUCT_NAME + ".",
           element:
             paymentMethodInput
         };
@@ -1734,7 +1902,7 @@ const submitButton =
                 data.message ||
                 data.detail
               )
-            : "Registrasi berhasil, tetapi ID pembelian Mesran gagal dibuat."
+            : "Registrasi berhasil, tetapi ID pembelian " + ACTIVE_PRODUCT_NAME + " gagal dibuat."
         );
       }
 
@@ -1759,7 +1927,7 @@ const submitButton =
             data.purchase.totalAmount
               ? data.purchase.totalAmount
               : raffleData.quantity *
-                MESRAN_UNIT_PRICE
+                ACTIVE_PRODUCT_UNIT_PRICE
           ),
         paymentMethod:
           String(
@@ -1767,6 +1935,27 @@ const submitButton =
             data.purchase.paymentMethod
               ? data.purchase.paymentMethod
               : raffleData.paymentMethod
+          ),
+        productName:
+          String(
+            data.purchase &&
+            data.purchase.productName
+              ? data.purchase.productName
+              : ACTIVE_PRODUCT_NAME
+          ),
+        unitName:
+          String(
+            data.purchase &&
+            data.purchase.unitName
+              ? data.purchase.unitName
+              : ACTIVE_PRODUCT_UNIT_NAME
+          ),
+        unitPrice:
+          Number(
+            data.purchase &&
+            data.purchase.unitPrice
+              ? data.purchase.unitPrice
+              : ACTIVE_PRODUCT_UNIT_PRICE
           ),
         paymentAccount:
           data.paymentAccount || null
@@ -1868,7 +2057,8 @@ const submitButton =
 
         lookupResultQuantity.textContent =
           (purchase.quantity || 0) +
-          " botol";
+          " " +
+          ACTIVE_PRODUCT_UNIT_NAME;
 
         lookupResultTotal.textContent =
           formatRupiah(
@@ -2701,7 +2891,7 @@ const boldRidersId =
       }
 
       /*
-       * TIKET UNDIAN / PEMBELIAN MESRAN
+       * TIKET UNDIAN / <span id="purchaseSectionTitle">PEMBELIAN PRODUK</span>
        */
       const raffleData =
         validateRafflePurchase();
@@ -2835,7 +3025,7 @@ boldRidersId:
               );
           } catch (purchaseError) {
             console.error(
-              "MESRAN PURCHASE ERROR:",
+              "PRODUCT PURCHASE ERROR:",
               purchaseError
             );
 
@@ -2848,7 +3038,7 @@ boldRidersId:
               purchaseError &&
               purchaseError.message
                 ? purchaseError.message
-                : "Registrasi berhasil, tetapi proses pembelian Mesran gagal."
+                : "Registrasi berhasil, tetapi proses pembelian " + ACTIVE_PRODUCT_NAME + " gagal."
             );
 
             return;
@@ -3372,7 +3562,7 @@ boldRidersId:
         ctx.fillStyle = "#666666";
 
         ctx.fillText(
-          "DETAIL PEMBELIAN MESRAN",
+          "DETAIL <span id="purchaseSectionTitle">PEMBELIAN PRODUK</span>",
           canvas.width / 2,
           135
         );
@@ -3457,7 +3647,7 @@ boldRidersId:
 
         link.href = url;
         link.download =
-          "BOLD-AFTER-DARK-PEMBELIAN-" +
+          "BOLD-AFTER-DARK-" + sanitizeFileName(ACTIVE_PRODUCT_NAME) + "-PEMBELIAN-" +
           sanitizeFileName(
             purchaseId
           ) +
@@ -3631,7 +3821,11 @@ boldRidersId:
 
         resultPurchaseQuantity.textContent =
           mesranPurchase.quantity +
-          " botol";
+          " " +
+          (
+            mesranPurchase.unitName ||
+            ACTIVE_PRODUCT_UNIT_NAME
+          );
 
         resultPurchaseTotal.textContent =
           formatRupiah(
@@ -3924,6 +4118,7 @@ boldRidersId:
      * INITIAL STATE
      */
     updateAccessFields();
+    loadProductSettings();
 
   </script>
 
