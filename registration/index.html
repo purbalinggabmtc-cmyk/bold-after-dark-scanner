@@ -429,7 +429,7 @@
 
 
     /* =========================================================
-       TIKET UNDIAN / <span id="purchaseSectionTitle">PEMBELIAN PRODUK</span>
+       TIKET UNDIAN / PEMBELIAN PRODUK
        ========================================================= */
 
     .raffle-option {
@@ -1176,7 +1176,7 @@
             class="purchase-result hidden"
           >
             <div class="purchase-result-label">
-              DETAIL <span id="purchaseSectionTitle">PEMBELIAN PRODUK</span>
+              <span id="purchaseDetailTitle">DETAIL PEMBELIAN PRODUK</span>
             </div>
 
             <div class="result-grid" style="margin-top:10px;">
@@ -1605,43 +1605,54 @@ const submitButton =
 
 
     function applyProductSettingsToUi() {
-      purchaseSectionTitle.textContent =
-        "PEMBELIAN " +
-        ACTIVE_PRODUCT_NAME.toUpperCase();
+      if (purchaseSectionTitle) {
+        purchaseSectionTitle.textContent =
+          "PEMBELIAN " +
+          ACTIVE_PRODUCT_NAME.toUpperCase();
+      }
 
-      raffleProductInfo.textContent =
-        "1 " +
-        ACTIVE_PRODUCT_UNIT_NAME +
-        " " +
-        ACTIVE_PRODUCT_NAME +
-        " " +
-        formatRupiah(
-          ACTIVE_PRODUCT_UNIT_PRICE
-        ) +
-        ". Setelah pembayaran disetujui, setiap 1 " +
-        ACTIVE_PRODUCT_UNIT_NAME +
-        " mendapatkan 1 tiket undian sekali pakai.";
+      if (raffleProductInfo) {
+        raffleProductInfo.textContent =
+          "1 " +
+          ACTIVE_PRODUCT_UNIT_NAME +
+          " " +
+          ACTIVE_PRODUCT_NAME +
+          " " +
+          formatRupiah(
+            ACTIVE_PRODUCT_UNIT_PRICE
+          ) +
+          ". Setelah pembayaran disetujui, setiap 1 " +
+          ACTIVE_PRODUCT_UNIT_NAME +
+          " mendapatkan 1 tiket undian sekali pakai.";
+      }
 
-      raffleQuantityLabel.textContent =
-        "Jumlah " +
-        ACTIVE_PRODUCT_UNIT_NAME;
+      if (raffleQuantityLabel) {
+        raffleQuantityLabel.textContent =
+          "Jumlah " +
+          ACTIVE_PRODUCT_UNIT_NAME;
+      }
 
-      raffleUnitPriceLabel.textContent =
-        "Harga per " +
-        ACTIVE_PRODUCT_UNIT_NAME;
+      if (raffleUnitPriceLabel) {
+        raffleUnitPriceLabel.textContent =
+          "Harga per " +
+          ACTIVE_PRODUCT_UNIT_NAME;
+      }
 
-      raffleUnitPriceText.textContent =
-        formatRupiah(
-          ACTIVE_PRODUCT_UNIT_PRICE
-        );
+      if (raffleUnitPriceText) {
+        raffleUnitPriceText.textContent =
+          formatRupiah(
+            ACTIVE_PRODUCT_UNIT_PRICE
+          );
+      }
 
-      purchaseDetailTitle.textContent =
-        "DETAIL PEMBELIAN " +
-        ACTIVE_PRODUCT_NAME.toUpperCase();
+      if (purchaseDetailTitle) {
+        purchaseDetailTitle.textContent =
+          "DETAIL PEMBELIAN " +
+          ACTIVE_PRODUCT_NAME.toUpperCase();
+      }
 
       updateRaffleTotal();
     }
-
 
     const PAYMENT_ACCOUNTS = {
       EWALLET: {
@@ -2894,7 +2905,7 @@ const boldRidersId =
       }
 
       /*
-       * TIKET UNDIAN / <span id="purchaseSectionTitle">PEMBELIAN PRODUK</span>
+       * TIKET UNDIAN / PEMBELIAN PRODUK
        */
       const raffleData =
         validateRafflePurchase();
@@ -3565,7 +3576,7 @@ boldRidersId:
         ctx.fillStyle = "#666666";
 
         ctx.fillText(
-          "DETAIL <span id="purchaseSectionTitle">PEMBELIAN PRODUK</span>",
+          "DETAIL PEMBELIAN " + ACTIVE_PRODUCT_NAME.toUpperCase(),
           canvas.width / 2,
           135
         );
@@ -3936,14 +3947,27 @@ boldRidersId:
     /*
      * ACCESS CHANGE
      */
+    function syncAccessUi() {
+      updateAccessFields();
+      updateRafflePurchaseFields();
+      updateRaffleTotal();
+      updatePaymentAccount();
+    }
+
+
     accessTypeInput.addEventListener(
       "change",
       function() {
-        updateAccessFields();
-    updateRafflePurchaseFields();
-    updateRaffleTotal();
-    updatePaymentAccount();
+        syncAccessUi();
         hideMessage();
+      }
+    );
+
+
+    accessTypeInput.addEventListener(
+      "input",
+      function() {
+        syncAccessUi();
       }
     );
 
@@ -4120,8 +4144,23 @@ boldRidersId:
     /*
      * INITIAL STATE
      */
-    updateAccessFields();
+    syncAccessUi();
     loadProductSettings();
+
+    /*
+     * Beberapa browser memulihkan nilai form setelah script awal berjalan.
+     * Sinkronkan kembali supaya field ID BOLD RIDERS selalu muncul
+     * ketika Access yang aktif adalah BOLD RIDERS.
+     */
+    window.addEventListener(
+      "pageshow",
+      function() {
+        setTimeout(
+          syncAccessUi,
+          0
+        );
+      }
+    );
 
   </script>
 
