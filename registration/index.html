@@ -136,6 +136,33 @@
       color: #777;
     }
 
+    .purchase-id-input-group {
+      display: flex;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .purchase-id-prefix {
+      display: flex;
+      align-items: center;
+      min-height: 48px;
+      padding: 0 13px;
+      border: 1px solid #444444;
+      border-right: 0;
+      border-radius: 9px 0 0 9px;
+      background: #1a1a1a;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .purchase-id-input-group input {
+      border-radius: 0 9px 9px 0;
+    }
+
     .field-help {
       margin-top: 6px;
       color: #777;
@@ -912,15 +939,25 @@
               ID Pembelian / Ticket ID <span class="required">*</span>
             </label>
 
-            <input
-              id="lookupPurchaseId"
-              type="text"
-              inputmode="numeric"
-              maxlength="4"
-              autocomplete="off"
-              spellcheck="false"
-              placeholder="Masukkan 4 digit ID pembelian"
-            >
+            <div class="purchase-id-input-group">
+              <div class="purchase-id-prefix">
+                BAD26-
+              </div>
+
+              <input
+                id="lookupPurchaseId"
+                type="text"
+                inputmode="numeric"
+                maxlength="6"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="XXXXXX"
+              >
+            </div>
+
+            <div class="field-help">
+              Masukkan hanya 6 digit kode setelah BAD26-.
+            </div>
           </div>
 
           <button
@@ -1977,29 +2014,29 @@ const submitButton =
     async function lookupPurchase() {
       hideMessage();
 
-      const purchaseId =
+      const purchaseCode =
         String(
           lookupPurchaseIdInput.value || ""
         )
-          .trim()
-          .toUpperCase()
-          .replace(/[^A-Z0-9-]/g, "")
-          .slice(0, 12);
+          .replace(/\D/g, "")
+          .slice(0, 6);
 
       lookupPurchaseIdInput.value =
-        purchaseId;
+        purchaseCode;
 
       if (
-        !/^BAD26-[A-Z0-9]{6}$/.test(
-          purchaseId
-        )
+        purchaseCode.length !== 6
       ) {
         showMessage(
           "error",
-          "ID Pembelian harus menggunakan Ticket ID dengan format BAD26-XXXXXX."
+          "Masukkan 6 digit kode setelah BAD26-."
         );
         return;
       }
+
+      const purchaseId =
+        "BAD26-" +
+        purchaseCode;
 
       whatsappConfirmationBox.classList.add(
         "hidden"
@@ -4111,9 +4148,8 @@ boldRidersId:
           String(
             lookupPurchaseIdInput.value || ""
           )
-            .toUpperCase()
-            .replace(/[^A-Z0-9-]/g, "")
-            .slice(0, 12);
+            .replace(/\D/g, "")
+            .slice(0, 6);
 
         lookupPurchaseDetails.classList.add(
           "hidden"
