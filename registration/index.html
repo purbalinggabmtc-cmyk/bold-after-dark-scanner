@@ -2058,7 +2058,10 @@ const submitButton =
         lookupResultQuantity.textContent =
           (purchase.quantity || 0) +
           " " +
-          ACTIVE_PRODUCT_UNIT_NAME;
+          (
+            purchase.unitName ||
+            ACTIVE_PRODUCT_UNIT_NAME
+          );
 
         lookupResultTotal.textContent =
           formatRupiah(
