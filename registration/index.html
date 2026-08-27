@@ -936,6 +936,33 @@
             class="hidden"
             style="margin-top:16px;"
           >
+            <div
+              id="approvedRaffleBox"
+              class="purchase-result hidden"
+              style="margin-bottom:16px;"
+            >
+              <div class="purchase-result-label">
+                NOMOR UNDIAN
+              </div>
+
+              <div
+                id="approvedRaffleNumbers"
+                class="purchase-result-value"
+                style="line-height:1.6; white-space:pre-line;"
+              >
+                -
+              </div>
+
+              <button
+                id="saveRaffleNumbersButton"
+                class="btn-save-qr"
+                type="button"
+                style="margin-top:12px;"
+              >
+                SIMPAN NOMOR UNDIAN (JPG)
+              </button>
+            </div>
+
             <div class="result-grid">
               <div class="result-item">
                 <div class="result-label">ID Pembelian</div>
@@ -1122,6 +1149,29 @@
           </div>
 
           <div
+            id="qrBox"
+            class="qr-box hidden"
+          >
+            <img
+              id="qrImage"
+              src=""
+              alt="QR Code"
+            >
+
+            <div class="qr-caption">
+              Tunjukkan QR Code ini saat check-in.
+            </div>
+
+            <button
+              id="saveQrButton"
+              class="btn-save-qr"
+              type="button"
+            >
+              SIMPAN TIKET MASUK (JPG)
+            </button>
+          </div>
+
+          <div
             id="purchaseDetailResultBox"
             class="purchase-result hidden"
           >
@@ -1165,28 +1215,7 @@
               SIMPAN DETAIL PEMBELIAN (JPG)
             </button>
           </div>
-<div
-            id="qrBox"
-            class="qr-box hidden"
-          >
-            <img
-              id="qrImage"
-              src=""
-              alt="QR Code"
-            >
 
-            <div class="qr-caption">
-              Tunjukkan QR Code ini saat check-in.
-            </div>
-
-            <button
-              id="saveQrButton"
-              class="btn-save-qr"
-              type="button"
-            >
-              SIMPAN TIKET MASUK (JPG)
-            </button>
-          </div>
 
         </div>
 
@@ -1327,6 +1356,15 @@
     const lookupResultPaymentAccount =
       document.getElementById("lookupResultPaymentAccount");
 
+    const approvedRaffleBox =
+      document.getElementById("approvedRaffleBox");
+
+    const approvedRaffleNumbers =
+      document.getElementById("approvedRaffleNumbers");
+
+    const saveRaffleNumbersButton =
+      document.getElementById("saveRaffleNumbersButton");
+
     const lookupPaymentProofInput =
       document.getElementById("lookupPaymentProof");
 
@@ -1400,6 +1438,10 @@ const submitButton =
 
     let currentTicketId = "";
     let currentQrUrl = "";
+
+    let currentHasMesranPurchase = false;
+    let ticketSavedForCurrentResult = false;
+    let purchaseDetailSavedForCurrentResult = false;
 
     let boldRiderIsValid = false;
     let boldRiderValidatedId = "";
@@ -1860,6 +1902,67 @@ const submitButton =
               )
             : "-";
 
+        const raffleNumbers =
+          Array.isArray(data.coupons)
+            ? data.coupons
+                .map(function(coupon) {
+                  return String(
+                    coupon.coupon_code || ""
+                  ).trim();
+                })
+                .filter(Boolean)
+            : [];
+
+        if (
+          String(
+            purchase.paymentStatus || ""
+          ).toUpperCase() === "APPROVED" &&
+          raffleNumbers.length > 0
+        ) {
+          approvedRaffleNumbers.textContent =
+            raffleNumbers.join("\n");
+
+          approvedRaffleBox.classList.remove(
+            "hidden"
+          );
+
+          lookupPaymentProofInput
+            .closest(".field")
+            .classList.add(
+              "hidden"
+            );
+
+          submitLookupPaymentProofButton.classList.add(
+            "hidden"
+          );
+
+          whatsappConfirmationBox.classList.add(
+            "hidden"
+          );
+
+          showMessage(
+            "success",
+            "Pembayaran sudah disetujui. Nomor undian Anda tersedia."
+          );
+        } else {
+          approvedRaffleNumbers.textContent =
+            "-";
+
+          approvedRaffleBox.classList.add(
+            "hidden"
+          );
+
+          lookupPaymentProofInput
+            .closest(".field")
+            .classList.remove(
+              "hidden"
+            );
+
+          submitLookupPaymentProofButton.classList.remove(
+            "hidden"
+          );
+        }
+
         lookupPurchaseDetails.classList.remove(
           "hidden"
         );
@@ -2160,6 +2263,15 @@ const submitButton =
 
       currentTicketId = "";
       currentQrUrl = "";
+
+      currentHasMesranPurchase =
+        false;
+
+      ticketSavedForCurrentResult =
+        false;
+
+      purchaseDetailSavedForCurrentResult =
+        false;
 
       updateAccessFields();
       updateRafflePurchaseFields();
@@ -2782,6 +2894,30 @@ boldRidersId:
       }
     }
 
+    function maybeResetRegistrationAfterSaving() {
+      if (currentHasMesranPurchase) {
+        if (
+          ticketSavedForCurrentResult &&
+          purchaseDetailSavedForCurrentResult
+        ) {
+          setTimeout(
+            resetRegistrationForm,
+            500
+          );
+        }
+
+        return;
+      }
+
+      if (ticketSavedForCurrentResult) {
+        setTimeout(
+          resetRegistrationForm,
+          500
+        );
+      }
+    }
+
+
     async function saveQrAsJpg() {
       const ticketId =
         String(
@@ -2956,10 +3092,10 @@ boldRidersId:
           "Tiket masuk berhasil disimpan sebagai JPG."
         );
 
-        setTimeout(
-          resetRegistrationForm,
-          300
-        );
+        ticketSavedForCurrentResult =
+          true;
+
+        maybeResetRegistrationAfterSaving();
 
       } catch (error) {
         console.error(
@@ -2977,6 +3113,203 @@ boldRidersId:
           "SIMPAN TIKET MASUK (JPG)";
       }
     }
+
+    async function saveRaffleNumbersAsJpg() {
+      const purchaseId =
+        lookupResultPurchaseId.textContent.trim();
+
+      const buyerName =
+        lookupResultName.textContent.trim();
+
+      const numbers =
+        String(
+          approvedRaffleNumbers.textContent || ""
+        )
+          .split(/\s+/)
+          .map(function(value) {
+            return value.trim();
+          })
+          .filter(Boolean);
+
+      if (
+        !purchaseId ||
+        purchaseId === "-" ||
+        numbers.length === 0
+      ) {
+        showMessage(
+          "error",
+          "Nomor undian belum tersedia."
+        );
+        return;
+      }
+
+      saveRaffleNumbersButton.disabled =
+        true;
+
+      saveRaffleNumbersButton.textContent =
+        "MENYIAPKAN JPG...";
+
+      try {
+        const canvas =
+          document.createElement("canvas");
+
+        canvas.width = 1000;
+        canvas.height =
+          420 +
+          numbers.length * 72;
+
+        const ctx =
+          canvas.getContext("2d");
+
+        if (!ctx) {
+          throw new Error(
+            "Browser tidak mendukung pembuatan JPG."
+          );
+        }
+
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#111111";
+        ctx.font =
+          "900 44px Arial, Helvetica, sans-serif";
+
+        ctx.fillText(
+          "BOLD AFTER DARK",
+          canvas.width / 2,
+          80
+        );
+
+        ctx.fillStyle = "#666666";
+        ctx.font =
+          "700 24px Arial, Helvetica, sans-serif";
+
+        ctx.fillText(
+          "NOMOR UNDIAN",
+          canvas.width / 2,
+          130
+        );
+
+        ctx.fillStyle = "#111111";
+        ctx.font =
+          "700 22px Arial, Helvetica, sans-serif";
+
+        ctx.fillText(
+          "ID Pembelian: " + purchaseId,
+          canvas.width / 2,
+          190
+        );
+
+        ctx.fillText(
+          "Nama: " + buyerName,
+          canvas.width / 2,
+          225
+        );
+
+        let y = 320;
+
+        numbers.forEach(
+          function(number) {
+            ctx.font =
+              "900 42px Arial, Helvetica, sans-serif";
+
+            ctx.fillText(
+              number,
+              canvas.width / 2,
+              y
+            );
+
+            y += 72;
+          }
+        );
+
+        ctx.fillStyle = "#666666";
+        ctx.font =
+          "700 18px Arial, Helvetica, sans-serif";
+
+        ctx.fillText(
+          "Simpan gambar ini sebagai bukti nomor undian Anda.",
+          canvas.width / 2,
+          canvas.height - 45
+        );
+
+        const blob =
+          await new Promise(
+            function(resolve, reject) {
+              canvas.toBlob(
+                function(result) {
+                  if (result) {
+                    resolve(result);
+                  } else {
+                    reject(
+                      new Error(
+                        "Gagal membuat JPG."
+                      )
+                    );
+                  }
+                },
+                "image/jpeg",
+                0.95
+              );
+            }
+          );
+
+        const url =
+          URL.createObjectURL(blob);
+
+        const link =
+          document.createElement("a");
+
+        link.href = url;
+        link.download =
+          "BOLD-AFTER-DARK-UNDIAN-" +
+          sanitizeFileName(
+            purchaseId
+          ) +
+          ".jpg";
+
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        setTimeout(
+          function() {
+            URL.revokeObjectURL(url);
+          },
+          1000
+        );
+
+        showMessage(
+          "success",
+          "Nomor undian berhasil disimpan sebagai JPG."
+        );
+
+      } catch (error) {
+        console.error(
+          "SAVE RAFFLE NUMBERS ERROR:",
+          error
+        );
+
+        showMessage(
+          "error",
+          "Nomor undian tidak dapat disimpan."
+        );
+
+      } finally {
+        saveRaffleNumbersButton.disabled =
+          false;
+
+        saveRaffleNumbersButton.textContent =
+          "SIMPAN NOMOR UNDIAN (JPG)";
+      }
+    }
+
 
     async function savePurchaseDetailAsJpg() {
       const purchaseId =
@@ -3146,10 +3479,10 @@ boldRidersId:
           "Detail pembelian berhasil disimpan sebagai JPG."
         );
 
-        setTimeout(
-          resetRegistrationForm,
-          300
-        );
+        purchaseDetailSavedForCurrentResult =
+          true;
+
+        maybeResetRegistrationAfterSaving();
 
       } catch (error) {
         console.error(
@@ -3217,6 +3550,18 @@ boldRidersId:
       resultBox.classList.add(
         "show"
       );
+
+      currentHasMesranPurchase =
+        Boolean(
+          mesranPurchase &&
+          mesranPurchase.purchaseId
+        );
+
+      ticketSavedForCurrentResult =
+        false;
+
+      purchaseDetailSavedForCurrentResult =
+        false;
 
       resultPassId.textContent =
         data.passId || "-";
@@ -3349,10 +3694,7 @@ boldRidersId:
 
       currentQrUrl = qrUrl;
 
-      if (
-        qrUrl &&
-        !mesranPurchase
-      ) {
+      if (qrUrl) {
         qrImage.src =
           qrUrl;
 
@@ -3561,6 +3903,12 @@ boldRidersId:
     savePurchaseDetailButton.addEventListener(
       "click",
       savePurchaseDetailAsJpg
+    );
+
+
+    saveRaffleNumbersButton.addEventListener(
+      "click",
+      saveRaffleNumbersAsJpg
     );
 
 
